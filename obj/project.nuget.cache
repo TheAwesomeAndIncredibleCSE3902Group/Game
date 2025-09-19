@@ -1,0 +1,17 @@
+{
+  "version": 2,
+  "dgSpecHash": "XruBQwwUJ3ZTW+anm/agwMuGzez+RutTR3XmJQ35YnH3DRcKE7kOVppG6FWi8ebc4ltFmNv45kdBfMV8Jagqxw==",
+  "success": true,
+  "projectFilePath": "/home/wicycool/Development/CSE 3902/Sprint0/Sprint0.csproj",
+  "expectedPackageFiles": [
+    "/home/wicycool/.nuget/packages/monogame.content.builder.task/3.8.4/monogame.content.builder.task.3.8.4.nupkg.sha512",
+    "/home/wicycool/.nuget/packages/monogame.framework.desktopgl/3.8.4/monogame.framework.desktopgl.3.8.4.nupkg.sha512",
+    "/home/wicycool/.nuget/packages/monogame.library.openal/1.23.1.10/monogame.library.openal.1.23.1.10.nupkg.sha512",
+    "/home/wicycool/.nuget/packages/monogame.library.sdl/2.32.2.1/monogame.library.sdl.2.32.2.1.nupkg.sha512",
+    "/home/wicycool/.nuget/packages/nvorbis/0.10.4/nvorbis.0.10.4.nupkg.sha512",
+    "/home/wicycool/.nuget/packages/system.memory/4.5.3/system.memory.4.5.3.nupkg.sha512",
+    "/home/wicycool/.nuget/packages/system.valuetuple/4.5.0/system.valuetuple.4.5.0.nupkg.sha512",
+    "/home/wicycool/.nuget/packages/microsoft.aspnetcore.app.ref/8.0.19/microsoft.aspnetcore.app.ref.8.0.19.nupkg.sha512"
+  ],
+  "logs": []
+}
