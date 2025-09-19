@@ -55,3 +55,9 @@ TestResults/
 
 # Publish
 publish/
+
+
+# Custom additions
+obj
+[Cc]ontent/bin/
+[Cc]ontent/obj/

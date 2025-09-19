@@ -1,3 +1,0 @@
-Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
-"/home/wicycool/Development/CSE 3902/Sprint0/Content/Fonts/MyFont.spritefont","/home/wicycool/Development/CSE 3902/Sprint0/Content/bin/DesktopGL/Fonts/MyFont.xnb","FontDescriptionProcessor","SpriteFontContent",2019,37913,0.1372254
-"/home/wicycool/Development/CSE 3902/Sprint0/Content/SpriteImages/kris_custom.png","/home/wicycool/Development/CSE 3902/Sprint0/Content/bin/DesktopGL/SpriteImages/kris_custom.xnb","TextureProcessor","Texture2DContent",6257,111685,0.0144297
