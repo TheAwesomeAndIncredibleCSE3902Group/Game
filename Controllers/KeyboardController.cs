@@ -1,62 +1,31 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
-using Microsoft.Xna.Framework;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Input;
-using Sprint0.Sprites;
 
-namespace Sprint0.Controllers;
-
-public class KeyboardController : IController
+namespace Sprint0
 {
-    private readonly HashSet<Keys> _previousTickKeysDown = [];
-    private readonly HashSet<Keys> _keysTapped = [];
-    private readonly Game _gameObject;
-    private Action<int> SetChosenSprite;
-    public KeyboardController(Game game, Action<int> setChosenSpriteAction)
+    public class KeyboardController : IController
     {
-        _gameObject = game;
-        SetChosenSprite = setChosenSpriteAction;
-    }
-    public void Update()
-    {
-        KeyboardState keyState = Keyboard.GetState();
-        Keys[] currentlyPressedKeys = keyState.GetPressedKeys();
-        _keysTapped.Clear();
-        foreach (Keys currentKey in currentlyPressedKeys)
+        private Dictionary<Keys, ICommand> controllerMappings;
+        public KeyboardController() 
         {
-            if (!_previousTickKeysDown.Contains(currentKey))
+            controllerMappings = new Dictionary<Keys, ICommand>();
+        }
+        public void RegisterCommand(Keys key, ICommand command)
+        {
+            controllerMappings.Add(key, command);
+        }
+        public void Update()
+        {
+            Keys[] keysPressed = Keyboard.GetState().GetPressedKeys();
+
+            foreach (Keys key in keysPressed)
             {
-                _keysTapped.Add(currentKey);
+                controllerMappings[key].Execute();
             }
         }
-
-        foreach (Keys key in _keysTapped) {
-            switch (key)
-            {
-                case Keys.D0:
-                case Keys.NumPad0:
-                    _gameObject.Exit();
-                    break;
-                case Keys.D1:
-                case Keys.NumPad1:
-                    SetChosenSprite(0);
-                    break;
-                case Keys.D2:
-                case Keys.NumPad2:
-                    SetChosenSprite(1);
-                    break;
-                case Keys.D3:
-                case Keys.NumPad3:
-                    SetChosenSprite(2);
-                    break;
-                case Keys.D4:
-                case Keys.NumPad4:
-                    SetChosenSprite(3);
-                    break;
-            }
-        }
-
-        _previousTickKeysDown.Clear();
-        _previousTickKeysDown.UnionWith(currentlyPressedKeys);
     }
 }
