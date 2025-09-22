@@ -58,6 +58,6 @@ publish/
 
 
 # Custom additions
-obj
+obj/
 [Cc]ontent/bin/
 [Cc]ontent/obj/
