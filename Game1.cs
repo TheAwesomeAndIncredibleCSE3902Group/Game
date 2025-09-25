@@ -37,7 +37,7 @@ public class Game1 : Game
     {
         // TODO: Add your initialization logic here
 
-        _controllersList.Add(new KeyboardController(this, SetChosenSprite));
+        _controllersList.Add(new KeyboardController());
         _controllersList.Add(new MouseController(this, SetChosenSprite));
 
         base.Initialize();
