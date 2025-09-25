@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Input;
 
-namespace Sprint0
+namespace Sprint0.Controllers
 {
     public class KeyboardController : IController
     {
