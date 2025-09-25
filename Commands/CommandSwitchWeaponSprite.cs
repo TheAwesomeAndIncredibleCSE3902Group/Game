@@ -6,13 +6,11 @@ using System.Threading.Tasks;
 
 namespace Sprint0.Commands
 {
-    public class CommandSwitchSprite : ICommand
+    public class CommandSwitchWeaponSprite : ICommand
     {
-        private Game1 myGame;
 
-        public CommandSwitchSprite(Game1 game) 
+        public CommandSwitchWeaponSprite() 
         {
-            myGame = game;
         }
 
         public void Execute()
