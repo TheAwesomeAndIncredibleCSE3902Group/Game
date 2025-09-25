@@ -10,9 +10,8 @@ namespace Sprint0.Commands
     {
         private Game1 myGame;
 
-        public CommandSwitchEnemySprite(Game1 game) 
+        public CommandSwitchEnemySprite() 
         {
-            myGame = game;
         }
 
         public void Execute()
