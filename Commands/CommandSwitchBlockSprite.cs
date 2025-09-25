@@ -8,11 +8,9 @@ namespace Sprint0.Commands
 {
     public class CommandSwitchBlockSprite : ICommand
     {
-        private Game1 myGame;
 
-        public CommandSwitchBlockSprite(Game1 game) 
+        public CommandSwitchBlockSprite() 
         {
-            myGame = game;
         }
 
         public void Execute()
