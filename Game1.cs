@@ -12,7 +12,6 @@ public class Game1 : Game
 {
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
-    private SpriteFont _spriteFont;
     private List<ISprite> _spriteList = [];
     private int _chosenSprite = 0;
     private List<IController> _controllersList = [];
@@ -49,19 +48,18 @@ public class Game1 : Game
 
         // TODO: use this.Content to load your game content here
 
-        _spriteFont = Content.Load<SpriteFont>("Fonts/MyFont");
-        _spriteList.Add(new TextSprite(
-            _spriteBatch,
-            _spriteFont,
-            "Credits:\nProgram made by: Eli Lambrych\nSprites provided by contributors of The Spriters Resource:\nhttps://www.spriters-resource.com/pc_computer/deltarune/asset/110448/\n(Note: I created my own spritesheet from the SR spritesheet)\nArtwork by Toby Fox, Temmie Chang, and DELTARUNE team",
-            20, 20, Color.White
-        ));
-
         Texture2D spriteTexture = Content.Load<Texture2D>("SpriteImages/kris_custom");
-        _spriteList.Add(new MovingAnimatedSprite(_spriteBatch, spriteTexture, GetChosenSprite));
-        _spriteList.Add(new NonMovingAnimatedSprite(_spriteBatch, spriteTexture, GetChosenSprite));
-        _spriteList.Add(new NonMovingNonAnimatedSprite(_spriteBatch, spriteTexture, GetChosenSprite));
-        _spriteList.Add(new MovingNonAnimatedSprite(_spriteBatch, spriteTexture, GetChosenSprite));
+
+        // _spriteList.Add(new AnimatableSprite(_spriteBatch, spriteTexture, new Rectangle(0, 0, 24, 24)));
+        _spriteList.Add(new AnimatableSprite(
+            _spriteBatch,
+            spriteTexture,
+            new int[,] {
+                { 10, 10, 15, 15, 20, 10 },
+                { 25, 25, 13, 24, 10, 200}
+            },
+            1000
+        ));
     }
 
     protected override void Update(GameTime gameTime)
@@ -73,11 +71,6 @@ public class Game1 : Game
 
         foreach (IController controller in _controllersList) {
             controller.Update();
-        }
-
-        foreach (ISprite currentSprite in _spriteList)
-        {
-            currentSprite.Update(gameTime);
         }
 
         base.Update(gameTime);
@@ -92,7 +85,7 @@ public class Game1 : Game
 
         foreach (ISprite currentSprite in _spriteList)
         {
-            currentSprite.Draw(gameTime);
+            currentSprite.Draw(gameTime, new Vector2(10, 10));
         }
         _spriteBatch.End();
 
