@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Sprint0.Controllers;
 using Sprint0.Sprites;
+using Sprint0.Tiles;
 
 namespace Sprint0;
 
@@ -15,6 +16,7 @@ public class Game1 : Game
     private List<ISprite> _spriteList = [];
     private int _chosenSprite = 0;
     private List<IController> _controllersList = [];
+    private Tilemap _tilemap;
     public void SetChosenSprite(int val)
     {
         _chosenSprite = val;
@@ -60,6 +62,9 @@ public class Game1 : Game
             },
             1000
         ));
+
+
+        _tilemap = Tilemap.FromFile(Content, "TileImages\\test_tiles_definition.xml");
     }
 
     protected override void Update(GameTime gameTime)
@@ -82,6 +87,8 @@ public class Game1 : Game
 
         // TODO: Add your drawing code here
         _spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp);
+
+        _tilemap.Draw(_spriteBatch);
 
         foreach (ISprite currentSprite in _spriteList)
         {

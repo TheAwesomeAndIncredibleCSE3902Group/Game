@@ -32,3 +32,18 @@
 /processorParam:TextureFormat=Color
 /build:SpriteImages/kris_custom.png
 
+#begin TileImages/test_tiles_definition.xml
+/copy:TileImages/test_tiles_definition.xml
+
+#begin TileImages/test_tiles.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:TileImages/test_tiles.png
+
