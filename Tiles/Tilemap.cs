@@ -11,7 +11,7 @@ namespace Sprint0.Tiles;
 // contains the image for the tilemap
 public class Tilemap
 {
-    private readonly ITileset _tileset;
+    private readonly TileSet _tileset;
     private readonly int[] _tiles;
 
     /// <summary>
@@ -50,7 +50,7 @@ public class Tilemap
     /// <param name="tileset">The tileset used by this tilemap.</param>
     /// <param name="columns">The total number of columns in this tilemap.</param>
     /// <param name="rows">The total number of rows in this tilemap.</param>
-    public Tilemap(ITileset tileset, int columns, int rows)
+    public Tilemap(TileSet tileset, int columns, int rows)
     {
         _tileset = tileset;
         Rows = rows;
@@ -89,7 +89,7 @@ public class Tilemap
     /// </summary>
     /// <param name="index">The index of the tile in this tilemap.</param>
     /// <returns>The texture region of the tile from this tilemap at the specified index.</returns>
-    public TextureRegion GetTile(int index)
+    public Tile GetTile(int index)
     {
         return _tileset.GetTile(_tiles[index]);
     }
@@ -101,7 +101,7 @@ public class Tilemap
     /// <param name="column">The column of the tile in this tilemap.</param>
     /// <param name="row">The row of the tile in this tilemap.</param>
     /// <returns>The texture region of the tile from this tilemap at the specified column and row.</returns>
-    public TextureRegion GetTile(int column, int row)
+    public Tile GetTile(int column, int row)
     {
         int index = row * Columns + column;
         return GetTile(index);
@@ -116,7 +116,7 @@ public class Tilemap
         for (int i = 0; i < Count; i++)
         {
             int tilesetIndex = _tiles[i];
-            TextureRegion tile = _tileset.GetTile(tilesetIndex);
+            Tile tile = _tileset.GetTile(tilesetIndex);
 
             int x = i % Columns;
             int y = i / Columns;
@@ -174,10 +174,10 @@ public class Tilemap
                 Texture2D texture = content.Load<Texture2D>(contentPath);
 
                 // Create the texture region from the texture
-                TextureRegion textureRegion = new TextureRegion(texture, x, y, width, height);
+                Tile textureRegion = new Tile(texture, x, y, width, height);
 
                 // Create the tileset using the texture region
-                ITileset tileset = new DefaultTileset(textureRegion, tileWidth, tileHeight);
+                TileSet tileset = new TileSet(textureRegion, tileWidth, tileHeight);
 
                 // The <Tiles> element contains lines of strings where each line
                 // represents a row in the tilemap.  Each line is a space
@@ -217,7 +217,7 @@ public class Tilemap
                         int tilesetIndex = int.Parse(columns[column]);
 
                         // Get the texture region of that tile from the tileset
-                        TextureRegion region = tileset.GetTile(tilesetIndex);
+                        Tile region = tileset.GetTile(tilesetIndex);
 
                         // Add that region to the tilemap at the row and column location
                         tilemap.SetTile(column, row, tilesetIndex);
