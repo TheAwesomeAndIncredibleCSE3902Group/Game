@@ -17,6 +17,7 @@ public class Game1 : Game
     private int _chosenSprite = 0;
     private List<IController> _controllersList = [];
     private Tilemap _tilemap;
+    private IPlayer player;
     public void SetChosenSprite(int val)
     {
         _chosenSprite = val;
@@ -63,8 +64,10 @@ public class Game1 : Game
             1000
         ));
 
-
         _tilemap = Tilemap.FromFile(Content, "TileImages\\test_tiles_definition.xml");
+
+        ItemSpriteFactory.LoadAllTextures(Content, _spriteBatch);
+        player = new Player();
     }
 
     protected override void Update(GameTime gameTime)
@@ -77,6 +80,8 @@ public class Game1 : Game
         foreach (IController controller in _controllersList) {
             controller.Update();
         }
+
+        player.Update(gameTime);
 
         base.Update(gameTime);
     }
@@ -94,6 +99,9 @@ public class Game1 : Game
         {
             currentSprite.Draw(gameTime, new Vector2(10, 10));
         }
+
+        player.Draw(gameTime);
+
         _spriteBatch.End();
 
         base.Draw(gameTime);
