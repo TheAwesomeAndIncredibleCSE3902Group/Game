@@ -2,13 +2,14 @@ using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Sprint0.Sprites;
 
-namespace Sprint0.Tiles;
+namespace Sprint0.Sprites;
 
 
 public class CharacterSpriteFactory
 {
-    private Texture2D _itemSpriteSheet;
+    private Texture2D _enemySpriteSheet;
     private SpriteBatch _spriteBatch;
 
     private static CharacterSpriteFactory instance = new CharacterSpriteFactory();
@@ -22,19 +23,22 @@ public class CharacterSpriteFactory
     }
     private CharacterSpriteFactory()
     {
-        
+
     }
 
     public void LoadAllTextures(ContentManager content, SpriteBatch spriteBatch)
     {
-        _itemSpriteSheet = content.Load<Texture2D>("TODO");// TODO!!!!
+        _enemySpriteSheet = content.Load<Texture2D>("SpriteImages/enemy_sprites");
         _spriteBatch = spriteBatch;
     }
 
-    public ISprite KrisSprite(ContentManager content, SpriteBatch spriteBatch)
+    public AnimatableSprite MoblinSprite()
     {
-        _itemSpriteSheet = content.Load<Texture2D>("TODO");// TODO!!!!
-        _spriteBatch = spriteBatch;
+        Rectangle sourceRec = new Rectangle(0, 0, 16, 16);
+        return new AnimatableSprite(_spriteBatch, _enemySpriteSheet, sourceRec);
     }
+    
+
+
     
 }

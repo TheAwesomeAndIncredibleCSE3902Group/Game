@@ -1,6 +1,7 @@
 using System;
 using System.Drawing;
 using Sprint0.Sprites;
+using Microsoft.Xna.Framework;
 
 namespace Sprint0.Characters;
 
@@ -9,6 +10,6 @@ namespace Sprint0.Characters;
 public interface ICharacter
 {
 
-    void Update();
-    void Draw();
+    public void Update(GameTime gameTime);
+    public void Draw(GameTime gameTime);
 }
