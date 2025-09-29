@@ -22,15 +22,15 @@ public static class ItemSpriteFactory
         return new AnimatableSprite(sb, spriteSheet, sourceRec);
     }
 
-    public static ISprite CreateKrisSprite()
+    public static ISprite CreateLinkSprite()
     {
-        Rectangle sourceRec = new Rectangle(0, 0, 17, 37);
+        Rectangle sourceRec = new Rectangle(0, 0, 15, 15);
         return new AnimatableSprite(sb, spriteSheet, sourceRec);
     }
 
     public static void LoadAllTextures(ContentManager content, SpriteBatch spriteBatch)
     {
-        spriteSheet = content.Load<Texture2D>("SpriteImages/kris_custom");
+        spriteSheet = content.Load<Texture2D>("SpriteImages/legendofzelda_link_sheet");
         sb = spriteBatch;
 
         //Use this if/once we have a dedicated sprite sheet for items
