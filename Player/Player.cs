@@ -15,7 +15,6 @@ public class Player : IPlayer
     public Cardinal FacingDirection => Cardinal.right;
     public Vector2 Position { get; set; }
     public ISprite Sprite { get; set; }
-
     public IPlayerState PlayerState { get; set; }
 
     public List<IEquipment> Equipment { get; } = new();
@@ -32,10 +31,9 @@ public class Player : IPlayer
 
         //TODO: create State
         //      ensure State initializes Sprite
-        PlayerState = new PlayerStateMachine();
 
         //Very temporary, just to test display until PlayerState is implemented
-        Sprite = ItemSpriteFactory.CreateLinkSprite();
+        Sprite = ItemSpriteFactory.CreateKrisSprite();
         //Testing arrow (heart) spawning
         Equipment.Add(new Bow());
         Equipment[0].Use();
@@ -64,7 +62,6 @@ public class Player : IPlayer
 
         //Grabbing the direction from PlayerState here ensures that IPlayerState is the ultimate authority
         Cardinal newDirection = PlayerState.Direction;
-        PlayerState.ChangeStateWalking();
         Position += movementSpeed * new[] { -Vector2.UnitY, Vector2.UnitX, Vector2.UnitY, -Vector2.UnitX }[(int)newDirection];
     }
 
