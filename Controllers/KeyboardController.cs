@@ -42,6 +42,7 @@ namespace Sprint0.Controllers
 
         private void InitializeCommands(Game1 game)
         {
+            controllerMappings[Keys.Q] = new CommandQuit(game);
             controllerMappings[Keys.U] = new CommandSwitchOverworldItemSprite(game,CommandSwitchOverworldItemSprite.Direction.left);
             controllerMappings[Keys.I] = new CommandSwitchOverworldItemSprite(game, CommandSwitchOverworldItemSprite.Direction.right);
         }
