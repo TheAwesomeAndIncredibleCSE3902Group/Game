@@ -4,6 +4,7 @@ using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Sprint0.Characters;
 using Sprint0.Commands;
 using Sprint0.Controllers;
 using Sprint0.Sprites;
@@ -16,6 +17,7 @@ public class Game1 : Game
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
     private Dictionary<string,ISprite> _spriteDict = [];
+    private HashSet<ICharacter> _characterSet = [];
     private int _chosenSprite = 0;
     private List<IController> _controllersList = [];
     private Tilemap _tilemap;
@@ -62,7 +64,7 @@ public class Game1 : Game
         OverworldItemSpriteFactory.Instance.LoadAllTextures(Content, _spriteBatch);
         // _spriteList.Add(new AnimatableSprite(_spriteBatch, spriteTexture, new Rectangle(0, 0, 24, 24)));
         _spriteDict.Add(
-            "kris",new AnimatableSprite(
+            "kris", new AnimatableSprite(
             _spriteBatch,
             spriteTexture,
             new int[,] {
@@ -76,7 +78,9 @@ public class Game1 : Game
         _tilemap = Tilemap.FromFile(Content, "TileImages\\test_tiles_definition.xml");
 
         ItemSpriteFactory.LoadAllTextures(Content, _spriteBatch);
+        CharacterSpriteFactory.Instance.LoadAllTextures(Content, _spriteBatch);
         player = new Player();
+        _characterSet.Add(new CharacterEnemyMoblin(new Vector2(300, 350), Util.Cardinal.up));
     }
 
     protected override void Update(GameTime gameTime)
@@ -90,6 +94,10 @@ public class Game1 : Game
         }
 
         player.Update(gameTime);
+
+        foreach (ICharacter character in _characterSet) {
+            character.Update(gameTime);
+        }
 
         base.Update(gameTime);
     }
@@ -109,6 +117,10 @@ public class Game1 : Game
         }
 
         player.Draw(gameTime);
+
+        foreach (ICharacter character in _characterSet) {
+            character.Draw(gameTime);
+        }
 
         _spriteBatch.End();
 

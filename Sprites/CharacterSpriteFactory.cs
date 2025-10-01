@@ -35,7 +35,7 @@ public class CharacterSpriteFactory
     public AnimatableSprite MoblinSprite()
     {
         Rectangle sourceRec = new Rectangle(0, 0, 16, 16);
-        return new AnimatableSprite(_spriteBatch, _enemySpriteSheet, sourceRec);
+        return new AnimatableSprite(_spriteBatch, _enemySpriteSheet, sourceRec, 3, 10, new Point(0,0));
     }
     
 

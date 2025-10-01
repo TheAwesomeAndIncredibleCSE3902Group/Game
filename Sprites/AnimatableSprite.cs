@@ -66,6 +66,7 @@ public class AnimatableSprite : ISprite
         _numberOfFrames = numberOfFrames;
 
         _sourceList = new Rectangle[numberOfFrames];
+        _offsetList = new Vector2[numberOfFrames];
         Point currentPositionOnSpriteSheet = spriteSheetInitialFrameSource.Location;
 
         int widthOfTexture = texture.Width;
