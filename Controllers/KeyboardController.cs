@@ -42,6 +42,13 @@ namespace Sprint0.Controllers
 
         private void InitializeCommands(Game1 game)
         {
+            // Movement
+            controllerMappings[Keys.W] = new CommandMovePlayer(game.Player, Util.Cardinal.up);
+            controllerMappings[Keys.A] = new CommandMovePlayer(game.Player, Util.Cardinal.left);
+            controllerMappings[Keys.S] = new CommandMovePlayer(game.Player, Util.Cardinal.down);
+            controllerMappings[Keys.D] = new CommandMovePlayer(game.Player, Util.Cardinal.right);
+
+            // Game Actions
             controllerMappings[Keys.Q] = new CommandQuit(game);
             controllerMappings[Keys.U] = new CommandSwitchOverworldItemSprite(game,CommandSwitchOverworldItemSprite.Direction.left);
             controllerMappings[Keys.I] = new CommandSwitchOverworldItemSprite(game, CommandSwitchOverworldItemSprite.Direction.right);
