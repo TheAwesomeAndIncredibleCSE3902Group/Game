@@ -16,6 +16,8 @@ public class Player : IPlayer
     public Vector2 Position { get; set; }
     public ISprite Sprite { get; set; }
 
+    private float linkXPosition;
+    private float linkYPosition;
     public IPlayerState PlayerState { get; set; }
 
     public List<IEquipment> Equipment { get; } = new();
@@ -28,21 +30,25 @@ public class Player : IPlayer
     {
         Instance = this;
         //Throwing in a random position so the sprite isn't halfway off the screen or something
-        Position = new Vector2(300, 300);
+        linkXPosition = 300;
+        linkYPosition = 300;
+        Position = new Vector2(linkXPosition, linkYPosition);
 
         //TODO: create State
         //      ensure State initializes Sprite
         PlayerState = new PlayerStateMachine();
 
         //Very temporary, just to test display until PlayerState is implemented
-        Sprite = ItemSpriteFactory.CreateLinkSprite();
+        Sprite = PlayerState.GetSprite();
         //Testing arrow (heart) spawning
         Equipment.Add(new Bow());
         Equipment[0].Use();
     }
 
+
     public void Draw(GameTime gt)
     {
+
         Sprite.Draw(gt, Position);
 
         Arrow?.Draw(gt);
@@ -51,6 +57,13 @@ public class Player : IPlayer
     public void Update(GameTime gt)
     {
         Arrow?.Update(gt);
+        
+        PlayerState.Update(gt);
+    }
+
+    public void BeIdle()
+    {
+        PlayerState.ChangeStateStanding();
     }
 
     /// <summary>
@@ -60,12 +73,19 @@ public class Player : IPlayer
     public void Move(Cardinal direction)
     {
         if (PlayerState.Direction != direction)
+        {
             PlayerState.ChangeDirection(direction);
-
+            PlayerState.ChangeStateStanding();
+        }
         //Grabbing the direction from PlayerState here ensures that IPlayerState is the ultimate authority
         Cardinal newDirection = PlayerState.Direction;
         PlayerState.ChangeStateWalking();
         Position += movementSpeed * new[] { -Vector2.UnitY, Vector2.UnitX, Vector2.UnitY, -Vector2.UnitX }[(int)newDirection];
+    }
+
+    public void SwordAttack()
+    {
+        PlayerState.ChangeStateSwordAttack();
     }
 
     public void UseEquipment()
