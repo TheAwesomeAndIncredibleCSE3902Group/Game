@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Sprint0.Sprites;
 using System;
+using System.Diagnostics;
 using static Sprint0.Util;
 
 namespace Sprint0;
@@ -35,6 +36,8 @@ public class PlayerStateMachine : IPlayerState
         currentHealth = 3;
         currentMaxHealth = currentHealth;
         linkVelocity = 0;
+        //TODO: REMOVE THIS, TEST FOR ARROW SPAWNING
+        activeEquipment = Player.Instance.Equipment[0];
 
         // Link, on the legendofzelda_link_sheet.png, is 15 by 15 pixels in size
         rectangleXPosition = 0;

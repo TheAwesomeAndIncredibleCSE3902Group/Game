@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -20,8 +21,8 @@ public class Player
     public PlayerStateMachine PStateMachine { get; private set; }
 
     public List<IEquipment> Equipment { get; } = new();
-    public PlayerArrow Arrow { get; set; }
-
+    public Dictionary<IEquipment.Projectiles, Projectile> spawnedProjectiles { get; set; } = new();
+    
     //In pixels per tick. Might change to pixels per second later
     float movementSpeed = 2;
 
@@ -30,6 +31,7 @@ public class Player
     public Player(ContentManager content, SpriteBatch _spriteBatch)
     {
         Instance = this;
+        Equipment.Add(new Bow());
         //Throwing in a random position so the sprite isn't halfway off the screen or something
         Vector2 startingPos = new Vector2(300, 300);
         Position = startingPos;
@@ -39,9 +41,6 @@ public class Player
         PStateMachine = new PlayerStateMachine();
         PStateMachine.LoadPlayer(content,_spriteBatch);
 
-        //Testing arrow (heart) spawning
-        Equipment.Add(new Bow());
-        Equipment[0].Use();
     }
 
 
@@ -50,13 +49,19 @@ public class Player
 
         PStateMachine.Draw(gt, Position);
 
-        Arrow?.Draw(gt);
+        foreach (Projectile projectile in spawnedProjectiles.Values)
+        {
+            projectile.Draw(gt);
+        }
     }
 
     public void Update(GameTime gt)
     {
-        Arrow?.Update(gt);
-        
+        foreach (Projectile projectile in spawnedProjectiles.Values)
+        {
+            projectile.Update(gt);
+        }
+
         PStateMachine.Update(gt);
     }
 

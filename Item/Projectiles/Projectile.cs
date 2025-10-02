@@ -27,7 +27,7 @@ public abstract class Projectile
             Destroy();
         else
         {
-            position += movementSpeed * new[] { -Vector2.UnitY, Vector2.UnitX, Vector2.UnitY, -Vector2.UnitX }[(int)direction];
+            position += movementSpeed * Util.CardinalToUnitVector(direction);
         }
     }
     public void Draw(GameTime gt)

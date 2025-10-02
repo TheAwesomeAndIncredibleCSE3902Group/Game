@@ -33,8 +33,8 @@ public class Game1 : Game
     /// <summary>
     /// Changes the sprite in spritelist of a given name with a new sprite
     /// </summary>
-    /// <param name="spriteName"></param> The name of the sprite in the dictionary
-    /// <param name="newSprite"></param> The ISprite of the new sprite being given
+    /// <param name="spriteName">The name of the sprite in the dictionary</param> 
+    /// <param name="newSprite">The ISprite of the new sprite being given</param> 
     public void ChangeGameSpriteToNewSprite(string spriteName, ISprite newSprite)
     {
         _spriteDict[spriteName] = newSprite;
