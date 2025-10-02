@@ -9,14 +9,10 @@ namespace StateMachineDemo;
 
     public class StateMachine
     {
-        private Dictionary<PlayerTest.States, IState> playerStates;
         private IState currentState;
         public void Initialize()
         {
-            playerStates[PlayerTest.States.Walking] = new WalkingState();
-            playerStates[PlayerTest.States.Idle] = new IdleState();
-
-            currentState = new WalkingState();
+            currentState = new IdleState();
             currentState.Enter(this);
         }
 
@@ -25,12 +21,12 @@ namespace StateMachineDemo;
             currentState = newState;
         }
 
-        public void Draw()
+        public void Draw(GameTime gt, Vector2 positon)
         {
             currentState.Draw();
         }
 
-        public void Update()
+        public void Update(GameTime gt)
         {
             currentState.Update();
         }
