@@ -266,4 +266,9 @@ public class PlayerStateMachine : IPlayerState
         currentFrame = new Rectangle(rectangleXPosition, rectangleYPosition, rectangleWidth, rectangleHeight);
         linkSprite = new AnimatableSprite(linkSpriteBatch, linkSpriteSheet, currentFrame);
     }
+
+    public void Draw(GameTime gt, Vector2 position)
+    {
+        linkSprite.Draw(gt,position);
+    }
 }

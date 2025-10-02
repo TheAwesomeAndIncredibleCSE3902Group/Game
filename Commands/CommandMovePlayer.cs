@@ -21,6 +21,7 @@ namespace Sprint0
         public void Execute()
         {
             currentPlayer.Move(inputDirection);
+            currentPlayer.PStateMachine.ChangeStateWalking();
         }
 
     }

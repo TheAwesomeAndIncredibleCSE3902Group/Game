@@ -16,10 +16,7 @@ public class Player
     //public Cardinal FacingDirection => PlayerState.Direction;
     public Cardinal FacingDirection => Cardinal.right;
     public Vector2 Position { get; set; }
-    public ISprite Sprite { get; set; }
 
-    private float linkXPosition;
-    private float linkYPosition;
     public PlayerStateMachine PStateMachine { get; private set; }
 
     public List<IEquipment> Equipment { get; } = new();
@@ -34,17 +31,14 @@ public class Player
     {
         Instance = this;
         //Throwing in a random position so the sprite isn't halfway off the screen or something
-        linkXPosition = 300;
-        linkYPosition = 300;
-        Position = new Vector2(linkXPosition, linkYPosition);
+        Vector2 startingPos = new Vector2(300, 300);
+        Position = startingPos;
 
         //TODO: create State
         //      ensure State initializes Sprite
         PStateMachine = new PlayerStateMachine();
         PStateMachine.LoadPlayer(content,_spriteBatch);
 
-        //Very temporary, just to test display until PlayerState is implemented
-        Sprite = PStateMachine.GetSprite();
         //Testing arrow (heart) spawning
         Equipment.Add(new Bow());
         Equipment[0].Use();
@@ -54,7 +48,7 @@ public class Player
     public void Draw(GameTime gt)
     {
 
-        Sprite.Draw(gt, Position);
+        PStateMachine.Draw(gt, Position);
 
         Arrow?.Draw(gt);
     }
