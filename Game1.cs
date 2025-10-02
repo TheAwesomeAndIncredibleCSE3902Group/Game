@@ -81,6 +81,9 @@ public class Game1 : Game
         CharacterSpriteFactory.Instance.LoadAllTextures(Content, _spriteBatch);
         player = new Player();
         _characterSet.Add(new CharacterEnemyMoblin(new Vector2(300, 350), Util.Cardinal.up));
+        _characterSet.Add(new CharacterEnemyArmos(new Vector2(300, 350), Util.Cardinal.down));
+        _characterSet.Add(new CharacterEnemyLynel(new Vector2(300, 350), Util.Cardinal.right));
+        _characterSet.Add(new CharacterKris());
     }
 
     protected override void Update(GameTime gameTime)

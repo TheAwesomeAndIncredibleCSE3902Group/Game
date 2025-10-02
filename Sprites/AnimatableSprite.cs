@@ -75,6 +75,7 @@ public class AnimatableSprite : ISprite
         {
             _sourceList[i] = new Rectangle(currentPositionOnSpriteSheet, spriteSheetInitialFrameSource.Size);
 
+            currentPositionOnSpriteSheet.X += spriteSheetInitialFrameSource.Width;
             if (gapSize.HasValue)
             {
                 currentPositionOnSpriteSheet += gapSize.Value;
@@ -85,6 +86,8 @@ public class AnimatableSprite : ISprite
                 currentPositionOnSpriteSheet.Y += spriteSheetInitialFrameSource.Height;
             }
         }
+
+        Console.WriteLine(currentPositionOnSpriteSheet);
     }
 
     /// <summary>
@@ -160,6 +163,6 @@ public class AnimatableSprite : ISprite
     {
         updateAnimationFrameAndOffset(gameTime, ref position);
         _spriteBatch.Draw(_texture, position, _sourceList[_currentFrame], Color.White);
-        Console.WriteLine("current frame", _currentFrame);
+        // Console.WriteLine("current frame", _currentFrame);
     }
 }
