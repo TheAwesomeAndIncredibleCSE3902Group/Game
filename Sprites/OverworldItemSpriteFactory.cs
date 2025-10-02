@@ -7,8 +7,8 @@ namespace Sprint0.Sprites;
 
 public class OverworldItemSpriteFactory
 {
-    private Texture2D _itemSpriteSheet;
-    private SpriteBatch _spriteBatch;
+    private static Texture2D _itemSpriteSheet;
+    private static SpriteBatch _spriteBatch;
 
     private static OverworldItemSpriteFactory instance = new OverworldItemSpriteFactory();
 
@@ -24,7 +24,7 @@ public class OverworldItemSpriteFactory
     {
     }
 
-    public void LoadAllTextures(ContentManager content, SpriteBatch spriteBatch)
+    public static void LoadAllTextures(ContentManager content, SpriteBatch spriteBatch)
     {
         _itemSpriteSheet = content.Load<Texture2D>("SpriteImages/misc_items");
         _spriteBatch = spriteBatch;

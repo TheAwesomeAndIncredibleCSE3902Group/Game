@@ -12,9 +12,9 @@ namespace Sprint0
         private Player currentPlayer;
         private Cardinal inputDirection;
 
-        public CommandMovePlayer(Player player, Cardinal direction) 
+        public CommandMovePlayer(Game1 game, Cardinal direction) 
         {
-            currentPlayer = player;
+            currentPlayer = game.Player;
             inputDirection = direction;
         }
 

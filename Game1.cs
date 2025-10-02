@@ -19,7 +19,7 @@ public class Game1 : Game
     private int _chosenSprite = 0;
     private List<IController> _controllersList = [];
     private Tilemap _tilemap;
-    private IPlayer player;
+    public Player Player { get ; private set; }
 
     public void SetChosenSprite(int val)
     {
@@ -49,8 +49,6 @@ public class Game1 : Game
 
     protected override void Initialize()
     {
-        // TODO: Add your initialization logic here
-        _controllersList.Add(new KeyboardController(this));
         _controllersList.Add(new MouseController(this, SetChosenSprite));
         base.Initialize();
     }
@@ -58,25 +56,21 @@ public class Game1 : Game
     protected override void LoadContent()
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
-        Texture2D spriteTexture = Content.Load<Texture2D>("SpriteImages/kris_custom");
-        OverworldItemSpriteFactory.Instance.LoadAllTextures(Content, _spriteBatch);
-        // _spriteList.Add(new AnimatableSprite(_spriteBatch, spriteTexture, new Rectangle(0, 0, 24, 24)));
-        _spriteDict.Add(
-            "kris",new AnimatableSprite(
-            _spriteBatch,
-            spriteTexture,
-            new int[,] {
-                { 10, 10, 15, 15, 20, 10 },
-                { 25, 25, 13, 24, 10, 200}
-            },
-            1000));
+        
+        //Create sprite factories
+        OverworldItemSpriteFactory.LoadAllTextures(Content, _spriteBatch);
+        ItemSpriteFactory.LoadAllTextures(Content, _spriteBatch);
 
+        //Create item(Probably could be improved, _spriteDict might not be needed anymore)
         _spriteDict.Add("item", OverworldItemSpriteFactory.Instance.CreatePotionSprite());
 
+        //World Creation
         _tilemap = Tilemap.FromFile(Content, "TileImages\\test_tiles_definition.xml");
 
-        ItemSpriteFactory.LoadAllTextures(Content, _spriteBatch);
-        player = new Player();
+        //TEMP should be removed in the future, player shouldn't know about sprites
+        //Because KeyboardController needs player and Player needs sprite its here
+        Player = new Player(Content,_spriteBatch);
+        _controllersList.Add(new KeyboardController(this));
     }
 
     protected override void Update(GameTime gameTime)
@@ -89,7 +83,7 @@ public class Game1 : Game
             controller.Update();
         }
 
-        player.Update(gameTime);
+        Player.Update(gameTime);
 
         base.Update(gameTime);
     }
@@ -108,7 +102,7 @@ public class Game1 : Game
             currentSprite.Draw(gameTime, new Vector2(50, 50));
         }
 
-        player.Draw(gameTime);
+        Player.Draw(gameTime);
 
         _spriteBatch.End();
 

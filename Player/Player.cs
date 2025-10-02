@@ -1,12 +1,14 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
 using Sprint0.Sprites;
 using static Sprint0.Util;
 
 namespace Sprint0;
 
-public class Player : IPlayer
+public class Player
 {
     //Singleton pattern seems acceptable for the player
     public static Player Instance { get; private set; }
@@ -18,7 +20,7 @@ public class Player : IPlayer
 
     private float linkXPosition;
     private float linkYPosition;
-    public IPlayerState PlayerState { get; set; }
+    public PlayerStateMachine PStateMachine { get; private set; }
 
     public List<IEquipment> Equipment { get; } = new();
     public PlayerArrow Arrow { get; set; }
@@ -26,7 +28,9 @@ public class Player : IPlayer
     //In pixels per tick. Might change to pixels per second later
     float movementSpeed = 2;
 
-    public Player()
+
+    //TODO: GET RID OF PLAYER KNOWING ABOUT SPRITE THINGS AT ALL
+    public Player(ContentManager content, SpriteBatch _spriteBatch)
     {
         Instance = this;
         //Throwing in a random position so the sprite isn't halfway off the screen or something
@@ -36,10 +40,11 @@ public class Player : IPlayer
 
         //TODO: create State
         //      ensure State initializes Sprite
-        PlayerState = new PlayerStateMachine();
+        PStateMachine = new PlayerStateMachine();
+        PStateMachine.LoadPlayer(content,_spriteBatch);
 
         //Very temporary, just to test display until PlayerState is implemented
-        Sprite = PlayerState.GetSprite();
+        Sprite = PStateMachine.GetSprite();
         //Testing arrow (heart) spawning
         Equipment.Add(new Bow());
         Equipment[0].Use();
@@ -58,12 +63,12 @@ public class Player : IPlayer
     {
         Arrow?.Update(gt);
         
-        PlayerState.Update(gt);
+        PStateMachine.Update(gt);
     }
 
     public void BeIdle()
     {
-        PlayerState.ChangeStateStanding();
+        PStateMachine.ChangeStateStanding();
     }
 
     /// <summary>
@@ -72,24 +77,24 @@ public class Player : IPlayer
     /// </summary>
     public void Move(Cardinal direction)
     {
-        if (PlayerState.Direction != direction)
+        if (PStateMachine.Direction != direction)
         {
-            PlayerState.ChangeDirection(direction);
-            PlayerState.ChangeStateStanding();
+            PStateMachine.ChangeDirection(direction);
+            PStateMachine.ChangeStateStanding();
         }
         //Grabbing the direction from PlayerState here ensures that IPlayerState is the ultimate authority
-        Cardinal newDirection = PlayerState.Direction;
-        PlayerState.ChangeStateWalking();
+        Cardinal newDirection = PStateMachine.Direction;
+        PStateMachine.ChangeStateWalking();
         Position += movementSpeed * new[] { -Vector2.UnitY, Vector2.UnitX, Vector2.UnitY, -Vector2.UnitX }[(int)newDirection];
     }
 
     public void SwordAttack()
     {
-        PlayerState.ChangeStateSwordAttack();
+        PStateMachine.ChangeStateSwordAttack();
     }
 
     public void UseEquipment()
     {
-        PlayerState.UseEquipment();
+        PStateMachine.UseEquipment();
     }
 }
