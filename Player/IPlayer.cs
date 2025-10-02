@@ -16,6 +16,7 @@ public interface IPlayer
     public IPlayerState PlayerState { get; }
     public List<IEquipment> Equipment { get; }
 
+    public void BeIdle();
     public void Update(GameTime gt);
     public void Draw(GameTime gt);
     public void Move(Cardinal direction);

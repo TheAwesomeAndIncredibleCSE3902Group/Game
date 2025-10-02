@@ -18,6 +18,10 @@ public class AnimatableSprite : ISprite
     private readonly uint _numberOfFrames;
     private ulong _elapsedTicksOnCurrentFrame = 0;
     private uint _currentFrame = 0;
+
+    // TODO: make frameScale a parameter passed into the constructor so that each sprite can be their appropriate size
+    private float _frameScale = 3.0f; 
+    
     private readonly SpriteBatch _spriteBatch;
     private ulong _ticksBetweenFrames;
 
@@ -158,7 +162,7 @@ public class AnimatableSprite : ISprite
     public void Draw(GameTime gameTime, Vector2 position)
     {
         updateAnimationFrameAndOffset(gameTime, ref position);
-        _spriteBatch.Draw(_texture, position, _sourceList[_currentFrame], Color.White);
+        _spriteBatch.Draw(_texture, position, _sourceList[_currentFrame], Color.White, 0.0f, Vector2.Zero, _frameScale, SpriteEffects.None, 0.0f);
         Console.WriteLine("current frame", _currentFrame);
     }
 }
