@@ -84,7 +84,7 @@ public class Player
         //Grabbing the direction from PlayerState here ensures that IPlayerState is the ultimate authority
         Cardinal newDirection = PStateMachine.Direction;
         PStateMachine.ChangeStateWalking();
-        Position += movementSpeed * new[] { -Vector2.UnitY, Vector2.UnitX, Vector2.UnitY, -Vector2.UnitX }[(int)newDirection];
+        Position += movementSpeed * Util.CardinalToUnitVector(direction);
     }
 
     public void SwordAttack()
