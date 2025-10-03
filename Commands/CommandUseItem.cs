@@ -7,22 +7,18 @@ using static Sprint0.Util;
 
 namespace Sprint0.Commands
 {
-    public class CommandMovePlayer : ICommand
+    public class CommandUseItem : ICommand
     {
         private Player currentPlayer;
-        private Cardinal inputDirection;
 
-        public CommandMovePlayer(Game1 game, Cardinal direction) 
+        public CommandUseItem(Game1 game)
         {
             currentPlayer = game.Player;
-            inputDirection = direction;
         }
 
         public void Execute()
         {
-            currentPlayer.Move(inputDirection);
-            currentPlayer.PStateMachine.ChangeStateWalking();
+            currentPlayer.PStateMachine.UseEquipment();
         }
-
     }
 }

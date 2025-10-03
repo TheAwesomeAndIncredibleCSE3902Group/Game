@@ -5,14 +5,14 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Sprint0.Sprites;
 
-public class OverworldItemSpriteFactory
+public class MapItemSpriteFactory
 {
-    private Texture2D _itemSpriteSheet;
-    private SpriteBatch _spriteBatch;
+    private static Texture2D _itemSpriteSheet;
+    private static SpriteBatch _spriteBatch;
 
-    private static OverworldItemSpriteFactory instance = new OverworldItemSpriteFactory();
+    private static MapItemSpriteFactory instance = new MapItemSpriteFactory();
 
-    public static OverworldItemSpriteFactory Instance
+    public static MapItemSpriteFactory Instance
     {
         get
         {
@@ -20,11 +20,11 @@ public class OverworldItemSpriteFactory
         }
     }
 
-    private OverworldItemSpriteFactory()
+    private MapItemSpriteFactory()
     {
     }
 
-    public void LoadAllTextures(ContentManager content, SpriteBatch spriteBatch)
+    public static void LoadAllTextures(ContentManager content, SpriteBatch spriteBatch)
     {
         _itemSpriteSheet = content.Load<Texture2D>("SpriteImages/misc_items");
         _spriteBatch = spriteBatch;

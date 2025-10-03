@@ -22,7 +22,7 @@ public class Game1 : Game
     private int _chosenSprite = 0;
     private List<IController> _controllersList = [];
     private Tilemap _tilemap;
-    private IPlayer player;
+    public Player Player { get ; private set; }
 
     public void SetChosenSprite(int val)
     {
@@ -36,8 +36,8 @@ public class Game1 : Game
     /// <summary>
     /// Changes the sprite in spritelist of a given name with a new sprite
     /// </summary>
-    /// <param name="spriteName"></param> The name of the sprite in the dictionary
-    /// <param name="newSprite"></param> The ISprite of the new sprite being given
+    /// <param name="spriteName">The name of the sprite in the dictionary</param> 
+    /// <param name="newSprite">The ISprite of the new sprite being given</param> 
     public void ChangeGameSpriteToNewSprite(string spriteName, ISprite newSprite)
     {
         _spriteDict[spriteName] = newSprite;
@@ -52,8 +52,6 @@ public class Game1 : Game
 
     protected override void Initialize()
     {
-        // TODO: Add your initialization logic here
-        _controllersList.Add(new KeyboardController(this));
         _controllersList.Add(new MouseController(this, SetChosenSprite));
         base.Initialize();
     }
@@ -61,26 +59,22 @@ public class Game1 : Game
     protected override void LoadContent()
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
-        Texture2D spriteTexture = Content.Load<Texture2D>("SpriteImages/kris_custom");
-        OverworldItemSpriteFactory.Instance.LoadAllTextures(Content, _spriteBatch);
-        // _spriteList.Add(new AnimatableSprite(_spriteBatch, spriteTexture, new Rectangle(0, 0, 24, 24)));
-        _spriteDict.Add(
-            "kris", new AnimatableSprite(
-            _spriteBatch,
-            spriteTexture,
-            new int[,] {
-                { 10, 10, 15, 15, 20, 10 },
-                { 25, 25, 13, 24, 10, 200}
-            },
-            1000));
+        
+        //Create sprite factories
+        MapItemSpriteFactory.LoadAllTextures(Content, _spriteBatch);
+        ItemSpriteFactory.LoadAllTextures(Content, _spriteBatch);
 
-        _spriteDict.Add("item", OverworldItemSpriteFactory.Instance.CreatePotionSprite());
+        //Create item(Probably could be improved, _spriteDict might not be needed anymore)
+        _spriteDict.Add("item", MapItemSpriteFactory.Instance.CreatePotionSprite());
 
+        //World Creation
         _tilemap = Tilemap.FromFile(Content, "TileImages\\test_tiles_definition.xml");
 
-        ItemSpriteFactory.LoadAllTextures(Content, _spriteBatch);
+        //TEMP should be removed in the future, player shouldn't know about sprites
+        //Because KeyboardController needs player and Player needs sprite its here
+        Player = new Player(Content,_spriteBatch);
         CharacterSpriteFactory.Instance.LoadAllTextures(Content, _spriteBatch);
-        player = new Player();
+        _controllersList.Add(new KeyboardController(this));
         _characterSet.Add(new CharacterEnemyMoblin(new Vector2(300, 350), Util.Cardinal.up));
         _characterSet.Add(new CharacterEnemyArmos(new Vector2(300, 350), Util.Cardinal.down));
         _characterSet.Add(new CharacterEnemyLynel(new Vector2(300, 350), Util.Cardinal.right));
@@ -98,7 +92,7 @@ public class Game1 : Game
             controller.Update();
         }
 
-        player.Update(gameTime);
+        Player.Update(gameTime);
 
         foreach (ICharacter character in _characterSet) {
             character.Update(gameTime);
@@ -121,7 +115,7 @@ public class Game1 : Game
             currentSprite.Draw(gameTime, new Vector2(50, 50));
         }
 
-        player.Draw(gameTime);
+        Player.Draw(gameTime);
 
         foreach (ICharacter character in _characterSet) {
             character.Draw(gameTime);

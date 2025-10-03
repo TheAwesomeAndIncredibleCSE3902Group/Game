@@ -18,6 +18,7 @@ public class AnimatableSprite : ISprite
     private readonly uint _numberOfFrames;
     private ulong _elapsedTicksOnCurrentFrame = 0;
     private uint _currentFrame = 0;
+
     private readonly SpriteBatch _spriteBatch;
     private ulong _ticksBetweenFrames;
 
@@ -114,7 +115,7 @@ public class AnimatableSprite : ISprite
         int numberOfFrames = spriteAtlasSource.GetLength(0);
         int numberOfParams = spriteAtlasSource.GetLength(1);
 
-        _numberOfFrames = (uint) numberOfFrames;
+        _numberOfFrames = (uint)numberOfFrames;
 
         _sourceList = new Rectangle[numberOfFrames]; // all source rectangles set to 0,0,0,0
         _offsetList = new Vector2[numberOfFrames];  // all offsets set to 0.0f, 0.0f
@@ -140,8 +141,9 @@ public class AnimatableSprite : ISprite
         throw new System.Exception("Invalid spriteAtlasSource 2D array! Must either have 6 columns (X,Y,W,H,offsetX,offsetY) or 4 columns (X,Y,W,H)");
     }
 
-    private void updateAnimationFrameAndOffset(GameTime gameTime, ref Vector2 position) {
-        _elapsedTicksOnCurrentFrame += (ulong) gameTime.ElapsedGameTime.Ticks;
+    private void updateAnimationFrameAndOffset(GameTime gameTime, ref Vector2 position, float frameScale)
+    {
+        _elapsedTicksOnCurrentFrame += (ulong)gameTime.ElapsedGameTime.Ticks;
         if (_elapsedTicksOnCurrentFrame >= _ticksBetweenFrames)
         {
             if (_ticksBetweenFrames != 0)
@@ -151,18 +153,34 @@ public class AnimatableSprite : ISprite
                 _currentFrame %= _numberOfFrames;
             }
         }
-        position += _offsetList[_currentFrame];
+        position += _offsetList[_currentFrame] * frameScale;
+    }
+
+    private void DoDraw(GameTime gameTime, Vector2 position, float scale = 3.0f)
+    {
+        updateAnimationFrameAndOffset(gameTime, ref position, scale);
+        _spriteBatch.Draw(_texture, position, _sourceList[_currentFrame], Color.White, 0.0f, Vector2.Zero, scale, SpriteEffects.None, 0.0f);
     }
 
     /// <summary>
-    /// Draw the sprite to its SpriteBatch.
+    /// Draw the sprite to its SpriteBatch. (default scale of 3.0x)
     /// </summary>
     /// <param name="gameTime">The gameTime inherited from the Game's Draw() method.</param>
     /// <param name="position">The X,Y position to draw the sprite at.</param>
     public void Draw(GameTime gameTime, Vector2 position)
     {
-        updateAnimationFrameAndOffset(gameTime, ref position);
-        _spriteBatch.Draw(_texture, position, _sourceList[_currentFrame], Color.White);
-        // Console.WriteLine("current frame", _currentFrame);
+        DoDraw(gameTime, position);
     }
+
+    /// <summary>
+    /// Draw the sprite to its SpriteBatch, with custom scaling.
+    /// </summary>
+    /// <param name="gameTime">The gameTime inherited from the Game's Draw() method.</param>
+    /// <param name="position">The X,Y position to draw the sprite at.</param>
+    /// <param name="scale">Amount the sprite should be scaled</param>
+    public void Draw(GameTime gameTime, Vector2 position, float scale = 3.0f)
+    {
+        DoDraw(gameTime, position, scale);
+    }
+
 }

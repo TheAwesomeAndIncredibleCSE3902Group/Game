@@ -1,3 +1,5 @@
+using Microsoft.Xna.Framework;
+using Sprint0.Sprites;
 using System;
 using System.Collections.Generic;
 using static Sprint0.Util;
@@ -19,8 +21,17 @@ public interface IPlayerState
     public int MaxHealth { get; }
     //Equipment might not need to be part of state, but it does drive the sprite, so I put it here for now
     public IEquipment ActiveEquipment { get; set; }
+
+    public ISprite GetSprite();
     public void ChangeDirection(Cardinal direction);
+    public void ChangeStateStanding();
+    public void ChangeStateWalking();
+    public void ChangeStateSwordAttack();
+    public void ChangeStateItemUse();
+    public void ChangeStateDamaged();
+
     public void TakeDamage(int amount = 1);
     public void Heal(int amount);
     public void UseEquipment();
+    public void Update(GameTime gt);
 }

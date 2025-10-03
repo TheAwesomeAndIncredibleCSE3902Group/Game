@@ -21,11 +21,12 @@ public class PlayerArrow : Projectile
 
         this.damage = damage;
 
-        sprite = ItemSpriteFactory.CreateArrowSprite();
+        //Didn't work with arrow sprite, rework later
+        sprite = MapItemSpriteFactory.Instance.CreatePotionSprite();
     }
 
     public override void Destroy()
     {
-        Player.Instance.Arrow = null;
+        Player.Instance.spawnedProjectiles.Remove(IEquipment.Projectiles.arrow);
     }
 }
