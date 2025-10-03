@@ -5,10 +5,11 @@ using Sprint0.Sprites;
 using System;
 using System.Diagnostics;
 using static Sprint0.Util;
+using static Sprint0.Player;
 
 namespace Sprint0;
 
-public class PlayerStateMachine : IPlayerState
+public class PlayerStateMachine
 {
 
     private IPlayer currentPlayer;
@@ -16,19 +17,12 @@ public class PlayerStateMachine : IPlayerState
     private int currentHealth;
     private int currentMaxHealth;
     private IEquipment activeEquipment;
-
     public enum States { Standing, Walking, SwordAttack, ItemUse, Damaged };
     private States currentState;
+    private PlayerSpriteFactory spriteFactory;
+
     private float linkVelocity;
 
-    private Texture2D linkSpriteSheet;
-    private SpriteBatch linkSpriteBatch;
-    private ISprite linkSprite;
-    private Rectangle currentFrame;
-    private int rectangleXPosition;
-    private int rectangleYPosition;
-    private int rectangleWidth;
-    private int rectangleHeight;
     public PlayerStateMachine()
     {
         currentDirection = Util.Cardinal.down;
@@ -36,25 +30,16 @@ public class PlayerStateMachine : IPlayerState
         currentHealth = 3;
         currentMaxHealth = currentHealth;
         linkVelocity = 0;
+
+        spriteFactory = new PlayerSpriteFactory();
         //TODO: REMOVE THIS, TEST FOR ARROW SPAWNING
         activeEquipment = Player.Instance.Equipment[0];
-
-        // Link, on the legendofzelda_link_sheet.png, is 15 by 15 pixels in size
-        rectangleXPosition = 0;
-        rectangleYPosition = 0;
-        rectangleWidth = 15;
-        rectangleHeight = 15;
-
-        currentFrame = new Rectangle(rectangleXPosition, rectangleYPosition, rectangleWidth, rectangleHeight);
     }
 
     public void LoadPlayer(ContentManager content, SpriteBatch spriteBatch)
     {
-        linkSpriteSheet = content.Load<Texture2D>("SpriteImages/legendofzelda_link_sheet");
-        linkSpriteBatch = spriteBatch;
-        linkSprite = new AnimatableSprite(linkSpriteBatch, linkSpriteSheet, currentFrame); 
-        // If Link could be scaled, he should be scaled by a factor of 3.0f - 5.0f so that he can be visible on screen.
-        // Preferably 3.0f.
+        spriteFactory.LoadPlayer(content, spriteBatch);
+        spriteFactory.ChangeDirection(currentDirection);
     }
 
     public Cardinal Direction
@@ -63,11 +48,6 @@ public class PlayerStateMachine : IPlayerState
         {
             return currentDirection;
         }
-    }
-
-    public ISprite GetSprite()
-    {
-        return linkSprite;
     }
 
     public States GetState()
@@ -93,55 +73,14 @@ public class PlayerStateMachine : IPlayerState
 
     public void ChangeDirection(Cardinal newDirection)
     {
-        switch (currentDirection)
-        {
-            case Cardinal.down:
-                switch (newDirection)
-                {
-                    case Cardinal.left: rectangleXPosition += 30; break;
-                    case Cardinal.up: rectangleXPosition += 60; break;
-                    case Cardinal.right: rectangleXPosition += 90; break;
-                }
-                break;
-
-            case Cardinal.left:
-                switch (newDirection)
-                {
-                    case Cardinal.down: rectangleXPosition -= 30; break;
-                    case Cardinal.up: rectangleXPosition += 30; break;
-                    case Cardinal.right: rectangleXPosition += 60; break;
-                }
-                break;
-
-            case Cardinal.up:
-                switch (newDirection)
-                {
-                    case Cardinal.down: rectangleXPosition -= 60; break;
-                    case Cardinal.left: rectangleXPosition -= 30; break;
-                    case Cardinal.right: rectangleXPosition += 30; break;
-                }
-                break;
-
-            case Cardinal.right:
-                switch (newDirection)
-                {
-                    case Cardinal.down: rectangleXPosition -= 90; break;
-                    case Cardinal.left: rectangleXPosition -= 60; break;
-                    case Cardinal.up: rectangleXPosition -= 30; break;
-                }
-                break;
-        }
-
+        spriteFactory.ChangeDirection(newDirection);
         currentDirection = newDirection;
     }
 
     public void ChangeStateStanding()
     {
-        if ((currentDirection == Cardinal.left || currentDirection == Cardinal.right) && currentState == States.SwordAttack)
-        {
-            rectangleXPosition += 6;
-        }
-        rectangleYPosition = 0;
+        if(currentState == States.SwordAttack)
+            spriteFactory.ChangeSpriteStanding();
         currentState = States.Standing;
     }
 
@@ -211,67 +150,24 @@ public class PlayerStateMachine : IPlayerState
         {
             //case States.Standing: break;
             case States.Walking:
-                if (rectangleYPosition == 30)
-                {
-                    rectangleYPosition -= 30;
-                }
-                else
-                {
-                    rectangleYPosition += 30;
-                }
+                spriteFactory.ChangeSpriteWalking();
                 break;
 
-            case States.SwordAttack:
-                // figure out recangle dimensions soon
-                if (currentDirection == Cardinal.up || currentDirection == Cardinal.down)
-                {
-                    rectangleYPosition = 84;
-                    rectangleWidth = 15;
-                    rectangleHeight = 28;
-                }
-                else
-                {
-                    rectangleYPosition = 90;
-                    rectangleWidth = 28;
-                    rectangleHeight = 15;
-
-                    if (currentDirection == Cardinal.left)
-                    {
-                        rectangleXPosition = 24;
-                    }
-                    else
-                    {
-                        rectangleXPosition = 84;
-                    }
-                }
-                break;
-
-            case States.ItemUse:
-                if (rectangleYPosition == 60)
-                {
-                    rectangleYPosition -= 60;
-                }
-                else
-                {
-                    rectangleYPosition += 60;
-                }
+            case States.Standing:
+                spriteFactory.ChangeSpriteStanding();
                 break;
 
             case States.Damaged:
-                // decorator type stuff goes here to 'damage' Link
+                spriteFactory.ChangeSpriteDamaged();
                 break;
 
             default:
-                rectangleWidth = 15;
-                rectangleHeight = rectangleWidth;
-                break; // if Link is standing, this resets Link to standing normally in his 15 by 15 spritemap
+                spriteFactory.ChangeSpriteItemUse();
+                break;
         }
-        currentFrame = new Rectangle(rectangleXPosition, rectangleYPosition, rectangleWidth, rectangleHeight);
-        linkSprite = new AnimatableSprite(linkSpriteBatch, linkSpriteSheet, currentFrame);
     }
-
     public void Draw(GameTime gt, Vector2 position)
     {
-        linkSprite.Draw(gt,position);
+        spriteFactory.Draw(gt,position);
     }
 }
