@@ -58,11 +58,11 @@ public class Game1 : Game
         _spriteBatch = new SpriteBatch(GraphicsDevice);
         
         //Create sprite factories
-        OverworldItemSpriteFactory.LoadAllTextures(Content, _spriteBatch);
+        MapItemSpriteFactory.LoadAllTextures(Content, _spriteBatch);
         ItemSpriteFactory.LoadAllTextures(Content, _spriteBatch);
 
         //Create item(Probably could be improved, _spriteDict might not be needed anymore)
-        _spriteDict.Add("item", OverworldItemSpriteFactory.Instance.CreatePotionSprite());
+        _spriteDict.Add("item", MapItemSpriteFactory.Instance.CreatePotionSprite());
 
         //World Creation
         _tilemap = Tilemap.FromFile(Content, "TileImages\\test_tiles_definition.xml");

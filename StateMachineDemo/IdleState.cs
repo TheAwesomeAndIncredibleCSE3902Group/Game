@@ -23,7 +23,7 @@ public class IdleState : IState
 
     public void Draw()
     {
-        OverworldItemSpriteFactory.Instance.CreatePotionSprite();
+        MapItemSpriteFactory.Instance.CreatePotionSprite();
     }
     public void Exit()
     {

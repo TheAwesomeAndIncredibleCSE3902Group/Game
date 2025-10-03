@@ -38,7 +38,7 @@ public class WalkingState : IState
 
     public void Draw()
     {
-        OverworldItemSpriteFactory.Instance.CreateCandleSprite();
+        MapItemSpriteFactory.Instance.CreateCandleSprite();
     }
     public void Exit()
     {
