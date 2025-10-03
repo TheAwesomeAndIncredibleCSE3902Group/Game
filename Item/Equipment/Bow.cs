@@ -18,7 +18,8 @@ public class Bow : IEquipment
         if (spawnedProjectiles.ContainsKey(IEquipment.Projectiles.arrow))
             return;
 
-        PlayerArrow arrow = new PlayerArrow(player.Position, player.FacingDirection);
+        //PlayerArrow arrow = new PlayerArrow(player.Position, player.FacingDirection);
+        WaveyArrow arrow = new WaveyArrow(player.Position, player.FacingDirection);
         spawnedProjectiles[IEquipment.Projectiles.arrow] = arrow;
     }
 }

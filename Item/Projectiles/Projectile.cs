@@ -28,9 +28,15 @@ public abstract class Projectile
             Destroy();
         else
         {
-            position += movementSpeed * Util.CardinalToUnitVector(direction);
+            Move();
         }
     }
+
+    protected virtual void Move()
+    {
+        position += movementSpeed * Util.CardinalToUnitVector(direction);
+    }
+
     public void Draw(GameTime gt)
     {
         sprite.Draw(gt, position);
