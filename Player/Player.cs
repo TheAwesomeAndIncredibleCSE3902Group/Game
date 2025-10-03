@@ -13,9 +13,7 @@ public class Player
 {
     //Singleton pattern seems acceptable for the player
     public static Player Instance { get; private set; }
-    //TODO: change once PlayerState implemented
-    //public Cardinal FacingDirection => PlayerState.Direction;
-    public Cardinal FacingDirection => Cardinal.right;
+    public Cardinal FacingDirection => PStateMachine.Direction;
     public Vector2 Position { get; set; }
 
     public PlayerStateMachine PStateMachine { get; private set; }
@@ -36,17 +34,12 @@ public class Player
         Vector2 startingPos = new Vector2(300, 300);
         Position = startingPos;
 
-        //TODO: create State
-        //      ensure State initializes Sprite
         PStateMachine = new PlayerStateMachine();
         PStateMachine.LoadPlayer(content,_spriteBatch);
-
     }
-
 
     public void Draw(GameTime gt)
     {
-
         PStateMachine.Draw(gt, Position);
 
         foreach (Projectile projectile in spawnedProjectiles.Values)
@@ -84,7 +77,7 @@ public class Player
         //Grabbing the direction from PlayerState here ensures that IPlayerState is the ultimate authority
         Cardinal newDirection = PStateMachine.Direction;
         PStateMachine.ChangeStateWalking();
-        Position += movementSpeed * Util.CardinalToUnitVector(direction);
+        Position += movementSpeed * Util.CardinalToUnitVector(newDirection);
     }
 
     public void SwordAttack()
