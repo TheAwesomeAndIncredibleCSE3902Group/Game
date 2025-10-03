@@ -17,10 +17,21 @@ public class AnimatableSprite : ISprite
     private readonly Vector2[] _offsetList;
     private readonly uint _numberOfFrames;
     private ulong _elapsedTicksOnCurrentFrame = 0;
-    private uint _currentFrame = 0;
 
     private readonly SpriteBatch _spriteBatch;
     private ulong _ticksBetweenFrames;
+    private uint _currentFrame = 0;
+    public uint CurrentFrame
+    {
+        get
+        {
+            return _currentFrame;
+        }
+        set
+        {
+            _currentFrame = value % _numberOfFrames;
+        }
+    }
 
     public ulong MillisecondsBetweenFrames
     {
