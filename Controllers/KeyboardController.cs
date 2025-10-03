@@ -68,6 +68,9 @@ namespace Sprint0.Controllers
             keyPressMappings[Keys.I] = new CommandSwitchOverworldItemSprite(game, CommandSwitchOverworldItemSprite.Direction.right);
             //Use Equipment
             keyPressMappings[Keys.D1] = new CommandUseItem(game);
+            //Switching Enemy
+            keyPressMappings[Keys.O] = new CommandSwitchEnemySprite(game, false);
+            keyPressMappings[Keys.P] = new CommandSwitchEnemySprite(game, true);
 
             //Key Downs
             //Movement

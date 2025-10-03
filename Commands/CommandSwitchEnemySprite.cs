@@ -29,7 +29,7 @@ namespace Sprint0.Commands
             }
             else if (direction + myGame.currentEnemy < 0)
             {
-                myGame.currentEnemy = Size;
+                myGame.currentEnemy = Size - 1;
             }
             else
             {

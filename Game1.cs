@@ -94,9 +94,7 @@ public class Game1 : Game
 
         Player.Update(gameTime);
 
-        foreach (ICharacter character in _characterSet) {
-            character.Update(gameTime);
-        }
+        _characterSet[currentEnemy].Update(gameTime);
 
         base.Update(gameTime);
     }
@@ -110,16 +108,12 @@ public class Game1 : Game
 
         _tilemap.Draw(_spriteBatch);
 
-        foreach (ISprite currentSprite in _spriteDict.Values)
-        {
-            currentSprite.Draw(gameTime, new Vector2(50, 50));
-        }
+        
 
         Player.Draw(gameTime);
 
-        foreach (ICharacter character in _characterSet) {
-            character.Draw(gameTime);
-        }
+        
+        _characterSet[currentEnemy].Draw(gameTime);
 
         _spriteBatch.End();
 
