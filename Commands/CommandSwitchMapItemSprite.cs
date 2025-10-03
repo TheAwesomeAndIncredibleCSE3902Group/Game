@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Sprint0.Commands
 {
-    public class CommandSwitchOverworldItemSprite : ICommand
+    public class CommandSwitchMapItemSprite : ICommand
     {
         Game1 myGame;
         public enum Direction {left,right}
@@ -22,17 +22,15 @@ namespace Sprint0.Commands
         /// </summary>
         /// <param name="game"></param>
         /// <param name="direction"></param>
-        public CommandSwitchOverworldItemSprite(Game1 game, Direction direction) 
+        public CommandSwitchMapItemSprite(Game1 game, bool right) 
         {
             myGame = game;
-            _direction = direction == Direction.left ? -1 : 1; //Figure out which way to cycle the sprite 
+            _direction = right ? -1 : 1; //Figure out which way to cycle the sprite 
         }
 
         public void Execute()
         {
-            Debug.WriteLine($"Index Starts at {_currentItemIndex}");
             SwapSprite();
-            Debug.WriteLine($"Index Ends at {_currentItemIndex}");
         }
 
         //Swaps the sprite through the list

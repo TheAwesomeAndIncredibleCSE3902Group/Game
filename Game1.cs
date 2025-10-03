@@ -114,6 +114,11 @@ public class Game1 : Game
 
         _characterSet[currentEnemy].Draw(gameTime);
 
+        foreach (ISprite sprite in _spriteDict.Values)
+        {
+            sprite.Draw(gameTime, new Vector2(500, 200));
+        }
+
         _spriteBatch.End();
 
         base.Draw(gameTime);

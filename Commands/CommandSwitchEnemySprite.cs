@@ -12,12 +12,12 @@ namespace Sprint0.Commands
     public class CommandSwitchEnemySprite : ICommand
     {
         private Game1 myGame;
-        private int direction = 0;
+        private int direction;
 
         public CommandSwitchEnemySprite(Game1 game, bool right)
         {
             myGame = game;
-            direction += right ? -1 : 1;
+            direction = right ? -1 : 1;
         }
 
         public void Execute()

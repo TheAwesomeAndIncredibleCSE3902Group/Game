@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Sprint0;
 using Sprint0.Sprites;
-using static Sprint0.Commands.CommandSwitchOverworldItemSprite;
+using static Sprint0.Commands.CommandSwitchMapItemSprite;
 using static Sprint0.Util;
 
 namespace StateMachineDemo;
