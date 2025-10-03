@@ -17,7 +17,8 @@ public class Game1 : Game
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
     private Dictionary<string,ISprite> _spriteDict = [];
-    private HashSet<ICharacter> _characterSet = [];
+    public List<ICharacter> _characterSet = [];
+    public int currentEnemy;
     private int _chosenSprite = 0;
     private List<IController> _controllersList = [];
     private Tilemap _tilemap;
@@ -84,6 +85,7 @@ public class Game1 : Game
         _characterSet.Add(new CharacterEnemyArmos(new Vector2(300, 350), Util.Cardinal.down));
         _characterSet.Add(new CharacterEnemyLynel(new Vector2(300, 350), Util.Cardinal.right));
         _characterSet.Add(new CharacterKris());
+        currentEnemy = 0;
     }
 
     protected override void Update(GameTime gameTime)
