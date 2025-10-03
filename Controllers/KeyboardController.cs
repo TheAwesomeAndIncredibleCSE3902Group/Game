@@ -13,6 +13,10 @@ namespace Sprint0.Controllers
     {
         private Dictionary<Keys, ICommand> keyPressMappings;
         private Dictionary<Keys, ICommand> keyDownMappings;
+
+        //TODO: change as we migrate to state-by-class
+        private ICommand playerToStandingCommand;
+
         private KeyboardState _previousState;
         public KeyboardController(Game1 game)
         {
@@ -28,6 +32,9 @@ namespace Sprint0.Controllers
             KeyboardState currentState = Keyboard.GetState();
             HandleKeyDowns(currentState);
             HandleKeyPresses(currentState);
+
+            //TODO: change as we migrate to state-by-class
+            HandleStanding(currentState);
         }
 
         //Checks keys in keyPressMappings to see if it just got pressed if so executes command
@@ -55,6 +62,30 @@ namespace Sprint0.Controllers
                     keyDownMappings[key].Execute();
                 }
             }
+        }
+
+        /// <summary>
+        /// Very quick and dirty way to enter standing state when no movement is input
+        /// TODO: change as we migrate to state-by-class
+        /// </summary>
+        /// <param name="currentState"></param>
+        private void HandleStanding(KeyboardState currentState)
+        {
+            //If any movement key is pressed just return
+            if (currentState.IsKeyDown(Keys.W)
+                || currentState.IsKeyDown(Keys.A)
+                || currentState.IsKeyDown(Keys.S)
+                || currentState.IsKeyDown(Keys.D)
+                || currentState.IsKeyDown(Keys.Up)
+                || currentState.IsKeyDown(Keys.Right)
+                || currentState.IsKeyDown(Keys.Down)
+                || currentState.IsKeyDown(Keys.Left))
+            {
+                return;
+            }
+            //Otherwise transition to standing
+            else
+                playerToStandingCommand.Execute();
         }
 
         //Links all keyboard commands into their keys
@@ -87,6 +118,8 @@ namespace Sprint0.Controllers
             keyDownMappings[Keys.Down] = moveDown;
             keyDownMappings[Keys.S] = moveDown;
 
+            //TODO: change as we migrate to state-by-class
+            playerToStandingCommand = new CommandPlayerToStanding(game);
         }
     }
 }
