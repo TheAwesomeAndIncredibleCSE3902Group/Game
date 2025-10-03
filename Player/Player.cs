@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Sprint0.Sprites;
 using static Sprint0.Util;
+using static Sprint0.PlayerStateMachine;
 
 namespace Sprint0;
 
@@ -36,7 +37,7 @@ public class Player
         Position = startingPos;
 
         PStateMachine = new PlayerStateMachine();
-        PStateMachine.LoadPlayer(content,_spriteBatch);
+        PStateMachine.LoadPlayer(content, _spriteBatch);
     }
 
     public void Draw(GameTime gt)
