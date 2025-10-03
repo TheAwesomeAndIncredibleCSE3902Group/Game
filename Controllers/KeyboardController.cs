@@ -103,6 +103,9 @@ namespace Sprint0.Controllers
             //Switching Enemy
             keyPressMappings[Keys.O] = new CommandSwitchEnemySprite(game, false);
             keyPressMappings[Keys.P] = new CommandSwitchEnemySprite(game, true);
+            //Switching Block
+            keyPressMappings[Keys.T] = new CommandSwitchBlockSprite(game.Tilemap, false, 1, 2);
+            keyPressMappings[Keys.Y] = new CommandSwitchBlockSprite(game.Tilemap, true, 1, 2);
 
             //Key Downs
             //Movement

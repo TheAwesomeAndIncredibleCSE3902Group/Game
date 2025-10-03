@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Common;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Sprint0.Tiles;
 
@@ -13,20 +15,34 @@ namespace Sprint0.Commands
 
         private int Column;
         private int Row;
-        private int Id; 
-        private Tilemap Tilemap;
+        private int Direction;
+        private readonly Tilemap Tilemap;
 
-        public CommandSwitchBlockSprite(Tilemap tilemap, int tile_id, int column, int row)
+        public CommandSwitchBlockSprite(Tilemap tilemap, bool right, int column, int row)
         {
             Tilemap = tilemap;
             Column = column;
             Row = row;
-            Id = tile_id;
+            Direction = right ? -1 : 1;
+            
         }
 
         public void Execute()
         {
-            Tilemap.SetTile(Column, Row, Id);
+            int tileId = Tilemap.GetTile(Column, Row).Id;
+            int Size = Tilemap._tileset.Count;
+            if (Direction + tileId >= Size)
+            {
+                Tilemap.SetTile(Column, Row, 0);
+            }
+            else if (Direction + tileId < 0)
+            {
+                Tilemap.SetTile(Column, Row, Size - 1);
+            }
+            else
+            {
+                Tilemap.SetTile(Column, Row, tileId + Direction);
+            }
         }
 
     }

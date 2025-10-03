@@ -21,8 +21,9 @@ public class Game1 : Game
     public int currentEnemy;
     private int _chosenSprite = 0;
     private List<IController> _controllersList = [];
-    private Tilemap _tilemap;
-    public Player Player { get ; private set; }
+    public Tilemap Tilemap;
+    public List<int> Tiles;
+    public Player Player { get; private set; }
 
     public void SetChosenSprite(int val)
     {
@@ -68,7 +69,7 @@ public class Game1 : Game
         _spriteDict.Add("item", MapItemSpriteFactory.CreatePotionSprite());
 
         //World Creation
-        _tilemap = Tilemap.FromFile(Content, "TileImages\\test_tiles_definition.xml");
+        Tilemap = Tilemap.FromFile(Content, "TileImages\\test_tiles_definition.xml");
 
         //TEMP should be removed in the future, player shouldn't know about sprites
         //Because KeyboardController needs player and Player needs sprite its here
@@ -108,7 +109,7 @@ public class Game1 : Game
         // TODO: Add your drawing code here
         _spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp);
 
-        _tilemap.Draw(_spriteBatch);
+        Tilemap.Draw(_spriteBatch);
 
         Player.Draw(gameTime);
 

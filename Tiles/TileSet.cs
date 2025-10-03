@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -15,7 +16,7 @@ public class TileSet
     public int Count { get; }
     private readonly Tile[] _tiles;
 
-    public TileSet(Tile textureRegion, int tileWidth, int tileHeight)
+    public TileSet(Texture2D textureRegion, int tileWidth, int tileHeight)
     {
         TileWidth = tileWidth;
         TileHeight = tileHeight;
@@ -30,7 +31,9 @@ public class TileSet
         {
             int x = i % Columns * tileWidth;
             int y = i / Columns * tileHeight;
-            _tiles[i] = new Tile(textureRegion.Texture, textureRegion.SourceRectangle.X + x, textureRegion.SourceRectangle.Y + y, tileWidth, tileHeight);
+            Console.WriteLine(i);
+
+            _tiles[i] = new Tile(textureRegion, i, x, y, tileWidth, tileHeight);
         }
     }
     /// <summary>

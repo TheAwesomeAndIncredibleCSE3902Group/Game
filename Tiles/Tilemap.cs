@@ -11,7 +11,7 @@ namespace Sprint0.Tiles;
 // contains the image for the tilemap
 public class Tilemap
 {
-    private readonly TileSet _tileset;
+    public readonly TileSet _tileset;
     private readonly int[] _tiles;
 
     /// <summary>
@@ -146,9 +146,9 @@ public class Tilemap
                 // used by the tilemap.
                 //
                 // Example
-                // <Tileset region="0 0 100 100" tileWidth="10" tileHeight="10">contentPath</Tileset>
+                // <Tileset region="100 100" tileWidth="10" tileHeight="10">contentPath</Tileset>
                 //
-                // The region attribute represents the x, y, width, and height
+                // The region attribute represents the width and height
                 // components of the boundary for the texture region within the
                 // texture at the contentPath specified.
                 //
@@ -161,23 +161,18 @@ public class Tilemap
 
                 string regionAttribute = tilesetElement.Attribute("region").Value;
                 string[] split = regionAttribute.Split(" ", StringSplitOptions.RemoveEmptyEntries);
-                int x = int.Parse(split[0]);
-                int y = int.Parse(split[1]);
-                int width = int.Parse(split[2]);
-                int height = int.Parse(split[3]);
+                int width = int.Parse(split[0]);
+                int height = int.Parse(split[1]);
 
                 int tileWidth = int.Parse(tilesetElement.Attribute("tileWidth").Value);
                 int tileHeight = int.Parse(tilesetElement.Attribute("tileHeight").Value);
                 string contentPath = tilesetElement.Value;
 
                 // Load the texture 2d at the content path
-                Texture2D texture = content.Load<Texture2D>(contentPath);
-
-                // Create the texture region from the texture
-                Tile textureRegion = new Tile(texture, x, y, width, height);
+                Texture2D texture = content.Load<Texture2D>(contentPath);;
 
                 // Create the tileset using the texture region
-                TileSet tileset = new TileSet(textureRegion, tileWidth, tileHeight);
+                TileSet tileset = new TileSet(texture, tileWidth, tileHeight);
 
                 // The <Tiles> element contains lines of strings where each line
                 // represents a row in the tilemap.  Each line is a space

@@ -11,6 +11,8 @@ public class Tile
 
     public Rectangle SourceRectangle { get; set; }
 
+    public int Id;
+
     public int Width => SourceRectangle.Width;
 
     public int Height => SourceRectangle.Height;
@@ -25,10 +27,11 @@ public class Tile
     /// <param name="y">The y-coordinate position of the upper-left corner of this texture region relative to the upper-left corner of the source texture.</param>
     /// <param name="width">The width, in pixels, of this texture region.</param>
     /// <param name="height">The height, in pixels, of this texture region.</param>
-    public Tile(Texture2D texture, int x, int y, int width, int height)
+    public Tile(Texture2D texture, int id, int x, int y, int width, int height)
     {
         Texture = texture;
         SourceRectangle = new Rectangle(x, y, width, height);
+        Id = id;
     }
 
 
