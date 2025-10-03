@@ -23,8 +23,8 @@ namespace Sprint0.Sprites
 
         private static Rectangle standingFrame;
         private static Rectangle itemFrame;
-        private static int[] rectangleXPositions;
-        private static int [,] spriteAtlas;
+        private static readonly int[] rectangleXPositions = {0, 30, 60, 90};
+        private static int [,] spriteAtlas = { {0, 0, 15, 15} , {0, 30, 15, 15} };
 
         //Make 4 animatable sprites to have Link be able to walk
         public PlayerSpriteFactory()
@@ -32,8 +32,6 @@ namespace Sprint0.Sprites
             // Link, on the legendofzelda_link_sheet.png, is 15 by 15 pixels in size
             standingFrame = new Rectangle(0, 0, 15, 15);
             itemFrame = new Rectangle(0, 60, 15, 15);
-            int [] rectangleXPositions = {0, 30, 60, 90};
-            int [,] spriteAtlas = { {0, 0, 15, 15} , {0, 30, 15, 15} };
         }
 
         public void LoadPlayer(ContentManager content, SpriteBatch spriteBatch)
