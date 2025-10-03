@@ -10,14 +10,18 @@ namespace Sprint0.Commands
     public class CommandUseItem : ICommand
     {
         private Player currentPlayer;
+        private int equipIdx;
 
-        public CommandUseItem(Game1 game)
+        public CommandUseItem(int equipmentIndex)
         {
-            currentPlayer = game.Player;
+            currentPlayer = Player.Instance;
+            equipIdx = equipmentIndex;
         }
 
         public void Execute()
         {
+            //EVIL ITEM USAGE CHANGE ONCE STATE MACHINE DROP PROLLY
+            currentPlayer.PStateMachine.ActiveEquipment = currentPlayer.Equipment[equipIdx];
             currentPlayer.PStateMachine.UseEquipment();
         }
     }

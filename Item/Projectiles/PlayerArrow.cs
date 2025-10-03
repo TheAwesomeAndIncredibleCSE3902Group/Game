@@ -12,17 +12,17 @@ namespace Sprint0;
 public class PlayerArrow : Projectile
 {
     int damage;
-    public PlayerArrow(Vector2 position, Cardinal direction, float movementSpeed = 1, float lifetime = 3, int damage = 1)
+    public PlayerArrow(Vector2 position, Cardinal direction)
     {
         this.position = position;
         this.direction = direction;
-        this.movementSpeed = movementSpeed;
-        this.lifetime = lifetime;
 
-        this.damage = damage;
+        this.movementSpeed = 2;
+        this.lifetime = 2;
+        this.damage = 2;
 
         //Didn't work with arrow sprite, rework later
-        sprite = MapItemSpriteFactory.Instance.CreatePotionSprite();
+        sprite = MapItemSpriteFactory.CreatePotionSprite();
     }
 
     public override void Destroy()

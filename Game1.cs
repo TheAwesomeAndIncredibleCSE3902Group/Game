@@ -65,7 +65,7 @@ public class Game1 : Game
         ItemSpriteFactory.LoadAllTextures(Content, _spriteBatch);
 
         //Create item(Probably could be improved, _spriteDict might not be needed anymore)
-        _spriteDict.Add("item", MapItemSpriteFactory.Instance.CreatePotionSprite());
+        _spriteDict.Add("item", MapItemSpriteFactory.CreatePotionSprite());
 
         //World Creation
         _tilemap = Tilemap.FromFile(Content, "TileImages\\test_tiles_definition.xml");
@@ -75,6 +75,8 @@ public class Game1 : Game
         Player = new Player(Content,_spriteBatch);
         CharacterSpriteFactory.Instance.LoadAllTextures(Content, _spriteBatch);
         _controllersList.Add(new KeyboardController(this));
+
+        //NPC creation
         _characterSet.Add(new CharacterEnemyMoblin(new Vector2(300, 350), Util.Cardinal.up));
         _characterSet.Add(new CharacterEnemyArmos(new Vector2(300, 350), Util.Cardinal.down));
         _characterSet.Add(new CharacterEnemyLynel(new Vector2(300, 350), Util.Cardinal.right));
@@ -108,11 +110,8 @@ public class Game1 : Game
 
         _tilemap.Draw(_spriteBatch);
 
-        
-
         Player.Draw(gameTime);
 
-        
         _characterSet[currentEnemy].Draw(gameTime);
 
         _spriteBatch.End();

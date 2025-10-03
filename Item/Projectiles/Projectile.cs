@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Sprint0.Sprites;
 using static Sprint0.Util;
@@ -20,7 +21,7 @@ public abstract class Projectile
     protected float lifetime;
     protected float age = 0;
 
-    public void Update(GameTime gt)
+    public virtual void Update(GameTime gt)
     {
         age += gt.ElapsedGameTime.Milliseconds / 1000f;
         if (age > lifetime)

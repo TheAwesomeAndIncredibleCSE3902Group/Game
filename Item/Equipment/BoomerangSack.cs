@@ -5,9 +5,9 @@ using System.Diagnostics;
 namespace Sprint0;
 
 /// <summary>
-/// The Bow can shoot an Arrow
+/// The BoomerangSack can throw a Boomerang
 /// </summary>
-public class Bow : IEquipment
+public class BoomerangSack : IEquipment
 {
     public void Use()
     {
@@ -15,10 +15,10 @@ public class Bow : IEquipment
         Dictionary<IEquipment.Projectiles,Projectile> spawnedProjectiles = player.spawnedProjectiles;
 
         //Player can only ever have one arrow on screen, so if arrow already exists then abort
-        if (spawnedProjectiles.ContainsKey(IEquipment.Projectiles.arrow))
+        if (spawnedProjectiles.ContainsKey(IEquipment.Projectiles.boomerang))
             return;
 
-        PlayerArrow arrow = new PlayerArrow(player.Position, player.FacingDirection);
-        spawnedProjectiles[IEquipment.Projectiles.arrow] = arrow;
+        PlayerBoomerang boomerang = new PlayerBoomerang(player.Position, player.FacingDirection);
+        spawnedProjectiles[IEquipment.Projectiles.boomerang] = boomerang;
     }
 }

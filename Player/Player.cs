@@ -30,6 +30,7 @@ public class Player
     {
         Instance = this;
         Equipment.Add(new Bow());
+        Equipment.Add(new BoomerangSack());
         //Throwing in a random position so the sprite isn't halfway off the screen or something
         Vector2 startingPos = new Vector2(300, 300);
         Position = startingPos;

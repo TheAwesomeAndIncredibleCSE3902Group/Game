@@ -43,13 +43,13 @@ namespace Sprint0.Commands
             switch (_currentItemIndex)
             {
                 case 0:
-                    myGame.ChangeGameSpriteToNewSprite("item", MapItemSpriteFactory.Instance.CreatePotionSprite());
+                    myGame.ChangeGameSpriteToNewSprite("item", MapItemSpriteFactory.CreatePotionSprite());
                     break;
                 case 1:
-                    myGame.ChangeGameSpriteToNewSprite("item", MapItemSpriteFactory.Instance.CreateCandleSprite());
+                    myGame.ChangeGameSpriteToNewSprite("item", MapItemSpriteFactory.CreateCandleSprite());
                     break;
                 case 2:
-                    myGame.ChangeGameSpriteToNewSprite("item", MapItemSpriteFactory.Instance.CreateRupeeSprite());
+                    myGame.ChangeGameSpriteToNewSprite("item", MapItemSpriteFactory.CreateRupeeSprite());
                     break;    
             }
            
