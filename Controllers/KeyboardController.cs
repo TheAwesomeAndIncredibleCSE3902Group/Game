@@ -125,6 +125,7 @@ namespace Sprint0.Controllers
         {
             keyPressMappings[Keys.D1] = new CommandUseItem(IEquipment.Weapons.bow);
             keyPressMappings[Keys.D2] = new CommandUseItem(IEquipment.Weapons.boomerangSack);
+            keyPressMappings[Keys.D3] = new CommandUseItem(IEquipment.Weapons.superSwordSheathe);
             ICommand swordUse = new CommandUseItem(IEquipment.Weapons.swordSheathe);
             keyPressMappings[Keys.Z] = swordUse;
             keyPressMappings[Keys.N] = swordUse;

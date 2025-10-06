@@ -84,5 +84,6 @@ public class Player
         Equipment.Add(IEquipment.Weapons.bow, new Bow());
         Equipment.Add(IEquipment.Weapons.boomerangSack, new BoomerangSack());
         Equipment.Add(IEquipment.Weapons.swordSheathe, new SwordSheathe());
+        Equipment.Add(IEquipment.Weapons.superSwordSheathe, new SuperSwordSheathe());
     }
 }

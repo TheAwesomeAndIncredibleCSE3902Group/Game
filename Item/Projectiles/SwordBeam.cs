@@ -7,26 +7,26 @@ using System.Data;
 namespace Sprint0;
 
 /// <summary>
-/// Arrow shot by the player. Managed by Player.
+/// Swordbeam shot by the player. Managed by Player.
 /// </summary>
-public class PlayerArrow : Projectile
+public class SwordBeam : Projectile
 {
     int damage;
-    public PlayerArrow(Vector2 position, Cardinal direction)
+    public SwordBeam(Vector2 position, Cardinal direction)
     {
         this.position = position;
         this.direction = direction;
 
-        this.movementSpeed = 2;
+        this.movementSpeed = 4;
         this.lifetime = 2;
         this.damage = 2;
 
         //Didn't work with arrow sprite, rework later
-        sprite = ItemSpriteFactory.CreateArrowSprite(direction);
+        sprite = ItemSpriteFactory.CreateSwordBeamSprite(direction);
     }
 
     public override void Destroy()
     {
-        Player.Instance.spawnedProjectiles.Remove(IEquipment.Projectiles.arrow);
+        Player.Instance.spawnedProjectiles.Remove(IEquipment.Projectiles.swordBeam);
     }
 }

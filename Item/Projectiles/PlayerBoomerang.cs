@@ -25,7 +25,7 @@ public class PlayerBoomerang : Projectile
         damage = 1;
 
         //Didn't work with arrow sprite, rework later
-        sprite = MapItemSpriteFactory.CreateCandleSprite();
+        sprite = ItemSpriteFactory.CreateBoomerangSprite();
     }
 
     protected override void Move()
