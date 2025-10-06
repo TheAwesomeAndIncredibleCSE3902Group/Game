@@ -72,7 +72,7 @@ namespace Sprint0.Sprites
 
             SetSpritesToFaceSameDirection();
             currentDirection = newDirection;
-            ChangeSpriteStanding();
+            ChangeSpriteWalking();
         }
 
         public void ChangeSpriteStanding()
