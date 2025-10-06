@@ -22,7 +22,7 @@ public class PlayerSword : Projectile
         this.lifetime = 2;
         this.damage = 2;
 
-        sprite = ItemSpriteFactory.CreateSwordSprite();
+        sprite = ItemSpriteFactory.CreateDirectionalSwordSprite(direction);
     }
 
     protected override void Move()

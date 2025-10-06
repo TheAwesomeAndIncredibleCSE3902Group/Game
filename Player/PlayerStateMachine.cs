@@ -35,6 +35,7 @@ public class PlayerStateMachine
     {
         spriteFactory.LoadPlayer(content, spriteBatch);
         spriteFactory.ChangeDirection(currentDirection);
+        spriteFactory.ChangeSpriteStanding();
     }
 
     public Cardinal Direction
