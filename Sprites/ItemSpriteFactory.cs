@@ -18,13 +18,13 @@ public static class ItemSpriteFactory
 
     public static ISprite CreateArrowSprite()
     {
-        Rectangle sourceRec = new Rectangle(172, 4, 6, 4);
+        Rectangle sourceRec = new Rectangle(125, 195, 5, 16);
         return new AnimatableSprite(sb, spriteSheet, sourceRec);
     }
 
-    public static ISprite CreateLinkSprite()
+    public static ISprite CreateSwordSprite()
     {
-        Rectangle sourceRec = new Rectangle(0, 0, 15, 15);
+        Rectangle sourceRec = new Rectangle(4, 255, 7, 16);
         return new AnimatableSprite(sb, spriteSheet, sourceRec);
     }
 

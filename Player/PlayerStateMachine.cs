@@ -16,12 +16,9 @@ public class PlayerStateMachine
     private Cardinal currentDirection;
     private int currentHealth;
     private int currentMaxHealth;
-    private IEquipment activeEquipment;
     public enum States { Standing, Walking, SwordAttack, ItemUse, Damaged };
     private States currentState;
     private PlayerSpriteFactory spriteFactory;
-
-    private float linkVelocity;
 
     public PlayerStateMachine()
     {
@@ -29,11 +26,8 @@ public class PlayerStateMachine
         currentState = States.Standing;
         currentHealth = 3;
         currentMaxHealth = currentHealth;
-        linkVelocity = 0;
 
         spriteFactory = new PlayerSpriteFactory();
-        //TODO: REMOVE THIS, TEST FOR ARROW SPAWNING
-        activeEquipment = Player.Instance.Equipment[0];
     }
 
     public void LoadPlayer(ContentManager content, SpriteBatch spriteBatch)
@@ -92,14 +86,6 @@ public class PlayerStateMachine
         }
     }
 
-    public void ChangeStateSwordAttack()
-    {
-        if (currentState == States.Standing)
-        {
-            currentState = States.SwordAttack;
-        }
-    }
-
     public void ChangeStateItemUse()
     {
         if (currentState == States.Standing)
@@ -116,19 +102,6 @@ public class PlayerStateMachine
         }
     }
 
-    //Equipment might not need to be part of state, but it does drive the sprite, so I put it here for now
-    public IEquipment ActiveEquipment
-    {
-        get
-        {
-            return activeEquipment;
-        }
-        set
-        {
-            activeEquipment = value;
-        }
-    }
-
     public void TakeDamage(int amount)
     {
         currentHealth -= amount;
@@ -139,9 +112,9 @@ public class PlayerStateMachine
         currentHealth += amount;
     }
 
-    public void UseEquipment()
+    public void UseEquipment(IEquipment.Weapons weapon)
     {
-        activeEquipment.Use();
+        Player.Instance.Equipment[weapon].Use();
     }
 
     public void Update(GameTime gt)

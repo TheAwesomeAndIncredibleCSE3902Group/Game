@@ -9,20 +9,19 @@ namespace Sprint0.Commands
 {
     public class CommandUseItem : ICommand
     {
-        private Player currentPlayer;
-        private int equipIdx;
+        private Player _currentPlayer;
+        private IEquipment.Weapons _weapon;
 
-        public CommandUseItem(int equipmentIndex)
+        public CommandUseItem(IEquipment.Weapons weapon)
         {
-            currentPlayer = Player.Instance;
-            equipIdx = equipmentIndex;
+            _currentPlayer = Player.Instance;
+            _weapon = weapon;
         }
 
         public void Execute()
         {
-            //EVIL ITEM USAGE CHANGE ONCE STATE MACHINE DROP PROLLY
-            currentPlayer.PStateMachine.ActiveEquipment = currentPlayer.Equipment[equipIdx];
-            currentPlayer.PStateMachine.UseEquipment();
+            _currentPlayer.PStateMachine.UseEquipment(_weapon);
+            _currentPlayer.PStateMachine.ChangeStateItemUse();
         }
     }
 }

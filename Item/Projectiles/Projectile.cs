@@ -21,7 +21,7 @@ public abstract class Projectile
     protected float lifetime;
     protected float age = 0;
 
-    public virtual void Update(GameTime gt)
+    public void Update(GameTime gt)
     {
         age += gt.ElapsedGameTime.Milliseconds / 1000f;
         if (age > lifetime)

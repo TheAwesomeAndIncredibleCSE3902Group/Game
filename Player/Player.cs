@@ -19,19 +19,17 @@ public class Player
 
     public PlayerStateMachine PStateMachine { get; private set; }
 
-    public List<IEquipment> Equipment { get; } = new();
+    public Dictionary<IEquipment.Weapons,IEquipment> Equipment { get; } = new();
     public Dictionary<IEquipment.Projectiles, Projectile> spawnedProjectiles { get; set; } = new();
     
     //In pixels per tick. Might change to pixels per second later
     float movementSpeed = 2;
 
 
-    //TODO: GET RID OF PLAYER KNOWING ABOUT SPRITE THINGS AT ALL
     public Player(ContentManager content, SpriteBatch _spriteBatch)
     {
         Instance = this;
-        Equipment.Add(new Bow());
-        Equipment.Add(new BoomerangSack());
+        InitializeEquipment();
         //Throwing in a random position so the sprite isn't halfway off the screen or something
         Vector2 startingPos = new Vector2(300, 300);
         Position = startingPos;
@@ -60,10 +58,6 @@ public class Player
         PStateMachine.Update(gt);
     }
 
-    public void BeIdle()
-    {
-        PStateMachine.ChangeStateStanding();
-    }
 
     /// <summary>
     /// This is the target for any Move Command. 
@@ -82,13 +76,11 @@ public class Player
         Position += movementSpeed * Util.CardinalToUnitVector(newDirection);
     }
 
-    public void SwordAttack()
+    //Declares values for all equipment
+    private void InitializeEquipment()
     {
-        PStateMachine.ChangeStateSwordAttack();
-    }
-
-    public void UseEquipment()
-    {
-        PStateMachine.UseEquipment();
+        Equipment.Add(IEquipment.Weapons.bow, new Bow());
+        Equipment.Add(IEquipment.Weapons.boomerangSack, new BoomerangSack());
+        Equipment.Add(IEquipment.Weapons.swordSheathe, new SwordSheathe());
     }
 }

@@ -28,9 +28,9 @@ public class PlayerBoomerang : Projectile
         sprite = MapItemSpriteFactory.CreateCandleSprite();
     }
 
-    public override void Update(GameTime gt)
+    protected override void Move()
     {
-        base.Update(gt);
+        base.Move();
         movementSpeed = initialSpeed - (age / lifetime) * 2 * initialSpeed; //Silly math to make the boomerang go back
     }
 

@@ -91,26 +91,41 @@ namespace Sprint0.Controllers
         //Links all keyboard commands into their keys
         private void InitializeCommands(Game1 game)
         {
-            //Key Presses
-            //Quitting
+            InitializeGameCommands(game);
+            InitializeSwapCommands(game);
+            InitializeWeaponCommands(game);
+            InitializeMovementCommands(game);
+            //TODO: change as we migrate to state-by-class
+            playerToStandingCommand = new CommandPlayerToStanding(game);
+        }
+        //Initialize commands which effect the application as a whole
+        private void InitializeGameCommands(Game1 game)
+        {
             keyPressMappings[Keys.Q] = new CommandQuit(game);
-            //Resetting
             keyPressMappings[Keys.R] = new CommandResetGame(game);
-            //Switching Overworld Item Sprite
+        }
+        //Initialize commands which relate to swapping things around
+        private void InitializeSwapCommands(Game1 game)
+        {
             keyPressMappings[Keys.U] = new CommandSwitchMapItemSprite(game, false);
             keyPressMappings[Keys.I] = new CommandSwitchMapItemSprite(game, true);
-            //Use Equipment
-            keyPressMappings[Keys.D1] = new CommandUseItem(0);
-            keyPressMappings[Keys.D2] = new CommandUseItem(1);
-            //Switching Enemy
             keyPressMappings[Keys.O] = new CommandSwitchEnemySprite(game, false);
             keyPressMappings[Keys.P] = new CommandSwitchEnemySprite(game, true);
-            //Switching Block
             keyPressMappings[Keys.T] = new CommandSwitchBlockSprite(game.Tilemap, false, 1, 2);
             keyPressMappings[Keys.Y] = new CommandSwitchBlockSprite(game.Tilemap, true, 1, 2);
-
-            //Key Downs
-            //Movement
+        }
+        //Initialize commands which relate to weapons and item use
+        private void InitializeWeaponCommands(Game1 game)
+        {
+            keyPressMappings[Keys.D1] = new CommandUseItem(IEquipment.Weapons.bow);
+            keyPressMappings[Keys.D2] = new CommandUseItem(IEquipment.Weapons.boomerangSack);
+            ICommand swordUse = new CommandUseItem(IEquipment.Weapons.swordSheathe);
+            keyPressMappings[Keys.Z] = swordUse;
+            keyPressMappings[Keys.N] = swordUse;
+        }
+        //Initialize commands which relate to movement
+        private void InitializeMovementCommands(Game1 game)
+        {
             ICommand moveLeft = new CommandMovePlayer(game, Util.Cardinal.left);
             ICommand moveRight = new CommandMovePlayer(game, Util.Cardinal.right);
             ICommand moveUp = new CommandMovePlayer(game, Util.Cardinal.up);
@@ -123,9 +138,6 @@ namespace Sprint0.Controllers
             keyDownMappings[Keys.W] = moveUp;
             keyDownMappings[Keys.Down] = moveDown;
             keyDownMappings[Keys.S] = moveDown;
-
-            //TODO: change as we migrate to state-by-class
-            playerToStandingCommand = new CommandPlayerToStanding(game);
         }
     }
 }
