@@ -70,13 +70,12 @@ public class Player
             PStateMachine.ChangeDirection(direction);
         }
 
-        if (PStateMachine.GetCurrentState() != States.Walking)
+        if (PStateMachine.GetCurrentState() == States.Walking)
         {
-            return;
+            //Grabbing the direction from PlayerState here ensures that IPlayerState is the ultimate authority
+            Cardinal newDirection = PStateMachine.Direction;
+            Position += movementSpeed * Util.CardinalToUnitVector(newDirection);
         }
-        //Grabbing the direction from PlayerState here ensures that IPlayerState is the ultimate authority
-        Cardinal newDirection = PStateMachine.Direction;
-        Position += movementSpeed * Util.CardinalToUnitVector(newDirection);
     }
 
     //Declares values for all equipment

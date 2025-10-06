@@ -81,7 +81,8 @@ namespace Sprint0.Controllers
                 || currentState.IsKeyDown(Keys.Down)
                 || currentState.IsKeyDown(Keys.Left)
                 || currentState.IsKeyDown(Keys.D1)
-                || currentState.IsKeyDown(Keys.D2))
+                || currentState.IsKeyDown(Keys.D2)
+                || currentState.IsKeyDown(Keys.E))
             {
                 return;
             }
