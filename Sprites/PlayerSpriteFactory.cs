@@ -17,14 +17,11 @@ namespace Sprint0.Sprites
         private SpriteBatch linkSpriteBatch;
 
         private ISprite currentLinkSprite;
-        private ISprite standingLinkSprite;
-        private ISprite walkingLinkSprite;
-        private ISprite itemUseLinkSprite;
 
         private static Rectangle standingFrame;
         private static Rectangle itemFrame;
         private static readonly int[] rectangleXPositions = {0, 30, 60, 90};
-        private static int [,] spriteAtlas = { {0, 0, 15, 15} , {0, 30, 15, 15} };
+        private static int [,] walkingSpriteAtlas = { {0, 0, 15, 15} , {0, 30, 15, 15} };
 
         //Make 4 animatable sprites to have Link be able to walk
         public PlayerSpriteFactory()
@@ -38,22 +35,18 @@ namespace Sprint0.Sprites
         {
             linkSpriteSheet = content.Load<Texture2D>("SpriteImages/legendofzelda_link_sheet");
             linkSpriteBatch = spriteBatch;
-            standingLinkSprite = new AnimatableSprite(linkSpriteBatch, linkSpriteSheet, standingFrame);
-            walkingLinkSprite = new AnimatableSprite(linkSpriteBatch, linkSpriteSheet, spriteAtlas, 500);
-            itemUseLinkSprite = new AnimatableSprite(linkSpriteBatch, linkSpriteSheet, itemFrame);
-            currentLinkSprite = standingLinkSprite;
+            currentLinkSprite = new AnimatableSprite(linkSpriteBatch, linkSpriteSheet, standingFrame);
         }
         public ISprite GetSprite()
         {
             return currentLinkSprite;
         }
 
-        // Sets x values of each rectangle to be the same so that each frame correlates with the same direction
-        private void SetXValuesEqual()
+        private void SetSpritesToFaceSameDirection()
         {
-            standingFrame.X = spriteAtlas[0, 0];
-            itemFrame.X = standingFrame.X;
-            spriteAtlas[1, 0] = spriteAtlas[0, 0];
+            standingFrame.X = walkingSpriteAtlas[0, 0];
+            itemFrame.X = walkingSpriteAtlas[0, 0];
+            walkingSpriteAtlas[1, 0] = walkingSpriteAtlas[0, 0];
         }
 
         public void ChangeDirection(Cardinal newDirection)
@@ -61,44 +54,40 @@ namespace Sprint0.Sprites
             switch (newDirection)
             {
                 case Cardinal.down:
-                    spriteAtlas[0, 0] = rectangleXPositions[0];
+                    walkingSpriteAtlas[0, 0] = rectangleXPositions[0];
                     break;
 
                 case Cardinal.left:
-                    spriteAtlas[0, 0] = rectangleXPositions[1];
+                    walkingSpriteAtlas[0, 0] = rectangleXPositions[1];
                     break;
 
                 case Cardinal.up:
-                    spriteAtlas[0, 0] = rectangleXPositions[2];
+                    walkingSpriteAtlas[0, 0] = rectangleXPositions[2];
                     break;
 
                 case Cardinal.right:
-                    spriteAtlas[0, 0] = rectangleXPositions[3];
+                    walkingSpriteAtlas[0, 0] = rectangleXPositions[3];
                     break;
             }
 
-            SetXValuesEqual();
+            SetSpritesToFaceSameDirection();
             currentDirection = newDirection;
+            ChangeSpriteStanding();
         }
 
         public void ChangeSpriteStanding()
         {
-            spriteAtlas[0,1] = 0;
-            spriteAtlas[0,2] = 15;
-            spriteAtlas[0,3] = 15;
-            SetXValuesEqual();
-
-            currentLinkSprite = standingLinkSprite;
+            currentLinkSprite = new AnimatableSprite(linkSpriteBatch, linkSpriteSheet, standingFrame);
         }
 
         public void ChangeSpriteWalking()
         {
-            currentLinkSprite = walkingLinkSprite;
+            currentLinkSprite = new AnimatableSprite(linkSpriteBatch, linkSpriteSheet, walkingSpriteAtlas, 200);
         }
 
         public void ChangeSpriteItemUse()
         {
-            currentLinkSprite = itemUseLinkSprite;
+            currentLinkSprite = new AnimatableSprite(linkSpriteBatch, linkSpriteSheet, itemFrame);
         }
         public void ChangeSpriteDamaged()
         {

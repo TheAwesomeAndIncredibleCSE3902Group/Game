@@ -18,6 +18,7 @@ public class PlayerStateMachine
     private int currentMaxHealth;
     public enum States { Standing, Walking, SwordAttack, ItemUse, Damaged };
     private States currentState;
+    private States previousState;
     private PlayerSpriteFactory spriteFactory;
 
     public PlayerStateMachine()
@@ -44,7 +45,7 @@ public class PlayerStateMachine
         }
     }
 
-    public States GetState()
+    public States GetCurrentState()
     {
         return currentState;
     }
@@ -67,14 +68,17 @@ public class PlayerStateMachine
 
     public void ChangeDirection(Cardinal newDirection)
     {
+        ChangeStateStanding();
         spriteFactory.ChangeDirection(newDirection);
         currentDirection = newDirection;
     }
 
     public void ChangeStateStanding()
     {
+        /*
         if(currentState == States.SwordAttack)
             spriteFactory.ChangeSpriteStanding();
+        */
         currentState = States.Standing;
     }
 
@@ -117,26 +121,34 @@ public class PlayerStateMachine
         Player.Instance.Equipment[weapon].Use();
     }
 
+    /// <summary>
+    /// Updates the drawn sprite of Link if the previous state is different than the current state.
+    /// Otherwise this keeps the same sprite state drawn of Link.
+    /// </summary>
+    /// <param name="gt"> The game time of the current game where Link is playable in</param>
     public void Update(GameTime gt)
     {
-        switch (currentState)
+        if (currentState != previousState)
         {
-            //case States.Standing: break;
-            case States.Walking:
-                spriteFactory.ChangeSpriteWalking();
-                break;
+            switch (currentState)
+            {
+                case States.Walking:
+                    spriteFactory.ChangeSpriteWalking();
+                    break;
 
-            case States.Standing:
-                spriteFactory.ChangeSpriteStanding();
-                break;
+                case States.ItemUse:
+                    spriteFactory.ChangeSpriteItemUse();
+                    break;
 
-            case States.Damaged:
-                spriteFactory.ChangeSpriteDamaged();
-                break;
+                case States.Damaged:
+                    spriteFactory.ChangeSpriteDamaged();
+                    break;
 
-            default:
-                spriteFactory.ChangeSpriteItemUse();
-                break;
+                case States.Standing:
+                    spriteFactory.ChangeSpriteStanding();
+                    break;
+            }
+            previousState = currentState;
         }
     }
     public void Draw(GameTime gt, Vector2 position)

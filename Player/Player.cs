@@ -68,11 +68,14 @@ public class Player
         if (PStateMachine.Direction != direction)
         {
             PStateMachine.ChangeDirection(direction);
-            PStateMachine.ChangeStateStanding();
+        }
+
+        if (PStateMachine.GetCurrentState() != States.Walking)
+        {
+            return;
         }
         //Grabbing the direction from PlayerState here ensures that IPlayerState is the ultimate authority
         Cardinal newDirection = PStateMachine.Direction;
-        PStateMachine.ChangeStateWalking();
         Position += movementSpeed * Util.CardinalToUnitVector(newDirection);
     }
 

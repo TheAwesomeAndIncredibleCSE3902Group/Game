@@ -65,13 +65,13 @@ namespace Sprint0.Controllers
         }
 
         /// <summary>
-        /// Very quick and dirty way to enter standing state when no movement is input
+        /// Very quick and dirty way to enter standing state when no movement, nor item use is input
         /// TODO: change as we migrate to state-by-class
         /// </summary>
         /// <param name="currentState"></param>
         private void HandleStanding(KeyboardState currentState)
         {
-            //If any movement key is pressed just return
+            //If any movement or item key is pressed just return
             if (currentState.IsKeyDown(Keys.W)
                 || currentState.IsKeyDown(Keys.A)
                 || currentState.IsKeyDown(Keys.S)
@@ -79,13 +79,17 @@ namespace Sprint0.Controllers
                 || currentState.IsKeyDown(Keys.Up)
                 || currentState.IsKeyDown(Keys.Right)
                 || currentState.IsKeyDown(Keys.Down)
-                || currentState.IsKeyDown(Keys.Left))
+                || currentState.IsKeyDown(Keys.Left)
+                || currentState.IsKeyDown(Keys.D1)
+                || currentState.IsKeyDown(Keys.D2))
             {
                 return;
             }
             //Otherwise transition to standing
             else
+            {
                 playerToStandingCommand.Execute();
+            }
         }
 
         //Links all keyboard commands into their keys

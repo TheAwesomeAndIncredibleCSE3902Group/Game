@@ -20,8 +20,8 @@ namespace Sprint0.Commands
 
         public void Execute()
         {
-            _currentPlayer.PStateMachine.UseEquipment(_weapon);
             _currentPlayer.PStateMachine.ChangeStateItemUse();
+            _currentPlayer.PStateMachine.UseEquipment(_weapon);
         }
     }
 }
