@@ -107,6 +107,7 @@ namespace Sprint0.Controllers
         {
             keyPressMappings[Keys.Q] = new CommandQuit(game);
             keyPressMappings[Keys.R] = new CommandResetGame(game);
+            keyPressMappings[Keys.E] = new CommandDamagePlayer(game);
         }
         //Initialize commands which relate to swapping things around
         private void InitializeSwapCommands(Game1 game)

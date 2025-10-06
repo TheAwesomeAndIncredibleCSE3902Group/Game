@@ -102,6 +102,7 @@ public class PlayerStateMachine
     {
         if (currentState == States.Standing)
         {
+            Console.WriteLine("State changed to damaged");
             currentState = States.Damaged;
         }
     }
@@ -141,6 +142,7 @@ public class PlayerStateMachine
                     break;
 
                 case States.Damaged:
+                    Console.WriteLine("Spritefactory called");
                     spriteFactory.ChangeSpriteDamaged();
                     break;
 

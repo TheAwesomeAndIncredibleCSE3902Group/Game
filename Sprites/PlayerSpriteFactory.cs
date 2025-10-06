@@ -20,6 +20,7 @@ namespace Sprint0.Sprites
 
         private static Rectangle standingFrame;
         private static Rectangle itemFrame;
+        private static Rectangle damageFrame;
         private static readonly int[] rectangleXPositions = {0, 30, 60, 90};
         private static int [,] walkingSpriteAtlas = { {0, 0, 15, 15} , {0, 30, 15, 15} };
 
@@ -27,6 +28,7 @@ namespace Sprint0.Sprites
         public PlayerSpriteFactory()
         {
             // Link, on the legendofzelda_link_sheet.png, is 15 by 15 pixels in size
+            damageFrame = new Rectangle(30, 150, 15, 15);
             standingFrame = new Rectangle(0, 0, 15, 15);
             itemFrame = new Rectangle(0, 60, 15, 15);
         }
@@ -91,7 +93,8 @@ namespace Sprint0.Sprites
         }
         public void ChangeSpriteDamaged()
         {
-            // decorator type stuff goes here to 'damage' Link
+            Console.WriteLine("Damaged sprite changed");
+            currentLinkSprite = new AnimatableSprite(linkSpriteBatch, linkSpriteSheet, damageFrame);
         }
         
         public void Draw(GameTime gt, Vector2 position)

@@ -18,6 +18,7 @@ namespace Sprint0.Commands
 
         public void Execute()
         {
+            Console.WriteLine("Player Damaged");
             currentPlayer.PStateMachine.ChangeStateDamaged();
         }
 
