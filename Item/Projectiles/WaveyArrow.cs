@@ -38,7 +38,7 @@ public class WaveyArrow : Projectile
         this.baseAmplitude = baseAmplitude;
 
         //Didn't work with arrow sprite, rework later
-        sprite = ItemSpriteFactory.CreateArrowSprite();
+        sprite = ItemSpriteFactory.CreateDirectionalArrowSprite(direction);
     }
 
     /// <summary>

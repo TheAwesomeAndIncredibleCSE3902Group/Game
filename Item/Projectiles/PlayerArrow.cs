@@ -22,7 +22,7 @@ public class PlayerArrow : Projectile
         this.damage = 2;
 
         //Didn't work with arrow sprite, rework later
-        sprite = MapItemSpriteFactory.CreatePotionSprite();
+        sprite = ItemSpriteFactory.CreateDirectionalArrowSprite(direction);
     }
 
     public override void Destroy()
