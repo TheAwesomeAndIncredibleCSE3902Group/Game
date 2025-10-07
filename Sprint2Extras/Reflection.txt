@@ -15,3 +15,12 @@ We also weren't super clear on the requirements of Sprint 2 and ended up having 
 Iris
 ----------
 The team did well during sprint 2. I think we learned a lot from this sprint to carry forward, and I'm excited to move on to sprint 3. Also, The burnup chart does include some cards in todo that are meant for sprint 3 or are cards related more to game design than code implementation. 
+
+
+Caleb
+----------
+The team struggled to start up, but once we got going we sped through pretty quick.
+Hopefully that momentum will carry into sprint 3, and we can move from being on our back foot to getting ahead of the curve.
+Generally with planning I believe that we struggled with constructing clear lines on who was working exactly on what.
+I think by taking more time to plan things out during out weekly meeting we can be far more efficient in future sprints.
+Overall I think the project will be fine though. The team gained a lot of skill with monogame this sprint and I think we'll see the reward of that soon.
