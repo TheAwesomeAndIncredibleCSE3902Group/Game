@@ -1,0 +1,7 @@
+John
+---------
+PlayerStateMachine Readability:
+	PlayerStateMachine has only one comment explaining something in the code, but I think most of the code is very readable just through the names of the variables and methods.
+AnimatableSprite Maintainability:
+	AnimatableSprite seems to have high cohesion and not really any more than the required amount of coupling.
+
