@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Sprint0.Sprites;
-using static Sprint0.Util;
-using static Sprint0.PlayerStateMachine;
+using AwesomeRPG.Sprites;
+using static AwesomeRPG.Util;
+using static AwesomeRPG.PlayerStateMachine;
 
-namespace Sprint0;
+namespace AwesomeRPG;
 
 public class Player
 {

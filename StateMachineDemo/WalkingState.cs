@@ -2,10 +2,10 @@ using System;
 using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Sprint0;
-using Sprint0.Sprites;
-using static Sprint0.Commands.CommandSwitchMapItemSprite;
-using static Sprint0.Util;
+using AwesomeRPG;
+using AwesomeRPG.Sprites;
+using static AwesomeRPG.Commands.CommandSwitchMapItemSprite;
+using static AwesomeRPG.Util;
 
 namespace StateMachineDemo;
 

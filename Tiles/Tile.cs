@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Rectangle = Microsoft.Xna.Framework.Rectangle;
 
-namespace Sprint0.Tiles;
+namespace AwesomeRPG.Tiles;
 
 public class Tile
 {

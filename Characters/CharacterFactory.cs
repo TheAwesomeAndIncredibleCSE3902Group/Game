@@ -1,6 +1,6 @@
 using System;
 
-namespace Sprint0.Characters;
+namespace AwesomeRPG.Characters;
 
 public class CharacterFactory
 {

@@ -2,7 +2,7 @@ using System;
 using System.Diagnostics;
 using System.Numerics;
 
-namespace Sprint0;
+namespace AwesomeRPG;
 
 /// <summary>
 /// This can be a nice storage bin for enums and math that might be needed by many classes

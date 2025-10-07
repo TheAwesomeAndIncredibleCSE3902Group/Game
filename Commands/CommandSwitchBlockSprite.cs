@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Sprint0.Tiles;
+using AwesomeRPG.Tiles;
 
-namespace Sprint0.Commands
+namespace AwesomeRPG.Commands
 {
     public class CommandSwitchBlockSprite : ICommand
     {

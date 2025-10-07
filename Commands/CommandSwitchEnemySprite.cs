@@ -5,9 +5,9 @@ using System.Runtime.InteropServices.Marshalling;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
-using Sprint0.Characters;
+using AwesomeRPG.Characters;
 
-namespace Sprint0.Commands
+namespace AwesomeRPG.Commands
 {
     public class CommandSwitchEnemySprite : ICommand
     {

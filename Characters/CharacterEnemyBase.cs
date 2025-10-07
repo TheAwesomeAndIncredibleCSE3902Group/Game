@@ -1,11 +1,11 @@
 using System;
 using System.Drawing;
-using Sprint0.Sprites;
-using Sprint0.Tiles;
+using AwesomeRPG.Sprites;
+using AwesomeRPG.Tiles;
 using Microsoft.Xna.Framework;
-using static Sprint0.Util;
+using static AwesomeRPG.Util;
 
-namespace Sprint0.Characters;
+namespace AwesomeRPG.Characters;
 
 // ICharacter(ISprite sprite, Point position);
 

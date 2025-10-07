@@ -6,9 +6,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static Sprint0.Util;
+using static AwesomeRPG.Util;
 
-namespace Sprint0.Sprites
+namespace AwesomeRPG.Sprites
 {
     public class PlayerSpriteFactory
     {

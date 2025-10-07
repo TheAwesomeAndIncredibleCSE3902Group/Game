@@ -1,9 +1,9 @@
 using System;
-using Sprint0.Sprites;
+using AwesomeRPG.Sprites;
 using Microsoft.Xna.Framework;
-using static Sprint0.Util;
+using static AwesomeRPG.Util;
 
-namespace Sprint0;
+namespace AwesomeRPG;
 
 /// <summary>
 /// Arrow that moves in a pattern similar to a square wave.

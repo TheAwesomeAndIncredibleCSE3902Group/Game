@@ -1,6 +1,6 @@
 using System;
 
-namespace Sprint0.Commands;
+namespace AwesomeRPG.Commands;
 
 public class CommandPlayerToStanding : ICommand
 {

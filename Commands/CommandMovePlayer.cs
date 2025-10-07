@@ -1,7 +1,7 @@
 ﻿using System;
-using static Sprint0.Util;
+using static AwesomeRPG.Util;
 
-namespace Sprint0.Commands
+namespace AwesomeRPG.Commands
 {
     public class CommandMovePlayer : ICommand
     {

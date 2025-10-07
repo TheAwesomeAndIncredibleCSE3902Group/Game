@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 
-namespace Sprint0;
+namespace AwesomeRPG;
 
 /// <summary>
 /// The SwordSheathe that holds a sword

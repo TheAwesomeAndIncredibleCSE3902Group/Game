@@ -1,6 +1,6 @@
 using System;
 
-namespace Sprint0.Controllers;
+namespace AwesomeRPG.Controllers;
 
 public interface IController
 {

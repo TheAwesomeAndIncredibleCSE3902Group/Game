@@ -1,8 +1,8 @@
 using Microsoft.Xna.Framework;
-using Sprint0.Sprites;
-using static Sprint0.Util;
+using AwesomeRPG.Sprites;
+using static AwesomeRPG.Util;
 
-namespace Sprint0.Characters;
+namespace AwesomeRPG.Characters;
 
 public class CharacterEnemyLynel : CharacterEnemyBase
 {

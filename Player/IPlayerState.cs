@@ -1,10 +1,10 @@
 using Microsoft.Xna.Framework;
-using Sprint0.Sprites;
+using AwesomeRPG.Sprites;
 using System;
 using System.Collections.Generic;
-using static Sprint0.Util;
+using static AwesomeRPG.Util;
 
-namespace Sprint0;
+namespace AwesomeRPG;
 
 /// <summary>
 /// TODO:

@@ -5,10 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Sprint0.Characters;
-using Sprint0.Sprites;
+using AwesomeRPG.Characters;
+using AwesomeRPG.Sprites;
 
-namespace Sprint0.Commands
+namespace AwesomeRPG.Commands
 {
     internal class CommandResetGame : ICommand
     {

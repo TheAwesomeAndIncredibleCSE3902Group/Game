@@ -1,8 +1,8 @@
 using System;
 using Microsoft.Xna.Framework;
-using Sprint0.Sprites;
+using AwesomeRPG.Sprites;
 
-namespace Sprint0.Item;
+namespace AwesomeRPG.Item;
 
 public interface IMapItem
 {

@@ -2,7 +2,7 @@ using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
-namespace Sprint0.Controllers;
+namespace AwesomeRPG.Controllers;
 
 public class MouseController : IController
 {

@@ -4,13 +4,13 @@ using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Sprint0.Characters;
-using Sprint0.Commands;
-using Sprint0.Controllers;
-using Sprint0.Sprites;
-using Sprint0.Tiles;
+using AwesomeRPG.Characters;
+using AwesomeRPG.Commands;
+using AwesomeRPG.Controllers;
+using AwesomeRPG.Sprites;
+using AwesomeRPG.Tiles;
 
-namespace Sprint0;
+namespace AwesomeRPG;
 
 public class Game1 : Game
 {
@@ -51,7 +51,7 @@ public class Game1 : Game
         IsMouseVisible = true;
 
         //Can change title as we see fit
-        Window.Title = "Zelda-like";
+        Window.Title = "AwesomeRPG";
     }
 
     protected override void Initialize()

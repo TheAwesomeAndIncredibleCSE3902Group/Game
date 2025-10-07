@@ -1,13 +1,13 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Sprint0.Sprites;
+using AwesomeRPG.Sprites;
 using System;
 using System.Diagnostics;
-using static Sprint0.Util;
-using static Sprint0.Player;
+using static AwesomeRPG.Util;
+using static AwesomeRPG.Player;
 
-namespace Sprint0;
+namespace AwesomeRPG;
 
 public class PlayerStateMachine
 {

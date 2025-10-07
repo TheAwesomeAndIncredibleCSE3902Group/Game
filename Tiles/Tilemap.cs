@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Sprint0.Tiles;
+namespace AwesomeRPG.Tiles;
 
 // contains the image for the tilemap
 public class Tilemap

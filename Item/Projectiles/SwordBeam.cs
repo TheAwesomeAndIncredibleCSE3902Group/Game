@@ -1,10 +1,10 @@
 using System;
-using Sprint0.Sprites;
+using AwesomeRPG.Sprites;
 using Microsoft.Xna.Framework;
-using static Sprint0.Util;
+using static AwesomeRPG.Util;
 using System.Data;
 
-namespace Sprint0;
+namespace AwesomeRPG;
 
 /// <summary>
 /// Swordbeam shot by the player. Managed by Player.

@@ -4,7 +4,7 @@ using System.Reflection.Metadata;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Sprint0.Sprites;
+namespace AwesomeRPG.Sprites;
 
 public class AnimatableSprite : ISprite
 {

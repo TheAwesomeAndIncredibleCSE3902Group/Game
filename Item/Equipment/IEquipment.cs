@@ -1,6 +1,6 @@
 using System;
 
-namespace Sprint0;
+namespace AwesomeRPG;
 
 public interface IEquipment
 {

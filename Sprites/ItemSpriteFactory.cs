@@ -3,10 +3,10 @@ using System.Formats.Asn1;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Sprint0.Sprites;
-using static Sprint0.Commands.CommandSwitchMapItemSprite;
+using AwesomeRPG.Sprites;
+using static AwesomeRPG.Commands.CommandSwitchMapItemSprite;
 
-namespace Sprint0;
+namespace AwesomeRPG;
 
 /// <summary>
 /// Factory to make sprites for all Items, Projectiles, and etc.

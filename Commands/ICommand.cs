@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Sprint0.Commands
+namespace AwesomeRPG.Commands
 {
     public interface ICommand
     {

@@ -2,9 +2,9 @@ using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Sprint0.Sprites;
+using AwesomeRPG.Sprites;
 
-namespace Sprint0.Sprites;
+namespace AwesomeRPG.Sprites;
 
 
 public class CharacterSpriteFactory
