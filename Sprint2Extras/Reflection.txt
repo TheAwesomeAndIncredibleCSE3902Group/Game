@@ -24,3 +24,12 @@ Hopefully that momentum will carry into sprint 3, and we can move from being on 
 Generally with planning I believe that we struggled with constructing clear lines on who was working exactly on what.
 I think by taking more time to plan things out during out weekly meeting we can be far more efficient in future sprints.
 Overall I think the project will be fine though. The team gained a lot of skill with monogame this sprint and I think we'll see the reward of that soon.
+
+
+Eli
+----------
+I think our team did well, especially considering that this was our first sprint where we collaborated on code. I believe that we may need to work a bit on our communication with each other, since there were definitely times where people weren't sure what they should be working on, or weren't on the same page on how something would work or be implemented. 
+
+Also, we need to get a bit better ensuring that we meet the requirements for each sprint. We can try to improve at that by going through the sprint#.html file and making a checklist of what we specifically have done and specifically still need to do at the start of each meeting, in addition to using our GitHub project tab.
+
+I am looking forward to our next sprint so we can try to address some of these issues! I've definitely have enjoyed working on our game so far and I think that we'll be able to have an Awesome game by the end of the semester.
