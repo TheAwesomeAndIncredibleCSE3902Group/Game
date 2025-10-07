@@ -32,3 +32,33 @@ Generally good quality, though some areas are better than others.
 Known limitations: switching to standing is not handled well. This was a point of difficulty for the team because triggering on the *absense* of input is surprisingly hard. This behavior should be transferred to Player instead.
 Otherwise, linking input to Commands is simple and easily editable.
 A hypothetical change that might be necessary is the addition of more key -> command linkings, or just the change of button for a particular control. Both of these would be easy to implement, as that's basically the only behavior that KeyboardController is in charge of.
+
+
+
+Eli reviewing Item/PlayerBoomerang.cs 
+	Authored by Caleb
+6 Oct 2025
+Sprint2
+Review took ~30 minutes
+-------------------------------------
+
+Readability:
+I believe that everything within this class, which extends the Projectile abstract class,
+is readable. Each variable within PlayerBoomerang (and Projectile) are self-descriptive in
+their naming. Within the projectile class, there are comments describing the units
+of the movementSpeed and lifetime, which are used within the PlayerBoomerang class. 
+It may be a good idea to rename these variables to include the units directly in the
+names, but otherwise the naming is good. There is also a comment which describes how 
+an issue in SpriteFactory which causes the Boomerang sprite to not work correctly, which will
+be useful in narrowing down the problem when we fix this bug in the future.
+
+Code quality:
+I believe that the code quality is fairly good. Using a separate abstract class to handle
+the code that would otherwise be reused across multiple classes is a good design decision.
+The summary at the top makes it clear that PlayerBoomerang is managed by the singleton
+Player class and the Destroy method directly references the Player's single instance.
+However this may cause issues if, for example, we added new player types or
+multiplayer support is ever added in the future. One way that we may be able to de-couple 
+from the player class is having a separate singleton that keeps track of every projectile
+created by any member of the IPlayer interface rather than having it be the job of the
+Player class itself.
