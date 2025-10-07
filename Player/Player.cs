@@ -94,16 +94,16 @@ public class Player
         PStateMachine.ChangeStateDamaged();
     }
 
-    public void UseEquipment(IEquipment.Weapons eq)
+    public void UseEquipment(IEquipment.Weapons requestedEQ)
     {
-        if (!Equipment.ContainsKey(eq))
+        if (!Equipment.TryGetValue(requestedEQ, out IEquipment playerEQ))
         {
             Console.WriteLine("Tried to use an Equipment that doesn't exist!");
             return;
         }
         
         PStateMachine.ChangeStateItemUse();
-        Equipment[eq].Use();
+        playerEQ.Use();
     }
 
     //Declares values for all equipment

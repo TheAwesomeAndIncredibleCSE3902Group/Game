@@ -93,7 +93,6 @@ namespace AwesomeRPG.Sprites
         }
         public void ChangeSpriteDamaged()
         {
-            Console.WriteLine("Damaged sprite changed");
             currentLinkSprite = new AnimatableSprite(linkSpriteBatch, linkSpriteSheet, damageFrame);
         }
         

@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -31,7 +30,6 @@ public class TileSet
         {
             int x = i % Columns * tileWidth;
             int y = i / Columns * tileHeight;
-            Console.WriteLine(i);
 
             _tiles[i] = new Tile(textureRegion, i, x, y, tileWidth, tileHeight);
         }

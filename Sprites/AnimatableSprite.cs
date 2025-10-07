@@ -1,6 +1,5 @@
 
 using System;
-using System.Reflection.Metadata;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -99,7 +98,7 @@ public class AnimatableSprite : ISprite
             }
         }
 
-        Console.WriteLine(currentPositionOnSpriteSheet);
+        //Console.WriteLine(currentPositionOnSpriteSheet);
     }
 
     /// <summary>

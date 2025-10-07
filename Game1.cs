@@ -52,6 +52,10 @@ public class Game1 : Game
 
         //Can change title as we see fit
         Window.Title = "AwesomeRPG";
+
+        _graphics.PreferredBackBufferWidth = 1024;
+        _graphics.PreferredBackBufferHeight = 768;
+        //See Game.TargetElapsedTime if we'd like to change refresh rate
     }
 
     protected override void Initialize()
