@@ -4,3 +4,9 @@ Lupine
 The team performed adequately this sprint. We were quite a ways off the full functionality goal by the mid-sprint check-in, due to a bit of roughness getting things started and a few blocking issues. However, by the end of the sprint I believe we have completed all or nearly all of the required functionality.
 
 Next sprint we will be sure to hold to the 2/3 mark deadline for functionality. Likewise, we will integrate the full suite of extra processes (code quality analysis, code reviews, and a burndown chart with time estimate).
+
+
+John
+----------
+I think the team did pretty well all things considered. We had some early issues with figuring out how to get certain functionality down, but we put in the extra time to try and make it somewhat useful and mantainable for the future. 
+We also weren't super clear on the requirements of Sprint 2 and ended up having to rush certain things right at the end, like this reflection.
