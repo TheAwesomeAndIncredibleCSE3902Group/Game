@@ -90,3 +90,25 @@ which could likely be put into the Tilemap class itself. Therefore the command c
 call a single function and be done. However since this functionality is only important
 for Sprint2, it ain't that deep.
 -------------------------------------
+
+Jesse reviewing ItemSpriteFactory 
+    Authored by Caleb and Lupine
+6 Oct 2025
+Sprint2
+__________
+Readability:
+    Easy to navigate through, albeit a bit difficult due to the amount of comments per method. 
+    Each method's name is descriptive enough to state its purpose, and most variable names are 
+    descriptive enough to state what they hold, but can be confusing at first glance. SourceRec,
+    sb, and miscSheet are a bit confusing to understand their purpose, and should be expanded 
+    to clarify what they hold (sb to spriteBatch and sourceRec to currentItemFrame for example).
+    So even though it may be nitpicky, clarifying why these variables are here can help not just
+    improve our thought process of how our code works, but also what thoughts we may have had in
+    the first place to believe our code works.
+
+Maintainability:
+    Will be a bit hard to maintain since every create projectile item method has their own individual
+    switch case statements for changing their facing direction, and seems to also be painting a similar 
+    picture for the other items currently implemented and future; however, adding and removing 
+    item sprites will be easy since each method just returns a new sprite and is not coupled with 
+    other sprite magic.

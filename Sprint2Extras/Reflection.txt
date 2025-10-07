@@ -33,3 +33,13 @@ I think our team did well, especially considering that this was our first sprint
 Also, we need to get a bit better ensuring that we meet the requirements for each sprint. We can try to improve at that by going through the sprint#.html file and making a checklist of what we specifically have done and specifically still need to do at the start of each meeting, in addition to using our GitHub project tab.
 
 I am looking forward to our next sprint so we can try to address some of these issues! I've definitely have enjoyed working on our game so far and I think that we'll be able to have an Awesome game by the end of the semester.
+
+Jesse
+__________
+I think our team did pretty well considering the amount of juggling we had to manage in our own individual lives on top of this sprint. 
+We only got our game to run during the functionality checkin, but we had slim to none built at that point; however, within a few days,
+this team managed to get everything pulled together and then some.
+
+So far, we only had little to go off of, and despite not being able to have our code perfected we figured out every bit of what we 
+needed along the way. So going forward from here will be a challenge for certain, but I am excited to face the next Sprints with this 
+team as we learn and grow from this sprint onwards.
