@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -21,9 +20,12 @@ public class Player
 
     public Dictionary<IEquipment.Weapons,IEquipment> Equipment { get; } = new();
     public Dictionary<IEquipment.Projectiles, Projectile> spawnedProjectiles { get; set; } = new();
+
+    //Whether this has moved yet this frame. Please be careful of any timing issues / race conditions with the Controllers.
+    private bool hasMoved;
     
     //In pixels per tick. Might change to pixels per second later
-    float movementSpeed = 2;
+    private float movementSpeed = 2;
 
 
     public Player(ContentManager content, SpriteBatch _spriteBatch)
@@ -50,6 +52,8 @@ public class Player
 
     public void Update(GameTime gt)
     {
+        hasMoved = false;
+
         foreach (Projectile projectile in spawnedProjectiles.Values)
         {
             projectile.Update(gt);
@@ -61,14 +65,19 @@ public class Player
 
     /// <summary>
     /// This is the target for any Move Command. 
-    /// Player will then request IPlayerState change direction if necessary, and finally update position.
+    /// Requests IPlayerState change direction and change to WalkingState if necessary, and finally updates position.
     /// </summary>
     public void Move(Cardinal direction)
     {
+        if (hasMoved)
+            return;
+
         if (PStateMachine.Direction != direction)
         {
             PStateMachine.ChangeDirection(direction);
         }
+
+        PStateMachine.ChangeStateWalking();
 
         if (PStateMachine.GetCurrentState() == States.Walking)
         {
@@ -76,6 +85,25 @@ public class Player
             Cardinal newDirection = PStateMachine.Direction;
             Position += movementSpeed * Util.CardinalToUnitVector(newDirection);
         }
+
+        hasMoved = true;
+    }
+
+    public void TakeDamage(int amount = 1)
+    {
+        PStateMachine.ChangeStateDamaged();
+    }
+
+    public void UseEquipment(IEquipment.Weapons eq)
+    {
+        if (!Equipment.ContainsKey(eq))
+        {
+            Console.WriteLine("Tried to use an Equipment that doesn't exist!");
+            return;
+        }
+        
+        PStateMachine.ChangeStateItemUse();
+        Equipment[eq].Use();
     }
 
     //Declares values for all equipment

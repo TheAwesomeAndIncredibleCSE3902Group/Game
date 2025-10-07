@@ -49,6 +49,9 @@ public class Game1 : Game
         _graphics = new GraphicsDeviceManager(this);
         Content.RootDirectory = "Content";
         IsMouseVisible = true;
+
+        //Can change title as we see fit
+        Window.Title = "Zelda-like";
     }
 
     protected override void Initialize()
@@ -90,7 +93,6 @@ public class Game1 : Game
         if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
             Exit();
 
-        // TODO: Add your update logic here
         foreach (IController controller in _controllersList) {
             controller.Update();
         }
@@ -106,13 +108,10 @@ public class Game1 : Game
     {
         GraphicsDevice.Clear(Color.DarkSlateGray);
 
-        // TODO: Add your drawing code here
         _spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp);
 
         Tilemap.Draw(_spriteBatch);
-
         Player.Draw(gameTime);
-
         _characterSet[currentEnemy].Draw(gameTime);
 
         foreach (ISprite sprite in _spriteDict.Values)
