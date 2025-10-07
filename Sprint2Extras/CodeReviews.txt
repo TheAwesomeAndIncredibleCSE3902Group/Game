@@ -35,7 +35,7 @@ A hypothetical change that might be necessary is the addition of more key -> com
 
 
 
-Eli reviewing Item/PlayerBoomerang.cs 
+Eli reviewing Item/Projectiles/PlayerBoomerang.cs 
 	Authored by Caleb
 6 Oct 2025
 Sprint2
