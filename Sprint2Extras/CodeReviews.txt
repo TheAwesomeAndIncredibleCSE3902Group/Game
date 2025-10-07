@@ -8,9 +8,10 @@ AnimatableSprite Maintainability:
 
 Iris
 ---------
-CharacterSpriteFactory Readability: 
+Reviews took around 10 minutes each.
+CharacterSpriteFactory Readability (By Eli): 
 	All methods and variables are named well and I consider the code to be "self commented."
-CommandResetGame Maintainability:
+CommandResetGame Maintainability (by John):
 	Although this class will change a lot after implementing level states and xml layout files, in its current state any changes to the inital game state would need to be added individually. 
 
 
