@@ -62,3 +62,31 @@ multiplayer support is ever added in the future. One way that we may be able to 
 from the player class is having a separate singleton that keeps track of every projectile
 created by any member of the IPlayer interface rather than having it be the job of the
 Player class itself.
+
+
+
+Caleb
+6 Oct 2025
+Sprint2
+-------------------------------------
+Author of the code: Iris
+Code Under Review: Tilemap for readability
+Review took 4 minutes
+
+Overall Tilemap is fairly readable. It makes use of a variety of matrix math
+which can end up looking pretty complicated, but the use of documentation to
+abstract the methods allows for it to stay pretty readable.
+
+The only issue I see with the class is that I think it might prove useful to
+add a few additional helper methods to the FromFile method due to it's complexity.
+-------------------------------------
+Author of the code: Iris
+Code Under Review: CommandSwitchBlock
+Review took 4 minutes
+
+The code itself is pretty well written and swaps between various tiles in a concise
+manner. Only potential issue is that as is the command is handling a fair bit of logic
+which could likely be put into the Tilemap class itself. Therefore the command can just
+call a single function and be done. However since this functionality is only important
+for Sprint2, it ain't that deep.
+-------------------------------------

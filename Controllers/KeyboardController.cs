@@ -51,7 +51,7 @@ namespace AwesomeRPG.Controllers
             _previousState = currentState; // save for next frame
         }
 
-        //Checks keys in keyDownMappings to see if it's pressed if so executes command
+        //Checks keys in keyDownMappings to see if it's pressed if so executes command continously
         private void HandleKeyDowns(KeyboardState currentState)
         {
             foreach (Keys key in currentState.GetPressedKeys())
