@@ -5,9 +5,28 @@ PlayerStateMachine Readability:
 AnimatableSprite Maintainability:
 	AnimatableSprite seems to have high cohesion and not really any more than the required amount of coupling.
 
+
 Iris
 ---------
 CharacterSpriteFactory Readability: 
 	All methods and variables are named well and I consider the code to be "self commented."
 CommandResetGame Maintainability:
 	Although this class will change a lot after implementing level states and xml layout files, in its current state any changes to the inital game state would need to be added individually. 
+
+
+Lupine reviewing KeyboardController
+6 Oct 2025
+Sprint2
+-------------------------------------
+Review took 15 minutes
+
+Readability:
+Very readable. All methods have signature comments. Variable and parameter names are descriptive.
+Methods are short and seem to handle one unit of behavior. Method names descriptive. 
+"InitializeSwapCommands" is slightly vague. The difference between keyPress and keyDown could be made more descriptive with a comment.
+
+Code quality:
+Generally good quality, though some areas are better than others.
+Known limitations: switching to standing is not handled well. This was a point of difficulty for the team because triggering on the *absense* of input is surprisingly hard. This behavior should be transferred to Player instead.
+Otherwise, linking input to Commands is simple and easily editable.
+A hypothetical change that might be necessary is the addition of more key -> command linkings, or just the change of button for a particular control. Both of these would be easy to implement, as that's basically the only behavior that KeyboardController is in charge of.
