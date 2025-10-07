@@ -5,3 +5,9 @@ PlayerStateMachine Readability:
 AnimatableSprite Maintainability:
 	AnimatableSprite seems to have high cohesion and not really any more than the required amount of coupling.
 
+Iris
+---------
+CharacterSpriteFactory Readability: 
+	All methods and variables are named well and I consider the code to be "self commented."
+CommandResetGame Maintainability:
+	Although this class will change a lot after implementing level states and xml layout files, in its current state any changes to the inital game state would need to be added individually. 

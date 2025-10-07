@@ -10,3 +10,8 @@ John
 ----------
 I think the team did pretty well all things considered. We had some early issues with figuring out how to get certain functionality down, but we put in the extra time to try and make it somewhat useful and mantainable for the future. 
 We also weren't super clear on the requirements of Sprint 2 and ended up having to rush certain things right at the end, like this reflection.
+
+
+Iris
+----------
+The team did well during sprint 2. I think we learned a lot from this sprint to carry forward, and I'm excited to move on to sprint 3. Also, The burnup chart does include some cards in todo that are meant for sprint 3 or are cards related more to game design than code implementation. 
