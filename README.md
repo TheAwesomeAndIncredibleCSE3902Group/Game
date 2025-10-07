@@ -1,6 +1,8 @@
 # Game
 
 Hello! This is our game repo where we're making the video game 😎
+AwesomeRPG is a Zelda clone that will eventually include turn-based RPG elements.
+Weapons are inspired by Zelda but with a twist.
 
 |Control            | Keys          |
 | -------------     | ------------- |

@@ -16,6 +16,7 @@ CommandResetGame Maintainability (by John):
 
 
 Lupine reviewing KeyboardController
+	Authored by Caleb
 6 Oct 2025
 Sprint2
 -------------------------------------
