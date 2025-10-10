@@ -1,7 +1,7 @@
 using System;
 using System.Drawing;
 using AwesomeRPG.Sprites;
-using AwesomeRPG.Tiles;
+using AwesomeRPG.Map;
 using Microsoft.Xna.Framework;
 using static AwesomeRPG.Util;
 

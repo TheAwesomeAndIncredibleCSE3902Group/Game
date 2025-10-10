@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using AwesomeRPG.Tiles;
+using AwesomeRPG.Map;
 
 namespace AwesomeRPG.Commands
 {

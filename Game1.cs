@@ -8,7 +8,7 @@ using AwesomeRPG.Characters;
 using AwesomeRPG.Commands;
 using AwesomeRPG.Controllers;
 using AwesomeRPG.Sprites;
-using AwesomeRPG.Tiles;
+using AwesomeRPG.Map;
 
 namespace AwesomeRPG;
 

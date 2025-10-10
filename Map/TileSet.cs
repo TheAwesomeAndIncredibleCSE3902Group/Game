@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-namespace AwesomeRPG.Tiles;
+namespace AwesomeRPG.Map;
 
 public class TileSet
 {
