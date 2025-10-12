@@ -3,6 +3,7 @@ using AwesomeRPG.Sprites;
 using Microsoft.Xna.Framework;
 using static AwesomeRPG.Util;
 using System.Data;
+using StateMachineDemo;
 
 namespace AwesomeRPG;
 
@@ -12,14 +13,15 @@ namespace AwesomeRPG;
 public class PlayerSword : Projectile
 {
     int damage;
+    int swordOffset = 40;
     public PlayerSword(Vector2 position, Cardinal direction)
     {
-        int swordOffset = 40;
-        this.position = position + Util.CardinalToUnitVector(direction)*swordOffset;
         this.direction = direction;
 
+        this.position = position + Util.CardinalToUnitVector(direction) * swordOffset;
+
         this.movementSpeed = 0;
-        this.lifetime = 2;
+        this.lifetime = 0.5f;
         this.damage = 2;
 
         sprite = ItemSpriteFactory.CreateSwordSprite(direction);
@@ -27,7 +29,8 @@ public class PlayerSword : Projectile
 
     protected override void Move()
     {
-       //Sword does not move
+       //Sword tracks the player
+       this.position = Player.Instance.Position + Util.CardinalToUnitVector(direction) * swordOffset;
     }
 
     public override void Destroy()
