@@ -34,7 +34,7 @@ namespace AwesomeRPG.Controllers
             HandleKeyPresses(currentState);
 
             //TODO: change as we migrate to state-by-class
-            HandleStanding(currentState);
+            //HandleStanding(currentState);
         }
 
         //Checks keys in keyPressMappings to see if it just got pressed if so executes command

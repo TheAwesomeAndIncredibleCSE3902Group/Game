@@ -3,9 +3,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using AwesomeRPG.Sprites;
 using System;
-using System.Diagnostics;
 using static AwesomeRPG.Util;
-using static AwesomeRPG.Player;
 
 namespace AwesomeRPG;
 
@@ -20,6 +18,9 @@ public class PlayerStateMachine
     private States currentState;
     private States previousState;
     private PlayerSpriteFactory spriteFactory;
+    private float timeSinceStateChange;
+    private const float hurtTime = 0.5f;
+    private const float itemUseTime = 0.5f;
 
     public PlayerStateMachine()
     {
@@ -69,7 +70,6 @@ public class PlayerStateMachine
 
     public void ChangeDirection(Cardinal newDirection)
     {
-        ChangeStateStanding();
         spriteFactory.ChangeDirection(newDirection);
         currentDirection = newDirection;
     }
@@ -93,7 +93,7 @@ public class PlayerStateMachine
 
     public void ChangeStateItemUse()
     {
-        if (currentState == States.Standing)
+        if (currentState == States.Standing || currentState == States.Damaged || currentState == States.Walking)
         {
             currentState = States.ItemUse;
         }
@@ -131,27 +131,56 @@ public class PlayerStateMachine
     {
         if (currentState != previousState)
         {
-            switch (currentState)
-            {
-                case States.Walking:
-                    spriteFactory.ChangeSpriteWalking();
-                    break;
-
-                case States.ItemUse:
-                    spriteFactory.ChangeSpriteItemUse();
-                    break;
-
-                case States.Damaged:
-                    spriteFactory.ChangeSpriteDamaged();
-                    break;
-
-                case States.Standing:
-                    spriteFactory.ChangeSpriteStanding();
-                    break;
-            }
+            UpdateSprite();
             previousState = currentState;
+            timeSinceStateChange = 0;
+        }
+        else
+            AdvanceStateTime(gt);
+    }
+
+    /// <summary>
+    /// Handles the logic for all time-limited states. Also handles the transition from Walking to Standing
+    /// </summary>
+    /// <param name="gt"></param>
+    private void AdvanceStateTime(GameTime gt)
+    {
+        timeSinceStateChange += (float)gt.ElapsedGameTime.TotalSeconds;
+
+        if (currentState == States.Damaged && timeSinceStateChange > hurtTime)
+            ChangeStateStanding();
+
+        //This is coupled with Player, plus requires the correct order between the Controllers and This. Neither of which do I love
+        else if (currentState == States.Walking && !Player.Instance.HasMovedThisFrame)
+            ChangeStateStanding();
+
+        else if (currentState == States.ItemUse && timeSinceStateChange > itemUseTime)
+            ChangeStateStanding();
+    }
+
+    //This could be a Dictionary if we wanted to collapse this a bit
+    private void UpdateSprite()
+    {
+        switch (currentState)
+        {
+            case States.Walking:
+                spriteFactory.ChangeSpriteWalking();
+                break;
+
+            case States.ItemUse:
+                spriteFactory.ChangeSpriteItemUse();
+                break;
+
+            case States.Damaged:
+                spriteFactory.ChangeSpriteDamaged();
+                break;
+
+            case States.Standing:
+                spriteFactory.ChangeSpriteStanding();
+                break;
         }
     }
+    
     public void Draw(GameTime gt, Vector2 position)
     {
         spriteFactory.Draw(gt,position);

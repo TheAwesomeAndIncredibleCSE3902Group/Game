@@ -5,7 +5,6 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using AwesomeRPG.Sprites;
 using static AwesomeRPG.Util;
-using static AwesomeRPG.PlayerStateMachine;
 
 namespace AwesomeRPG;
 
@@ -22,7 +21,7 @@ public class Player
     public Dictionary<IEquipment.Projectiles, Projectile> spawnedProjectiles { get; set; } = new();
 
     //Whether this has moved yet this frame. Please be careful of any timing issues / race conditions with the Controllers.
-    private bool hasMoved;
+    public bool HasMovedThisFrame { get; set; }
     
     //In pixels per tick. Might change to pixels per second later
     private float movementSpeed = 2;
@@ -52,7 +51,7 @@ public class Player
 
     public void Update(GameTime gt)
     {
-        hasMoved = false;
+        HasMovedThisFrame = false;
 
         foreach (Projectile projectile in spawnedProjectiles.Values)
         {
@@ -69,24 +68,25 @@ public class Player
     /// </summary>
     public void Move(Cardinal direction)
     {
-        if (hasMoved)
+        if (HasMovedThisFrame)
             return;
-
-        if (PStateMachine.Direction != direction)
-        {
-            PStateMachine.ChangeDirection(direction);
-        }
 
         PStateMachine.ChangeStateWalking();
 
-        if (PStateMachine.GetCurrentState() == States.Walking)
+        PlayerStateMachine.States newState = PStateMachine.GetCurrentState();
+        if (newState == PlayerStateMachine.States.Walking 
+            || newState == PlayerStateMachine.States.Damaged 
+            || newState == PlayerStateMachine.States.ItemUse)
         {
+            if (PStateMachine.Direction != direction)
+                PStateMachine.ChangeDirection(direction);
+
             //Grabbing the direction from PlayerState here ensures that IPlayerState is the ultimate authority
             Cardinal newDirection = PStateMachine.Direction;
             Position += movementSpeed * Util.CardinalToUnitVector(newDirection);
         }
 
-        hasMoved = true;
+        HasMovedThisFrame = true;
     }
 
     public void TakeDamage(int amount = 1)
