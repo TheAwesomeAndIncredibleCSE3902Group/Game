@@ -12,12 +12,13 @@ namespace AwesomeRPG.Characters;
 public abstract class CharacterEnemyBase : ICharacter
 {
     protected AnimatableSprite _sprite;
+    public IPathingScheme Pathing { get; set; } = null;
 
     public Vector2 Position;
 
     public Cardinal Direction;
 
-    private Boolean _moving = true;
+    private bool _moving = true;
 
     
     public CharacterEnemyBase(Vector2 position, Cardinal direction)
@@ -27,7 +28,14 @@ public abstract class CharacterEnemyBase : ICharacter
     }
 
     public void Update(GameTime gameTime)
-    {        
+    {
+        if (Pathing is not null)
+        {
+            Pathing.Update(gameTime);
+            Direction = Pathing.GetDirection();
+            //TODO: change direction sprite
+        }
+
         if (_moving)
         {
             switch (Direction)
@@ -52,4 +60,6 @@ public abstract class CharacterEnemyBase : ICharacter
     {
         _sprite.Draw(gameTime, Position);
     }
+
+    public abstract void ChangeDirection(Cardinal direction);
 }

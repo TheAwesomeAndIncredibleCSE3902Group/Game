@@ -14,7 +14,12 @@ public class CharacterKris : ICharacter
     {
         _sprite = CharacterSpriteFactory.Instance.KrisSprite(); 
     }
-
+    public IPathingScheme Pathing
+    {
+        //This Character does not have an IPathingScheme
+        get => null;
+        set { }
+    }
     protected AnimatableSprite _sprite;
     public Vector2 Position;
 
@@ -26,5 +31,10 @@ public class CharacterKris : ICharacter
     public void Draw(GameTime gameTime)
     {
         _sprite.Draw(gameTime, Position);
+    }
+
+    public void ChangeDirection(Util.Cardinal direction)
+    {
+        throw new NotImplementedException();
     }
 }

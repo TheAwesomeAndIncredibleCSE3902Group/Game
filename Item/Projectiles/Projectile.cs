@@ -23,7 +23,7 @@ public abstract class Projectile
 
     public void Update(GameTime gt)
     {
-        age += gt.ElapsedGameTime.Milliseconds / 1000f;
+        age += (float)gt.ElapsedGameTime.TotalSeconds;
         if (age > lifetime)
             Destroy();
         else

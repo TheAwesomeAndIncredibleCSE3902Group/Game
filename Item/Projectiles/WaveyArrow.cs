@@ -54,7 +54,7 @@ public class WaveyArrow : Projectile
         float offset = (float)(baseAmplitude * (Math.Sin(x) + Math.Sin(3 * x) / 3));
         //float offset = (float) (baseAmplitude * (Math.Sin(x) + Math.Sin(3 * x) / 6 + Math.Sin(5 * x) / 10));
 
-        Cardinal modCardinal = (Cardinal)((int)(direction + 1) % 4);
+        Cardinal modCardinal = direction.Rotate();
         Vector2 vectorOffset = Util.CardinalToUnitVector(modCardinal) * offset;
         position = linearPos + vectorOffset;
     }

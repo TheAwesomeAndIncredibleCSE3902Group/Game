@@ -10,4 +10,9 @@ public class CharacterEnemyLynel : CharacterEnemyBase
     {
         _sprite = CharacterSpriteFactory.Instance.LynelSprite();
     }
+
+    public override void ChangeDirection(Cardinal direction)
+    {
+        throw new System.NotImplementedException();
+    }
 }

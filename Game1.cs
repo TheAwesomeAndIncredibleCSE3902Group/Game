@@ -89,6 +89,7 @@ public class Game1 : Game
         _characterSet.Add(new CharacterEnemyArmos(new Vector2(300, 350), Util.Cardinal.down));
         _characterSet.Add(new CharacterEnemyLynel(new Vector2(300, 350), Util.Cardinal.right));
         _characterSet.Add(new CharacterKris());
+        _characterSet[0].Pathing = new RandomWalkPathing(Util.Cardinal.right);
         currentEnemy = 0;
     }
 

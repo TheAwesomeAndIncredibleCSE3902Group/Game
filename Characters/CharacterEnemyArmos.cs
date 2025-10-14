@@ -10,4 +10,9 @@ public class CharacterEnemyArmos : CharacterEnemyBase
     {
         _sprite = CharacterSpriteFactory.Instance.ArmosSprite();
     }
+
+    public override void ChangeDirection(Cardinal direction)
+    {
+        throw new System.NotImplementedException();
+    }
 }
