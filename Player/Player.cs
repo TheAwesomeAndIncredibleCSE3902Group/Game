@@ -5,15 +5,18 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using AwesomeRPG.Sprites;
 using static AwesomeRPG.Util;
+using AwesomeRPG.Collision;
 
 namespace AwesomeRPG;
 
-public class Player
+public class Player : CollisionObject
 {
     //Singleton pattern seems acceptable for the player
     public static Player Instance { get; private set; }
     public Cardinal FacingDirection => PStateMachine.Direction;
     public Vector2 Position { get; set; }
+
+    public CollisionRect Collider { get; private set; }
 
     public PlayerStateMachine PStateMachine { get; private set; }
 
@@ -34,6 +37,9 @@ public class Player
         //Throwing in a random position so the sprite isn't halfway off the screen or something
         Vector2 startingPos = new Vector2(300, 300);
         Position = startingPos;
+
+        int spriteSize = 15;
+        Collider = new CollisionRect(this, spriteSize, spriteSize);
 
         PStateMachine = new PlayerStateMachine();
         PStateMachine.LoadPlayer(content, _spriteBatch);
