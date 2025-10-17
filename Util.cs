@@ -52,12 +52,26 @@ public static class Util
             _ => throw new ArgumentException("Invalid Cardinal!")
         };
     }
-    
+
     public static Cardinal Rotate(this Cardinal cardinal, bool clockwise = true)
     {
         if (clockwise)
             return (Cardinal)((int)(cardinal + 1) % 4);
         else
             return (Cardinal)((int)(cardinal - 1) % 4);
+    }
+
+    public static Cardinal ToCard(this Collision.CollisionInfo.CollisionDirection direction)
+    {
+        if (direction == Collision.CollisionInfo.CollisionDirection.None)
+            throw new ArgumentException("CollisionDirection cannot be null!");
+
+        return direction switch
+            {
+                Collision.CollisionInfo.CollisionDirection.Bottom => Cardinal.down,
+                Collision.CollisionInfo.CollisionDirection.Top => Cardinal.up,
+                Collision.CollisionInfo.CollisionDirection.Right => Cardinal.right,
+                Collision.CollisionInfo.CollisionDirection.Left => Cardinal.left
+            };
     }
 }

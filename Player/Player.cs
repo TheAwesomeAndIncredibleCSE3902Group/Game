@@ -19,8 +19,9 @@ public class Player : CollisionObject
     public CollisionRect Collider { get; private set; }
 
     public PlayerStateMachine PStateMachine { get; private set; }
+    public PlayerCollisionHandler CollisionHandler { get; private set; }
 
-    public Dictionary<IEquipment.Weapons,IEquipment> Equipment { get; } = new();
+    public Dictionary<IEquipment.Weapons, IEquipment> Equipment { get; } = new();
     public Dictionary<IEquipment.Projectiles, Projectile> spawnedProjectiles { get; set; } = new();
 
     //Whether this has moved yet this frame. Please be careful of any timing issues / race conditions with the Controllers.
@@ -43,6 +44,8 @@ public class Player : CollisionObject
 
         PStateMachine = new PlayerStateMachine();
         PStateMachine.LoadPlayer(content, _spriteBatch);
+
+        CollisionHandler = new PlayerCollisionHandler();
     }
 
     public void Draw(GameTime gt)
