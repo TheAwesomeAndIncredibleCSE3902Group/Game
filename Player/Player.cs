@@ -14,10 +14,6 @@ public class Player : CollisionObject
     //Singleton pattern seems acceptable for the player
     public static Player Instance { get; private set; }
     public Cardinal FacingDirection => PStateMachine.Direction;
-    public Vector2 Position { get; set; }
-
-    public CollisionRect Collider { get; private set; }
-
     public PlayerStateMachine PStateMachine { get; private set; }
     public PlayerCollisionHandler CollisionHandler { get; private set; }
 
@@ -41,6 +37,7 @@ public class Player : CollisionObject
 
         int spriteSize = 15;
         Collider = new CollisionRect(this, spriteSize, spriteSize);
+        Type = CollisionObjectType.Player;
 
         PStateMachine = new PlayerStateMachine();
         PStateMachine.LoadPlayer(content, _spriteBatch);

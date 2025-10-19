@@ -9,21 +9,35 @@ using AwesomeRPG.Commands;
 using AwesomeRPG.Controllers;
 using AwesomeRPG.Sprites;
 using AwesomeRPG.Map;
+using AwesomeRPG.Collision;
 
 namespace AwesomeRPG;
 
 public class Game1 : Game
 {
+    //Monogame required
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
+    
+    //Controls Variables
+    private List<IController> _controllersList = [];
+
+    //Object Variables
     private Dictionary<string,ISprite> _spriteDict = [];
     public List<ICharacter> _characterSet = [];
     public int currentEnemy;
     private int _chosenSprite = 0;
-    private List<IController> _controllersList = [];
+    public Player Player { get; private set; }
+
+    //Collision Variables
+    private List<CollisionObject> _movingCollisionObjects = new();
+    private List<CollisionObject> _nonMovingCollisionObjects = new();
+    AllCollisionHandler _allCollisionHandler;
+
+    //Map Variables
     public Tilemap Tilemap;
     public List<int> Tiles;
-    public Player Player { get; private set; }
+    
 
     public void SetChosenSprite(int val)
     {
@@ -61,6 +75,7 @@ public class Game1 : Game
     protected override void Initialize()
     {
         _controllersList.Add(new MouseController(this, SetChosenSprite));
+        _allCollisionHandler = new AllCollisionHandler();
         base.Initialize();
     }
 
@@ -78,13 +93,14 @@ public class Game1 : Game
         //World Creation
         Tilemap = Tilemap.FromFile(Content, "TileImages\\test_tiles_definition.xml");
 
-        //TEMP should be removed in the future, player shouldn't know about sprites
-        //Because KeyboardController needs player and Player needs sprite its here
+        //Player declaration
+        //TODO: PROBABLY WANNA HAVE A METHOD IN EACH LEVEL WHICH HANDLES ADDING THINGS TO COLLISION LIST
         Player = new Player(Content,_spriteBatch);
-        CharacterSpriteFactory.Instance.LoadAllTextures(Content, _spriteBatch);
+        _movingCollisionObjects.Add(Player);
         _controllersList.Add(new KeyboardController(this));
 
         //NPC creation
+        CharacterSpriteFactory.Instance.LoadAllTextures(Content, _spriteBatch);
         _characterSet.Add(new CharacterEnemyMoblin(new Vector2(300, 350), Util.Cardinal.up));
         _characterSet.Add(new CharacterEnemyArmos(new Vector2(300, 350), Util.Cardinal.down));
         _characterSet.Add(new CharacterEnemyLynel(new Vector2(300, 350), Util.Cardinal.right));
@@ -93,11 +109,24 @@ public class Game1 : Game
         currentEnemy = 0;
     }
 
+    private void HandleCollisions()
+    {
+        for (int i = 0; i< _movingCollisionObjects.Count; i++)
+        {
+            foreach (CollisionObject nonMovingObject in _nonMovingCollisionObjects)
+            {
+                CollisionInfo collision = _movingCollisionObjects[i].DetectCollision(nonMovingObject);
+                _allCollisionHandler.HandleCollision(collision);
+            }
+            for (int j = i+1; j < _movingCollisionObjects.Count; j++)
+            {
+                CollisionInfo collision = _movingCollisionObjects[i].DetectCollision(_movingCollisionObjects[j]);
+                _allCollisionHandler.HandleCollision(collision);
+            }
+        }
+    }
     protected override void Update(GameTime gameTime)
     {
-        if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-            Exit();
-
         foreach (IController controller in _controllersList) {
             controller.Update();
         }
@@ -105,7 +134,7 @@ public class Game1 : Game
         Player.Update(gameTime);
 
         _characterSet[currentEnemy].Update(gameTime);
-
+        HandleCollisions();
         base.Update(gameTime);
     }
 

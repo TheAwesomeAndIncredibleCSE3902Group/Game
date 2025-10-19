@@ -61,17 +61,17 @@ public static class Util
             return (Cardinal)((int)(cardinal - 1) % 4);
     }
 
-    public static Cardinal ToCard(this Collision.CollisionInfo.CollisionDirection direction)
+    public static Cardinal ToCard(this Collision.CollisionDirection direction)
     {
-        if (direction == Collision.CollisionInfo.CollisionDirection.None)
+        if (direction == Collision.CollisionDirection.None)
             throw new ArgumentException("CollisionDirection cannot be null!");
 
         return direction switch
             {
-                Collision.CollisionInfo.CollisionDirection.Bottom => Cardinal.down,
-                Collision.CollisionInfo.CollisionDirection.Top => Cardinal.up,
-                Collision.CollisionInfo.CollisionDirection.Right => Cardinal.right,
-                Collision.CollisionInfo.CollisionDirection.Left => Cardinal.left
+                Collision.CollisionDirection.Bottom => Cardinal.down,
+                Collision.CollisionDirection.Top => Cardinal.up,
+                Collision.CollisionDirection.Right => Cardinal.right,
+                Collision.CollisionDirection.Left => Cardinal.left
             };
     }
 }

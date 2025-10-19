@@ -2,32 +2,44 @@
 
 namespace AwesomeRPG.Collision
 {
+    public enum CollisionObjectType { Player, Enemy, Wall }
     public abstract class CollisionObject
     {
         public Vector2 Position { get; set; }
 
-        public CollisionRect Collider { get; }
+        public CollisionRect Collider { get; protected set; }
 
-        public CollisionInfo DetectCollision(CollisionObject collisionObject)
+        public CollisionObjectType Type { get; protected set; }
+
+        /// <summary>
+        /// Creates a collisionInfo tracks in which direction the objects collided
+        /// </summary>
+        /// <param name="otherCollisionObject"></param>
+        /// <returns>CollisionInfo which carries the objects collided along with the direction of collision</returns>
+        public CollisionInfo DetectCollision(CollisionObject otherCollisionObject)
         {
-            Rectangle intersectRect = Rectangle.Intersect(this.Collider.GetCollisionRect(), collisionObject.Collider.GetCollisionRect());
-            CollisionInfo.CollisionDirection direction = CollisionInfo.CollisionDirection.None;
-            return new CollisionInfo(this, collisionObject, direction);
+            Rectangle intersectRect = Rectangle.Intersect(Collider.GetCollisionRect(), otherCollisionObject.Collider.GetCollisionRect());
+            CollisionDirection direction = GetCollisionDirection(otherCollisionObject, intersectRect);
+            return new CollisionInfo(this, otherCollisionObject, direction);
         }
 
-        /*
-        private CollisionInfo.CollisionDirection GetCollisionDirection(Rectangle intersectRect)
+        
+        private CollisionDirection GetCollisionDirection(CollisionObject otherCollisionObject, Rectangle intersectRect)
         { 
-            if(intersectRect.IsEmpty)
+            if(intersectRect.Width > 0)
             {
-                 return CollisionInfo.CollisionDirection.None;
+                return Position.X < otherCollisionObject.Position.X ? CollisionDirection.Left : CollisionDirection.Right; 
             }
-            else if(intersectRect.Width > 0)
+            else if(intersectRect.Height > 0)
             {
-                return 
+                return Position.Y < otherCollisionObject.Position.Y ? CollisionDirection.Top : CollisionDirection.Bottom;
+            }
+            else
+            {
+                return CollisionDirection.None;
             }
         }
-        */
+        
 
     }
 }
