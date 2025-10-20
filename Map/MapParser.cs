@@ -34,8 +34,6 @@ public class MapParser
         _characterSet = characters;
     }
 
-    public enum EntityType { Player, Enemy, Item, Block }
-
     public RoomMap RoomMapFromXML(ContentManager content, string filename, Vector2 scale)
     {
         string filePath = Path.Combine(content.RootDirectory, filename);
@@ -107,7 +105,6 @@ public class MapParser
                 RoomMap map = new RoomMap(tilemap);
 
                 IEnumerable entityElements = mapElement.Element("Entities").Elements("Entity");
-                int j = 0;
                 foreach (XElement entity in entityElements)
                 {
                     string type = entity.Value.Trim().ToLower();
