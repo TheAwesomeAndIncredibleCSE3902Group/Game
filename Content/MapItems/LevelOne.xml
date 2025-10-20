@@ -2,7 +2,7 @@
 <Map>
   <Tilemap>
     <Tileset width="80" height="80" tileWidth="20" tileHeight="20">TileImages/test_tiles</Tileset>
-    <Tiles>
+    <Tiles rows="9" columns="16">
       <Row>00 01 02 01 02 01 02 01 02 01 02 01 02 01 02 03</Row>
       <Row>04 05 05 06 05 05 06 05 05 06 05 05 06 05 05 07</Row>
       <Row>08 09 09 09 09 09 09 09 09 09 09 09 09 09 09 11</Row>
@@ -15,6 +15,6 @@
     </Tiles>
   </Tilemap>
   <Entities>
-    <Entity type="" x="" y=""/>
+    <Entity type="player" x="40" y="60"/>
   </Entities>
 </Map>

@@ -125,12 +125,8 @@ public class Tilemap
             tile.Draw(spriteBatch, position, Color.White, 0.0f, Vector2.Zero, Scale, SpriteEffects.None, 1.0f);
         }
     }
-    /// <summary>
-    /// Creates a new tilemap based on a tilemap xml configuration file.
-    /// </summary>
-    /// <param name="content">The content manager used to load the texture for the tileset.</param>
-    /// <param name="filename">The path to the xml file, relative to the content root directory.</param>
-    /// <returns>The tilemap created by this method.</returns>
+
+    // to be removed, should be handled in MapParser
     public static Tilemap FromFile(ContentManager content, string filename)
     {
         string filePath = Path.Combine(content.RootDirectory, filename);
