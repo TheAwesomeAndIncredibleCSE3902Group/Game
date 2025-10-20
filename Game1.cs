@@ -90,8 +90,14 @@ public class Game1 : Game
         //Create item(Probably could be improved, _spriteDict might not be needed anymore)
         _spriteDict.Add("item", MapItemSpriteFactory.CreatePotionSprite());
 
+
+        //NPC creation
+        CharacterSpriteFactory.Instance.LoadAllTextures(Content, _spriteBatch);
+        currentEnemy = 0;
+
         //World Creation
-        RoomMap = MapParser.RoomMapFromXML(Content, "MapItems\\LevelOne.xml", new Vector2(2,2));
+        MapParser.SetupParser(_characterSet);
+        RoomMap = MapParser.Instance.RoomMapFromXML(Content, "MapItems\\LevelOne.xml", new Vector2(2,2));
 
         //Player declaration
         //TODO: PROBABLY WANNA HAVE A METHOD IN EACH LEVEL WHICH HANDLES ADDING THINGS TO COLLISION LIST
@@ -99,14 +105,6 @@ public class Game1 : Game
         _movingCollisionObjects.Add(Player);
         _controllersList.Add(new KeyboardController(this));
 
-        //NPC creation
-        CharacterSpriteFactory.Instance.LoadAllTextures(Content, _spriteBatch);
-        _characterSet.Add(new CharacterEnemyMoblin(new Vector2(300, 350), Util.Cardinal.up));
-        _characterSet.Add(new CharacterEnemyArmos(new Vector2(300, 350), Util.Cardinal.down));
-        _characterSet.Add(new CharacterEnemyLynel(new Vector2(300, 350), Util.Cardinal.right));
-        _characterSet.Add(new CharacterKris());
-        _characterSet[0].Pathing = new RandomWalkPathing(Util.Cardinal.right);
-        currentEnemy = 0;
     }
 
     private void HandleCollisions()
