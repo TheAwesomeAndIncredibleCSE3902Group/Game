@@ -14,17 +14,6 @@ public class RoomMap
         _tilemap = map;
     }
 
-    // TODO: need a way to position characters, items, etc. when loading a map
-    public void AddCharacter(ICharacter character, Vector2 position)
-    {
-
-    }
-
-    public void AddItem(Vector2 position)
-    {
-
-    }
-
 
     // we might use this later to make some sort of minimap or map item. 
     public Tilemap GenMap()

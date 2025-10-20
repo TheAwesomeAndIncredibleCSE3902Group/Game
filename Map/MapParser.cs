@@ -147,6 +147,9 @@ public class MapParser
                         {
                             switch (entity.Attribute("pathing").Value.Trim().ToLower())
                             {
+                                case "line":
+                                    pathing = new LinePathing(facing);
+                                    break;
                                 case "random":
                                 default:
                                     pathing = new RandomWalkPathing(facing);
@@ -185,7 +188,6 @@ public class MapParser
                     }
                     
                 }
-
 
                 return map;
 
