@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.IO;
 using System.Xml;
 using System.Xml.Linq;
@@ -15,7 +16,7 @@ public static class MapParser
 {
     public enum EntityType { Player, Enemy, Item, Block }
 
-    public static RoomMap RoomMapFromXML(ContentManager content, string filename, Cardinal? enteredfrom)
+    public static RoomMap RoomMapFromXML(ContentManager content, string filename, Vector2 scale)
     {
         string filePath = Path.Combine(content.RootDirectory, filename);
 
@@ -24,7 +25,7 @@ public static class MapParser
             using (XmlReader reader = XmlReader.Create(stream))
             {
                 XDocument doc = XDocument.Load(reader);
-                XElement root = doc.Root;
+                XElement mapElement = doc.Root;
 
                 // The <Tileset> element contains the information about the tileset
                 // used by the tilemap.
@@ -34,11 +35,8 @@ public static class MapParser
                 //      <Tileset region="100 100" tileWidth="10" tileHeight="10">contentPath</Tileset>
                 //      <Tiles>...</Tiles>
                 // </Tilemap>
-                XElement tilemapElement = root.Element("Tilemap");
+                XElement tilemapElement = mapElement.Element("Tilemap");
                 XElement tilesetElement = tilemapElement.Element("Tileset");
-
-                string regionAttribute = tilesetElement.Attribute("region").Value;
-                string[] split = regionAttribute.Split(" ", StringSplitOptions.RemoveEmptyEntries);
                 int width = int.Parse(tilesetElement.Attribute("width").Value);
                 int height = int.Parse(tilesetElement.Attribute("height").Value);
 
@@ -61,26 +59,29 @@ public static class MapParser
                 //      <Row>03 04 04 05</Row>
                 //      <Row>06 07 07 08</Row>
                 // </Tiles>
-                XElement tilesElement = root.Element("Tiles");
+                XElement tilesElement = tilemapElement.Element("Tiles");
 
                 Tilemap tilemap = new Tilemap(tileset,
                                         int.Parse(tilesElement.Attribute("columns").Value),
                                         int.Parse(tilesElement.Attribute("rows").Value));
+                tilemap.Scale = scale;
 
                 // set up tilemap using data from rows
-                XElement[] rowElements = (XElement[])tilesElement.Elements("Row");
-                for (int row = 0; row < rowElements.Length; row++)
+                IEnumerable rowElements = tilesElement.Elements("Row");
+                int i = 0;
+                foreach (XElement row in rowElements)
                 {
 
-                    string[] rowTileIDs = rowElements[row].Value.Trim().Split(" ", StringSplitOptions.RemoveEmptyEntries);
+                    string[] rowTileIDs = row.Value.Trim().Split(" ", StringSplitOptions.RemoveEmptyEntries);
                     for (int column = 0; column < rowTileIDs.Length; column++)
                     {
                         int tilesetIndex = int.Parse(rowTileIDs[column]);
 
                         Tile region = tileset.GetTile(tilesetIndex);
 
-                        tilemap.SetTile(column, row, tilesetIndex);
+                        tilemap.SetTile(column, i, tilesetIndex);
                     }
+                    i++;
                 }
                 
                 return new RoomMap(tilemap);

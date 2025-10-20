@@ -20,6 +20,9 @@
 /processorParam:TextureFormat=Compressed
 /build:Fonts/MyFont.spritefont
 
+#begin MapItems/LevelOne.xml
+/copy:MapItems/LevelOne.xml
+
 #begin SpriteImages/enemy_sprites.png
 /importer:TextureImporter
 /processor:TextureProcessor

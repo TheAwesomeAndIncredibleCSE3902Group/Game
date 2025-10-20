@@ -1,7 +1,6 @@
-using System.Linq;
 using System.Numerics;
 using AwesomeRPG.Characters;
-using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace AwesomeRPG.Map;
 
@@ -26,7 +25,7 @@ public class RoomMap
 
     }
 
-    
+
     // we might use this later to make some sort of minimap or map item. 
     public Tilemap GenMap()
     {
@@ -40,6 +39,11 @@ public class RoomMap
         }
         return _minimap;
 
+    }
+    
+    public void Draw(SpriteBatch spriteBatch)
+    {
+        _tilemap.Draw(spriteBatch);
     }
 
     

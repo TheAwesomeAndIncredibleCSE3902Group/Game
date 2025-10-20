@@ -35,7 +35,7 @@ public class Game1 : Game
     AllCollisionHandler _allCollisionHandler;
 
     //Map Variables
-    public Tilemap Tilemap;
+    public RoomMap RoomMap;
     public List<int> Tiles;
     
 
@@ -91,7 +91,7 @@ public class Game1 : Game
         _spriteDict.Add("item", MapItemSpriteFactory.CreatePotionSprite());
 
         //World Creation
-        Tilemap = Tilemap.FromFile(Content, "TileImages\\test_tiles_definition.xml");
+        RoomMap = MapParser.RoomMapFromXML(Content, "MapItems\\LevelOne.xml", new Vector2(2,2));
 
         //Player declaration
         //TODO: PROBABLY WANNA HAVE A METHOD IN EACH LEVEL WHICH HANDLES ADDING THINGS TO COLLISION LIST
@@ -144,7 +144,7 @@ public class Game1 : Game
 
         _spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp);
 
-        Tilemap.Draw(_spriteBatch);
+        RoomMap.Draw(_spriteBatch);
         Player.Draw(gameTime);
         _characterSet[currentEnemy].Draw(gameTime);
 

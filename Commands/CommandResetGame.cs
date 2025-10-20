@@ -24,7 +24,6 @@ namespace AwesomeRPG.Commands
             myGame._characterSet.Add(new CharacterEnemyLynel(new Vector2(300, 350), Util.Cardinal.right));
             myGame._characterSet.Add(new CharacterKris());
             myGame.ChangeGameSpriteToNewSprite("item", MapItemSpriteFactory.CreatePotionSprite());
-            myGame.Tilemap.SetTile(1, 2, 9);
             myGame.Player.Position = new Vector2(300, 300);
             myGame.currentEnemy = 0;
         }

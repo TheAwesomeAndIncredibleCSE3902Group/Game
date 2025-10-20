@@ -76,8 +76,6 @@ namespace AwesomeRPG.Controllers
             keyPressMappings[Keys.I] = new CommandSwitchMapItemSprite(game, true);
             keyPressMappings[Keys.O] = new CommandSwitchEnemySprite(game, false);
             keyPressMappings[Keys.P] = new CommandSwitchEnemySprite(game, true);
-            keyPressMappings[Keys.T] = new CommandSwitchBlockSprite(game.Tilemap, false, 1, 2);
-            keyPressMappings[Keys.Y] = new CommandSwitchBlockSprite(game.Tilemap, true, 1, 2);
         }
         //Initialize commands which relate to weapons and item use
         private void InitializeWeaponCommands(Game1 game)
