@@ -14,6 +14,8 @@ public interface IPlayer
     //I'm not entirely sure whether Player or PlayerState should handle this sprite
     public ISprite Sprite { get; set; }
     public IPlayerState PlayerState { get; }
+    public PlayerCollisionHandler CollisionHandler { get; }
+
     public List<IEquipment> Equipment { get; }
 
     public void BeIdle();

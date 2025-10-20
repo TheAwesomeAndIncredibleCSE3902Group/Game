@@ -10,4 +10,9 @@ public class CharacterEnemyMoblin : CharacterEnemyBase
     {
         _sprite = CharacterSpriteFactory.Instance.MoblinSprite();
     }
+
+    public override void ChangeDirection(Cardinal direction)
+    {
+        throw new System.NotImplementedException();
+    }
 }

@@ -5,19 +5,19 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using AwesomeRPG.Sprites;
 using static AwesomeRPG.Util;
+using AwesomeRPG.Collision;
 
 namespace AwesomeRPG;
 
-public class Player
+public class Player : CollisionObject
 {
     //Singleton pattern seems acceptable for the player
     public static Player Instance { get; private set; }
     public Cardinal FacingDirection => PStateMachine.Direction;
-    public Vector2 Position { get; set; }
-
     public PlayerStateMachine PStateMachine { get; private set; }
+    public PlayerCollisionHandler CollisionHandler { get; private set; }
 
-    public Dictionary<IEquipment.Weapons,IEquipment> Equipment { get; } = new();
+    public Dictionary<IEquipment.Weapons, IEquipment> Equipment { get; } = new();
     public Dictionary<IEquipment.Projectiles, Projectile> spawnedProjectiles { get; set; } = new();
 
     //Whether this has moved yet this frame. Please be careful of any timing issues / race conditions with the Controllers.
@@ -35,8 +35,14 @@ public class Player
         Vector2 startingPos = new Vector2(300, 300);
         Position = startingPos;
 
+        int spriteSize = 15;
+        Collider = new CollisionRect(this, spriteSize, spriteSize);
+        Type = CollisionObjectType.Player;
+
         PStateMachine = new PlayerStateMachine();
         PStateMachine.LoadPlayer(content, _spriteBatch);
+
+        CollisionHandler = new PlayerCollisionHandler();
     }
 
     public void Draw(GameTime gt)

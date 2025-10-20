@@ -9,7 +9,9 @@ namespace AwesomeRPG.Characters;
 
 public interface ICharacter
 {
+    public IPathingScheme Pathing {get; set;}
 
     public void Update(GameTime gameTime);
     public void Draw(GameTime gameTime);
+    public void ChangeDirection(Util.Cardinal direction);
 }

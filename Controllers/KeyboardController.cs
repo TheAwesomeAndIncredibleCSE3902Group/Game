@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Input;
 using AwesomeRPG.Commands;
 
@@ -13,9 +9,6 @@ namespace AwesomeRPG.Controllers
     {
         private Dictionary<Keys, ICommand> keyPressMappings;
         private Dictionary<Keys, ICommand> keyDownMappings;
-
-        //TODO: change as we migrate to state-by-class
-        private ICommand playerToStandingCommand;
 
         private KeyboardState _previousState;
         public KeyboardController(Game1 game)
@@ -32,9 +25,6 @@ namespace AwesomeRPG.Controllers
             KeyboardState currentState = Keyboard.GetState();
             HandleKeyDowns(currentState);
             HandleKeyPresses(currentState);
-
-            //TODO: change as we migrate to state-by-class
-            //HandleStanding(currentState);
         }
 
         //Checks keys in keyPressMappings to see if it just got pressed if so executes command
@@ -64,35 +54,6 @@ namespace AwesomeRPG.Controllers
             }
         }
 
-        /// <summary>
-        /// Very quick and dirty way to enter standing state when no movement, nor item use is input
-        /// TODO: change as we migrate to state-by-class
-        /// </summary>
-        /// <param name="currentState"></param>
-        private void HandleStanding(KeyboardState currentState)
-        {
-            //If any movement or item key is pressed just return
-            if (currentState.IsKeyDown(Keys.W)
-                || currentState.IsKeyDown(Keys.A)
-                || currentState.IsKeyDown(Keys.S)
-                || currentState.IsKeyDown(Keys.D)
-                || currentState.IsKeyDown(Keys.Up)
-                || currentState.IsKeyDown(Keys.Right)
-                || currentState.IsKeyDown(Keys.Down)
-                || currentState.IsKeyDown(Keys.Left)
-                || currentState.IsKeyDown(Keys.D1)
-                || currentState.IsKeyDown(Keys.D2)
-                || currentState.IsKeyDown(Keys.E))
-            {
-                return;
-            }
-            //Otherwise transition to standing
-            else
-            {
-                playerToStandingCommand.Execute();
-            }
-        }
-
         //Links all keyboard commands into their keys
         private void InitializeCommands(Game1 game)
         {
@@ -100,8 +61,6 @@ namespace AwesomeRPG.Controllers
             InitializeSwapCommands(game);
             InitializeWeaponCommands(game);
             InitializeMovementCommands(game);
-            //TODO: change as we migrate to state-by-class
-            playerToStandingCommand = new CommandPlayerToStanding(game);
         }
         //Initialize commands which effect the application as a whole
         private void InitializeGameCommands(Game1 game)
