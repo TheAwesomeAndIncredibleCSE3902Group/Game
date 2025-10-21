@@ -63,15 +63,13 @@ public static class Util
 
     public static Cardinal ToCard(this Collision.CollisionDirection direction)
     {
-        if (direction == Collision.CollisionDirection.None)
-            throw new ArgumentException("CollisionDirection cannot be null!");
-
         return direction switch
             {
                 Collision.CollisionDirection.Bottom => Cardinal.down,
                 Collision.CollisionDirection.Top => Cardinal.up,
                 Collision.CollisionDirection.Right => Cardinal.right,
-                Collision.CollisionDirection.Left => Cardinal.left
+                Collision.CollisionDirection.Left => Cardinal.left,
+                _ => throw new ArgumentException("CollisionDirection cannot be null!")
             };
     }
 }

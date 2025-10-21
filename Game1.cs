@@ -29,12 +29,12 @@ public class Game1 : Game
 
     //Collision Variables
     private List<CollisionObject> _movingCollisionObjects = new();
-    public List<CollisionObject> _nonMovingCollisionObjects = new();
-    AllCollisionHandler _allCollisionHandler;
+    public List<CollisionObject> NonMovingCollisionObjects { get; set; } = new();
+    private AllCollisionHandler _allCollisionHandler;
 
     //Map Variables
-    public RoomMap RoomMap;
-    public List<int> Tiles;
+    public RoomMap RoomMap { get; set; }
+    public List<int> Tiles { get; set; }
     
 
     public void SetChosenSprite(int val)
@@ -107,7 +107,7 @@ public class Game1 : Game
     {
         for (int i = 0; i< _movingCollisionObjects.Count; i++)
         {
-            foreach (CollisionObject nonMovingObject in _nonMovingCollisionObjects)
+            foreach (CollisionObject nonMovingObject in NonMovingCollisionObjects)
             {
                 CollisionInfo collision = _movingCollisionObjects[i].DetectCollision(nonMovingObject);
                 _allCollisionHandler.HandleCollision(collision);
