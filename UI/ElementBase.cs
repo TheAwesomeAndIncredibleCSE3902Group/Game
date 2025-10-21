@@ -3,25 +3,47 @@
 using AwesomeRPG.Sprites;
 using Microsoft.Xna.Framework;
 
-namespace Sprint0.UI;
+namespace AwesomeRPG.UI;
 
-public abstract class ElementBase : IElement
+public abstract class ElementBase
 {
     public Rectangle OffsetAndSize { get; set; } = new Rectangle();
-    public IElement[] Children { get; } = [];
-    public bool IsSelectable { get; set; } = false;
-    public bool IsFloating { get; set; } = false;
-    public Color BackgroundColor { get; set; } = new Color(255, 255, 255, 0);
-    public AnimatableSprite BackgroundSprite { get; set; } = null;
-    public Spacing Margin { get; set; } = new Spacing(0);
-    public Spacing Padding { get; set; } = new Spacing(0);
+    public Point DerivedAbsolutePosition { get; private set; } = new Point(0, 0);
+    public bool DerivedAncestorIsSelected { get; private set; } = false;
+    public ElementBase[] Children { get; } = [];
+    public bool IsSelectable { get; private set; } = false;
+    public bool IsSelected = false;
     public ElementRoot RootElement { get; protected set; }
-    public FlowDirection Flow { get; set; } = FlowDirection.Row;
-    
-    public abstract void Draw(IElement parent);
 
-    public Point GetSpaceTaken() // width and height of the area that the element takes up, including margin
+    public abstract void Draw(GameTime gameTime, ElementBase parent);
+
+    protected void CalculateDerivedValuesFromAncestors(ElementBase parent)
     {
-        return new Point(OffsetAndSize.Width + Margin.Left + Margin.Right, OffsetAndSize.Height + Margin.Top + Margin.Bottom);
+        DerivedAbsolutePosition = parent.DerivedAbsolutePosition + OffsetAndSize.Location;
+        DerivedAncestorIsSelected = parent.IsSelected || parent.DerivedAncestorIsSelected;
+    }
+
+    protected void DrawChildren(GameTime gameTime)
+    {
+        // We will draw each of this element's children.
+        foreach (ElementBase child in Children)
+        {
+            child.Draw(gameTime, this);
+        }
+    }
+
+    public void MakeSelectable()
+    {
+        if (!IsSelectable)
+        {
+            IsSelectable = true;
+            RootElement.RegisterSelectableElement(this);
+        }
+    }
+
+    public void MakeUnselectable()
+    {
+        IsSelectable = false;
+            RootElement.UnregisterSelectableElement(this);
     }
 }

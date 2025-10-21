@@ -1,6 +1,6 @@
 using System;
 
-namespace Sprint0.UI;
+namespace AwesomeRPG.UI;
 
 public class UserInterfaceRoot
 {
