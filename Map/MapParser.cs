@@ -27,13 +27,6 @@ public class MapParser
         }
     }
 
-    private static List<ICharacter> _characterSet;
-
-    public static void SetupParser(List<ICharacter> characters)
-    {
-        _characterSet = characters;
-    }
-
     public RoomMap RoomMapFromXML(ContentManager content, string filename, Vector2 scale)
     {
         string filePath = Path.Combine(content.RootDirectory, filename);
@@ -163,21 +156,21 @@ public class MapParser
                         case "moblin":
                             CharacterEnemyMoblin moblin = new CharacterEnemyMoblin(position, facing);
                             moblin.Pathing = pathing;
-                            _characterSet.Add(moblin);
+                            map.Characters.Add(moblin);
                             break;
                         case "armos":
                             CharacterEnemyArmos armos = new CharacterEnemyArmos(position, facing);
                             armos.Pathing = pathing;
-                            _characterSet.Add(armos);
+                            map.Characters.Add(armos);
                             break;
                         case "lynel":
                             CharacterEnemyLynel lynel = new CharacterEnemyLynel(position, facing);
                             lynel.Pathing = pathing;
-                            _characterSet.Add(lynel);
+                            map.Characters.Add(lynel);
                             break;
                         case "kris":
                             CharacterKris kris = new CharacterKris();
-                            _characterSet.Add(kris);
+                            map.Characters.Add(kris);
                             break;
                         default:
                             Console.WriteLine("Type not supported: " + type);

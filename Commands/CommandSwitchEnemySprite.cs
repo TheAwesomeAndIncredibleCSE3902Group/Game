@@ -22,19 +22,21 @@ namespace AwesomeRPG.Commands
 
         public void Execute()
         {
-            int Size = myGame._characterSet.Count;
-            if (direction + myGame.currentEnemy >= Size)
-            {
-                myGame.currentEnemy = 0;
-            }
-            else if (direction + myGame.currentEnemy < 0)
-            {
-                myGame.currentEnemy = Size - 1;
-            }
-            else
-            {
-                myGame.currentEnemy += direction;
-            }
+            // TODO: might need to remove this command altogether
+
+            // int Size = myGame._characterSet.Count;
+            // if (direction + myGame.currentEnemy >= Size)
+            // {
+            //     myGame.currentEnemy = 0;
+            // }
+            // else if (direction + myGame.currentEnemy < 0)
+            // {
+            //     myGame.currentEnemy = Size - 1;
+            // }
+            // else
+            // {
+            //     myGame.currentEnemy += direction;
+            // }
             
         }
 

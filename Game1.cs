@@ -25,8 +25,6 @@ public class Game1 : Game
 
     //Object Variables
     private Dictionary<string,ISprite> _spriteDict = [];
-    public List<ICharacter> _characterSet = [];
-    public int currentEnemy;
     private int _chosenSprite = 0;
     public Player Player { get; private set; }
 
@@ -95,11 +93,9 @@ public class Game1 : Game
 
         //NPC creation
         CharacterSpriteFactory.Instance.LoadAllTextures(Content, _spriteBatch);
-        currentEnemy = 0;
 
         //World Creation
-        MapParser.SetupParser(_characterSet);
-        RoomMap = MapParser.Instance.RoomMapFromXML(Content, "MapItems\\LevelOne.xml", new Vector2(2,2));
+        RoomMap = MapParser.Instance.RoomMapFromXML(Content, "MapItems\\LevelOne.xml", new Vector2(3,3));
 
         //Player declaration
         //TODO: PROBABLY WANNA HAVE A METHOD IN EACH LEVEL WHICH HANDLES ADDING THINGS TO COLLISION LIST
@@ -133,7 +129,7 @@ public class Game1 : Game
 
         Player.Update(gameTime);
 
-        _characterSet[currentEnemy].Update(gameTime);
+        RoomMap.Update(gameTime);
         HandleCollisions();
         base.Update(gameTime);
     }
@@ -144,9 +140,8 @@ public class Game1 : Game
 
         _spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp);
 
-        RoomMap.Draw(_spriteBatch);
+        RoomMap.Draw(_spriteBatch, gameTime);
         Player.Draw(gameTime);
-        _characterSet[currentEnemy].Draw(gameTime);
 
         foreach (ISprite sprite in _spriteDict.Values)
         {
