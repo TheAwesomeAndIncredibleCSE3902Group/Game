@@ -6,7 +6,7 @@ using AwesomeRPG.Collision;
 
 namespace AwesomeRPG.Map;
 
-public class Tile : CollisionObject
+public class Tile
 {
     public Texture2D Texture { get; set; }
 
@@ -32,11 +32,7 @@ public class Tile : CollisionObject
     {
         Texture = texture;
         SourceRectangle = new Rectangle(x, y, width, height);
-        Position = new Vector2(x, y);
-        Collider = new CollisionRect(this, width, height);
-        ObjectType = CollisionObjectType.Wall;
         Id = id;
-        Game1.Instance._nonMovingCollisionObjects.Add(this);
     }
 
 

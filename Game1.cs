@@ -15,7 +15,6 @@ namespace AwesomeRPG;
 
 public class Game1 : Game
 {
-    public static Game1 Instance { get; private set; }
     //Monogame required
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
@@ -59,7 +58,6 @@ public class Game1 : Game
 
     public Game1()
     {
-        Instance = this;
         _graphics = new GraphicsDeviceManager(this);
         Content.RootDirectory = "Content";
         IsMouseVisible = true;

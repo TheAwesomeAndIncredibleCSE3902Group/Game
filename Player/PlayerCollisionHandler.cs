@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Numerics;
 using AwesomeRPG.Collision;
 
@@ -12,7 +13,7 @@ public class PlayerCollisionHandler
 {
     public void CollideWall(CollisionInfo collision)
     {
-        float pushPixels = 1;
+        float pushPixels = 2;
         Vector2 bumpUnitDirection = Util.CardinalToUnitVector(collision.Direction.ToCard().Opposite());
 
         Player.Instance.Position += pushPixels * bumpUnitDirection;

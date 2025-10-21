@@ -32,7 +32,7 @@ public class Player : CollisionObject
         Instance = this;
         InitializeEquipment();
         //Throwing in a random position so the sprite isn't halfway off the screen or something
-        Vector2 startingPos = new Vector2(0, 0);
+        Vector2 startingPos = new Vector2(200, 200);
         Position = startingPos;
 
         int spriteSize = 15;

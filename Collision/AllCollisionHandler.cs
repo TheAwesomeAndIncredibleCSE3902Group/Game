@@ -21,7 +21,6 @@ namespace AwesomeRPG.Collision
             if (collision.Direction == CollisionDirection.None) return;
 
             CollisionPair objectTypes = collision.GetObjectTypesOfCollision();
-            Debug.WriteLine(objectTypes);
 
             if (!collisionResponses.ContainsKey(objectTypes))
             {
