@@ -30,10 +30,9 @@ namespace AwesomeRPG.Collision
         /// Returns a hashset of the objectTypes of the collision
         /// </summary>
         /// <returns></returns>
-        public ImmutableHashSet<CollisionObjectType> GetObjectTypesOfCollision()
+        public CollisionPair GetObjectTypesOfCollision()
         {
-            ImmutableHashSet<CollisionObjectType> objectTypes = [ReferenceCollisionObject.Type, OtherCollisionObject.Type];
-            return objectTypes;
+            return new CollisionPair(ReferenceCollisionObject.ObjectType, OtherCollisionObject.ObjectType);
         }
 
         /// <summary>
@@ -43,8 +42,8 @@ namespace AwesomeRPG.Collision
         /// <returns></returns>
         public CollisionObject GetCollisionObjectOfType(CollisionObjectType type)
         {
-            if (ReferenceCollisionObject.Type == type) return ReferenceCollisionObject;
-            else if (OtherCollisionObject.Type == type) return OtherCollisionObject;
+            if (ReferenceCollisionObject.ObjectType == type) return ReferenceCollisionObject;
+            else if (OtherCollisionObject.ObjectType == type) return OtherCollisionObject;
             else return null;
         }
 

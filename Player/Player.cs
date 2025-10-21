@@ -32,12 +32,12 @@ public class Player : CollisionObject
         Instance = this;
         InitializeEquipment();
         //Throwing in a random position so the sprite isn't halfway off the screen or something
-        Vector2 startingPos = new Vector2(300, 300);
+        Vector2 startingPos = new Vector2(0, 0);
         Position = startingPos;
 
         int spriteSize = 15;
         Collider = new CollisionRect(this, spriteSize, spriteSize);
-        Type = CollisionObjectType.Player;
+        ObjectType = CollisionObjectType.Player;
 
         PStateMachine = new PlayerStateMachine();
         PStateMachine.LoadPlayer(content, _spriteBatch);

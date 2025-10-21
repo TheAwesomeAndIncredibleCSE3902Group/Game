@@ -10,14 +10,12 @@ namespace AwesomeRPG;
 /// </summary>
 public class PlayerCollisionHandler
 {
-    private Player player;
-
     public void CollideWall(CollisionInfo collision)
     {
         float pushPixels = 1;
         Vector2 bumpUnitDirection = Util.CardinalToUnitVector(collision.Direction.ToCard().Opposite());
 
-        player.Position += pushPixels * bumpUnitDirection;
+        Player.Instance.Position += pushPixels * bumpUnitDirection;
     }
 
     public void CollideEnemy(CollisionInfo collision)

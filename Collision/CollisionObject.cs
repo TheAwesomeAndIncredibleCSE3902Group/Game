@@ -9,7 +9,7 @@ namespace AwesomeRPG.Collision
 
         public CollisionRect Collider { get; protected set; }
 
-        public CollisionObjectType Type { get; protected set; }
+        public CollisionObjectType ObjectType { get; protected set; }
 
         /// <summary>
         /// Creates a collisionInfo tracks in which direction the objects collided
