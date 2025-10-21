@@ -15,6 +15,7 @@ namespace AwesomeRPG;
 
 public class Game1 : Game
 {
+    public static Game1 Instance { get; private set; }
     //Monogame required
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
@@ -31,7 +32,7 @@ public class Game1 : Game
 
     //Collision Variables
     private List<CollisionObject> _movingCollisionObjects = new();
-    private List<CollisionObject> _nonMovingCollisionObjects = new();
+    public List<CollisionObject> _nonMovingCollisionObjects = new();
     AllCollisionHandler _allCollisionHandler;
 
     //Map Variables
@@ -60,6 +61,7 @@ public class Game1 : Game
 
     public Game1()
     {
+        Instance = this;
         _graphics = new GraphicsDeviceManager(this);
         Content.RootDirectory = "Content";
         IsMouseVisible = true;
