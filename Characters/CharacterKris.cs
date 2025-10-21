@@ -35,6 +35,6 @@ public class CharacterKris : ICharacter
 
     public void ChangeDirection(Util.Cardinal direction)
     {
-        throw new NotImplementedException();
+        //throw new NotImplementedException();
     }
 }

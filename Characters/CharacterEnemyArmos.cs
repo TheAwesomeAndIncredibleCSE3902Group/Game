@@ -8,11 +8,16 @@ public class CharacterEnemyArmos : CharacterEnemyBase
 {
     public CharacterEnemyArmos(Vector2 position, Cardinal direction) : base(position, direction)
     {
-        _sprite = CharacterSpriteFactory.Instance.ArmosSprite();
+        ChangeDirection(direction);
     }
 
     public override void ChangeDirection(Cardinal direction)
     {
-        throw new System.NotImplementedException();
+        _sprite = direction switch
+        {
+            Cardinal.up => CharacterSpriteFactory.Instance.ArmosSpriteUp(),
+            Cardinal.down => CharacterSpriteFactory.Instance.ArmosSpriteDown(),
+            _=> CharacterSpriteFactory.Instance.ArmosSpriteDown()
+        };
     }
 }

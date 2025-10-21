@@ -16,7 +16,22 @@ public abstract class CharacterEnemyBase : ICharacter
 
     public Vector2 Position;
 
-    public Cardinal Direction;
+    public Cardinal Direction
+    {
+        get
+        {
+            return direction;
+        }
+        set
+        {
+            if (value == direction)
+                return;
+
+            ChangeDirection(value);
+            direction = value;
+        }
+    }
+    private Cardinal direction;
 
     private bool _moving = true;
 
@@ -33,7 +48,6 @@ public abstract class CharacterEnemyBase : ICharacter
         {
             Pathing.Update(gameTime);
             Direction = Pathing.GetDirection();
-            //TODO: change direction sprite
         }
 
         if (_moving)
