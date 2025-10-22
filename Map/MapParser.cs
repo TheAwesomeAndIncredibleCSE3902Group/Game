@@ -115,14 +115,9 @@ public class MapParser
                 {
                     for (int j = 0; j < collisionMatrix[i].Count; j++)
                     {
-                            Console.Out.WriteLine(collisionMatrix[i][j]);
-
                         if (collisionMatrix[i][j] == 1)
                         {
                             map._nonMovingCollisionObjects.Add(new Wall(new Vector2(j * tileWidth * scale.X, i * tileHeight * scale.Y), (int)(tileWidth * scale.X), (int)(tileHeight * scale.Y)));
-                            
-                            // Console.Out.WriteLine(map._nonMovingCollisionObjects.Last().Position);
-
                         }
                     }
                 }
@@ -134,7 +129,7 @@ public class MapParser
                     string type = entity.Value.Trim().ToLower();
 
                     Vector2 position = new Vector2(int.Parse(entity.Attribute("x").Value), int.Parse(entity.Attribute("x").Value));
-                    
+
                     Cardinal facing;
                     // try catch, because some entities don't need facing
                     try
@@ -164,7 +159,8 @@ public class MapParser
 
                     IPathingScheme pathing;
                     // try catch, because some entities don't need pathing
-                    try {
+                    try
+                    {
                         {
                             switch (entity.Attribute("pathing").Value.Trim().ToLower())
                             {
@@ -177,7 +173,8 @@ public class MapParser
                                     break;
                             }
                         }
-                    } catch
+                    }
+                    catch
                     {
                         pathing = new RandomWalkPathing(facing);
                     }
@@ -204,10 +201,33 @@ public class MapParser
                             map.Characters.Add(kris);
                             break;
                         default:
-                            Console.WriteLine("Type not supported: " + type);
+                            Console.WriteLine("Entity type not supported: " + type);
                             break;
                     }
+
+                }
+                
+                IEnumerable pickupElements = mapElement.Element("Pickups").Elements("Pickup");
+                foreach (XElement pickup in pickupElements)
+                {
+                    string type = pickup.Value.Trim().ToLower();
+                    Vector2 position = new Vector2(int.Parse(pickup.Attribute("x").Value), int.Parse(pickup.Attribute("y").Value));
+                        
+                    switch (type)
+                    {
+                        case "potion":
+                            Potion potion = new();
+                            potion.Position = position;
+                            map.Pickups.Add(potion);
+                            break;
+                        default:
+                            Console.WriteLine("Pickup type not supported: " + type);
+                            break;
+                    }
+                        
                     
+                    
+
                 }
 
                 return map;

@@ -20,4 +20,8 @@
     <Entity x="500" y="50" pathing="line" facing="right">lynel</Entity>
     <Entity x="300" y="300" pathing="" facing="up">kris</Entity>
   </Entities>
+  <Pickups>
+    <Pickup x="100" y="300">potion</Pickup>
+    <Pickup x="600" y="400">potion</Pickup>
+  </Pickups>
 </Map>

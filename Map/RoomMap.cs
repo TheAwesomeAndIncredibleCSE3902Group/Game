@@ -9,16 +9,16 @@ namespace AwesomeRPG.Map;
 
 public class RoomMap
 {
-    private Tilemap _tilemap;
-    public List<ICharacter> Characters;
-    public List<CollisionObject> _movingCollisionObjects = new();
-    public List<CollisionObject> _nonMovingCollisionObjects = new();
-    private Tilemap _minimap;
+    private readonly Tilemap _tilemap;
+    public List<ICharacter> Characters =[];
+    public List<Pickup> Pickups = [];
+    public List<CollisionObject> _movingCollisionObjects = [];
+    public List<CollisionObject> _nonMovingCollisionObjects = [];
+    private readonly Tilemap _minimap;
 
     public RoomMap(Tilemap map)
     {
         _tilemap = map;
-        Characters = new();
     }
 
 
@@ -48,11 +48,21 @@ public class RoomMap
     public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
     {
         DrawTiles(spriteBatch);
+        DrawPickups(gameTime);
         DrawCharacters(gameTime);
     }
+    
     public void DrawTiles(SpriteBatch spriteBatch)
     {
         _tilemap.Draw(spriteBatch);
+    }
+
+    public void DrawPickups(GameTime gameTime)
+    {
+        foreach (Pickup p in Pickups)
+        {
+            p.Draw(gameTime);
+        }
     }
     
     public void DrawCharacters(GameTime gameTime)
