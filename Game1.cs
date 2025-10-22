@@ -122,6 +122,9 @@ public class Game1 : Game
     }
     protected override void Update(GameTime gameTime)
     {
+        //Time can be slowed like this
+        //gameTime = new GameTime(gameTime.TotalGameTime / 2f, gameTime.ElapsedGameTime / 2f);
+        
         foreach (IController controller in _controllersList) {
             controller.Update();
         }

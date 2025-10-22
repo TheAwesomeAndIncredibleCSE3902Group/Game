@@ -22,9 +22,11 @@ public class Player : CollisionObject
 
     //Whether this has moved yet this frame. Please be careful of any timing issues / race conditions with the Controllers.
     public bool HasMovedThisFrame { get; set; }
-    
-    //In pixels per tick. Might change to pixels per second later
-    private float movementSpeed = 2;
+
+    //In pixels per second
+    private float movementSpeed = 120;
+    //Cache a reference to GameTime for movement. Gets updated at every Update() call
+    private GameTime gt = new GameTime();
 
 
     public Player(ContentManager content, SpriteBatch _spriteBatch)
@@ -57,6 +59,7 @@ public class Player : CollisionObject
 
     public void Update(GameTime gt)
     {
+        this.gt = gt;
         HasMovedThisFrame = false;
 
         foreach (Projectile projectile in spawnedProjectiles.Values)
@@ -89,7 +92,8 @@ public class Player : CollisionObject
 
             //Grabbing the direction from PlayerState here ensures that IPlayerState is the ultimate authority
             Cardinal newDirection = PStateMachine.Direction;
-            Position += movementSpeed * Util.CardinalToUnitVector(newDirection);
+            Position += (float)(gt.ElapsedGameTime.TotalSeconds * movementSpeed) * Util.CardinalToUnitVector(newDirection);
+            //Position += movementSpeed * Util.CardinalToUnitVector(newDirection);
         }
 
         HasMovedThisFrame = true;
