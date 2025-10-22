@@ -20,8 +20,32 @@
 /processorParam:TextureFormat=Compressed
 /build:Fonts/MyFont.spritefont
 
-#begin MapItems/LevelOne.xml
-/copy:MapItems/LevelOne.xml
+#begin MapItems/Level0-0.xml
+/copy:MapItems/Level0-0.xml
+
+#begin MapItems/Level0-1.xml
+/copy:MapItems/Level0-1.xml
+
+#begin MapItems/Level0-2.xml
+/copy:MapItems/Level0-2.xml
+
+#begin MapItems/Level1-0.xml
+/copy:MapItems/Level1-0.xml
+
+#begin MapItems/Level1-1.xml
+/copy:MapItems/Level1-1.xml
+
+#begin MapItems/Level1-2.xml
+/copy:MapItems/Level1-2.xml
+
+#begin MapItems/Level2-0.xml
+/copy:MapItems/Level2-0.xml
+
+#begin MapItems/Level2-1.xml
+/copy:MapItems/Level2-1.xml
+
+#begin MapItems/Level2-2.xml
+/copy:MapItems/Level0-0.xml
 
 #begin SpriteImages/enemy_sprites.png
 /importer:TextureImporter

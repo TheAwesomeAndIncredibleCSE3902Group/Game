@@ -93,7 +93,7 @@ public class Game1 : Game
         CharacterSpriteFactory.Instance.LoadAllTextures(Content, _spriteBatch);
 
         //World Creation
-        RoomMap = MapParser.Instance.RoomMapFromXML(Content, "MapItems\\LevelOne.xml", new Vector2(3, 3));
+        RoomMap = MapParser.Instance.RoomMapFromXML(Content, "MapItems\\Level0-0.xml", new Vector2(3, 3));
         NonMovingCollisionObjects = RoomMap._nonMovingCollisionObjects;
 
         //Player declaration
