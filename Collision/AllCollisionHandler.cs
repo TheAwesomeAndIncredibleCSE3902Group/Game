@@ -25,6 +25,7 @@ namespace AwesomeRPG.Collision
             if (!collisionResponses.ContainsKey(objectTypes))
             {
                 Debug.WriteLine($"Unmarked collision between {objectTypes}");
+                return;
             }
             collisionResponses[objectTypes].Invoke(collision);
         }
