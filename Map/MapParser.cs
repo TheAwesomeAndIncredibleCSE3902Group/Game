@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
 using static AwesomeRPG.Util;
+using System.Linq;
 
 
 namespace AwesomeRPG.Map;
@@ -72,30 +73,60 @@ public class MapParser
                 // </Tiles>
                 XElement tilesElement = tilemapElement.Element("Tiles");
 
-                Tilemap tilemap = new Tilemap(tileset,
-                                        int.Parse(tilesElement.Attribute("columns").Value),
-                                        int.Parse(tilesElement.Attribute("rows").Value));
+                int columns = int.Parse(tilesElement.Attribute("columns").Value);
+                int rows = int.Parse(tilesElement.Attribute("rows").Value);
+                Tilemap tilemap = new Tilemap(tileset, columns, rows);
                 tilemap.Scale = scale;
+
+                List<List<int>> collisionMatrix = new(columns);
 
                 // set up tilemap using data from rows
                 IEnumerable rowElements = tilesElement.Elements("Row");
                 int i = 0;
                 foreach (XElement row in rowElements)
                 {
-
+                    collisionMatrix.Add(new List<int>(rows));
                     string[] rowTileIDs = row.Value.Trim().Split(" ", StringSplitOptions.RemoveEmptyEntries);
                     for (int column = 0; column < rowTileIDs.Length; column++)
                     {
-                        int tilesetIndex = int.Parse(rowTileIDs[column]);
+                        string tileInfo = rowTileIDs[column];
+                        if (tileInfo.StartsWith('!'))
+                        {
+                            collisionMatrix[i].Add(1);
+                        }
+                        else
+                        {
+                            collisionMatrix[i].Add(0);
+                        }
+
+                        int tilesetIndex = int.Parse(tileInfo.Trim('!'));                        
 
                         Tile region = tileset.GetTile(tilesetIndex);
 
                         tilemap.SetTile(column, i, tilesetIndex);
+
                     }
                     i++;
                 }
 
                 RoomMap map = new RoomMap(tilemap);
+
+                for (i = 0; i < collisionMatrix.Count; i++)
+                {
+                    for (int j = 0; j < collisionMatrix[i].Count; j++)
+                    {
+                            Console.Out.WriteLine(collisionMatrix[i][j]);
+
+                        if (collisionMatrix[i][j] == 1)
+                        {
+                            map._nonMovingCollisionObjects.Add(new Wall(new Vector2(j * tileWidth * scale.X, i * tileHeight * scale.Y), (int)(tileWidth * scale.X), (int) (tileHeight* scale.Y)));
+                            
+                            // Console.Out.WriteLine(map._nonMovingCollisionObjects.Last().Position);
+
+                        }
+                    }
+                }
+
 
                 IEnumerable entityElements = mapElement.Element("Entities").Elements("Entity");
                 foreach (XElement entity in entityElements)

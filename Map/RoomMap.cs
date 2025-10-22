@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Numerics;
+using AwesomeRPG.Collision;
 using AwesomeRPG.Characters;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -10,6 +11,8 @@ public class RoomMap
 {
     private Tilemap _tilemap;
     public List<ICharacter> Characters;
+    public List<CollisionObject> _movingCollisionObjects = new();
+    public List<CollisionObject> _nonMovingCollisionObjects = new();
     private Tilemap _minimap;
 
     public RoomMap(Tilemap map)
