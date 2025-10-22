@@ -8,11 +8,17 @@ public class CharacterEnemyLynel : CharacterEnemyBase
 {
     public CharacterEnemyLynel(Vector2 position, Cardinal direction) : base(position, direction)
     {
-        _sprite = CharacterSpriteFactory.Instance.LynelSprite();
+        ChangeDirection(direction);
     }
 
     public override void ChangeDirection(Cardinal direction)
     {
-        throw new System.NotImplementedException();
+        _sprite = direction switch
+        {
+            Cardinal.up => CharacterSpriteFactory.Instance.LynelSpriteUp(),
+            Cardinal.down => CharacterSpriteFactory.Instance.LynelSpriteDown(),
+            Cardinal.left => CharacterSpriteFactory.Instance.LynelSpriteLeft(),
+            Cardinal.right => CharacterSpriteFactory.Instance.LynelSpriteRight()
+        };
     }
 }
