@@ -38,7 +38,7 @@ public class Player : CollisionObject
         Position = startingPos;
 
         int spriteSize = 15;
-        Collider = new CollisionRect(this, spriteSize, spriteSize);
+        Collider = new CollisionRect(this, spriteSize * 3, spriteSize * 3);
         ObjectType = CollisionObjectType.Player;
 
         PStateMachine = new PlayerStateMachine();
