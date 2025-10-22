@@ -10,7 +10,7 @@ public class MapItemSpriteFactory
     private static Texture2D _itemSpriteSheet;
     private static SpriteBatch _spriteBatch;
 
-    private static MapItemSpriteFactory instance = new MapItemSpriteFactory();
+    public static MapItemSpriteFactory Instance = new MapItemSpriteFactory();
 
     public static void LoadAllTextures(ContentManager content, SpriteBatch spriteBatch)
     {
