@@ -94,7 +94,7 @@ public class Game1 : Game
 
         //World Creation
         RoomMap = MapParser.Instance.RoomMapFromXML(Content, "MapItems\\LevelOne.xml", new Vector2(3, 3));
-        _nonMovingCollisionObjects = RoomMap._nonMovingCollisionObjects;
+        NonMovingCollisionObjects = RoomMap._nonMovingCollisionObjects;
 
         //Player declaration
         //TODO: PROBABLY WANNA HAVE A METHOD IN EACH LEVEL WHICH HANDLES ADDING THINGS TO COLLISION LIST

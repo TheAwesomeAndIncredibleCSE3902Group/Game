@@ -119,7 +119,7 @@ public class MapParser
 
                         if (collisionMatrix[i][j] == 1)
                         {
-                            map._nonMovingCollisionObjects.Add(new Wall(new Vector2(j * tileWidth * scale.X, i * tileHeight * scale.Y), (int)(tileWidth * scale.X), (int) (tileHeight* scale.Y)));
+                            map._nonMovingCollisionObjects.Add(new Wall(new Vector2(j * tileWidth * scale.X, i * tileHeight * scale.Y), (int)(tileWidth * scale.X), (int)(tileHeight * scale.Y)));
                             
                             // Console.Out.WriteLine(map._nonMovingCollisionObjects.Last().Position);
 
