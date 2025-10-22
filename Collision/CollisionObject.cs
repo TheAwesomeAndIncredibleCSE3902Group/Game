@@ -25,20 +25,20 @@ namespace AwesomeRPG.Collision
 
         
         private CollisionDirection GetCollisionDirection(CollisionObject otherCollisionObject, Rectangle intersectRect)
-        { 
-            
-            if(intersectRect.Height > 0)
-            {
-                return Position.Y > otherCollisionObject.Position.Y ? CollisionDirection.Top : CollisionDirection.Bottom;
-            }
-            else if (intersectRect.Width > 0)
-            {
-                return Position.X > otherCollisionObject.Position.X ? CollisionDirection.Left : CollisionDirection.Right;
-            }
-            else
+        {
+            if(intersectRect.IsEmpty)
             {
                 return CollisionDirection.None;
             }
+            else if (intersectRect.Width > intersectRect.Height)
+            {
+                return Position.Y > otherCollisionObject.Position.Y ? CollisionDirection.Top : CollisionDirection.Bottom;
+            }
+            else
+            {
+                return Position.X > otherCollisionObject.Position.X ? CollisionDirection.Left : CollisionDirection.Right;
+            }
+            
         }
         
 
