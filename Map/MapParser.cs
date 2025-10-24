@@ -39,15 +39,9 @@ public class MapParser
                 XDocument doc = XDocument.Load(reader);
                 XElement mapElement = doc.Root;
 
-                // The <Tileset> element contains the information about the tileset
-                // used by the tilemap.
-                //
-                // Example
-                // <Tilemap>
-                //      <Tileset region="100 100" tileWidth="10" tileHeight="10">contentPath</Tileset>
-                //      <Tiles>...</Tiles>
-                // </Tilemap>
+                // tilemap contains all background information
                 XElement tilemapElement = mapElement.Element("Tilemap");
+                // tileset contains tile image info
                 XElement tilesetElement = tilemapElement.Element("Tileset");
                 int width = int.Parse(tilesetElement.Attribute("width").Value);
                 int height = int.Parse(tilesetElement.Attribute("height").Value);
@@ -56,31 +50,29 @@ public class MapParser
                 int tileHeight = int.Parse(tilesetElement.Attribute("tileHeight").Value);
                 string contentPath = tilesetElement.Value;
 
-                // Load the texture 2d at the content path
-                Texture2D texture = content.Load<Texture2D>(contentPath); ;
+                // Load the texture 2d containing tileset
+                Texture2D tileTexture = content.Load<Texture2D>(contentPath); ;
 
                 // Create the tileset using the texture region
-                TileSet tileset = new TileSet(texture, tileWidth, tileHeight);
+                TileSet tileset = new(tileTexture, tileWidth, tileHeight);
 
                 // The <Tiles> element contains <Row></Row>s of strings where <Row>
-                // contains space seperated tile texture ids
-                // Example:
-                // <Tiles rows="4" columns="4">
-                //      <Row>00 01 01 02</Row>
-                //      <Row>03 04 04 05</Row>
-                //      <Row>03 04 04 05</Row>
-                //      <Row>06 07 07 08</Row>
-                // </Tiles>
+                // contains space seperated tile texture ids. ids beginning with ! are collideable
                 XElement tilesElement = tilemapElement.Element("Tiles");
 
                 int columns = int.Parse(tilesElement.Attribute("columns").Value);
                 int rows = int.Parse(tilesElement.Attribute("rows").Value);
-                Tilemap tilemap = new Tilemap(tileset, columns, rows);
-                tilemap.Scale = scale;
+                Tilemap tilemap = new(tileset, columns, rows)
+                {
+                    Scale = scale
+                };
 
+                // 2d list where 1 indictates collision and 0 is no collision.
+                // doesn't use booleans so it can later be optimised to generate larger collision rectangles
                 List<List<int>> collisionMatrix = new(columns);
 
                 // set up tilemap using data from rows
+                
                 IEnumerable rowElements = tilesElement.Elements("Row");
                 int i = 0;
                 foreach (XElement row in rowElements)
@@ -109,8 +101,10 @@ public class MapParser
                     i++;
                 }
 
+                // the map to return
                 RoomMap map = new RoomMap(tilemap);
 
+                // handle collision
                 for (i = 0; i < collisionMatrix.Count; i++)
                 {
                     for (int j = 0; j < collisionMatrix[i].Count; j++)
@@ -122,6 +116,7 @@ public class MapParser
                     }
                 }
 
+                // generate entities
 
                 IEnumerable entityElements = mapElement.Element("Entities").Elements("Entity");
                 foreach (XElement entity in entityElements)
@@ -158,7 +153,7 @@ public class MapParser
                     }
 
                     IPathingScheme pathing;
-                    // try catch, because some entities don't need pathing
+                    // try catch, because entities aren't required to have pathing
                     try
                     {
                         {
@@ -168,6 +163,7 @@ public class MapParser
                                     pathing = new LinePathing(facing);
                                     break;
                                 case "random":
+                                // intentional spillover into default
                                 default:
                                     pathing = new RandomWalkPathing(facing);
                                     break;
@@ -176,28 +172,28 @@ public class MapParser
                     }
                     catch
                     {
-                        pathing = new RandomWalkPathing(facing);
-                    }
+                            pathing = new RandomWalkPathing(facing);
+                        }
 
                     switch (type)
                     {
                         case "moblin":
-                            CharacterEnemyMoblin moblin = new CharacterEnemyMoblin(position, facing);
+                            CharacterEnemyMoblin moblin = new(position, facing);
                             moblin.Pathing = pathing;
                             map.Characters.Add(moblin);
                             break;
                         case "armos":
-                            CharacterEnemyArmos armos = new CharacterEnemyArmos(position, facing);
+                            CharacterEnemyArmos armos = new(position, facing);
                             armos.Pathing = pathing;
                             map.Characters.Add(armos);
                             break;
                         case "lynel":
-                            CharacterEnemyLynel lynel = new CharacterEnemyLynel(position, facing);
+                            CharacterEnemyLynel lynel = new(position, facing);
                             lynel.Pathing = pathing;
                             map.Characters.Add(lynel);
                             break;
                         case "kris":
-                            CharacterKris kris = new CharacterKris();
+                            CharacterKris kris = new();
                             map.Characters.Add(kris);
                             break;
                         default:
@@ -206,6 +202,8 @@ public class MapParser
                     }
 
                 }
+
+                // generate pickups
                 
                 IEnumerable pickupElements = mapElement.Element("Pickups").Elements("Pickup");
                 foreach (XElement pickup in pickupElements)
@@ -224,10 +222,6 @@ public class MapParser
                             Console.WriteLine("Pickup type not supported: " + type);
                             break;
                     }
-                        
-                    
-                    
-
                 }
 
                 return map;

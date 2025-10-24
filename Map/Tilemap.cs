@@ -85,16 +85,6 @@ public class Tilemap
     }
 
     /// <summary>
-    /// Gets the texture region of the tile from this tilemap at the specified index.
-    /// </summary>
-    /// <param name="index">The index of the tile in this tilemap.</param>
-    /// <returns>The texture region of the tile from this tilemap at the specified index.</returns>
-    public Tile GetTile(int index)
-    {
-        return _tileset.GetTile(_tiles[index]);
-    }
-
-    /// <summary>
     /// Gets the texture region of the tile frm this tilemap at the specified
     /// column and row.
     /// </summary>
@@ -104,7 +94,7 @@ public class Tilemap
     public Tile GetTile(int column, int row)
     {
         int index = row * Columns + column;
-        return GetTile(index);
+        return _tileset.GetTile(_tiles[index]);
     }
 
     /// <summary>
