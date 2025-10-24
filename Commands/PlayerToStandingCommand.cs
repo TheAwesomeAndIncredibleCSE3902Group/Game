@@ -2,11 +2,11 @@ using System;
 
 namespace AwesomeRPG.Commands;
 
-public class CommandPlayerToStanding : ICommand
+public class PlayerToStandingCommand : ICommand
 {
     private Player currentPlayer;
 
-    public CommandPlayerToStanding(Game1 game)
+    public PlayerToStandingCommand(Game1 game)
     {
         currentPlayer = game.Player;
     }

@@ -65,35 +65,35 @@ namespace AwesomeRPG.Controllers
         //Initialize commands which effect the application as a whole
         private void InitializeGameCommands(Game1 game)
         {
-            keyPressMappings[Keys.Q] = new CommandQuit(game);
-            keyPressMappings[Keys.R] = new CommandResetGame(game);
-            keyPressMappings[Keys.E] = new CommandDamagePlayer(game);
+            keyPressMappings[Keys.Q] = new QuitCommand(game);
+            keyPressMappings[Keys.R] = new ResetGameCommand(game);
+            keyPressMappings[Keys.E] = new DamagePlayerCommand(game);
         }
         //Initialize commands which relate to swapping things around
         private void InitializeSwapCommands(Game1 game)
         {
-            keyPressMappings[Keys.U] = new CommandSwitchMapItemSprite(game, false);
-            keyPressMappings[Keys.I] = new CommandSwitchMapItemSprite(game, true);
-            keyPressMappings[Keys.O] = new CommandSwitchEnemySprite(game, false);
-            keyPressMappings[Keys.P] = new CommandSwitchEnemySprite(game, true);
+            keyPressMappings[Keys.U] = new SwitchMapItemSpriteCommand(game, false);
+            keyPressMappings[Keys.I] = new SwitchMapItemSpriteCommand(game, true);
+            keyPressMappings[Keys.O] = new SwitchEnemySpriteCommand(game, false);
+            keyPressMappings[Keys.P] = new SwitchEnemySpriteCommand(game, true);
         }
         //Initialize commands which relate to weapons and item use
         private void InitializeWeaponCommands(Game1 game)
         {
-            keyPressMappings[Keys.D1] = new CommandUseItem(IEquipment.Weapons.bow);
-            keyPressMappings[Keys.D2] = new CommandUseItem(IEquipment.Weapons.boomerangSack);
-            keyPressMappings[Keys.D3] = new CommandUseItem(IEquipment.Weapons.superSwordSheathe);
-            ICommand swordUse = new CommandUseItem(IEquipment.Weapons.swordSheathe);
+            keyPressMappings[Keys.D1] = new UseItemCommand(IEquipment.Weapons.bow);
+            keyPressMappings[Keys.D2] = new UseItemCommand(IEquipment.Weapons.boomerangSack);
+            keyPressMappings[Keys.D3] = new UseItemCommand(IEquipment.Weapons.superSwordSheathe);
+            ICommand swordUse = new UseItemCommand(IEquipment.Weapons.swordSheathe);
             keyPressMappings[Keys.Z] = swordUse;
             keyPressMappings[Keys.N] = swordUse;
         }
         //Initialize commands which relate to movement
         private void InitializeMovementCommands(Game1 game)
         {
-            ICommand moveLeft = new CommandMovePlayer(game, Util.Cardinal.left);
-            ICommand moveRight = new CommandMovePlayer(game, Util.Cardinal.right);
-            ICommand moveUp = new CommandMovePlayer(game, Util.Cardinal.up);
-            ICommand moveDown = new CommandMovePlayer(game, Util.Cardinal.down);
+            ICommand moveLeft = new MovePlayerCommand(game, Util.Cardinal.left);
+            ICommand moveRight = new MovePlayerCommand(game, Util.Cardinal.right);
+            ICommand moveUp = new MovePlayerCommand(game, Util.Cardinal.up);
+            ICommand moveDown = new MovePlayerCommand(game, Util.Cardinal.down);
             keyDownMappings[Keys.Left] = moveLeft;
             keyDownMappings[Keys.A] = moveLeft;
             keyDownMappings[Keys.Right] = moveRight;

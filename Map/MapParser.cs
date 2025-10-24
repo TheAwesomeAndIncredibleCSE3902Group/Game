@@ -217,6 +217,7 @@ public class MapParser
                             Potion potion = new();
                             potion.Position = position;
                             map.Pickups.Add(potion);
+                            //DEBUG collision for potion map._nonMovingCollisionObjects.Add(potion);
                             break;
                         default:
                             Console.WriteLine("Pickup type not supported: " + type);

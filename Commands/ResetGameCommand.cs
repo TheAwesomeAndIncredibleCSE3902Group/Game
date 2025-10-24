@@ -10,10 +10,10 @@ using AwesomeRPG.Sprites;
 
 namespace AwesomeRPG.Commands
 {
-    internal class CommandResetGame : ICommand
+    internal class ResetGameCommand : ICommand
     {
         private Game1 myGame;
-        public CommandResetGame(Game1 game) { 
+        public ResetGameCommand(Game1 game) { 
             myGame = game;
         }
 

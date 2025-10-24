@@ -1,9 +1,5 @@
-using System;
-using AwesomeRPG.Sprites;
 using Microsoft.Xna.Framework;
 using static AwesomeRPG.Util;
-using System.Data;
-using StateMachineDemo;
 
 namespace AwesomeRPG;
 

@@ -3,12 +3,12 @@ using static AwesomeRPG.Util;
 
 namespace AwesomeRPG.Commands
 {
-    public class CommandMovePlayer : ICommand
+    public class MovePlayerCommand : ICommand
     {
         private Player currentPlayer;
         private Cardinal inputDirection;
 
-        public CommandMovePlayer(Game1 game, Cardinal direction) 
+        public MovePlayerCommand(Game1 game, Cardinal direction) 
         {
             currentPlayer = game.Player;
             inputDirection = direction;

@@ -9,12 +9,12 @@ using AwesomeRPG.Characters;
 
 namespace AwesomeRPG.Commands
 {
-    public class CommandSwitchEnemySprite : ICommand
+    public class SwitchEnemySpriteCommand : ICommand
     {
         private Game1 myGame;
         private int direction;
 
-        public CommandSwitchEnemySprite(Game1 game, bool right)
+        public SwitchEnemySpriteCommand(Game1 game, bool right)
         {
             myGame = game;
             direction = right ? -1 : 1;

@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.InteropServices.Marshalling;
 using AwesomeRPG.Commands;
 
 namespace AwesomeRPG.Collision
 { 
     public class AllCollisionHandler
     {
-        private Dictionary<CollisionPair, Action<CollisionInfo>> collisionResponses;
+        private Dictionary<CollisionPair, ICollisionCommand> collisionResponses;
 
         /// <summary>
         /// Calls a collision response based on the info of the collision given
@@ -27,26 +28,27 @@ namespace AwesomeRPG.Collision
                 Debug.WriteLine($"Unmarked collision between {objectTypes}");
                 return;
             }
-            collisionResponses[objectTypes].Invoke(collision);
+            collisionResponses[objectTypes].Execute(collision);
         }
 
         public AllCollisionHandler()
         {
-            collisionResponses = new Dictionary<CollisionPair, Action<CollisionInfo>>();
+            collisionResponses = new Dictionary<CollisionPair, ICollisionCommand>();
             InitializeDict();
           
         }
 
         private void InitializeDict()
         {
-            collisionResponses[new CollisionPair(CollisionObjectType.Player,CollisionObjectType.Wall)] = PlayerWallCollision;
+            InitializePlayerCollisions();
         }
 
-        private void PlayerWallCollision(CollisionInfo collision)
+        private void InitializePlayerCollisions()
         {
-            new CommandCollidePlayerWall(collision).Execute();
-            
+            collisionResponses[new CollisionPair(CollisionObjectType.Player, CollisionObjectType.Wall)] = new CollidePlayerWallCommand();
+            collisionResponses[new CollisionPair(CollisionObjectType.Player, CollisionObjectType.Pickup)] = new CollidePlayerPickupCommand();
+            collisionResponses[new CollisionPair(CollisionObjectType.Player, CollisionObjectType.Enemy)] = new CollidePlayerEnemyCommand();
         }
-
+        
     }
 }

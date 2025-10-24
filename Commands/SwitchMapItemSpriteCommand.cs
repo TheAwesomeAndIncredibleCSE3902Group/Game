@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace AwesomeRPG.Commands
 {
-    public class CommandSwitchMapItemSprite : ICommand
+    public class SwitchMapItemSpriteCommand : ICommand
     {
         Game1 myGame;
         public enum Direction {left,right}
@@ -22,7 +22,7 @@ namespace AwesomeRPG.Commands
         /// </summary>
         /// <param name="game"></param>
         /// <param name="direction"></param>
-        public CommandSwitchMapItemSprite(Game1 game, bool right) 
+        public SwitchMapItemSpriteCommand(Game1 game, bool right) 
         {
             myGame = game;
             _direction = right ? -1 : 1; //Figure out which way to cycle the sprite 

@@ -19,7 +19,8 @@ public class CharacterEnemyMoblin : CharacterEnemyBase
             Cardinal.up => CharacterSpriteFactory.Instance.MoblinSpriteUp(),
             Cardinal.down => CharacterSpriteFactory.Instance.MoblinSpriteDown(),
             Cardinal.left => CharacterSpriteFactory.Instance.MoblinSpriteLeft(),
-            Cardinal.right => CharacterSpriteFactory.Instance.MoblinSpriteRight()
+            Cardinal.right => CharacterSpriteFactory.Instance.MoblinSpriteRight(),
+            _ => CharacterSpriteFactory.Instance.MoblinSpriteDown()
         };
     }
 }

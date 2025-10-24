@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using AwesomeRPG.Sprites;
-using static AwesomeRPG.Commands.CommandSwitchMapItemSprite;
+using static AwesomeRPG.Commands.SwitchMapItemSpriteCommand;
 
 namespace AwesomeRPG;
 

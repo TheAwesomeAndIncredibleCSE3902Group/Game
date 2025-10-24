@@ -3,11 +3,11 @@ using static AwesomeRPG.Util;
 
 namespace AwesomeRPG.Commands
 {
-    public class CommandDamagePlayer : ICommand
+    public class DamagePlayerCommand : ICommand
     {
         private Player currentPlayer;
 
-        public CommandDamagePlayer(Game1 game)
+        public DamagePlayerCommand(Game1 game)
         {
             currentPlayer = game.Player;
         }

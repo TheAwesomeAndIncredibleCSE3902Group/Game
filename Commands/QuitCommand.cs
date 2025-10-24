@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace AwesomeRPG.Commands
 {
-    public class CommandQuit : ICommand
+    public class QuitCommand : ICommand
     {
         private Game1 myGame;
-        public CommandQuit(Game1 game)
+        public QuitCommand(Game1 game)
         {
             myGame = game;
         }

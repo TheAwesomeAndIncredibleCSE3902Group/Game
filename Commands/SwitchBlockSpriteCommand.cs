@@ -10,7 +10,7 @@ using AwesomeRPG.Map;
 
 namespace AwesomeRPG.Commands
 {
-    public class CommandSwitchBlockSprite : ICommand
+    public class SwitchBlockSpriteCommand : ICommand
     {
 
         private int Column;
@@ -18,7 +18,7 @@ namespace AwesomeRPG.Commands
         private int Direction;
         private readonly Tilemap Tilemap;
 
-        public CommandSwitchBlockSprite(Tilemap tilemap, bool right, int column, int row)
+        public SwitchBlockSpriteCommand(Tilemap tilemap, bool right, int column, int row)
         {
             Tilemap = tilemap;
             Column = column;

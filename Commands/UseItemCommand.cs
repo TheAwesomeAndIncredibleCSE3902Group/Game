@@ -3,12 +3,12 @@ using static AwesomeRPG.Util;
 
 namespace AwesomeRPG.Commands
 {
-    public class CommandUseItem : ICommand
+    public class UseItemCommand : ICommand
     {
         private Player _currentPlayer;
         private IEquipment.Weapons _weapon;
 
-        public CommandUseItem(IEquipment.Weapons weapon)
+        public UseItemCommand(IEquipment.Weapons weapon)
         {
             _currentPlayer = Player.Instance;
             _weapon = weapon;
