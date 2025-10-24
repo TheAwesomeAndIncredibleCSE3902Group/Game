@@ -10,7 +10,7 @@ namespace AwesomeRPG.Map;
 public class RoomMap
 {
     private readonly Tilemap _tilemap;
-    public List<ICharacter> Characters =[];
+    public List<ICharacter> Characters = [];
     public List<Pickup> Pickups = [];
     public List<CollisionObject> _movingCollisionObjects = [];
     public List<CollisionObject> _nonMovingCollisionObjects = [];
@@ -22,7 +22,7 @@ public class RoomMap
     }
 
 
-    // we might use this later to make some sort of minimap or map item. 
+    // Currently non-functional but could be used for a map option/item 
     public Tilemap GenMap()
     {
         for (int i = 0; i < _tilemap.Columns; i++)
