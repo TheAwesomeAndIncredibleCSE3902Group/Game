@@ -1,4 +1,7 @@
 using System;
+using System.Collections.Generic;
+using AwesomeRPG.Commands;
+using AwesomeRPG.Map;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
@@ -6,14 +9,21 @@ namespace AwesomeRPG.Controllers;
 
 public class MouseController : IController
 {
-    private readonly Game _gameObject;
+    private readonly Game1 _gameObject;
     private Action<int> SetChosenSprite;
     private bool _prevTickLeftMouse = false;
     private bool _prevTickRightMouse = false;
-    public MouseController(Game game, Action<int> setChosenSpriteAction)
+
+    // Room Commands
+    private ICommand leftRoom;
+    private ICommand rightRoom;
+    private ICommand topRoom;
+    private ICommand bottomRoom;
+    private List<ICommand> commands;
+    public MouseController(Game1 game, RoomAtlas atlas)
     {
         _gameObject = game;
-        SetChosenSprite = setChosenSpriteAction;
+        InitializeCommands(game, atlas);
     }
     public void Update()
     {
@@ -27,26 +37,27 @@ public class MouseController : IController
             {
                 if (isOnLeft)
                 {
-                    // top left
-                    SetChosenSprite(0);
+                    // Top Left changes to the room on the left (first value decreases)
+                    commands[0].Execute();
+                    
                 }
                 else
                 {
-                    // top right
-                    SetChosenSprite(1);
+                    // Top Right changes to the room on the top (second value decreases)
+                    commands[2].Execute();
                 }
             }
             else
             {
                 if (isOnLeft)
                 {
-                    // bottom left
-                    SetChosenSprite(2);
+                    // Bottom Left changes to the room on the bottom (second value increases)
+                    commands[3].Execute();
                 }
                 else
                 {
-                    // bottom right
-                    SetChosenSprite(3);
+                    // Bottom Right changes to the room on the right (first value increases)
+                    commands[1].Execute();
                 }
             }
         }
@@ -63,5 +74,18 @@ public class MouseController : IController
         {
             _prevTickRightMouse = false;
         }
+    }
+
+    public void InitializeCommands(Game1 game, RoomAtlas atlas)
+    {
+        leftRoom = new ChangeCurrentRoomCommand(game, atlas, 1);
+        rightRoom = new ChangeCurrentRoomCommand(game, atlas, 2);
+        topRoom = new ChangeCurrentRoomCommand(game, atlas, 3);
+        bottomRoom = new ChangeCurrentRoomCommand(game, atlas, 4);
+        commands = new List<ICommand>();
+        commands.Add(leftRoom);
+        commands.Add(rightRoom);
+        commands.Add(upRoom);
+        commands.Add(downRoom);
     }
 }

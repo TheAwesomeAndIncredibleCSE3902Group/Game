@@ -20,7 +20,18 @@ namespace AwesomeRPG.Map
 
         public RoomMap GetRoom(int column, int row)
         {
-            return atlas[column][row];
+            if (column > atlas.Count - 1 || column < 0)
+            {
+                return null;
+            }
+            else
+            {
+                if (row > atlas[column].Count - 1 || row < 0)
+                {
+                    return null;
+                }
+                return atlas[column][row];
+            }
         }
 
         public int GetColumn(RoomMap room)

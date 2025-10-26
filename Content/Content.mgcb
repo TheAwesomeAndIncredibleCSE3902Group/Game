@@ -45,7 +45,7 @@
 /copy:MapItems/Level2-1.xml
 
 #begin MapItems/Level2-2.xml
-/copy:MapItems/Level0-0.xml
+/copy:MapItems/Level2-2.xml
 
 #begin SpriteImages/enemy_sprites.png
 /importer:TextureImporter

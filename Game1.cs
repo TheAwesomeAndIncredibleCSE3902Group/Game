@@ -33,6 +33,7 @@ public class Game1 : Game
     private AllCollisionHandler _allCollisionHandler;
 
     //Map Variables
+    public RoomAtlas RoomAtlas { get; private set; }
     public RoomMap RoomMap { get; set; }
     public List<int> Tiles { get; set; }
     
@@ -72,7 +73,6 @@ public class Game1 : Game
 
     protected override void Initialize()
     {
-        _controllersList.Add(new MouseController(this, SetChosenSprite));
         _allCollisionHandler = new AllCollisionHandler();
         base.Initialize();
     }
@@ -94,6 +94,8 @@ public class Game1 : Game
 
         //World Creation
         RoomMap = MapParser.Instance.RoomMapFromXML(Content, "MapItems\\Level0-0.xml", new Vector2(3, 3));
+        RoomAtlas = new RoomAtlas(new AtlasInitializer().InitializeAtlasWStartingRoom(Content,RoomMap));
+        _controllersList.Add(new MouseController(this, RoomAtlas));
         NonMovingCollisionObjects = RoomMap._nonMovingCollisionObjects;
 
         //Player declaration
