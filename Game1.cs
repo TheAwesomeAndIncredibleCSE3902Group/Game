@@ -106,6 +106,12 @@ public class Game1 : Game
 
     private void HandleCollisions()
     {
+        // This is solely detecting player collisions with everything because the
+        // movingCollisionObjects list has only the player and nothing else added.
+        // Might be good to separate the player out into it's own collision object
+        // to simplify the interactions between the player and everything not just
+        // for interactability with the world but also for battle mechanics with
+        // turn order and any AoE damage on both sides.
         for (int i = 0; i< _movingCollisionObjects.Count; i++)
         {
             foreach (CollisionObject nonMovingObject in NonMovingCollisionObjects)
