@@ -14,6 +14,7 @@ public class PlayerStateMachine
     private Cardinal currentDirection;
     private int currentHealth;
     private int currentMaxHealth;
+    public float currentDamageIntake { get; set; }
     public enum States { Standing, Walking, SwordAttack, ItemUse, Damaged };
     private States currentState;
     private States previousState;
@@ -28,6 +29,7 @@ public class PlayerStateMachine
         currentState = States.Standing;
         currentHealth = 3;
         currentMaxHealth = currentHealth;
+        currentDamageIntake = 1;
 
         spriteFactory = new PlayerSpriteFactory();
     }
@@ -109,7 +111,7 @@ public class PlayerStateMachine
 
     public void TakeDamage(int amount)
     {
-        currentHealth -= amount;
+        currentHealth -= (int)(amount * currentDamageIntake);
     }
 
     public void Heal(int amount)
@@ -117,7 +119,7 @@ public class PlayerStateMachine
         currentHealth += amount;
     }
 
-    public void UseEquipment(IEquipment.Weapons weapon)
+    public static void UseEquipment(IEquipment.Weapons weapon)
     {
         Player.Instance.Equipment[weapon].Use();
     }
