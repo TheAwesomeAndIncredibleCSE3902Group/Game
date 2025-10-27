@@ -1,0 +1,33 @@
+// This is the element that holds commands. It is selectable by default.
+
+using AwesomeRPG.Commands;
+using AwesomeRPG.Sprites;
+using AwesomeRPG.UI.Events;
+using Microsoft.Xna.Framework;
+
+namespace AwesomeRPG.UI.Elements;
+
+public class CommandElement : ElementBase
+{
+    public ICommand AssociatedCommand { get; set; }
+
+    public override void Draw(GameTime gameTime)
+    {
+        CalculateDerivedValuesFromAncestors();
+
+        DispatchUIEvent(UIEvent.BeforeDraw, new DrawUIEvent(this, gameTime));
+        DrawChildren(gameTime);
+        DispatchUIEvent(UIEvent.AfterDraw, new DrawUIEvent(this, gameTime));
+    }
+
+    public CommandElement(RootElement rootElement)
+    {
+        SetUpElement(rootElement);
+    }
+    
+    public CommandElement(RootElement rootElement, ICommand command)
+    {
+        SetUpElement(rootElement);
+        AssociatedCommand = command;
+    }
+}

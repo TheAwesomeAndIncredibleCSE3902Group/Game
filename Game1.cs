@@ -10,6 +10,9 @@ using AwesomeRPG.Controllers;
 using AwesomeRPG.Sprites;
 using AwesomeRPG.Map;
 using AwesomeRPG.Collision;
+using AwesomeRPG.UI.Elements;
+using AwesomeRPG.UI.Components;
+using AwesomeRPG.UI;
 
 namespace AwesomeRPG;
 
@@ -26,6 +29,7 @@ public class Game1 : Game
     private Dictionary<string,ISprite> _spriteDict = [];
     private int _chosenSprite = 0;
     public Player Player { get; private set; }
+    public RootElement RootUIElement;
 
     //Collision Variables
     private List<CollisionObject> _movingCollisionObjects = new();
@@ -104,6 +108,20 @@ public class Game1 : Game
         _movingCollisionObjects.Add(Player);
         _controllersList.Add(new KeyboardController(this));
 
+
+        // UI creation
+        var spriteFont = Content.Load<SpriteFont>("Fonts\\MyFont");
+        RootUIElement = new RootElement(_spriteBatch);
+        RootUIElement.AddChild(ButtonComponent.Create(RootUIElement, spriteFont, this, new Rectangle(400, 50, 300,100)));
+
+        RootUIElement.UIState.AddActionOnUIControlEvent(UIControl.MoveDown, UIControlEvent.ButtonPress, () =>
+        {
+            RootUIElement.UIState.SelectionIndex += 1;
+        });
+        RootUIElement.UIState.AddActionOnUIControlEvent(UIControl.MoveUp, UIControlEvent.ButtonPress, () =>
+        {
+            RootUIElement.UIState.SelectionIndex -= 1;
+        });
     }
 
     private void HandleCollisions()
@@ -148,7 +166,7 @@ public class Game1 : Game
     {
         GraphicsDevice.Clear(Color.DarkSlateGray);
 
-        _spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp);
+        _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp);
 
         RoomMap.Draw(_spriteBatch, gameTime);
         Player.Draw(gameTime);
@@ -157,6 +175,8 @@ public class Game1 : Game
         {
             sprite.Draw(gameTime, new Vector2(500, 200));
         }
+
+        RootUIElement.Draw(gameTime);
 
         _spriteBatch.End();
 
