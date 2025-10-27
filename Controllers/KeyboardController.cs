@@ -58,7 +58,6 @@ namespace AwesomeRPG.Controllers
         private void InitializeCommands(Game1 game)
         {
             InitializeGameCommands(game);
-            InitializeSwapCommands(game);
             InitializeWeaponCommands(game);
             InitializeMovementCommands(game);
         }
@@ -68,14 +67,6 @@ namespace AwesomeRPG.Controllers
             keyPressMappings[Keys.Q] = new QuitCommand(game);
             keyPressMappings[Keys.R] = new ResetGameCommand(game);
             keyPressMappings[Keys.E] = new DamagePlayerCommand(game);
-        }
-        //Initialize commands which relate to swapping things around
-        private void InitializeSwapCommands(Game1 game)
-        {
-            keyPressMappings[Keys.U] = new SwitchMapItemSpriteCommand(game, false);
-            keyPressMappings[Keys.I] = new SwitchMapItemSpriteCommand(game, true);
-            keyPressMappings[Keys.O] = new SwitchEnemySpriteCommand(game, false);
-            keyPressMappings[Keys.P] = new SwitchEnemySpriteCommand(game, true);
         }
         //Initialize commands which relate to weapons and item use
         private void InitializeWeaponCommands(Game1 game)

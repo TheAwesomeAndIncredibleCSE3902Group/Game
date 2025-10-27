@@ -8,6 +8,7 @@ using System.Windows.Input;
 using AwesomeRPG.Map;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
+using static AwesomeRPG.Util;
 
 namespace AwesomeRPG.Commands
 {
@@ -17,12 +18,12 @@ namespace AwesomeRPG.Commands
         private RoomMap newRoom;
         private RoomAtlas roomAtlas;
         private Game1 myGame;
-        private int changeDirection;
+        private Cardinal changeDirection;
 
         /// <param name="content">ContentManager for RoomMapFromXML.</param>
         /// <param name="map">RoomMap for RoomMapFromXML.</param>
-        /// <param name="direction">The dirction the room changes. 1 & 2 go left & right. 3 & 4 go up & down.</param>
-        public ChangeCurrentRoomCommand(Game1 game, RoomAtlas atlas, int direction) 
+        /// <param name="direction">The dirction the room changes.</param>
+        public ChangeCurrentRoomCommand(Game1 game, RoomAtlas atlas, Cardinal direction) 
         {
             roomAtlas = atlas;
             changeDirection = direction;
@@ -35,19 +36,19 @@ namespace AwesomeRPG.Commands
             int row = roomAtlas.GetRow(roomMap);
             int column = roomAtlas.GetColumn(roomMap);
 
-            if (changeDirection == 1)
+            if (changeDirection == Cardinal.left)
             {
                 newRoom = roomAtlas.GetRoom(column - 1, row);
             }
-            else if (changeDirection == 2)
+            else if (changeDirection == Cardinal.right)
             {
                 newRoom = roomAtlas.GetRoom(column + 1, row);
             }
-            else if (changeDirection == 3 && row > 0)
+            else if (changeDirection == Cardinal.up)
             {
                 newRoom = roomAtlas.GetRoom(column, row - 1);
             }
-            else if (changeDirection == 4)
+            else if (changeDirection == Cardinal.down)
             {
                 newRoom = roomAtlas.GetRoom(column, row + 1);
             }

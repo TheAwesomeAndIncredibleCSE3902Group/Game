@@ -48,6 +48,7 @@ namespace AwesomeRPG.Collision
             collisionResponses[new CollisionPair(CollisionObjectType.Player, CollisionObjectType.Wall)] = new CollidePlayerWallCommand();
             collisionResponses[new CollisionPair(CollisionObjectType.Player, CollisionObjectType.Pickup)] = new CollidePlayerPickupCommand();
             collisionResponses[new CollisionPair(CollisionObjectType.Player, CollisionObjectType.Enemy)] = new CollidePlayerEnemyCommand();
+            collisionResponses[new CollisionPair(CollisionObjectType.Player, CollisionObjectType.Entrance)] = new CollidePlayerEntranceCommand();
         }
         
     }
