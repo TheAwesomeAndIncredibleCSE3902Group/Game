@@ -1,3 +1,6 @@
+// Originally written by Eli L
+// If you need help with working on UI, feel free to ask me!!!
+
 // This is the root element that will contain every other class. This should only be used once.
 
 using System;

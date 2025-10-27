@@ -1,7 +1,9 @@
+// Originally written by Eli L
+// If you need help with working on UI, feel free to ask me!!!
+
 // This is the element that holds commands. It is selectable by default.
 
 using AwesomeRPG.Commands;
-using AwesomeRPG.Sprites;
 using AwesomeRPG.UI.Events;
 using Microsoft.Xna.Framework;
 

@@ -29,7 +29,9 @@ public class Game1 : Game
     private Dictionary<string,ISprite> _spriteDict = [];
     private int _chosenSprite = 0;
     public Player Player { get; private set; }
-    public RootElement RootUIElement;
+    
+    // Temporarily commented out for Sprint3 submission
+    // public RootElement RootUIElement;
 
     //Collision Variables
     private List<CollisionObject> _movingCollisionObjects = new();
@@ -84,7 +86,7 @@ public class Game1 : Game
     protected override void LoadContent()
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
-        
+
         //Create sprite factories
         MapItemSpriteFactory.LoadAllTextures(Content, _spriteBatch);
         ItemSpriteFactory.LoadAllTextures(Content, _spriteBatch);
@@ -98,29 +100,32 @@ public class Game1 : Game
 
         //World Creation
         RoomMap = MapParser.Instance.RoomMapFromXML(Content, "MapItems\\Level0-0.xml", new Vector2(3, 3));
-        RoomAtlas = new RoomAtlas(new AtlasInitializer().InitializeAtlasWStartingRoom(Content,RoomMap));
+        RoomAtlas = new RoomAtlas(new AtlasInitializer().InitializeAtlasWStartingRoom(Content, RoomMap));
         _controllersList.Add(new MouseController(this, RoomAtlas));
         NonMovingCollisionObjects = RoomMap._nonMovingCollisionObjects;
 
         //Player declaration
         //TODO: PROBABLY WANNA HAVE A METHOD IN EACH LEVEL WHICH HANDLES ADDING THINGS TO COLLISION LIST
-        Player = new Player(Content,_spriteBatch);
+        Player = new Player(Content, _spriteBatch);
         _movingCollisionObjects.Add(Player);
         _controllersList.Add(new KeyboardController(this));
 
-        // UI creation
-        var spriteFont = Content.Load<SpriteFont>("Fonts\\MyFont");
-        RootUIElement = new RootElement(_spriteBatch);
-        RootUIElement.AddChild(ButtonComponent.Create(RootUIElement, spriteFont, this, new Rectangle(400, 50, 300,100)));
+        
+        // Temporarily commented out for Sprint3 submission
 
-        RootUIElement.UIState.AddActionOnUIControlEvent(UIControl.MoveDown, UIControlEvent.ButtonPress, () =>
-        {
-            RootUIElement.UIState.SelectionIndex += 1;
-        });
-        RootUIElement.UIState.AddActionOnUIControlEvent(UIControl.MoveUp, UIControlEvent.ButtonPress, () =>
-        {
-            RootUIElement.UIState.SelectionIndex -= 1;
-        });
+        // UI creation
+        // var spriteFont = Content.Load<SpriteFont>("Fonts\\MyFont");
+        // RootUIElement = new RootElement(_spriteBatch);
+        // RootUIElement.AddChild(ButtonComponent.Create(RootUIElement, spriteFont, this, new Rectangle(400, 50, 300,100)));
+
+        // RootUIElement.UIState.AddActionOnUIControlEvent(UIControl.MoveDown, UIControlEvent.ButtonPress, () =>
+        // {
+        //     RootUIElement.UIState.SelectionIndex += 1;
+        // });
+        // RootUIElement.UIState.AddActionOnUIControlEvent(UIControl.MoveUp, UIControlEvent.ButtonPress, () =>
+        // {
+        //     RootUIElement.UIState.SelectionIndex -= 1;
+        // });
     }
 
     private void HandleCollisions()
@@ -175,7 +180,8 @@ public class Game1 : Game
             sprite.Draw(gameTime, new Vector2(500, 200));
         }
 
-        RootUIElement.Draw(gameTime);
+        // Temporarily commented out for Sprint3 submission
+        // RootUIElement.Draw(gameTime);
 
         _spriteBatch.End();
 

@@ -98,19 +98,21 @@ namespace AwesomeRPG.Controllers
         private void InitializeUICommands(Game1 game)
         {
             // RIGHT NOW THIS OVERWRITES THEM... SHOULD MAKE INTO LISTS?
-            keyDownMappings[Keys.Left] = new CommandUIControl(game, UI.UIControl.MoveLeft, UI.UIControlEvent.ButtonDown);
-            keyDownMappings[Keys.Up] = new CommandUIControl(game, UI.UIControl.MoveUp, UI.UIControlEvent.ButtonDown);
-            keyDownMappings[Keys.Right] = new CommandUIControl(game, UI.UIControl.MoveRight, UI.UIControlEvent.ButtonDown);
-            keyDownMappings[Keys.Down] = new CommandUIControl(game, UI.UIControl.MoveDown, UI.UIControlEvent.ButtonDown);
-            keyDownMappings[Keys.Back] = new CommandUIControl(game, UI.UIControl.Return, UI.UIControlEvent.ButtonDown);
-            keyDownMappings[Keys.Enter] = new CommandUIControl(game, UI.UIControl.Interact, UI.UIControlEvent.ButtonDown);
+            // Temporarily commented out for Sprint3 submission
             
-            keyPressMappings[Keys.Left] = new CommandUIControl(game, UI.UIControl.MoveLeft, UI.UIControlEvent.ButtonPress);
-            keyPressMappings[Keys.Up] = new CommandUIControl(game, UI.UIControl.MoveUp, UI.UIControlEvent.ButtonPress);
-            keyPressMappings[Keys.Right] = new CommandUIControl(game, UI.UIControl.MoveRight, UI.UIControlEvent.ButtonPress);
-            keyPressMappings[Keys.Down] = new CommandUIControl(game, UI.UIControl.MoveDown, UI.UIControlEvent.ButtonPress);
-            keyPressMappings[Keys.Back] = new CommandUIControl(game, UI.UIControl.Return, UI.UIControlEvent.ButtonPress);
-            keyPressMappings[Keys.Enter] =new CommandUIControl(game, UI.UIControl.Interact, UI.UIControlEvent.ButtonPress);
+            // keyDownMappings[Keys.Left] = new CommandUIControl(game, UI.UIControl.MoveLeft, UI.UIControlEvent.ButtonDown);
+            // keyDownMappings[Keys.Up] = new CommandUIControl(game, UI.UIControl.MoveUp, UI.UIControlEvent.ButtonDown);
+            // keyDownMappings[Keys.Right] = new CommandUIControl(game, UI.UIControl.MoveRight, UI.UIControlEvent.ButtonDown);
+            // keyDownMappings[Keys.Down] = new CommandUIControl(game, UI.UIControl.MoveDown, UI.UIControlEvent.ButtonDown);
+            // keyDownMappings[Keys.Back] = new CommandUIControl(game, UI.UIControl.Return, UI.UIControlEvent.ButtonDown);
+            // keyDownMappings[Keys.Enter] = new CommandUIControl(game, UI.UIControl.Interact, UI.UIControlEvent.ButtonDown);
+            
+            // keyPressMappings[Keys.Left] = new CommandUIControl(game, UI.UIControl.MoveLeft, UI.UIControlEvent.ButtonPress);
+            // keyPressMappings[Keys.Up] = new CommandUIControl(game, UI.UIControl.MoveUp, UI.UIControlEvent.ButtonPress);
+            // keyPressMappings[Keys.Right] = new CommandUIControl(game, UI.UIControl.MoveRight, UI.UIControlEvent.ButtonPress);
+            // keyPressMappings[Keys.Down] = new CommandUIControl(game, UI.UIControl.MoveDown, UI.UIControlEvent.ButtonPress);
+            // keyPressMappings[Keys.Back] = new CommandUIControl(game, UI.UIControl.Return, UI.UIControlEvent.ButtonPress);
+            // keyPressMappings[Keys.Enter] =new CommandUIControl(game, UI.UIControl.Interact, UI.UIControlEvent.ButtonPress);
         }
     }
 }

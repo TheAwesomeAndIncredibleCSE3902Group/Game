@@ -1,7 +1,8 @@
+// Originally written by Eli L
+// If you need help with working on UI, feel free to ask me!!!
+
 using System;
 using System.Collections.Generic;
-using AwesomeRPG.Commands;
-using Microsoft.Xna.Framework;
 
 namespace AwesomeRPG.UI.Elements;
 

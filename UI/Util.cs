@@ -1,3 +1,5 @@
+// Originally written by Eli L
+// If you need help with working on UI, feel free to ask me!!!
 
 namespace AwesomeRPG.UI;
 
@@ -30,8 +32,8 @@ public struct Spacing
         Bottom = bottom;
     }
 }
-public enum UIControl {MoveUp, MoveLeft, MoveRight, MoveDown, Interact, Return};
+public enum UIControl { MoveUp, MoveLeft, MoveRight, MoveDown, Interact, Return };
 
-public enum UIControlEvent {ButtonDown, ButtonUp, ButtonPress}; // KeyDown, KeyUp, KeyPress
+public enum UIControlEvent { ButtonDown, ButtonUp, ButtonPress }; // KeyDown, KeyUp, KeyPress
 
 public enum UIEvent { BeforeDraw, AfterDraw, Select, Unselect };

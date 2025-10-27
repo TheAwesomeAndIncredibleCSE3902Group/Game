@@ -9,7 +9,8 @@ public class CommandUIControl : ICommand
     private UIControlEvent _myUIControlEvent;
     public void Execute()
     {
-        _myGame.RootUIElement.UIState.RunControlActions(_myUIControl, _myUIControlEvent);
+        // Temporarily commented out for Sprint3 submission
+        // _myGame.RootUIElement.UIState.RunControlActions(_myUIControl, _myUIControlEvent);
     }
     
     public CommandUIControl(Game1 game, UIControl control, UIControlEvent uiControlEvent)

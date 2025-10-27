@@ -1,3 +1,6 @@
+// Originally written by Eli L
+// If you need help with working on UI, feel free to ask me!!!
+
 using AwesomeRPG.Commands;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;

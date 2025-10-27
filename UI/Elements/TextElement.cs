@@ -1,3 +1,6 @@
+// Originally written by Eli L
+// If you need help with working on UI, feel free to ask me!!!
+
 using System;
 using AwesomeRPG.UI.Events;
 using Microsoft.Xna.Framework;

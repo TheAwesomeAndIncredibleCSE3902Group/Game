@@ -1,9 +1,9 @@
-// This is the root element that will contain every other class. This should only be used once.
+// Originally written by Eli L
+// If you need help with working on UI, feel free to ask me!!!
+
+// This is the root element that will contain every other class. This should probably only be used once.
 // Unlike the other elements, this will also contain references to objects needed to draw the UI.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using AwesomeRPG.UI.Events;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
