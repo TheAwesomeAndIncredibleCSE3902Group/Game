@@ -85,7 +85,7 @@ public class MouseController : IController
         commands = new List<ICommand>();
         commands.Add(leftRoom);
         commands.Add(rightRoom);
-        commands.Add(upRoom);
-        commands.Add(downRoom);
+        commands.Add(topRoom);
+        commands.Add(bottomRoom);
     }
 }
