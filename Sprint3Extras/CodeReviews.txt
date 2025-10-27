@@ -1,0 +1,24 @@
+John
+Oct 25, 2025
+Sprint 3
+-----------------
+Author of code: Caleb and Lupine
+Code under review: All of the Collision code for readability
+Review took about ~15 minutes (forgot to check time so might be completely off)
+
+There's a lot going on for all the collision, but the comments for the methods do a decent job at concisely explaining the code's function.
+The names for the Collision classes (the commands are fine) are a bit basic and aren't thatt descriptive. I'm not sure if they necessarily 
+need to be much more descriptive, but when I was first reading through the code I got a little mixed up with the naming of the classes, it 
+definitely doesn't help that they all start with Collision. I think all of the commands are immediately understandable, which is kind of in 
+part of being a command.
+
+Author of code: Caleb
+Code under review: Pickup and Potion for code quality
+Review took about 5 minutes
+
+Ignoring the parts that are commented as in progress or unfinished, the code quality seems good. I like that the usage of abstract classes 
+allows for the creation of seperate "Pickups" based on the structure of the Pickup class. The classes are fairly simple, though there will 
+definitely be functional differences in the future as we have the pickups probably mostly be inventory items. Not an issue or something that 
+would take effort to change, but I think that it'd probably be good to make it so the size of the pickup isn't necessarily set or at least 
+have a constructor where the size could be changed. Since our game isn't grid based (the only grid based usage is for tile mapping), we don't
+need to have pickups be a set size. Anyways, code seems fine for what's currently there and I like how it's set up for more in the future.

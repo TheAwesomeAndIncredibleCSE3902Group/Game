@@ -1,0 +1,6 @@
+John
+----------
+There was some confusion between Jesse and I on the division of labor over the RPG Battle Mechanics.
+I believe the issue there was that Jesse and I needed to communicate more directly on the matter during development, 
+which is something I hopefully will improve on to make sure I provide more work for the next sprint.
+Otherwise, I think our team still performed pretty well and the team stayed pretty committed to working on the project.
