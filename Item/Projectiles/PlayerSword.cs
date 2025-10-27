@@ -1,3 +1,4 @@
+using AwesomeRPG.Collision;
 using Microsoft.Xna.Framework;
 using static AwesomeRPG.Util;
 
@@ -13,18 +14,20 @@ public class PlayerSword : Projectile
     {
         this.direction = direction;
 
-        this.position = position + Util.CardinalToUnitVector(direction) * swordOffset;
-
         this.movementSpeed = 0;
         this.lifetime = 0.5f;
 
         sprite = ItemSpriteFactory.CreateSwordSprite(direction);
+
+        Position = position + Util.CardinalToUnitVector(direction) * swordOffset;
+        Collider = new CollisionRect(this, sprite.Width, sprite.Height);
+        ObjectType = CollisionObjectType.PlayerProjectile;
     }
 
     protected override void Move()
     {
        //Sword tracks the player
-       this.position = Player.Instance.Position + Util.CardinalToUnitVector(direction) * swordOffset;
+       this.Position = Player.Instance.Position + Util.CardinalToUnitVector(direction) * swordOffset;
     }
 
     public override void Destroy()

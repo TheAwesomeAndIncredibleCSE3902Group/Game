@@ -3,6 +3,7 @@ using AwesomeRPG.Sprites;
 using Microsoft.Xna.Framework;
 using static AwesomeRPG.Util;
 using System.Data;
+using AwesomeRPG.Collision;
 
 namespace AwesomeRPG;
 
@@ -12,15 +13,17 @@ namespace AwesomeRPG;
 public class SwordBeam : Projectile
 {
     public SwordBeam(Vector2 position, Cardinal direction)
-    {
-        this.position = position;
+    {   
         this.direction = direction;
 
-        this.movementSpeed = 4;
-        this.lifetime = 2;
+        movementSpeed = 4;
+        lifetime = 2;
 
         //Didn't work with arrow sprite, rework later
         sprite = ItemSpriteFactory.CreateSwordBeamSprite(direction);
+        Position = position;
+        Collider = new CollisionRect(this, sprite.Width, sprite.Height);
+        ObjectType = CollisionObjectType.PlayerProjectile;
     }
 
     public override void Destroy()

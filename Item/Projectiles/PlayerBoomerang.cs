@@ -3,6 +3,7 @@ using AwesomeRPG.Sprites;
 using Microsoft.Xna.Framework;
 using static AwesomeRPG.Util;
 using System.Data;
+using AwesomeRPG.Collision;
 
 namespace AwesomeRPG;
 
@@ -14,8 +15,6 @@ public class PlayerBoomerang : Projectile
     float initialSpeed;
     public PlayerBoomerang(Vector2 position, Cardinal direction)
     {
-
-        this.position = position;
         this.direction = direction;
         initialSpeed = 2;
         movementSpeed = initialSpeed;
@@ -24,6 +23,9 @@ public class PlayerBoomerang : Projectile
 
         //Didn't work with arrow sprite, rework later
         sprite = ItemSpriteFactory.CreateBoomerangSprite();
+        Position = position;
+        Collider = new CollisionRect(this, sprite.Width, sprite.Height);
+        ObjectType = CollisionObjectType.PlayerProjectile;
     }
 
 /*
@@ -53,9 +55,9 @@ public class PlayerBoomerang : Projectile
     private void MoveBack()
     {
 
-        Vector2 toPlayer = Player.Instance.Position - position;
+        Vector2 toPlayer = Player.Instance.Position - Position;
         toPlayer.Normalize();
-        position += 2 * movementSpeed * toPlayer;
+        Position += 2 * movementSpeed * toPlayer;
     }
 
     public override void Destroy()

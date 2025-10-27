@@ -163,4 +163,12 @@ public class Game1 : Game
         base.Draw(gameTime);
     }
 
+    /// <summary>
+    /// This ain't do nothin rn
+    /// </summary>
+    public static void TransitionToBattleState()
+    {
+        Debug.WriteLine("Battle State moment");
+    }
+
 }

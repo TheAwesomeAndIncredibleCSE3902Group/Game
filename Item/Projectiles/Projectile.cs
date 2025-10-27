@@ -3,17 +3,17 @@ using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using AwesomeRPG.Sprites;
 using static AwesomeRPG.Util;
+using AwesomeRPG.Collision;
 
 namespace AwesomeRPG;
 
 /// <summary>
 /// Defines movement and drawing for an object that travels a linear path with a limited lifespan
 /// </summary>
-public abstract class Projectile
+public abstract class Projectile : CollisionObject
 {
     public ISprite sprite;
 
-    protected Vector2 position;
     protected Cardinal direction;
     //Pixels per tick. Might change to pixels per second later
     protected float movementSpeed;
@@ -34,12 +34,12 @@ public abstract class Projectile
 
     protected virtual void Move()
     {
-        position += movementSpeed * Util.CardinalToUnitVector(direction);
+        Position += movementSpeed * Util.CardinalToUnitVector(direction);
     }
 
     public void Draw(GameTime gt)
     {
-        sprite.Draw(gt, position);
+        sprite.Draw(gt, Position);
     }
 
     public abstract void Destroy();

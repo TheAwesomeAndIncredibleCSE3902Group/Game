@@ -3,6 +3,7 @@ using AwesomeRPG.Sprites;
 using Microsoft.Xna.Framework;
 using static AwesomeRPG.Util;
 using System.Data;
+using AwesomeRPG.Collision;
 
 namespace AwesomeRPG;
 
@@ -13,7 +14,6 @@ public class PlayerArrow : Projectile
 {
     public PlayerArrow(Vector2 position, Cardinal direction)
     {
-        this.position = position;
         this.direction = direction;
 
         this.movementSpeed = 2;
@@ -21,6 +21,9 @@ public class PlayerArrow : Projectile
 
         //Didn't work with arrow sprite, rework later
         sprite = ItemSpriteFactory.CreateArrowSprite(direction);
+        Position = position;
+        Collider = new CollisionRect(this, sprite.Width, sprite.Height);
+        ObjectType = CollisionObjectType.PlayerProjectile;
     }
 
     public override void Destroy()

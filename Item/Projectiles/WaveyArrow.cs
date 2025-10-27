@@ -1,4 +1,5 @@
 using System;
+using AwesomeRPG.Collision;
 using AwesomeRPG.Sprites;
 using Microsoft.Xna.Framework;
 using static AwesomeRPG.Util;
@@ -26,7 +27,6 @@ public class WaveyArrow : Projectile
     public WaveyArrow(Vector2 position, Cardinal direction, float baseFreq = 0.8f, float baseAmplitude = 50)
     {
         this.linearPos = position;
-        this.position = position;
         this.direction = direction;
 
         this.movementSpeed = 2;
@@ -37,6 +37,10 @@ public class WaveyArrow : Projectile
 
         //Didn't work with arrow sprite, rework later
         sprite = ItemSpriteFactory.CreateArrowSprite(direction);
+
+        Position = position;
+        Collider = new CollisionRect(this, sprite.Width, sprite.Height);
+        ObjectType = CollisionObjectType.PlayerProjectile;
     }
 
     /// <summary>
@@ -54,7 +58,7 @@ public class WaveyArrow : Projectile
 
         Cardinal modCardinal = direction.Rotate();
         Vector2 vectorOffset = Util.CardinalToUnitVector(modCardinal) * offset;
-        position = linearPos + vectorOffset;
+        Position = linearPos + vectorOffset;
     }
 
     public override void Destroy()

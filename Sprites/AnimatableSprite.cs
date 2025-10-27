@@ -20,6 +20,10 @@ public class AnimatableSprite : ISprite
     private readonly SpriteBatch _spriteBatch;
     private ulong _ticksBetweenFrames;
     private uint _currentFrame = 0;
+
+    public int Width { get; private set; }
+    public int Height { get; private set; }
+
     public uint CurrentFrame
     {
         get
@@ -44,6 +48,8 @@ public class AnimatableSprite : ISprite
         }
     }
 
+    
+
     /// <summary>
     /// Creates a static (non-moving) sprite. AnimationSpeed has no effect.
     /// </summary>
@@ -58,6 +64,8 @@ public class AnimatableSprite : ISprite
         _offsetList = new Vector2[1]; // offset is set to 0.0f, 0.0f
         _numberOfFrames = 1;
         MillisecondsBetweenFrames = 0;
+
+        SetWidthNHeight(spriteSheetStaticSource.Width, spriteSheetStaticSource.Height);
     }
 
     /// <summary>
@@ -98,6 +106,7 @@ public class AnimatableSprite : ISprite
             }
         }
 
+        SetWidthNHeight(spriteSheetInitialFrameSource.Width, spriteSheetInitialFrameSource.Height);
         //Console.WriteLine(currentPositionOnSpriteSheet);
     }
 
@@ -148,6 +157,11 @@ public class AnimatableSprite : ISprite
             return;
         }
 
+        //Assumes that the size of each sprite in the atlas is the same
+        int width = spriteAtlasSource[0, 2];
+        int height = spriteAtlasSource[0, 3];
+        SetWidthNHeight(width, height);
+
         throw new System.Exception("Invalid spriteAtlasSource 2D array! Must either have 6 columns (X,Y,W,H,offsetX,offsetY) or 4 columns (X,Y,W,H)");
     }
 
@@ -191,6 +205,12 @@ public class AnimatableSprite : ISprite
     public void Draw(GameTime gameTime, Vector2 position, float scale = 3.0f)
     {
         DoDraw(gameTime, position, scale);
+    }
+
+    private void SetWidthNHeight(int width, int height)
+    {
+        Width = width;
+        Height = height;
     }
 
 }
