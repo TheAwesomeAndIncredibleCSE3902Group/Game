@@ -13,7 +13,6 @@ public interface IPlayer
     public Vector2 Position { get; set; }
     //I'm not entirely sure whether Player or PlayerState should handle this sprite
     public ISprite Sprite { get; set; }
-    public IPlayerState PlayerState { get; }
     public PlayerCollisionHandler CollisionHandler { get; }
 
     public List<IEquipment> Equipment { get; }

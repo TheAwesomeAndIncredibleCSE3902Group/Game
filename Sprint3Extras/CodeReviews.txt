@@ -22,3 +22,32 @@ definitely be functional differences in the future as we have the pickups probab
 would take effort to change, but I think that it'd probably be good to make it so the size of the pickup isn't necessarily set or at least 
 have a constructor where the size could be changed. Since our game isn't grid based (the only grid based usage is for tile mapping), we don't
 need to have pickups be a set size. Anyways, code seems fine for what's currently there and I like how it's set up for more in the future.
+
+
+
+Caleb
+Oct 26, 2025
+Sprint 3
+-----------------
+Author of Code: Iris
+Code Under Review: Map Parser for Readability
+Review time: 3.5 minutes
+
+The function is a behemoth. The comments do a good job of describing each process which is occuring in
+the function, but the functions length can make it easy to lose track of what's happening at any point.
+The RoomMapToXML function should be broken up into multiple helper functions to improve the cohesion at any
+given point during the process. Ideally each function should be around 10-15 lines of code at max to ensure that
+at no step during the process is a single function handling too much. It's fine to create more function overhead
+if it gives each function a clear single target purpose.
+
+
+Author of Code: Jesse
+Code Under Review: IEnemyBattle along with its heirs
+Review time: 5 minutes
+
+The IEnemyBattle Interface is well made in allowing for the battleScene to simply iterate over all the different
+enemies and do what they need to do. Along with allowing each specific enemy class to have a short implementation
+allowing for it to have high cohesion. Only problem I would argue, is that the IEnemyBattle interface should have more
+generic data such as things like the CurrentHealth property being moved into there along with things such as fainted
+status and speed; This would allow for enemies to be treated more uniformly, along with further narrowing down the
+concrete classes into just showing the differences between the enemies.

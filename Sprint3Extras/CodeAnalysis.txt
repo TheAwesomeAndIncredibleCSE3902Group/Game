@@ -3,5 +3,9 @@ We made use of Visual Studio's Code Analysis tool to see potential mistakes in o
 The only code quality result we received warnings on were multiple caes of having
 various variables which were defined but never used. Most of these were removed except for these exceptions.
 
+LinePathing.startDirection since it likely will be used later
+RandomWalkPathing.startDirection since it likely will be used later
+
+
 
 

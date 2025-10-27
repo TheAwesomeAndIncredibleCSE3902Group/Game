@@ -17,6 +17,10 @@ namespace AwesomeRPG.Map;
 
 public class MapParser
 {
+    private MapParser()
+    {
+
+    }
 
     private static MapParser instance = new MapParser();
 
