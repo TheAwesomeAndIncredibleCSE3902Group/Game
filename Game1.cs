@@ -108,7 +108,6 @@ public class Game1 : Game
         _movingCollisionObjects.Add(Player);
         _controllersList.Add(new KeyboardController(this));
 
-
         // UI creation
         var spriteFont = Content.Load<SpriteFont>("Fonts\\MyFont");
         RootUIElement = new RootElement(_spriteBatch);
