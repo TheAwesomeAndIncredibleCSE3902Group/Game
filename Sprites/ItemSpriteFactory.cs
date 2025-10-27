@@ -4,7 +4,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using AwesomeRPG.Sprites;
-using static AwesomeRPG.Commands.SwitchMapItemSpriteCommand;
 
 namespace AwesomeRPG;
 
@@ -124,9 +123,6 @@ public static class ItemSpriteFactory
         zeldaSheet = content.Load<Texture2D>("SpriteImages/legendofzelda_link_sheet");
         miscSheet = content.Load<Texture2D>("SpriteImages/misc_items");
         sb = spriteBatch;
-
-        //Use this if/once we have a dedicated sprite sheet for items
-        //spriteSheet = content.Load<Texture2D>("items");
     }
 
 }

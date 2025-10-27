@@ -11,7 +11,6 @@ namespace AwesomeRPG;
 /// </summary>
 public class SwordBeam : Projectile
 {
-    int damage;
     public SwordBeam(Vector2 position, Cardinal direction)
     {
         this.position = position;
@@ -19,7 +18,6 @@ public class SwordBeam : Projectile
 
         this.movementSpeed = 4;
         this.lifetime = 2;
-        this.damage = 2;
 
         //Didn't work with arrow sprite, rework later
         sprite = ItemSpriteFactory.CreateSwordBeamSprite(direction);
