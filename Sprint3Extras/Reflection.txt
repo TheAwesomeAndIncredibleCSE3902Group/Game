@@ -4,3 +4,10 @@ There was some confusion between Jesse and I on the division of labor over the R
 I believe the issue there was that Jesse and I needed to communicate more directly on the matter during development, 
 which is something I hopefully will improve on to make sure I provide more work for the next sprint.
 Otherwise, I think our team still performed pretty well and the team stayed pretty committed to working on the project.
+
+
+Caleb
+---------
+Sprint work needs to be more clearly defined so that everyone knows exactly what they need to do and how much
+of it needs to be done, by the end of the sprint. Additionally we need to stick harder to sprint deadlines treating
+them more as hard goals rather than soft ones lest we fall behind.
