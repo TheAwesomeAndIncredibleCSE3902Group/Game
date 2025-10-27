@@ -12,11 +12,10 @@ namespace AwesomeRPG.Sprites
 {
     public class PlayerSpriteFactory
     {
-        private Cardinal currentDirection;
         private Texture2D linkSpriteSheet;
         private SpriteBatch linkSpriteBatch;
 
-        private ISprite currentLinkSprite;
+        private AnimatableSprite currentLinkSprite;
 
         private static Rectangle standingFrame;
         private static Rectangle itemFrame;
@@ -44,7 +43,7 @@ namespace AwesomeRPG.Sprites
             return currentLinkSprite;
         }
 
-        private void SetSpritesToFaceSameDirection()
+        private static void SetSpritesToFaceSameDirection()
         {
             standingFrame.X = walkingSpriteAtlas[0, 0];
             itemFrame.X = walkingSpriteAtlas[0, 0];
@@ -73,7 +72,6 @@ namespace AwesomeRPG.Sprites
             }
 
             SetSpritesToFaceSameDirection();
-            currentDirection = newDirection;
             ChangeSpriteWalking();
         }
 

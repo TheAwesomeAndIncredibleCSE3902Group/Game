@@ -8,7 +8,6 @@ namespace AwesomeRPG;
 /// </summary>
 public class PlayerSword : Projectile
 {
-    int damage;
     int swordOffset = 40;
     public PlayerSword(Vector2 position, Cardinal direction)
     {
@@ -18,7 +17,6 @@ public class PlayerSword : Projectile
 
         this.movementSpeed = 0;
         this.lifetime = 0.5f;
-        this.damage = 2;
 
         sprite = ItemSpriteFactory.CreateSwordSprite(direction);
     }

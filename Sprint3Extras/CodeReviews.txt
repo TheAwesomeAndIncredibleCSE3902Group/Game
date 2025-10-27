@@ -2,7 +2,7 @@ John
 Oct 25, 2025
 Sprint 3
 -----------------
-Author of code: Caleb and Lupine
+Author of code: Caleb
 Code under review: All of the Collision code for readability
 Review took about ~15 minutes (forgot to check time so might be completely off)
 
@@ -12,7 +12,7 @@ need to be much more descriptive, but when I was first reading through the code 
 definitely doesn't help that they all start with Collision. I think all of the commands are immediately understandable, which is kind of in 
 part of being a command.
 
-Author of code: Caleb
+Author of code: Lupine
 Code under review: Pickup and Potion for code quality
 Review took about 5 minutes
 

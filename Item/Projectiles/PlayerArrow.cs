@@ -11,7 +11,6 @@ namespace AwesomeRPG;
 /// </summary>
 public class PlayerArrow : Projectile
 {
-    int damage;
     public PlayerArrow(Vector2 position, Cardinal direction)
     {
         this.position = position;
@@ -19,7 +18,6 @@ public class PlayerArrow : Projectile
 
         this.movementSpeed = 2;
         this.lifetime = 2;
-        this.damage = 2;
 
         //Didn't work with arrow sprite, rework later
         sprite = ItemSpriteFactory.CreateArrowSprite(direction);

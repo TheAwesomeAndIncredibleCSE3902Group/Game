@@ -11,7 +11,6 @@ namespace AwesomeRPG;
 /// </summary>
 public class PlayerBoomerang : Projectile
 {
-    int damage;
     float initialSpeed;
     public PlayerBoomerang(Vector2 position, Cardinal direction)
     {
@@ -22,7 +21,6 @@ public class PlayerBoomerang : Projectile
         movementSpeed = initialSpeed;
         initialSpeed = movementSpeed;
         lifetime = 3;
-        damage = 1;
 
         //Didn't work with arrow sprite, rework later
         sprite = ItemSpriteFactory.CreateBoomerangSprite();

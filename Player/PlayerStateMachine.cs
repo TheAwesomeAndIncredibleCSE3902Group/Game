@@ -10,7 +10,6 @@ namespace AwesomeRPG;
 public class PlayerStateMachine
 {
 
-    private IPlayer currentPlayer;
     private Cardinal currentDirection;
     private int currentHealth;
     private int currentMaxHealth;

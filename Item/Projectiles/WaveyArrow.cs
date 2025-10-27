@@ -10,7 +10,6 @@ namespace AwesomeRPG;
 /// </summary>
 public class WaveyArrow : Projectile
 {
-    int damage;
     Vector2 linearPos;
     //hz
     float baseFreq;
@@ -32,7 +31,6 @@ public class WaveyArrow : Projectile
 
         this.movementSpeed = 2;
         this.lifetime = 3;
-        this.damage = 2;
 
         this.baseFreq = baseFreq;
         this.baseAmplitude = baseAmplitude;
