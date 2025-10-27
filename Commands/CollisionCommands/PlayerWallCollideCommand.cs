@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework;
 
 namespace AwesomeRPG.Commands;
 
-public class CollidePlayerWallCommand : ICollisionCommand
+public class PlayerWallCollideCommand : ICollisionCommand
 {
     public void Execute(CollisionInfo collision)
     {

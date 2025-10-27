@@ -11,6 +11,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 using static AwesomeRPG.Util;
 using System.Linq;
+using AwesomeRPG.Collision;
 
 
 namespace AwesomeRPG.Map;
@@ -179,32 +180,28 @@ public class MapParser
                             pathing = new RandomWalkPathing(facing);
                         }
 
+                    ICharacter enemy;
                     switch (type)
                     {
                         case "moblin":
-                            CharacterEnemyMoblin moblin = new(position, facing);
-                            moblin.Pathing = pathing;
-                            map.Characters.Add(moblin);
+                            enemy = new CharacterEnemyMoblin(position, facing);
                             break;
                         case "armos":
-                            CharacterEnemyArmos armos = new(position, facing);
-                            armos.Pathing = pathing;
-                            map.Characters.Add(armos);
+                            enemy = new CharacterEnemyMoblin(position, facing);
                             break;
                         case "lynel":
-                            CharacterEnemyLynel lynel = new(position, facing);
-                            lynel.Pathing = pathing;
-                            map.Characters.Add(lynel);
+                            enemy = new CharacterEnemyLynel(position, facing);
                             break;
                         case "kris":
-                            CharacterKris kris = new();
-                            map.Characters.Add(kris);
+                            enemy = new CharacterKris();
                             break;
                         default:
                             Console.WriteLine("Entity type not supported: " + type);
+                            enemy = new CharacterKris(); //Arbitrary
                             break;
                     }
-
+                    enemy.Pathing = pathing;
+                    map.Characters.Add(enemy);
                 }
 
                 // generate pickups
@@ -214,19 +211,20 @@ public class MapParser
                 {
                     string type = pickup.Value.Trim().ToLower();
                     Vector2 position = new Vector2(int.Parse(pickup.Attribute("x").Value), int.Parse(pickup.Attribute("y").Value));
-                        
+
+                    CollisionObject pickupToAdd;
                     switch (type)
                     {
                         case "potion":
-                            Potion potion = new();
-                            potion.Position = position;
-                            map.Pickups.Add(potion);
-                            //DEBUG collision for potion map._nonMovingCollisionObjects.Add(potion);
+                            pickupToAdd = new Potion();
+                            pickupToAdd.Position = position;
                             break;
                         default:
                             Console.WriteLine("Pickup type not supported: " + type);
+                            pickupToAdd = new Potion(); //Arbitrary
                             break;
                     }
+                    map._nonMovingCollisionObjects.Add(pickupToAdd);
                 }
 
                 return map;

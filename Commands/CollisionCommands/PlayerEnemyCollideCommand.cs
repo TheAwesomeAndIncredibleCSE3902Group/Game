@@ -4,7 +4,7 @@ using System.Diagnostics;
 
 namespace AwesomeRPG.Commands;
 
-public class CollidePlayerEnemyCommand : ICollisionCommand
+public class PlayerEnemyCollideCommand : ICollisionCommand
 {
     public void Execute(CollisionInfo collision)
     {
