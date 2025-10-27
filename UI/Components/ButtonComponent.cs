@@ -33,7 +33,7 @@ public static class ButtonComponent
         selAnimElem.AddChild(rectElem);
 
         CommandElement commandElem = new CommandElement(rootElement);
-        commandElem.AssociatedCommand = new CommandQuit(game);
+        commandElem.AssociatedCommand = new QuitCommand(game);
         commandElem.AddChild(selAnimElem);
         commandElem.MakeSelectable();
 
