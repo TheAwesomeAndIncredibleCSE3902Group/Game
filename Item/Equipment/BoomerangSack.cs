@@ -20,5 +20,6 @@ public class BoomerangSack : IEquipment
 
         PlayerBoomerang boomerang = new PlayerBoomerang(player.Position, player.FacingDirection);
         spawnedProjectiles[IEquipment.Projectiles.boomerang] = boomerang;
+        Game1.MovingCollisionObjects.Add(boomerang);
     }
 }

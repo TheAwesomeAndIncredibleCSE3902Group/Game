@@ -23,11 +23,9 @@ namespace AwesomeRPG.Collision
 
             CollisionPair objectTypes = collision.GetObjectTypesOfCollision();
 
-            if (!collisionResponses.ContainsKey(objectTypes))
-            {
-                Debug.WriteLine($"Unmarked collision between {objectTypes}");
-                return;
-            }
+            if (!collisionResponses.ContainsKey(objectTypes)) return;
+               
+          
             collisionResponses[objectTypes].Execute(collision);
         }
 
@@ -42,6 +40,13 @@ namespace AwesomeRPG.Collision
         {
             InitializePlayerCollisions();
             InitializeEnemyCollisions();
+            InitializeProjectileCollisions();
+        }
+
+        private void InitializeProjectileCollisions()
+        {
+            collisionResponses[new CollisionPair(CollisionObjectType.PlayerProjectile, CollisionObjectType.Enemy)] = new ProjectileEnemyCollideCommand();
+            collisionResponses[new CollisionPair(CollisionObjectType.PlayerProjectile, CollisionObjectType.Wall)] = new ProjectileWallCollideCommand();
         }
 
         private void InitializePlayerCollisions()
@@ -50,7 +55,6 @@ namespace AwesomeRPG.Collision
             collisionResponses[new CollisionPair(CollisionObjectType.Player, CollisionObjectType.Pickup)] = new PlayerPickupCollideCommand();
             collisionResponses[new CollisionPair(CollisionObjectType.Player, CollisionObjectType.Enemy)] = new PlayerEnemyCollideCommand();
             collisionResponses[new CollisionPair(CollisionObjectType.Player, CollisionObjectType.Entrance)] = new PlayerEntranceCollideCommand();
-            collisionResponses[new CollisionPair(CollisionObjectType.PlayerProjectile, CollisionObjectType.Enemy)] = new ProjectileEnemyCollideCommand();
         }
 
         private void InitializeEnemyCollisions()

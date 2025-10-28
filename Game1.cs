@@ -1,18 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using AwesomeRPG.Characters;
-using AwesomeRPG.Commands;
 using AwesomeRPG.Controllers;
 using AwesomeRPG.Sprites;
 using AwesomeRPG.Map;
 using AwesomeRPG.Collision;
-using AwesomeRPG.UI.Elements;
-using AwesomeRPG.UI.Components;
-using AwesomeRPG.UI;
 
 namespace AwesomeRPG;
 
@@ -32,9 +26,9 @@ public class Game1 : Game
     // Temporarily commented out for Sprint3 submission
     // public RootElement RootUIElement;
 
-    //Collision Variables
-    private List<CollisionObject> _movingCollisionObjects = new();
-    public List<CollisionObject> NonMovingCollisionObjects { get; set; } = new();
+    //Collision Variables, this needs to be improved sloppy solution for now
+    public static List<CollisionObject> MovingCollisionObjects { get; private set; } = new();
+    public List<CollisionObject> NonMovingCollisionObjects { get; private set; } = new();
     private AllCollisionHandler _allCollisionHandler;
 
     //Map Variables
@@ -78,14 +72,12 @@ public class Game1 : Game
         RoomAtlas = new RoomAtlas(new AtlasInitializer().InitializeAtlasWStartingRoom(Content, RoomMap));
         RoomMap = MapParser.Instance.RoomMapFromXML(Content, "MapItems\\Level0-0.xml", new Vector2(3, 3));
         NonMovingCollisionObjects = RoomMap._nonMovingCollisionObjects;
-        _movingCollisionObjects = RoomMap._movingCollisionObjects;
+        MovingCollisionObjects = RoomMap._movingCollisionObjects;
 
         //Player declaration
         //TODO: PROBABLY WANNA HAVE A METHOD IN EACH LEVEL WHICH HANDLES ADDING THINGS TO COLLISION LIST
         Player = new Player(Content, _spriteBatch);
-        _movingCollisionObjects.Add(Player);
-
-        //Controllers
+        MovingCollisionObjects.Add(Player);
         _controllersList.Add(new KeyboardController(this));
         _controllersList.Add(new MouseController(this, RoomAtlas));
 
@@ -117,7 +109,7 @@ public class Game1 : Game
         RoomMap.Characters.Add(enemy);
 
         //RoomMap._movingCollisionObjects.Add(enemy);
-        _movingCollisionObjects.Add(enemy);
+        MovingCollisionObjects.Add(enemy);
     }
 
     private void HandleCollisions()
@@ -128,17 +120,35 @@ public class Game1 : Game
         // to simplify the interactions between the player and everything not just
         // for interactability with the world but also for battle mechanics with
         // turn order and any AoE damage on both sides.
-        for (int i = 0; i< _movingCollisionObjects.Count; i++)
+        for (int i = 0; i< MovingCollisionObjects.Count; i++)
         {
             foreach (CollisionObject nonMovingObject in NonMovingCollisionObjects)
             {
-                CollisionInfo collision = _movingCollisionObjects[i].DetectCollision(nonMovingObject);
+                CollisionInfo collision = MovingCollisionObjects[i].DetectCollision(nonMovingObject);
                 _allCollisionHandler.HandleCollision(collision);
             }
-            for (int j = i+1; j < _movingCollisionObjects.Count; j++)
+
+            for (int j = i+1; j < MovingCollisionObjects.Count; j++)
             {
-                CollisionInfo collision = _movingCollisionObjects[i].DetectCollision(_movingCollisionObjects[j]);
+                CollisionInfo collision = MovingCollisionObjects[i].DetectCollision(MovingCollisionObjects[j]);
                 _allCollisionHandler.HandleCollision(collision);
+            }
+        }
+        ClearProjectiles();
+        
+    }
+
+    //Vile code, made by the most deprived of man. May this be fixed next sprint
+    private void ClearProjectiles()
+    {
+        if(Player.spawnedProjectiles.Count == 0)
+        {
+            for(int i = 0; i < MovingCollisionObjects.Count; i++)
+            {
+                if(MovingCollisionObjects[i].ObjectType == CollisionObjectType.PlayerProjectile)
+                {
+                    MovingCollisionObjects.RemoveAt(i);
+                }
             }
         }
     }

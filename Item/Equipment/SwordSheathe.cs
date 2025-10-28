@@ -20,5 +20,6 @@ public class SwordSheathe : IEquipment
 
         PlayerSword sword = new PlayerSword(player.Position, player.FacingDirection);
         spawnedProjectiles[IEquipment.Projectiles.sword] = sword;
+        Game1.MovingCollisionObjects.Add(sword);
     }
 }

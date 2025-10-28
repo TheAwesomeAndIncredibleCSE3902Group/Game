@@ -22,5 +22,7 @@ public class SuperSwordSheathe : IEquipment
         spawnedProjectiles[IEquipment.Projectiles.sword] = sword;
         SwordBeam swordBeam = new SwordBeam(player.Position, player.FacingDirection);
         spawnedProjectiles[IEquipment.Projectiles.swordBeam] = swordBeam;
+        Game1.MovingCollisionObjects.Add(swordBeam);
+        Game1.MovingCollisionObjects.Add(sword);
     }
 }
