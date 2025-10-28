@@ -9,10 +9,10 @@ public class CharacterEnemyMoblin : CharacterEnemyBase
 {
     public CharacterEnemyMoblin(Vector2 position, Cardinal direction) : base(position, direction)
     {
-        ChangeDirection(direction);
+        ChangeDirectionalSprite(direction);
     }
 
-    public override void ChangeDirection(Cardinal direction)
+    public override void ChangeDirectionalSprite(Cardinal direction)
     {
         _sprite = direction switch
         {

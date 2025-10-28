@@ -11,13 +11,20 @@ public class LinePathing : IPathingScheme
     private Cardinal direction;
     private float timeSinceLastSwap;
 
+    public Cardinal GetDirection() => direction;
+
     public LinePathing(Cardinal startDirection)
     {
         this.startDirection = startDirection;
         this.direction = startDirection;
     }
 
-    public Cardinal GetDirection() => direction;
+    public bool TrySetDirection(Cardinal direction)
+    {
+        this.direction = direction;
+        timeSinceLastSwap = 0;
+        return true;
+    }
 
     public void Update(GameTime gameTime)
     {

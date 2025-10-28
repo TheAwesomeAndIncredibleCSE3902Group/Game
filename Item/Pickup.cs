@@ -36,7 +36,7 @@ public abstract class Pickup : CollisionObject
     protected abstract void Apply(Player player);
     private void Destroy()
     {
-        throw new NotImplementedException();
+        //throw new NotImplementedException();
 
         //This should be something like Level.Remove(this)
         //Assuming the Level holds a list of all Pickups

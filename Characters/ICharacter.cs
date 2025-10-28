@@ -13,5 +13,5 @@ public interface ICharacter
 
     public void Update(GameTime gameTime);
     public void Draw(GameTime gameTime);
-    public void ChangeDirection(Util.Cardinal direction);
+    public void ChangeDirectionalSprite(Util.Cardinal direction);
 }

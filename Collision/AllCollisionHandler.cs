@@ -41,6 +41,7 @@ namespace AwesomeRPG.Collision
         private void InitializeDict()
         {
             InitializePlayerCollisions();
+            InitializeEnemyCollisions();
         }
 
         private void InitializePlayerCollisions()
@@ -50,6 +51,11 @@ namespace AwesomeRPG.Collision
             collisionResponses[new CollisionPair(CollisionObjectType.Player, CollisionObjectType.Enemy)] = new PlayerEnemyCollideCommand();
             collisionResponses[new CollisionPair(CollisionObjectType.Player, CollisionObjectType.Entrance)] = new PlayerEntranceCollideCommand();
             collisionResponses[new CollisionPair(CollisionObjectType.PlayerProjectile, CollisionObjectType.Enemy)] = new ProjectileEnemyCollideCommand();
+        }
+
+        private void InitializeEnemyCollisions()
+        {
+            collisionResponses[new CollisionPair(CollisionObjectType.Enemy, CollisionObjectType.Wall)] = new EnemyWallCollideCommand();
         }
         
     }

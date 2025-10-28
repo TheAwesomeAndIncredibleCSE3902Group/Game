@@ -33,7 +33,7 @@ public class CharacterKris : ICharacter
         _sprite.Draw(gameTime, Position);
     }
 
-    public void ChangeDirection(Util.Cardinal direction)
+    public void ChangeDirectionalSprite(Util.Cardinal direction)
     {
         //throw new NotImplementedException();
     }
