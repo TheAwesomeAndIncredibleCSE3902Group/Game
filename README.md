@@ -10,10 +10,13 @@ Weapons are inspired by Zelda but with a twist.
 | Quit Game         | Q             |
 | Reset Game        | R             |
 | Damage Player     | E             |
-| Switch Item       | U, I          |
-| Switch Enemy      | O, P          |
-| Switch Block      | T, Y          |
 | Use Sword         | Z, N          |
 | Use Bow           | 1             |
 | Use Boomerang     | 2             |
 | Use Super Sword   | 3             |
+
+Level can be swapped by clicking on the 4 quadrants on the screen.
+- Bottom Right changes to the room on the top (second value decreases)
+- Bottom Left changes to the room on the left (first value decreases)
+- Top Right changes to the room on the bottom (second value increases)
+- Top Left changes to the room on the right (first value increases)

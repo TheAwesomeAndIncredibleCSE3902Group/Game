@@ -19,7 +19,7 @@ public class MouseController : IController
     private ICommand rightRoom;
     private ICommand topRoom;
     private ICommand bottomRoom;
-    private List<ICommand> commands;
+    private List<ICommand> commands = new();
     public MouseController(Game1 game, RoomAtlas atlas)
     {
         _gameObject = game;
@@ -37,27 +37,27 @@ public class MouseController : IController
             {
                 if (isOnLeft)
                 {
-                    // Top Left changes to the room on the left (first value decreases)
-                    commands[0].Execute();
+                    // Top Left changes to the room on the right (first value increases)
+                    commands[1].Execute();
                     
                 }
                 else
                 {
-                    // Top Right changes to the room on the top (second value decreases)
-                    commands[2].Execute();
+                    // Top Right changes to the room on the bottom (second value increases)
+                    commands[3].Execute();
                 }
             }
             else
             {
                 if (isOnLeft)
                 {
-                    // Bottom Left changes to the room on the bottom (second value increases)
-                    commands[3].Execute();
+                    // Bottom Left changes to the room on the left (first value decreases)
+                    commands[0].Execute();
                 }
                 else
                 {
-                    // Bottom Right changes to the room on the right (first value increases)
-                    commands[1].Execute();
+                    // Bottom Right changes to the room on the top (second value decreases)
+                    commands[2].Execute();
                 }
             }
         }
@@ -82,7 +82,7 @@ public class MouseController : IController
         rightRoom = new ChangeCurrentRoomCommand(game, atlas, Util.Cardinal.right);
         topRoom = new ChangeCurrentRoomCommand(game, atlas, Util.Cardinal.up);
         bottomRoom = new ChangeCurrentRoomCommand(game, atlas, Util.Cardinal.down);
-        commands = new List<ICommand>();
+        //commands = new List<ICommand>();
         commands.Add(leftRoom);
         commands.Add(rightRoom);
         commands.Add(topRoom);
