@@ -19,8 +19,6 @@ public class Game1 : Game
     //Controls Variables
     private List<IController> _controllersList = [];
 
-    //Object Variables
-    private Dictionary<string,ISprite> _spriteDict = [];
     public Player Player { get; private set; }
     
     // Temporarily commented out for Sprint3 submission
@@ -135,7 +133,7 @@ public class Game1 : Game
             }
         }
         ClearProjectiles();
-        
+        ClearPickups();
     }
 
     //Vile code, made by the most deprived of man. May this be fixed next sprint
@@ -150,6 +148,24 @@ public class Game1 : Game
                     MovingCollisionObjects.RemoveAt(i);
                 }
             }
+        }
+    }
+
+
+    //Vile code, made by the most deprived of man. May this be fixed next sprint
+    private int prevPickups = 2;
+    private void ClearPickups()
+    {
+        if (prevPickups != 0 && RoomMap.Pickups.Count != prevPickups)
+        {
+            for (int i = 0; i < NonMovingCollisionObjects.Count; i++)
+            {
+                if (NonMovingCollisionObjects[i].ObjectType == CollisionObjectType.Pickup)
+                {
+                    NonMovingCollisionObjects.RemoveAt(i);
+                }
+            }
+            prevPickups--;
         }
     }
     protected override void Update(GameTime gameTime)
@@ -176,11 +192,6 @@ public class Game1 : Game
 
         RoomMap.Draw(_spriteBatch, gameTime);
         Player.Draw(gameTime);
-
-        foreach (ISprite sprite in _spriteDict.Values)
-        {
-            sprite.Draw(gameTime, new Vector2(500, 200));
-        }
 
         // Temporarily commented out for Sprint3 submission
         // RootUIElement.Draw(gameTime);
