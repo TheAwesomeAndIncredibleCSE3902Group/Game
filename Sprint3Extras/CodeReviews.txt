@@ -109,3 +109,26 @@ when I originaly wrote the Character classes). This approach allows multiple typ
 map in similar ways without having repetitive code insidde of the Update method of each Character class. However I am not 
 sure why TrySetDirection is returned as a boolean... It is just returned as true witin both LinePathing and RandomWalkPathing.
 Maybe this is intended for future functionality or a leftover from older code? 
+
+
+Lupine
+27 Oct 2025
+Sprint 3
+--------------------
+
+Author of code: Eli
+Reviewing all the UI classes for readability
+Review time: 5 minutes
+
+Names are intuitive and descriptive. Code is broken up logically and is easy to trace through. Classes have comments
+that describe their function when necessary. My only complaint is that a few more functions could use comments, but
+this will be easy to add after functionality is complete. The interface with the command system could also use explaining.
+
+Author of code: Eli
+Reviewing all the UI classes for code quality
+Review time: 10 minutes
+
+Overall, code quality seems high and elements seem very extendable. There are some choices I don't immediately understand,
+such as having commands be elements of their own. But I trust that there are good reasons behind these decisions, and they
+don't degrade the quality of the code. Good use of Actions and Events in ButtonComponent.
+

@@ -27,3 +27,11 @@ So, I was not involved very much with the main group. Additionally, I feel that 
 a bit more with John and Jesse who worked on the logic for the RPG battle mechanics, so they could get a clearer understanding
 of how we will be tying the state with the UI in the future.
 
+
+
+Lupine
+---------
+Work progressed well this sprint and large systems were built cleanly and with surprisingly few hiccups. I would like to see
+the team (including myself) adhere more closely to the functionality deadlines. The majority of the commits came in over the
+last week, which was understandable in some cases (ie building out complicated systems), but I would like to see incremental
+progress earlier so issues could be caught sooner. Nonetheless, I don't question that we'll keep meeting objectives.
