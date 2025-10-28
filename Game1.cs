@@ -27,7 +27,6 @@ public class Game1 : Game
 
     //Object Variables
     private Dictionary<string,ISprite> _spriteDict = [];
-    private int _chosenSprite = 0;
     public Player Player { get; private set; }
     
     // Temporarily commented out for Sprint3 submission
@@ -42,26 +41,6 @@ public class Game1 : Game
     public RoomAtlas RoomAtlas { get; private set; }
     public RoomMap RoomMap { get; set; }
     public List<int> Tiles { get; set; }
-    
-
-    public void SetChosenSprite(int val)
-    {
-        _chosenSprite = val;
-    }
-    public int GetChosenSprite()
-    {
-        return _chosenSprite;
-    }
-
-    /// <summary>
-    /// Changes the sprite in spritelist of a given name with a new sprite
-    /// </summary>
-    /// <param name="spriteName">The name of the sprite in the dictionary</param> 
-    /// <param name="newSprite">The ISprite of the new sprite being given</param> 
-    public void ChangeGameSpriteToNewSprite(string spriteName, ISprite newSprite)
-    {
-        _spriteDict[spriteName] = newSprite;
-    }
 
     public Game1()
     {
@@ -91,10 +70,6 @@ public class Game1 : Game
         MapItemSpriteFactory.LoadAllTextures(Content, _spriteBatch);
         ItemSpriteFactory.LoadAllTextures(Content, _spriteBatch);
 
-        //Create item(Probably could be improved, _spriteDict might not be needed anymore)
-        _spriteDict.Add("item", MapItemSpriteFactory.CreatePotionSprite());
-
-
         //NPC creation
         CharacterSpriteFactory.Instance.LoadAllTextures(Content, _spriteBatch);
 
@@ -102,14 +77,18 @@ public class Game1 : Game
         MapParser.Instance.LoadParser(this, RoomAtlas);
         RoomAtlas = new RoomAtlas(new AtlasInitializer().InitializeAtlasWStartingRoom(Content, RoomMap));
         RoomMap = MapParser.Instance.RoomMapFromXML(Content, "MapItems\\Level0-0.xml", new Vector2(3, 3));
-        _controllersList.Add(new MouseController(this, RoomAtlas));
         NonMovingCollisionObjects = RoomMap._nonMovingCollisionObjects;
+        _movingCollisionObjects = RoomMap._movingCollisionObjects;
 
         //Player declaration
         //TODO: PROBABLY WANNA HAVE A METHOD IN EACH LEVEL WHICH HANDLES ADDING THINGS TO COLLISION LIST
         Player = new Player(Content, _spriteBatch);
         _movingCollisionObjects.Add(Player);
+
+        //Controllers
         _controllersList.Add(new KeyboardController(this));
+        _controllersList.Add(new MouseController(this, RoomAtlas));
+
 
         TestEnemyCollision();
 

@@ -12,6 +12,7 @@ using Microsoft.Xna.Framework.Graphics;
 using static AwesomeRPG.Util;
 using System.Linq;
 using AwesomeRPG.Collision;
+using AwesomeRPG.BattleMechanics;
 
 
 namespace AwesomeRPG.Map;
@@ -219,6 +220,11 @@ public class MapParser
                     }
                     enemy.Pathing = pathing;
                     map.Characters.Add(enemy);
+
+                    //Reflection used here because as of Sprint3 Kris does not have collision. It will be revamped soon.
+                    CharacterEnemyBase enemyBase = enemy as CharacterEnemyBase;
+                    if (enemyBase is not null)
+                        map._movingCollisionObjects.Add(enemyBase);
                 }
 
                 // generate pickups
@@ -229,7 +235,7 @@ public class MapParser
                     string type = pickup.Value.Trim().ToLower();
                     Vector2 position = new Vector2(int.Parse(pickup.Attribute("x").Value), int.Parse(pickup.Attribute("y").Value));
 
-                    CollisionObject pickupToAdd;
+                    Pickup pickupToAdd;
                     switch (type)
                     {
                         case "potion":
@@ -241,6 +247,7 @@ public class MapParser
                             pickupToAdd = new Potion(); //Arbitrary
                             break;
                     }
+                    map.Pickups.Add(pickupToAdd);
                     map._nonMovingCollisionObjects.Add(pickupToAdd);
                 }
 
