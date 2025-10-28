@@ -18,3 +18,12 @@ Iris
 We got a lot done this sprint but a lot of it was completed towards the end of the sprint, rather than the work being more
 spread out. We still have a lot to do to turn our game into the RPG we plan, both on the coding and design sides of things,
 but I'm still confident our team can get it done.
+
+
+Eli
+---------
+I mostly worked on building out the UI framework throughout this sprint in preparation for the RPG battle UI, pause menu, title screen, etc.
+So, I was not involved very much with the main group. Additionally, I feel that I did not manage time well and should have communicated
+a bit more with John and Jesse who worked on the logic for the RPG battle mechanics, so they could get a clearer understanding
+of how we will be tying the state with the UI in the future.
+

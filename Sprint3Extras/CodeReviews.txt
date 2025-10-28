@@ -77,3 +77,35 @@ from the command into the RoomAtlas class. That would make it more closely follo
 individual command shouldn't contain any logic.
 
 
+
+
+
+Eli
+Oct 27, 2025
+Sprint 3
+-----------------
+Author of code: John
+Code under review: Map/RoomAtlas.cs
+Review took ~20 minutes or so
+
+The code is generally pretty readable. Although, one minor complaint I might have is that a generic "i" variable is used
+within the for loops, instead of a bit more descriptive name. I believe that using List<List<RoomMap>> works fine,
+(which is basically a jagged 2d array). Although, it may be possible to have a bit more cleaner code if we used something like a
+Dictionary<Point, RoomMap> , so we can map a 2d position without us having to worry about managing the rows and columns in the list.
+I also noticed that the RoomAtlas(RoomMap startingRoom) constructor seems like it wouldn't work because the atlas field is
+never initialized before adding something to the 0-index list. But this would be a simple fix. (Although, this constructor
+is never used elsewhere in the project at the moment). I was also unsure why we needed to pass a column to the AddRoom 
+and why there's a difference between how columns and rows are handled? But I could be missing something (I did not work 
+on any of the room related stuff.)
+
+
+Author of code: Lupine
+Code under review: Characters/Pathing/*.cs
+Review took 
+
+The code is very readable. I believe that it is a much better approach to separate the Pathing into a separate set of
+classes rather than just keeping it directly inside of each Character (enemy), (which was what I was assuming we would do 
+when I originaly wrote the Character classes). This approach allows multiple types of enemies to move around the
+map in similar ways without having repetitive code insidde of the Update method of each Character class. However I am not 
+sure why TrySetDirection is returned as a boolean... It is just returned as true witin both LinePathing and RandomWalkPathing.
+Maybe this is intended for future functionality or a leftover from older code? 
