@@ -111,7 +111,8 @@ public class Game1 : Game
         _movingCollisionObjects.Add(Player);
         _controllersList.Add(new KeyboardController(this));
 
-        
+        TestEnemyCollision();
+
         // Temporarily commented out for Sprint3 submission
 
         // UI creation
@@ -127,6 +128,17 @@ public class Game1 : Game
         // {
         //     RootUIElement.UIState.SelectionIndex -= 1;
         // });
+    }
+    
+    private void TestEnemyCollision()
+    {
+        LinePathing pathing = new LinePathing(Util.Cardinal.up);
+        CharacterEnemyArmos enemy = new CharacterEnemyArmos(new Vector2(100, 150), Util.Cardinal.up);
+        enemy.Pathing = pathing;
+        RoomMap.Characters.Add(enemy);
+
+        //RoomMap._movingCollisionObjects.Add(enemy);
+        _movingCollisionObjects.Add(enemy);
     }
 
     private void HandleCollisions()

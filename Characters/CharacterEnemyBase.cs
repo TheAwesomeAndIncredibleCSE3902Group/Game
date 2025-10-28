@@ -3,18 +3,15 @@ using System.Drawing;
 using AwesomeRPG.Sprites;
 using AwesomeRPG.Map;
 using Microsoft.Xna.Framework;
+using AwesomeRPG.Collision;
 using static AwesomeRPG.Util;
 
 namespace AwesomeRPG.Characters;
 
-// ICharacter(ISprite sprite, Point position);
-
-public abstract class CharacterEnemyBase : ICharacter
+public abstract class CharacterEnemyBase : CollisionObject, ICharacter
 {
     protected AnimatableSprite _sprite;
     public IPathingScheme Pathing { get; set; } = null;
-
-    public Vector2 Position;
 
     public Cardinal Direction
     {
@@ -27,7 +24,7 @@ public abstract class CharacterEnemyBase : ICharacter
             if (value == direction)
                 return;
 
-            ChangeDirection(value);
+            ChangeDirectionalSprite(value);
             direction = value;
         }
     }
@@ -40,6 +37,10 @@ public abstract class CharacterEnemyBase : ICharacter
     {
         this.Position = position;
         this.Direction = direction;
+
+        int spriteSize = 15;
+        Collider = new CollisionRect(this, spriteSize * 3, spriteSize * 3);
+        ObjectType = CollisionObjectType.Enemy;
     }
 
     public void Update(GameTime gameTime)
@@ -52,21 +53,7 @@ public abstract class CharacterEnemyBase : ICharacter
 
         if (_moving)
         {
-            switch (Direction)
-            {
-                case Cardinal.up:
-                    Position.Y -= (float)(gameTime.ElapsedGameTime.TotalMilliseconds / 10.0);
-                    break;
-                case Cardinal.down:
-                    Position.Y += (float)(gameTime.ElapsedGameTime.TotalMilliseconds / 10.0);
-                    break;
-                case Cardinal.left:
-                    Position.X -= (float)(gameTime.ElapsedGameTime.TotalMilliseconds / 10.0);
-                    break;
-                case Cardinal.right:
-                    Position.X += (float)(gameTime.ElapsedGameTime.TotalMilliseconds / 10.0);
-                    break;
-            }
+            Position += CardinalToUnitVector(Direction) * (float)gameTime.ElapsedGameTime.TotalSeconds * 100;
         }
     }
 
@@ -75,5 +62,18 @@ public abstract class CharacterEnemyBase : ICharacter
         _sprite.Draw(gameTime, Position);
     }
 
-    public abstract void ChangeDirection(Cardinal direction);
+
+    /// <summary>
+    /// Overrides Pathing and sets the direction
+    /// </summary>
+    /// <param name="direction"></param>
+    public void ForceDirection(Cardinal direction)
+    {
+        if (Pathing is not null)
+            Pathing.TrySetDirection(direction);
+
+        Direction = direction;
+    }
+    
+    public abstract void ChangeDirectionalSprite(Cardinal direction);
 }

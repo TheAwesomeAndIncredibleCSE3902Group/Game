@@ -21,6 +21,13 @@ public class RandomWalkPathing : IPathingScheme
 
     public Cardinal GetDirection() => direction;
 
+    public bool TrySetDirection(Cardinal direction)
+    {
+        this.direction = direction;
+        timeSinceLastSwap = 0;
+        return true;
+    }
+
     public void Update(GameTime gameTime)
     {
         timeSinceLastSwap += (float)gameTime.ElapsedGameTime.TotalSeconds;
