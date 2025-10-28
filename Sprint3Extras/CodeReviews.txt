@@ -58,6 +58,15 @@ Iris
 Oct 27, 2025
 Sprint 3
 -----------------
+Author of Code: Caleb
+Code Under Review: CollisionObject for Readability
+Review time: 5 minutes
+DetectCollision has proper comments which describes the method and CollisionObject parameter. The fields are named well, 
+but collider could be given a more descriptive name. CollisionDirection is private and so doesn't need documentation
+comments, but the logic in the method is a little obscured, and including a ternary in the same line as comparison
+operators makes it more obscure. 
+
+
 Author of Code: John
 Code Under Review: ChangeCurrentRoomCommand for code quality
 Review time: 5 minutes
@@ -66,4 +75,5 @@ The command functions correctly to switch the current room based on cardinals. I
 it does require a refrence to myGame.RoomMap. The only change I would make for quality would be to move the logic 
 from the command into the RoomAtlas class. That would make it more closely follow the command pattern, as an 
 individual command shouldn't contain any logic.
+
 

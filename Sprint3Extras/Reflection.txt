@@ -11,3 +11,10 @@ Caleb
 Sprint work needs to be more clearly defined so that everyone knows exactly what they need to do and how much
 of it needs to be done, by the end of the sprint. Additionally we need to stick harder to sprint deadlines treating
 them more as hard goals rather than soft ones lest we fall behind.
+
+
+Iris
+---------
+We got a lot done this sprint but a lot of it was completed towards the end of the sprint, rather than the work being more
+spread out. We still have a lot to do to turn our game into the RPG we plan, both on the coding and design sides of things,
+but I'm still confident our team can get it done.
