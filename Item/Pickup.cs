@@ -1,5 +1,6 @@
 using System;
 using AwesomeRPG.Collision;
+using AwesomeRPG.Map;
 using AwesomeRPG.Sprites;
 using Microsoft.Xna.Framework;
 
@@ -12,10 +13,11 @@ namespace AwesomeRPG;
 public abstract class Pickup : CollisionObject
 {
     public ISprite Sprite { get; protected set;  }
-    public Pickup()
+
+    private RoomMap LevelMap {  get; init; }
+    public Pickup(RoomMap levelMap)
     {
-        int spriteSize = 10;
-        Collider = new CollisionRect(this, spriteSize, spriteSize);
+        LevelMap = levelMap;
         ObjectType = CollisionObjectType.Pickup;
     }
 
@@ -36,9 +38,7 @@ public abstract class Pickup : CollisionObject
     protected abstract void Apply(Player player);
     private void Destroy()
     {
-        //throw new NotImplementedException();
-
-        //This should be something like Level.Remove(this)
-        //Assuming the Level holds a list of all Pickups
+        LevelMap.Pickups.Remove(this);
     }
+
 }
