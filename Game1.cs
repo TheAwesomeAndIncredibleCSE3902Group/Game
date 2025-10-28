@@ -93,8 +93,9 @@ public class Game1 : Game
         CharacterSpriteFactory.Instance.LoadAllTextures(Content, _spriteBatch);
 
         //World Creation
-        RoomMap = MapParser.Instance.RoomMapFromXML(Content, "MapItems\\Level0-0.xml", new Vector2(3, 3));
+        MapParser.Instance.LoadParser(this, RoomAtlas);
         RoomAtlas = new RoomAtlas(new AtlasInitializer().InitializeAtlasWStartingRoom(Content,RoomMap));
+        RoomMap = MapParser.Instance.RoomMapFromXML(Content, "MapItems\\Level0-0.xml", new Vector2(3, 3));
         _controllersList.Add(new MouseController(this, RoomAtlas));
         NonMovingCollisionObjects = RoomMap._nonMovingCollisionObjects;
 

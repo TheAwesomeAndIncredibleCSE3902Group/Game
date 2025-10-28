@@ -25,12 +25,21 @@ public class MapParser
 
     private static MapParser instance = new MapParser();
 
+    private RoomAtlas roomAtlas;
+    private Game1 myGame;
+
     public static MapParser Instance
     {
         get
         {
             return instance;
         }
+    }
+
+    public void LoadParser(Game1 game, RoomAtlas atlas)
+    {
+        myGame = game;
+        roomAtlas = atlas;
     }
 
     public RoomMap RoomMapFromXML(ContentManager content, string filename, Vector2 scale)
@@ -62,7 +71,7 @@ public class MapParser
                 TileSet tileset = new(tileTexture, tileWidth, tileHeight);
 
                 // The <Tiles> element contains <Row></Row>s of strings where <Row>
-                // contains space seperated tile texture ids. ids beginning with ! are collideable
+                // contains space seperated tile texture ids. ids beginning with ! are collideable ? is entrance
                 XElement tilesElement = tilemapElement.Element("Tiles");
 
                 int columns = int.Parse(tilesElement.Attribute("columns").Value);
@@ -72,7 +81,7 @@ public class MapParser
                     Scale = scale
                 };
 
-                // 2d list where 1 indictates collision and 0 is no collision.
+                // 2d list where 1 indictates wall, 2 is entrance, and 0 is no collision.
                 // doesn't use booleans so it can later be optimised to generate larger collision rectangles
                 List<List<int>> collisionMatrix = new(columns);
 
@@ -91,12 +100,16 @@ public class MapParser
                         {
                             collisionMatrix[i].Add(1);
                         }
+                        else if (tileInfo.StartsWith('?'))
+                        {
+                            collisionMatrix[i].Add(2);
+                        }
                         else
                         {
                             collisionMatrix[i].Add(0);
                         }
 
-                        int tilesetIndex = int.Parse(tileInfo.Trim('!'));                        
+                        int tilesetIndex = int.Parse(tileInfo.Trim('!').Trim('?'));                        
 
                         Tile region = tileset.GetTile(tilesetIndex);
 
@@ -117,6 +130,10 @@ public class MapParser
                         if (collisionMatrix[i][j] == 1)
                         {
                             map._nonMovingCollisionObjects.Add(new Wall(new Vector2(j * tileWidth * scale.X, i * tileHeight * scale.Y), (int)(tileWidth * scale.X), (int)(tileHeight * scale.Y)));
+                        }
+                        else if (collisionMatrix[i][j] == 2)
+                        {
+                            map._nonMovingCollisionObjects.Add(new Entrance(new Vector2(j * tileWidth * scale.X, i * tileHeight * scale.Y), (int)(tileWidth * scale.X), (int)(tileHeight * scale.Y), roomAtlas, myGame));
                         }
                     }
                 }
