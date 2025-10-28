@@ -109,3 +109,26 @@ when I originaly wrote the Character classes). This approach allows multiple typ
 map in similar ways without having repetitive code insidde of the Update method of each Character class. However I am not 
 sure why TrySetDirection is returned as a boolean... It is just returned as true witin both LinePathing and RandomWalkPathing.
 Maybe this is intended for future functionality or a leftover from older code? 
+
+Jesse
+Oct 27, 2025
+Sprint 3
+_________________
+Author of Code: Lupine
+Code Under Review: IPathingScheme and its heirs
+Review time: 3 minutes
+
+Brief classes for a path a character traverses over. I feel a bit confused by the Try Set Direction bool method since 
+it returns true always instead of having it be void, but everything seems to be pretty easy to read and understand. 
+Update might need a comment to explain what it does for both the random walk pathing and line pathing, but other than 
+that each file reads well, and seems to be easy to maintain.
+
+
+Author of Code: Eli
+Code Under Review: Button Component from UI on readability and maintainability
+Review time: 5 minutes
+
+The code is a bit hard to read. Everything is compact, but sets up a nice UI button component in creating a button, centering
+it's text, setting the output animation, and setting up the command to get said output animation; however, I think that this 
+implementation while nice can tightly couple the classes needed since this requires layered children to work. Other than that, 
+this is pretty straightforward, but should have some kind of clarification as to what create does as well as what it returns.

@@ -1,7 +1,7 @@
 ﻿using System;
 using static AwesomeRPG.Util;
 
-namespace AwesomeRPG.BattleMechanics;
+namespace AwesomeRPG.BattleMechanics.BattleEnemies;
 public class ArmosBattle : IEnemyBattle
 {
     public static ArmosBattle Instance { get; private set; }

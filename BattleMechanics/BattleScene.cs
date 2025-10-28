@@ -1,4 +1,7 @@
-﻿using AwesomeRPG.Characters;
+﻿using AwesomeRPG;
+using AwesomeRPG.BattleMechanics;
+using AwesomeRPG.Characters;
+using AwesomeRPG.BattleMechanics.BattleEnemies;
 using System;
 using System.Collections.Generic;
 using static AwesomeRPG.Util;

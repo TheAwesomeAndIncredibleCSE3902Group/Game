@@ -27,3 +27,11 @@ So, I was not involved very much with the main group. Additionally, I feel that 
 a bit more with John and Jesse who worked on the logic for the RPG battle mechanics, so they could get a clearer understanding
 of how we will be tying the state with the UI in the future.
 
+
+Jesse
+_________
+This sprint highlighted our current time organization skills as a group, and it did not hold back. We had a good, general 
+gameplan for our RPG; however, task management between teammates were lackluster until we clarified with each other in-person 
+near the end of the sprint. We also were hit with and held back by massive exams we each had to take care of in our individual
+courses leading to our sprint getting rushed to a degree. Other than that, we each completed a lot during this sprint, but 
+time and task management will be something our team will be able to clock in and figure out.

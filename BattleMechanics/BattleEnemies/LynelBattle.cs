@@ -1,7 +1,7 @@
 ﻿using System;
 using static AwesomeRPG.Util;
 
-namespace AwesomeRPG.BattleMechanics;
+namespace AwesomeRPG.BattleMechanics.BattleEnemies;
 public class LynelBattle : IEnemyBattle
 {
     public static LynelBattle Instance { get; private set; }
