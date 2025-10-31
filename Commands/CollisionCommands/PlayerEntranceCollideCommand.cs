@@ -11,15 +11,11 @@ public class PlayerEntranceCollideCommand : ICollisionCommand
     RoomMap oldRoom;
     RoomMap newRoom;
     RoomAtlas roomAtlas;
-    Game1 myGame;
     Cardinal direction;
     public void Execute(CollisionInfo collision)
     {
-        Entrance entrance = (Entrance)collision.GetCollisionObjectOfType(CollisionObjectType.Entrance);
-
-        roomAtlas = entrance.roomAtlas;
-        myGame = entrance.myGame;
-        oldRoom = myGame.RoomMap;
+        roomAtlas = RoomAtlas.Instance;
+        oldRoom = roomAtlas.CurrentRoom;
         direction = collision.Direction.ToCard();
         int row = roomAtlas.GetRow(oldRoom);
         int column = roomAtlas.GetColumn(oldRoom);
@@ -43,7 +39,7 @@ public class PlayerEntranceCollideCommand : ICollisionCommand
 
         if (newRoom != null)
         {
-            myGame.RoomMap = newRoom;
+            roomAtlas.CurrentRoom = newRoom;
         }
     }
 }

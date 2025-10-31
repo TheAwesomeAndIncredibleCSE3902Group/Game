@@ -30,8 +30,6 @@ public class Game1 : Game
     private AllCollisionHandler _allCollisionHandler;
 
     //Map Variables
-    public RoomAtlas RoomAtlas { get; private set; }
-    public RoomMap RoomMap { get; set; }
     public List<int> Tiles { get; set; }
 
     public Game1()
@@ -66,18 +64,18 @@ public class Game1 : Game
         CharacterSpriteFactory.Instance.LoadAllTextures(Content, _spriteBatch);
 
         //World Creation
-        MapParser.Instance.LoadParser(this, RoomAtlas);
-        RoomMap = MapParser.Instance.RoomMapFromXML(Content, "MapItems\\Level0-0.xml", new Vector2(3, 3));
-        RoomAtlas = new RoomAtlas(new AtlasInitializer().InitializeAtlasWStartingRoom(Content, RoomMap));
-        NonMovingCollisionObjects = RoomMap._nonMovingCollisionObjects;
-        MovingCollisionObjects = RoomMap._movingCollisionObjects;
+        MapParser.Instance.LoadParser(this, RoomAtlas.Instance);
+        RoomAtlas.Instance.CurrentRoom = MapParser.Instance.RoomMapFromXML(Content, "MapItems\\Level0-0.xml", new Vector2(3, 3));
+        RoomAtlas.Instance.SetAtlas(new AtlasInitializer().InitializeAtlas(Content));
+        NonMovingCollisionObjects = RoomAtlas.Instance.CurrentRoom._nonMovingCollisionObjects;
+        MovingCollisionObjects = RoomAtlas.Instance.CurrentRoom._movingCollisionObjects;
 
         //Player declaration
         //TODO: PROBABLY WANNA HAVE A METHOD IN EACH LEVEL WHICH HANDLES ADDING THINGS TO COLLISION LIST
         Player = new Player(Content, _spriteBatch);
         MovingCollisionObjects.Add(Player);
         _controllersList.Add(new KeyboardController(this));
-        _controllersList.Add(new MouseController(this, RoomAtlas));
+        _controllersList.Add(new MouseController(this));
 
 
         TestEnemyCollision();
@@ -104,7 +102,7 @@ public class Game1 : Game
         LinePathing pathing = new LinePathing(Util.Cardinal.up);
         CharacterEnemyArmos enemy = new CharacterEnemyArmos(new Vector2(100, 150), Util.Cardinal.up);
         enemy.Pathing = pathing;
-        RoomMap.Characters.Add(enemy);
+        RoomAtlas.Instance.CurrentRoom.Characters.Add(enemy);
 
         //RoomMap._movingCollisionObjects.Add(enemy);
         MovingCollisionObjects.Add(enemy);
@@ -156,7 +154,7 @@ public class Game1 : Game
     private int prevPickups = 2;
     private void ClearPickups()
     {
-        if (prevPickups != 0 && RoomMap.Pickups.Count != prevPickups)
+        if (prevPickups != 0 && RoomAtlas.Instance.CurrentRoom.Pickups.Count != prevPickups)
         {
             for (int i = 0; i < NonMovingCollisionObjects.Count; i++)
             {
@@ -179,7 +177,7 @@ public class Game1 : Game
 
         Player.Update(gameTime);
 
-        RoomMap.Update(gameTime);
+        RoomAtlas.Instance.CurrentRoom.Update(gameTime);
         HandleCollisions();
         base.Update(gameTime);
     }
@@ -190,7 +188,7 @@ public class Game1 : Game
 
         _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp);
 
-        RoomMap.Draw(_spriteBatch, gameTime);
+        RoomAtlas.Instance.CurrentRoom.Draw(_spriteBatch, gameTime);
         Player.Draw(gameTime);
 
         // Temporarily commented out for Sprint3 submission

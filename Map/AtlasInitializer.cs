@@ -34,23 +34,5 @@ namespace AwesomeRPG.Map
 
             return atlas;
         }
-        public List<List<RoomMap>> InitializeAtlasWStartingRoom(ContentManager content, RoomMap startingRoom)
-        {
-            atlas = new List<List<RoomMap>>();
-            // Initialize with the starting rooms
-            RoomMap room_0_1 = MapParser.Instance.RoomMapFromXML(content, "MapItems\\Level0-1.xml", new Vector2(3, 3));
-            RoomMap room_0_2 = MapParser.Instance.RoomMapFromXML(content, "MapItems\\Level0-2.xml", new Vector2(3, 3));
-            RoomMap room_1_0 = MapParser.Instance.RoomMapFromXML(content, "MapItems\\Level1-0.xml", new Vector2(3, 3));
-            RoomMap room_1_1 = MapParser.Instance.RoomMapFromXML(content, "MapItems\\Level1-1.xml", new Vector2(3, 3));
-            RoomMap room_1_2 = MapParser.Instance.RoomMapFromXML(content, "MapItems\\Level1-2.xml", new Vector2(3, 3));
-            RoomMap room_2_0 = MapParser.Instance.RoomMapFromXML(content, "MapItems\\Level2-0.xml", new Vector2(3, 3));
-            RoomMap room_2_1 = MapParser.Instance.RoomMapFromXML(content, "MapItems\\Level2-1.xml", new Vector2(3, 3));
-            RoomMap room_2_2 = MapParser.Instance.RoomMapFromXML(content, "MapItems\\Level2-2.xml", new Vector2(3, 3));
-            atlas.Add(new List<RoomMap> { startingRoom, room_0_1, room_0_2 });
-            atlas.Add(new List<RoomMap> { room_1_0, room_1_1, room_1_2 });
-            atlas.Add(new List<RoomMap> { room_2_0, room_2_1, room_2_2 });
-
-            return atlas;
-        }
     }
 }

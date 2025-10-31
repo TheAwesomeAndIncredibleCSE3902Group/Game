@@ -9,15 +9,21 @@ namespace AwesomeRPG.Map
     public class RoomAtlas
     {
         private List<List<RoomMap>> atlas;
-        public RoomAtlas(RoomMap startingRoom) {
-            atlas[0].Add(startingRoom);
+        private RoomAtlas()
+        {
+            atlas = new List<List<RoomMap>>();
         }
 
-        public RoomAtlas(List<List<RoomMap>> startingAtlas)
+        private static RoomAtlas instance = new RoomAtlas();
+
+        public static RoomAtlas Instance { get { return instance; } }
+
+        public RoomMap CurrentRoom { get; set; }
+
+        public void SetAtlas(List<List<RoomMap>> startingAtlas)
         {
             atlas = startingAtlas;
         }
-
         public RoomMap GetRoom(int column, int row)
         {
             if (column > atlas.Count - 1 || column < 0)

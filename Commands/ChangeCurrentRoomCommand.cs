@@ -17,22 +17,20 @@ namespace AwesomeRPG.Commands
         private RoomMap roomMap;
         private RoomMap newRoom;
         private RoomAtlas roomAtlas;
-        private Game1 myGame;
         private Cardinal changeDirection;
 
         /// <param name="content">ContentManager for RoomMapFromXML.</param>
         /// <param name="map">RoomMap for RoomMapFromXML.</param>
         /// <param name="direction">The dirction the room changes.</param>
-        public ChangeCurrentRoomCommand(Game1 game, RoomAtlas atlas, Cardinal direction) 
+        public ChangeCurrentRoomCommand(Cardinal direction) 
         {
-            roomAtlas = atlas;
+            roomAtlas = RoomAtlas.Instance;
             changeDirection = direction;
-            myGame = game;
         }
 
         public void Execute() 
         {
-            roomMap = myGame.RoomMap;
+            roomMap = roomAtlas.CurrentRoom;
             int row = roomAtlas.GetRow(roomMap);
             int column = roomAtlas.GetColumn(roomMap);
 
@@ -55,7 +53,7 @@ namespace AwesomeRPG.Commands
 
             if (newRoom != null)
             {
-                myGame.RoomMap = newRoom;
+                roomAtlas.CurrentRoom = newRoom;
             }
         }
     }

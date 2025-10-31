@@ -20,10 +20,10 @@ public class MouseController : IController
     private ICommand topRoom;
     private ICommand bottomRoom;
     private List<ICommand> commands = new();
-    public MouseController(Game1 game, RoomAtlas atlas)
+    public MouseController(Game1 game)
     {
         _gameObject = game;
-        InitializeCommands(game, atlas);
+        InitializeCommands(game);
     }
     public void Update()
     {
@@ -76,12 +76,12 @@ public class MouseController : IController
         }
     }
 
-    public void InitializeCommands(Game1 game, RoomAtlas atlas)
+    public void InitializeCommands(Game1 game)
     {
-        leftRoom = new ChangeCurrentRoomCommand(game, atlas, Util.Cardinal.left);
-        rightRoom = new ChangeCurrentRoomCommand(game, atlas, Util.Cardinal.right);
-        topRoom = new ChangeCurrentRoomCommand(game, atlas, Util.Cardinal.up);
-        bottomRoom = new ChangeCurrentRoomCommand(game, atlas, Util.Cardinal.down);
+        leftRoom = new ChangeCurrentRoomCommand(game, Util.Cardinal.left);
+        rightRoom = new ChangeCurrentRoomCommand(game, Util.Cardinal.right);
+        topRoom = new ChangeCurrentRoomCommand(game, Util.Cardinal.up);
+        bottomRoom = new ChangeCurrentRoomCommand(game, Util.Cardinal.down);
         //commands = new List<ICommand>();
         commands.Add(leftRoom);
         commands.Add(rightRoom);
