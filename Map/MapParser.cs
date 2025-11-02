@@ -134,7 +134,7 @@ public class MapParser
                         }
                         else if (collisionMatrix[i][j] == 2)
                         {
-                            map._nonMovingCollisionObjects.Add(new Entrance(new Vector2(j * tileWidth * scale.X, i * tileHeight * scale.Y), (int)(tileWidth * scale.X), (int)(tileHeight * scale.Y), roomAtlas, myGame));
+                            map._nonMovingCollisionObjects.Add(new Entrance(new Vector2(j * tileWidth * scale.X, i * tileHeight * scale.Y), (int)(tileWidth * scale.X), (int)(tileHeight * scale.Y)));
                         }
                     }
                 }

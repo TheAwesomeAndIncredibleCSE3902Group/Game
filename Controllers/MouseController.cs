@@ -78,10 +78,10 @@ public class MouseController : IController
 
     public void InitializeCommands(Game1 game)
     {
-        leftRoom = new ChangeCurrentRoomCommand(game, Util.Cardinal.left);
-        rightRoom = new ChangeCurrentRoomCommand(game, Util.Cardinal.right);
-        topRoom = new ChangeCurrentRoomCommand(game, Util.Cardinal.up);
-        bottomRoom = new ChangeCurrentRoomCommand(game, Util.Cardinal.down);
+        leftRoom = new ChangeCurrentRoomCommand(Util.Cardinal.left);
+        rightRoom = new ChangeCurrentRoomCommand(Util.Cardinal.right);
+        topRoom = new ChangeCurrentRoomCommand(Util.Cardinal.up);
+        bottomRoom = new ChangeCurrentRoomCommand(Util.Cardinal.down);
         //commands = new List<ICommand>();
         commands.Add(leftRoom);
         commands.Add(rightRoom);
