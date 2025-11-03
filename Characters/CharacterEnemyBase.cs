@@ -13,6 +13,12 @@ public abstract class CharacterEnemyBase : CollisionObject, ICharacter
     protected AnimatableSprite _sprite;
     public IPathingScheme Pathing { get; set; } = null;
 
+    public int MoveSpeed { get; init; } = 100;
+
+    private Cardinal direction;
+
+    protected bool _moving = true;
+
     public Cardinal Direction
     {
         get
@@ -28,9 +34,7 @@ public abstract class CharacterEnemyBase : CollisionObject, ICharacter
             direction = value;
         }
     }
-    private Cardinal direction;
-
-    private bool _moving = true;
+    
 
     
     public CharacterEnemyBase(Vector2 position, Cardinal direction)
@@ -43,18 +47,23 @@ public abstract class CharacterEnemyBase : CollisionObject, ICharacter
         ObjectType = CollisionObjectType.Enemy;
     }
 
-    public void Update(GameTime gameTime)
+    private void HandleMovement(GameTime gameTime)
     {
-        if (Pathing is not null)
+        if(_moving)
         {
-            Pathing.Update(gameTime);
-            Direction = Pathing.GetDirection();
+            if (Pathing is not null)
+            {
+                Pathing.Update(gameTime);
+                Direction = Pathing.GetDirection();
+            }
+            Position += CardinalToUnitVector(Direction) * (float)gameTime.ElapsedGameTime.TotalSeconds * MoveSpeed;
         }
+    }
 
-        if (_moving)
-        {
-            Position += CardinalToUnitVector(Direction) * (float)gameTime.ElapsedGameTime.TotalSeconds * 100;
-        }
+
+    public virtual void Update(GameTime gameTime)
+    {
+        HandleMovement(gameTime);
     }
 
     public void Draw(GameTime gameTime)

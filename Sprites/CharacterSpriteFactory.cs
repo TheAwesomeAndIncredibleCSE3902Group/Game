@@ -49,6 +49,10 @@ public class CharacterSpriteFactory
     public AnimatableSprite MoblinSpriteLeft() => BuildEnemySprite(new Rectangle(32, 0, 16, 16));
     public AnimatableSprite MoblinSpriteDown() => BuildEnemySprite(new Rectangle(64, 0, 16, 16));
     public AnimatableSprite MoblinSpriteUp() => BuildEnemySprite(new Rectangle(96, 0, 16, 16));
+    public AnimatableSprite MoblinAttackSpriteRight() => BuildEnemySprite(new Rectangle(0, 64, 16, 16));
+    public AnimatableSprite MoblinAttackSpriteLeft() => BuildEnemySprite(new Rectangle(32, 64, 16, 16));
+    public AnimatableSprite MoblinAttackSpriteDown() => BuildEnemySprite(new Rectangle(64, 64, 16, 16));
+    public AnimatableSprite MoblinAttackSpriteUp() => BuildEnemySprite(new Rectangle(96, 64, 16, 16));
 
     public AnimatableSprite ArmosSpriteDown() => BuildEnemySprite(new Rectangle(0, 17, 16, 16));
     public AnimatableSprite ArmosSpriteUp() => BuildEnemySprite(new Rectangle(32, 17, 16, 16));

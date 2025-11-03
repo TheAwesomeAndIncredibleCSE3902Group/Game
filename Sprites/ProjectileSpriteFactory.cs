@@ -8,10 +8,10 @@ using AwesomeRPG.Sprites;
 namespace AwesomeRPG;
 
 /// <summary>
-/// Factory to make sprites for all Items, Projectiles, and etc.
+/// Factory to make sprites for all Projectiles
 /// Technically can make any sprite, but it seems wise to limit its scope.
 /// </summary>
-public static class ItemSpriteFactory
+public static class ProjectileSpriteFactory
 {
     private static Texture2D zeldaSheet;
     private static Texture2D miscSheet;

@@ -20,7 +20,7 @@ public class PlayerArrow : Projectile
         this.lifetime = 2;
 
         //Didn't work with arrow sprite, rework later
-        sprite = ItemSpriteFactory.CreateArrowSprite(direction);
+        sprite = ProjectileSpriteFactory.CreateArrowSprite(direction);
         Position = position;
         Collider = new CollisionRect(this, sprite.Width, sprite.Height);
         ObjectType = CollisionObjectType.PlayerProjectile;

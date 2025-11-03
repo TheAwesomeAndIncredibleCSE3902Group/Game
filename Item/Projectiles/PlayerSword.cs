@@ -17,7 +17,7 @@ public class PlayerSword : Projectile
         this.movementSpeed = 0;
         this.lifetime = 0.5f;
 
-        sprite = ItemSpriteFactory.CreateSwordSprite(direction);
+        sprite = ProjectileSpriteFactory.CreateSwordSprite(direction);
 
         Position = position + Util.CardinalToUnitVector(direction) * swordOffset;
         Collider = new CollisionRect(this, sprite.Width, sprite.Height);

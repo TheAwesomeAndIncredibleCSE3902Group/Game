@@ -60,7 +60,7 @@ public class Game1 : Game
 
         //Create sprite factories
         MapItemSpriteFactory.LoadAllTextures(Content, _spriteBatch);
-        ItemSpriteFactory.LoadAllTextures(Content, _spriteBatch);
+        ProjectileSpriteFactory.LoadAllTextures(Content, _spriteBatch);
 
         //NPC creation
         CharacterSpriteFactory.Instance.LoadAllTextures(Content, _spriteBatch);
