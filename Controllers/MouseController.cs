@@ -25,7 +25,8 @@ public class MouseController : IController
         _gameObject = game;
         InitializeCommands(game);
     }
-    public void Update()
+    //TODO: make this work for the battle state. See KeyboardController for example
+    public void Update(Game1.GameState gameState)
     {
         MouseState mouseState = Mouse.GetState();
         if (mouseState.LeftButton == ButtonState.Pressed && !_prevTickLeftMouse)

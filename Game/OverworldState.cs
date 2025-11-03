@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using AwesomeRPG.Collision;
 using AwesomeRPG.Controllers;
@@ -12,11 +13,17 @@ public class OverworldState : IGameState
     private List<IController> controllersList = new();
     public Player Player { get; private set; }
 
+//TODO: These two lists should definitely be moved into allCollisionHandler
     public static List<CollisionObject> MovingCollisionObjects { get; private set; } = new();
     public List<CollisionObject> NonMovingCollisionObjects { get; private set; } = new();
     private AllCollisionHandler allCollisionHandler;
     public List<int> Tiles { get; set; }
 
+
+    public OverworldState()
+    {
+        throw new NotImplementedException();
+    }
 
     public void Draw(GameTime gameTime)
     {
@@ -26,7 +33,7 @@ public class OverworldState : IGameState
     public void Update(GameTime gameTime)
     {
         foreach (IController controller in controllersList) {
-            controller.Update();
+            controller.Update(Game1.GameState.overworld);
         }
 
         Player.Update(gameTime);
@@ -39,6 +46,9 @@ public class OverworldState : IGameState
 
     public BattleState ToBattleState()
     {
+        //This will have to convert any relevant data to its battle representation
+        //And return a new BattleState
+        return new BattleState(this);
         throw new System.NotImplementedException();
     }
 
@@ -73,7 +83,7 @@ public class OverworldState : IGameState
         ClearPickups();
     }
     
-        //Vile code, made by the most deprived of man. May this be fixed next sprint
+    //Vile code, made by the most deprived of man. May this be fixed next sprint
     private void ClearProjectiles()
     {
         if(Player.spawnedProjectiles.Count == 0)

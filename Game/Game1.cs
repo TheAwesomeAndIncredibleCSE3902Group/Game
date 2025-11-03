@@ -12,6 +12,8 @@ namespace AwesomeRPG;
 
 public class Game1 : Game
 {
+    public enum GameState { overworld, battle }
+    
     //Monogame required
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
@@ -172,7 +174,7 @@ public class Game1 : Game
         //gameTime = new GameTime(gameTime.TotalGameTime / 2f, gameTime.ElapsedGameTime / 2f);
         
         foreach (IController controller in _controllersList) {
-            controller.Update();
+            controller.Update(GameState.overworld);
         }
 
         Player.Update(gameTime);
