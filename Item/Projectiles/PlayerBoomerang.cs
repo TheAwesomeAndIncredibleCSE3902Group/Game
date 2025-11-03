@@ -22,7 +22,7 @@ public class PlayerBoomerang : Projectile
         lifetime = 3;
 
         //Didn't work with arrow sprite, rework later
-        sprite = ItemSpriteFactory.CreateBoomerangSprite();
+        sprite = ProjectileSpriteFactory.CreateBoomerangSprite();
         Position = position;
         Collider = new CollisionRect(this, sprite.Width, sprite.Height);
         ObjectType = CollisionObjectType.PlayerProjectile;

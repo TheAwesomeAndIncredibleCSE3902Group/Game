@@ -20,7 +20,7 @@ public class SwordBeam : Projectile
         lifetime = 2;
 
         //Didn't work with arrow sprite, rework later
-        sprite = ItemSpriteFactory.CreateSwordBeamSprite(direction);
+        sprite = ProjectileSpriteFactory.CreateSwordBeamSprite(direction);
         Position = position;
         Collider = new CollisionRect(this, sprite.Width, sprite.Height);
         ObjectType = CollisionObjectType.PlayerProjectile;

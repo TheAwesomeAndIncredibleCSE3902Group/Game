@@ -60,8 +60,6 @@ namespace AwesomeRPG.Collision
         private void InitializeEnemyCollisions()
         {
             collisionResponses[new CollisionPair(CollisionObjectType.Enemy, CollisionObjectType.Wall)] = new EnemyWallCollideCommand();
-            collisionResponses[new CollisionPair(CollisionObjectType.Enemy, CollisionObjectType.Pickup)] = new NoCollisionCollideCommand();
-            collisionResponses[new CollisionPair(CollisionObjectType.Enemy, CollisionObjectType.Enemy)] = new NoCollisionCollideCommand();
             //Enemies treat Entrances as Walls
             collisionResponses[new CollisionPair(CollisionObjectType.Enemy, CollisionObjectType.Entrance)] = new EnemyWallCollideCommand();
         }
