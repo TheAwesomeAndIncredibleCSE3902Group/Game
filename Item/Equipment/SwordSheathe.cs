@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using AwesomeRPG.Map;
 using System.Diagnostics;
 
 namespace AwesomeRPG;
@@ -20,6 +21,6 @@ public class SwordSheathe : IEquipment
 
         PlayerSword sword = new PlayerSword(player.Position, player.FacingDirection);
         spawnedProjectiles[IEquipment.Projectiles.sword] = sword;
-        Game1.MovingCollisionObjects.Add(sword);
+        RoomAtlas.Instance.CurrentRoom._movingCollisionObjects.Add(sword);
     }
 }
