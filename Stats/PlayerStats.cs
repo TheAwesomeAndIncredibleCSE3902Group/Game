@@ -2,9 +2,9 @@
 using System.Collections;
 using static AwesomeRPG.Util;
 
-namespace AwesomeRPG;
+namespace AwesomeRPG.Stats;
 
-class PlayerStats : ICharacterStats
+class PlayerStats : IStats
 {
     private int currentHealth;
     private int currentOverallLevel;
@@ -17,7 +17,13 @@ class PlayerStats : ICharacterStats
     private int currentSpecialDefenseLevel;
     private int currentLuckLevel;
 
-    public int GetCurrentHealth(int updateHealth)
+
+    #region Health Methods
+    public int GetHealth()
+    {
+        return currentHealth;
+    }
+    public int ChangeHealth(int updateHealth)
     {
         if (updateHealth != 0)
         {
@@ -31,17 +37,46 @@ class PlayerStats : ICharacterStats
 
         return currentHealth;
     }
+    #endregion
 
-    public int GetCurrentOverallLevel(int updateOverallLevel)
+    #region Stats Methods
+    #region Stat Getters
+    public int GetSpecialPointCount()
     {
-        if (updateOverallLevel != 0)
-        {
-            currentOverallLevel += updateOverallLevel;
-        }
-        return currentOverallLevel;
+        return currentSpecialPointCount;
     }
+    public int GetSpeedLevel()
+    {
+        return currentSpeedLevel;
+    }
+    public int GetAttackLevel()
+    {
+        return currentAttackLevel;
+    }
+    public int GetDefenseLevel()
+    {
+        return currentDefenseLevel;
+    }
+    public int GetWeaponUseLevel()
+    {
+        return currentWeaponUseLevel;
+    }
+    public int GetSpecialAttackLevel()
+    {
+        return currentSpecialAttackLevel;
+    }
+    public int GetSpecialDefenseLevel()
+    {
+        return currentSpecialDefenseLevel;
+    }
+    public int GetLuckLevel()
+    {
+        return currentLuckLevel;
+    }
+    #endregion
 
-    public int GetSpecialPointCount(int updateSpecialPointCount)
+    #region Stat Changers
+    public int ChangeSpecialPoint(int updateSpecialPointCount)
     {
         if (updateSpecialPointCount != 0)
         {
@@ -49,7 +84,7 @@ class PlayerStats : ICharacterStats
         }
         return currentSpecialPointCount;
     }
-    public int GetCurrentSpeedLevel(int updateSpeed)
+    public int ChangeSpeed(int updateSpeed)
     {
         if (updateSpeed != 0)
         {
@@ -58,7 +93,7 @@ class PlayerStats : ICharacterStats
         return currentSpeedLevel;
     }
 
-    public int GetCurrentAttackLevel(int updateAttack)
+    public int ChangeAttack(int updateAttack)
     {
         if (updateAttack != 0)
         {
@@ -67,7 +102,7 @@ class PlayerStats : ICharacterStats
         return currentAttackLevel;
     }
 
-    public int GetCurrentDefenseLevel(int updateDefense)
+    public int ChangeDefense(int updateDefense)
     {
         if (updateDefense != 0)
         {
@@ -76,7 +111,7 @@ class PlayerStats : ICharacterStats
         return currentDefenseLevel;
     }
 
-    public int GetCurrentWeaponUseLevel(int updateWeaponUse)
+    public int ChangeWeaponUse(int updateWeaponUse)
     {
         if (updateWeaponUse != 0)
         {
@@ -85,7 +120,7 @@ class PlayerStats : ICharacterStats
         return currentWeaponUseLevel;
     }
 
-    public int GetCurrentSpecialAttackLevel(int updateSpecialAttack)
+    public int ChangeSpecialAttack(int updateSpecialAttack)
     {
         if (updateSpecialAttack != 0)
         {
@@ -94,7 +129,7 @@ class PlayerStats : ICharacterStats
         return currentSpecialAttackLevel;
     }
 
-    public int GetCurrentSpecialDefenseLevel(int updateSpecialDefense)
+    public int ChangeSpecialDefense(int updateSpecialDefense)
     {
         if (updateSpecialDefense != 0)
         {
@@ -103,7 +138,7 @@ class PlayerStats : ICharacterStats
         return currentSpecialDefenseLevel;
     }
 
-    public int GetCurrentLuckLevel(int updateLuck)
+    public int ChangeLuck(int updateLuck)
     {
         if (updateLuck != 0)
         {
@@ -111,4 +146,16 @@ class PlayerStats : ICharacterStats
         }
         return currentLuckLevel;
     }
+    #endregion
+    #endregion
+    #region Level Methods
+    public int GetLevel(int updateOverallLevel)
+    {
+        if (updateOverallLevel != 0)
+        {
+            currentOverallLevel += updateOverallLevel;
+        }
+        return currentOverallLevel;
+    }
+    #endregion
 }
