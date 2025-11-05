@@ -65,7 +65,7 @@ public class Game1 : Game
 
         //World Creation
         MapParser.Instance.LoadParser(this, RoomAtlas.Instance);
-        RoomAtlas.Instance.CurrentRoom = MapParser.Instance.RoomMapFromXML(Content, "MapItems\\Level0-0.xml", new Vector2(3, 3));
+        RoomAtlas.Instance.CurrentRoom = MapParser.Instance.RoomMapFromXML(Content, "MapItems\\Level0-0.xml");
         RoomAtlas.Instance.SetAtlas(new AtlasInitializer().InitializeAtlas(Content));
         NonMovingCollisionObjects = RoomAtlas.Instance.CurrentRoom._nonMovingCollisionObjects;
         MovingCollisionObjects = RoomAtlas.Instance.CurrentRoom._movingCollisionObjects;

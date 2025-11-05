@@ -43,7 +43,7 @@ public class MapParser
         roomAtlas = atlas;
     }
 
-    public RoomMap RoomMapFromXML(ContentManager content, string filename, Vector2 scale)
+    public RoomMap RoomMapFromXML(ContentManager content, string filename)
     {
         string filePath = Path.Combine(content.RootDirectory, filename);
 
@@ -77,10 +77,7 @@ public class MapParser
 
                 int columns = int.Parse(tilesElement.Attribute("columns").Value);
                 int rows = int.Parse(tilesElement.Attribute("rows").Value);
-                Tilemap tilemap = new(tileset, columns, rows)
-                {
-                    Scale = scale
-                };
+                Tilemap tilemap = new(tileset, columns, rows);
 
                 // 2d list where 1 indictates wall, 2 is entrance, and 0 is no collision.
                 // doesn't use booleans so it can later be optimised to generate larger collision rectangles
@@ -130,11 +127,11 @@ public class MapParser
                     {
                         if (collisionMatrix[i][j] == 1)
                         {
-                            map._nonMovingCollisionObjects.Add(new Wall(new Vector2(j * tileWidth * scale.X, i * tileHeight * scale.Y), (int)(tileWidth * scale.X), (int)(tileHeight * scale.Y)));
+                            map._nonMovingCollisionObjects.Add(new Wall(new Vector2(j * tileWidth * Util.GlobalScale, i * tileHeight * Util.GlobalScale), (int)(tileWidth * Util.GlobalScale), (int)(tileHeight * Util.GlobalScale)));
                         }
                         else if (collisionMatrix[i][j] == 2)
                         {
-                            map._nonMovingCollisionObjects.Add(new Entrance(new Vector2(j * tileWidth * scale.X, i * tileHeight * scale.Y), (int)(tileWidth * scale.X), (int)(tileHeight * scale.Y)));
+                            map._nonMovingCollisionObjects.Add(new Entrance(new Vector2(j * tileWidth * Util.GlobalScale, i * tileHeight * Util.GlobalScale), (int)(tileWidth * Util.GlobalScale), (int)(tileHeight * Util.GlobalScale)));
                         }
                     }
                 }

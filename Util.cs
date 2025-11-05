@@ -13,6 +13,9 @@ public static class Util
 {
     public enum Cardinal { up, right, down, left }
 
+    // Global Scale DO NOT TOUCH
+    public readonly static float GlobalScale = 3.0f;
+
     public static float Root2 { get => 1.41421356237f; }
 
     /// <summary>

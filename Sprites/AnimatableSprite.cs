@@ -11,6 +11,8 @@ public class AnimatableSprite : ISprite
     // So, there are 10000 ticks in a millisecond.
     private const ulong TICKS_IN_ONE_MILLISECOND = 10000ul;
 
+    private readonly float _globalScale;
+
     private readonly Texture2D _texture;
     private readonly Rectangle[] _sourceList;
     private readonly Vector2[] _offsetList;
@@ -64,6 +66,7 @@ public class AnimatableSprite : ISprite
         _offsetList = new Vector2[1]; // offset is set to 0.0f, 0.0f
         _numberOfFrames = 1;
         MillisecondsBetweenFrames = 0;
+        _globalScale = Util.GlobalScale;
 
         SetWidthNHeight(spriteSheetStaticSource.Width, spriteSheetStaticSource.Height);
     }
@@ -83,6 +86,7 @@ public class AnimatableSprite : ISprite
         _texture = texture;
         MillisecondsBetweenFrames = msBetweenFrames;
         _numberOfFrames = numberOfFrames;
+        _globalScale = Util.GlobalScale;
 
         _sourceList = new Rectangle[numberOfFrames];
         _offsetList = new Vector2[numberOfFrames];
@@ -180,31 +184,20 @@ public class AnimatableSprite : ISprite
         position += _offsetList[_currentFrame] * frameScale;
     }
 
-    private void DoDraw(GameTime gameTime, Vector2 position, float scale = 3.0f)
+    private void DoDraw(GameTime gameTime, Vector2 position)
     {
-        updateAnimationFrameAndOffset(gameTime, ref position, scale);
-        _spriteBatch.Draw(_texture, position, _sourceList[_currentFrame], Color.White, 0.0f, Vector2.Zero, scale, SpriteEffects.None, 0.0f);
+        updateAnimationFrameAndOffset(gameTime, ref position, _globalScale);
+        _spriteBatch.Draw(_texture, position, _sourceList[_currentFrame], Color.White, 0.0f, Vector2.Zero, _globalScale, SpriteEffects.None, 0.0f);
     }
 
     /// <summary>
-    /// Draw the sprite to its SpriteBatch. (default scale of 3.0x)
+    /// Draw the sprite to its SpriteBatch. 
     /// </summary>
     /// <param name="gameTime">The gameTime inherited from the Game's Draw() method.</param>
     /// <param name="position">The X,Y position to draw the sprite at.</param>
     public void Draw(GameTime gameTime, Vector2 position)
     {
         DoDraw(gameTime, position);
-    }
-
-    /// <summary>
-    /// Draw the sprite to its SpriteBatch, with custom scaling.
-    /// </summary>
-    /// <param name="gameTime">The gameTime inherited from the Game's Draw() method.</param>
-    /// <param name="position">The X,Y position to draw the sprite at.</param>
-    /// <param name="scale">Amount the sprite should be scaled</param>
-    public void Draw(GameTime gameTime, Vector2 position, float scale = 3.0f)
-    {
-        DoDraw(gameTime, position, scale);
     }
 
     private void SetWidthNHeight(int width, int height)
