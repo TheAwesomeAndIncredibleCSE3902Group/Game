@@ -34,6 +34,4 @@ public struct Spacing
 }
 public enum UIControl { MoveUp, MoveLeft, MoveRight, MoveDown, Interact, Return };
 
-public enum UIControlEvent { ButtonDown, ButtonUp, ButtonPress }; // KeyDown, KeyUp, KeyPress
-
-public enum UIEvent { BeforeDraw, AfterDraw, Select, Unselect };
+public enum UIEvent { BeforeDraw, AfterDraw, Select, Unselect, ButtonDown, ButtonUp, ButtonPress }; // KeyDown, KeyUp, KeyPress

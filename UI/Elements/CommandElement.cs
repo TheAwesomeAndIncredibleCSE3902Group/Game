@@ -17,9 +17,9 @@ public class CommandElement : ElementBase
     {
         CalculateDerivedValuesFromAncestors();
 
-        DispatchUIEvent(UIEvent.BeforeDraw, new DrawUIEvent(this, gameTime));
+        DispatchUIEvent(UIEvent.BeforeDraw, new DrawUIEventParams(this, gameTime));
         DrawChildren(gameTime);
-        DispatchUIEvent(UIEvent.AfterDraw, new DrawUIEvent(this, gameTime));
+        DispatchUIEvent(UIEvent.AfterDraw, new DrawUIEventParams(this, gameTime));
     }
 
     public CommandElement(RootElement rootElement)

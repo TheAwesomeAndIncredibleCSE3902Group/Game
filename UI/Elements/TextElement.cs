@@ -42,11 +42,11 @@ public class TextElement : ElementBase
             textCalculatedPosition.Y += OffsetAndSize.Height - measuredText.Y;
         }
 
-        DispatchUIEvent(UIEvent.BeforeDraw, new DrawUIEvent(this, gameTime));
+        DispatchUIEvent(UIEvent.BeforeDraw, new DrawUIEventParams(this, gameTime));
         RootElement.SpriteBatch.DrawString(SpriteFont, TextString, textCalculatedPosition, TextColor);
 
         DrawChildren(gameTime);
-        DispatchUIEvent(UIEvent.AfterDraw, new DrawUIEvent(this, gameTime));
+        DispatchUIEvent(UIEvent.AfterDraw, new DrawUIEventParams(this, gameTime));
     }
 
     public TextElement(RootElement rootElement, SpriteFont spriteFont)

@@ -7,6 +7,10 @@ using AwesomeRPG.Controllers;
 using AwesomeRPG.Sprites;
 using AwesomeRPG.Map;
 using AwesomeRPG.Collision;
+using AwesomeRPG.UI.Elements;
+using AwesomeRPG.UI.Components;
+using AwesomeRPG.UI;
+using AwesomeRPG.UI.Events;
 
 namespace AwesomeRPG;
 
@@ -22,7 +26,7 @@ public class Game1 : Game
     public Player Player { get; private set; }
     
     // Temporarily commented out for Sprint3 submission
-    // public RootElement RootUIElement;
+    public RootElement RootUIElement;
 
     //Collision Variables, this needs to be improved sloppy solution for now
     public static List<CollisionObject> MovingCollisionObjects { get; private set; } = new();
@@ -75,6 +79,7 @@ public class Game1 : Game
         Player = new Player(Content, _spriteBatch);
         MovingCollisionObjects.Add(Player);
         _controllersList.Add(new KeyboardController(this));
+        _controllersList.Add(new KeyboardUIController(this));
         _controllersList.Add(new MouseController(this));
 
 
@@ -83,18 +88,23 @@ public class Game1 : Game
         // Temporarily commented out for Sprint3 submission
 
         // UI creation
-        // var spriteFont = Content.Load<SpriteFont>("Fonts\\MyFont");
-        // RootUIElement = new RootElement(_spriteBatch);
-        // RootUIElement.AddChild(ButtonComponent.Create(RootUIElement, spriteFont, this, new Rectangle(400, 50, 300,100)));
+        var spriteFont = Content.Load<SpriteFont>("Fonts\\MyFont");
+        RootUIElement = new RootElement(_spriteBatch);
+        RootUIElement.AddChild(ButtonComponent.Create(RootUIElement, spriteFont, this, new Rectangle(400, 50, 300,100), Color.AliceBlue, Color.Black, "Test one"));
+        RootUIElement.AddChild(ButtonComponent.Create(RootUIElement, spriteFont, this, new Rectangle(400, 200, 300,100), Color.GreenYellow, Color.Black, "test 2"));
 
-        // RootUIElement.UIState.AddActionOnUIControlEvent(UIControl.MoveDown, UIControlEvent.ButtonPress, () =>
-        // {
-        //     RootUIElement.UIState.SelectionIndex += 1;
-        // });
-        // RootUIElement.UIState.AddActionOnUIControlEvent(UIControl.MoveUp, UIControlEvent.ButtonPress, () =>
-        // {
-        //     RootUIElement.UIState.SelectionIndex -= 1;
-        // });
+        RootUIElement.AddActionOnUIEvent(UIEvent.ButtonDown, (e) =>
+        {
+            var eventParams = (InputUIEventParams) e;
+            if (eventParams.Controls.Contains(UIControl.MoveDown))
+            {            
+               RootUIElement.UIState.SelectionIndex += 1;
+            }
+            if (eventParams.Controls.Contains(UIControl.MoveUp))
+            {            
+               RootUIElement.UIState.SelectionIndex -= 1;
+            }
+        });
     }
     
     private void TestEnemyCollision()
@@ -192,7 +202,7 @@ public class Game1 : Game
         Player.Draw(gameTime);
 
         // Temporarily commented out for Sprint3 submission
-        // RootUIElement.Draw(gameTime);
+        RootUIElement.Draw(gameTime);
 
         _spriteBatch.End();
 
@@ -204,7 +214,7 @@ public class Game1 : Game
     /// </summary>
     public static void TransitionToBattleState()
     {
-        Debug.WriteLine("Battle State moment");
+        // Debug.WriteLine("Battle State moment");
     }
 
 }

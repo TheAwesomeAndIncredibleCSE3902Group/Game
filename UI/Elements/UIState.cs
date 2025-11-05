@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using AwesomeRPG.UI.Events;
 
 namespace AwesomeRPG.UI.Elements;
 
@@ -18,10 +19,12 @@ public class UIState
         }
         set
         {
+            SelectedElement.DispatchUIEvent(UIEvent.Unselect, new PlainUIEventParams(SelectedElement));
             _selectionIndex = ((value % _selectableElements.Count) + _selectableElements.Count) % _selectableElements.Count;
+            SelectedElement.DispatchUIEvent(UIEvent.Select, new PlainUIEventParams(SelectedElement));
         }
     }
-    private Dictionary<(UIControl, UIControlEvent), List<Action>> UIControlActions = [];
+    // private Dictionary<(UIControl, UIControlEvent), List<Action>> UIControlActions = [];
     private RootElement _rootElement;
     public ElementBase SelectedElement
     {
@@ -73,52 +76,9 @@ public class UIState
             Console.Error.WriteLine("Attempted to unregister element that was not registered");
         }
     }
-    private void SetUpControlActions()
-    {
-        foreach (UIControlEvent uiControlEventType in Enum.GetValues<UIControlEvent>())
-        {
-            foreach (UIControl uiControlType in Enum.GetValues<UIControl>())
-            {
-                UIControlActions[(uiControlType, uiControlEventType)] = new List<Action>();
-            }
-        }
-        AddActionOnUIControlEvent(UIControl.Interact, UIControlEvent.ButtonPress, () =>
-        {
-        if (SelectedElement is CommandElement)
-        {
-            var theAssociatedCommand = ((CommandElement)SelectedElement).AssociatedCommand;
-                if (theAssociatedCommand == null)
-                {
-                    throw new NullReferenceException("CommandElement does not have an AssociatedCommand and cannot handle user interaction.");
-                }
-                theAssociatedCommand.Execute();
-            }
-        });
-        
-    }
-
-    public void RunControlActions(UIControl control, UIControlEvent controlEvent)
-    {
-        foreach (Action currentAction in UIControlActions[(control, controlEvent)])
-        {
-            currentAction();
-        }
-    }
-
-    public void AddActionOnUIControlEvent(UIControl uiControl, UIControlEvent uiControlEvent, Action action)
-    {
-        UIControlActions[(uiControl, uiControlEvent)].Add(action);
-    }
-
-    public void RemoveActionOnUIControlEvent(UIControl uiControl, UIControlEvent uiControlEvent, Action action)
-    {
-        UIControlActions[(uiControl, uiControlEvent)].Add(action);
-    }
-
     public UIState(RootElement rootElement)
     {
         _rootElement = rootElement;
-        SetUpControlActions();
     }
 
     public void UpdateElementsAreSelected()

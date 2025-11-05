@@ -27,7 +27,7 @@ public abstract class ElementBase
     public bool IsVisible = true;
     public RootElement RootElement { get; protected set; }
     public ElementBase Parent { get; private set; }
-    private readonly Dictionary<UIEvent, List<Action<UIEventBase> >> _registeredUiEventActions = [];
+    private readonly Dictionary<UIEvent, List<Action<UIEventParamsBase> >> _registeredUiEventActions = [];
 
     public abstract void Draw(GameTime gameTime);
 
@@ -72,17 +72,17 @@ public abstract class ElementBase
     protected void RunBeforeDrawActions(GameTime gameTime)
     {
         // System.Console.WriteLine(_registeredUiEventActions.ToString());
-        foreach (Action<UIEventBase> uiAction in _registeredUiEventActions[UIEvent.BeforeDraw])
+        foreach (Action<UIEventParamsBase> uiAction in _registeredUiEventActions[UIEvent.BeforeDraw])
         {
-            uiAction(new DrawUIEvent(this, gameTime));
+            uiAction(new DrawUIEventParams(this, gameTime));
         }
     }
 
     protected void RunAfterDrawActions(GameTime gameTime)
     {
-        foreach (Action<UIEventBase> uiAction in _registeredUiEventActions[UIEvent.AfterDraw])
+        foreach (Action<UIEventParamsBase> uiAction in _registeredUiEventActions[UIEvent.AfterDraw])
         {
-            uiAction(new DrawUIEvent(this, gameTime));
+            uiAction(new DrawUIEventParams(this, gameTime));
         }
     }
 
@@ -120,17 +120,17 @@ public abstract class ElementBase
         }
     }
 
-    public void AddActionOnUIEvent(UIEvent uiEvent, Action<UIEventBase> action)
+    public void AddActionOnUIEvent(UIEvent uiEvent, Action<UIEventParamsBase> action)
     {
         _registeredUiEventActions[uiEvent].Add(action);
     }
-    public void RemoveActionOnUIEvent(UIEvent uiEvent, Action<UIEventBase> action)
+    public void RemoveActionOnUIEvent(UIEvent uiEvent, Action<UIEventParamsBase> action)
     {
         _registeredUiEventActions[uiEvent].Remove(action);
     }
-    public void DispatchUIEvent(UIEvent uiEvent, UIEventBase uiEventInfo)
+    public void DispatchUIEvent(UIEvent uiEvent, UIEventParamsBase uiEventInfo)
     {
-        foreach (Action<UIEventBase> uiAction in _registeredUiEventActions[uiEvent])
+        foreach (Action<UIEventParamsBase> uiAction in _registeredUiEventActions[uiEvent])
         {
             uiAction(uiEventInfo);
         }

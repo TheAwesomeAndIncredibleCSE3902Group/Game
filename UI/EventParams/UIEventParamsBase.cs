@@ -5,7 +5,7 @@ using AwesomeRPG.UI.Elements;
 
 namespace AwesomeRPG.UI.Events;
 
-public abstract class UIEventBase
+public abstract class UIEventParamsBase
 {
     public ElementBase Element { get; protected set; }
 }

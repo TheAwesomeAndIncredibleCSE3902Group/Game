@@ -13,7 +13,7 @@ public class RectElement : ElementBase
     public override void Draw(GameTime gameTime)
     {
         CalculateDerivedValuesFromAncestors();
-        DispatchUIEvent(UIEvent.BeforeDraw, new DrawUIEvent(this, gameTime));
+        DispatchUIEvent(UIEvent.BeforeDraw, new DrawUIEventParams(this, gameTime));
 
         RootElement.SpriteBatch.Draw(
             RootElement.RectangleTexture,
@@ -23,7 +23,7 @@ public class RectElement : ElementBase
 
         // System.Console.WriteLine("drawing rect element at" + DerivedAbsolutePosition.ToString());
         DrawChildren(gameTime);
-        DispatchUIEvent(UIEvent.AfterDraw, new DrawUIEvent(this, gameTime));
+        DispatchUIEvent(UIEvent.AfterDraw, new DrawUIEventParams(this, gameTime));
     }
 
     public RectElement(RootElement rootElement)
