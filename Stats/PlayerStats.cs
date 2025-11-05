@@ -41,35 +41,35 @@ class PlayerStats : IStats
 
     #region Stats Methods
     #region Stat Getters
-    public int GetSpecialPointCount()
+    public int GetSpecialPoint()
     {
         return currentSpecialPointCount;
     }
-    public int GetSpeedLevel()
+    public int GetSpeed()
     {
         return currentSpeedLevel;
     }
-    public int GetAttackLevel()
+    public int GetAttakc()
     {
         return currentAttackLevel;
     }
-    public int GetDefenseLevel()
+    public int GetDefense()
     {
         return currentDefenseLevel;
     }
-    public int GetWeaponUseLevel()
+    public int GetWeaponUse()
     {
         return currentWeaponUseLevel;
     }
-    public int GetSpecialAttackLevel()
+    public int GetSpecialAttack()
     {
         return currentSpecialAttackLevel;
     }
-    public int GetSpecialDefenseLevel()
+    public int GetSpecialDefense()
     {
         return currentSpecialDefenseLevel;
     }
-    public int GetLuckLevel()
+    public int GetLuck()
     {
         return currentLuckLevel;
     }
@@ -149,7 +149,11 @@ class PlayerStats : IStats
     #endregion
     #endregion
     #region Level Methods
-    public int GetLevel(int updateOverallLevel)
+    public int GetLevel()
+    {
+        return currentOverallLevel;
+    }
+    public int ChangeLevel(int updateOverallLevel)
     {
         if (updateOverallLevel != 0)
         {
