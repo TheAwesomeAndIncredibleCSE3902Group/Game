@@ -62,7 +62,7 @@ public class Game1 : Game
         CharacterSpriteFactory.Instance.LoadAllTextures(Content, _spriteBatch);
 
         //World Creation
-        RoomAtlas.Instance.CurrentRoom = MapParser.Instance.RoomMapFromXML(Content, "MapItems\\Level0-0.xml");
+        RoomAtlas.Instance.CurrentRoom = MapParser.RoomMapFromXML(Content, "MapItems\\Level0-0.xml");
         RoomAtlas.Instance.SetAtlas(new AtlasInitializer().InitializeAtlas(Content));
 
         //Player declaration

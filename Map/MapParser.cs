@@ -10,10 +10,6 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
 using static AwesomeRPG.Util;
-using System.Linq;
-using AwesomeRPG.Collision;
-using AwesomeRPG.BattleMechanics;
-using System.Security.Cryptography.X509Certificates;
 
 
 namespace AwesomeRPG.Map;
@@ -36,66 +32,66 @@ public class MapParser
         }
     }
 
-    public RoomMap RoomMapFromXML(ContentManager content, string filename)
+    /// <summary>
+    /// Generates and returns a RoomMap from an xml file
+    /// </summary>
+    /// <param name="content">The content manager</param>
+    /// <param name="filename">The name of the level.xml file</param>
+    /// <returns>A RoomMap with tiles, walls, characters, and pickups</returns>
+    public static RoomMap RoomMapFromXML(ContentManager content, string filename)
     {
         string filePath = Path.Combine(content.RootDirectory, filename);
 
-        using (Stream stream = TitleContainer.OpenStream(filePath))
+        using Stream stream = TitleContainer.OpenStream(filePath);
+        using XmlReader reader = XmlReader.Create(stream);
+        XDocument doc = XDocument.Load(reader);
+        XElement mapElement = doc.Root;
+
+        // tilemap contains all background information
+        XElement tilemapElement = mapElement.Element("Tilemap");
+
+        // tileset contains tile image info
+        XElement tilesetElement = tilemapElement.Element("Tileset");
+        int tileWidth = int.Parse(tilesetElement.Attribute("tileWidth").Value);
+        int tileHeight = int.Parse(tilesetElement.Attribute("tileHeight").Value);
+        string contentPath = tilesetElement.Value;
+
+        // Load the texture 2d containing tileset
+        Texture2D tileTexture = content.Load<Texture2D>(contentPath);
+
+        // Create the tileset using the texture region
+        TileSet tileset = new(tileTexture, tileWidth, tileHeight);
+
+        // The <Tiles> element contains <Row></Row>s of strings where <Row>
+        // contains space seperated tile texture ids. ids beginning with ! are collideable ? is entrance
+        XElement tilesElement = tilemapElement.Element("Tiles");
+
+        int columns = int.Parse(tilesElement.Attribute("columns").Value);
+        int rows = int.Parse(tilesElement.Attribute("rows").Value);
+        Tilemap tilemap = new(tileset, columns, rows);
+
+        // 2d list where 1 indictates wall, 2 is entrance, and 0 is no collision.
+        // doesn't use booleans so it can later be optimised to generate larger collision rectangles
+        List<List<int>> collisionMatrix = ParseLayout(tilesElement, columns, rows, tilemap);
+
+        // the map to return
+        RoomMap map = new(tilemap);
+
+        GenerateCollision(map, collisionMatrix, (int)(tileWidth * GlobalScale), (int)(tileHeight * GlobalScale));
+
+        IEnumerable entityElements = mapElement.Element("Entities").Elements("Entity");
+        foreach (XElement entity in entityElements)
         {
-            using (XmlReader reader = XmlReader.Create(stream))
-            {
-                XDocument doc = XDocument.Load(reader);
-                XElement mapElement = doc.Root;
-
-                // tilemap contains all background information
-                XElement tilemapElement = mapElement.Element("Tilemap");
-
-                // tileset contains tile image info
-                XElement tilesetElement = tilemapElement.Element("Tileset");
-                int tileWidth = int.Parse(tilesetElement.Attribute("tileWidth").Value);
-                int tileHeight = int.Parse(tilesetElement.Attribute("tileHeight").Value);
-                string contentPath = tilesetElement.Value;
-
-                // Load the texture 2d containing tileset
-                Texture2D tileTexture = content.Load<Texture2D>(contentPath);
-
-                // Create the tileset using the texture region
-                TileSet tileset = new(tileTexture, tileWidth, tileHeight);
-
-                // The <Tiles> element contains <Row></Row>s of strings where <Row>
-                // contains space seperated tile texture ids. ids beginning with ! are collideable ? is entrance
-                XElement tilesElement = tilemapElement.Element("Tiles");
-
-                int columns = int.Parse(tilesElement.Attribute("columns").Value);
-                int rows = int.Parse(tilesElement.Attribute("rows").Value);
-                Tilemap tilemap = new(tileset, columns, rows);
-
-                // 2d list where 1 indictates wall, 2 is entrance, and 0 is no collision.
-                // doesn't use booleans so it can later be optimised to generate larger collision rectangles
-                List<List<int>> collisionMatrix = ParseLayout(tilesElement, columns, rows, tilemap);
-
-                // the map to return
-                RoomMap map = new(tilemap);
-
-                GenerateCollision(map, collisionMatrix, (int)(tileWidth * GlobalScale), (int)(tileHeight * GlobalScale));
-
-                IEnumerable entityElements = mapElement.Element("Entities").Elements("Entity");
-                foreach (XElement entity in entityElements)
-                {
-                    GenerateCharacter(map, entity);
-                }
-
-                // generate pickups
-
-                IEnumerable pickupElements = mapElement.Element("Pickups").Elements("Pickup");
-                foreach (XElement pickup in pickupElements)
-                {
-                    GeneratePickup(map, pickup);
-                }
-                return map;
-
-            }
+            GenerateCharacter(map, entity);
         }
+
+        // Generate Pickups
+        IEnumerable pickupElements = mapElement.Element("Pickups").Elements("Pickup");
+        foreach (XElement pickup in pickupElements)
+        {
+            GeneratePickup(map, pickup);
+        }
+        return map;
     }
 
     /// <summary>
