@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using AwesomeRPG.Map;
 
 namespace AwesomeRPG;
 
@@ -19,6 +20,6 @@ public class Bow : IEquipment
 
         WaveyArrow arrow = new WaveyArrow(player.Position, player.FacingDirection);
         spawnedProjectiles[IEquipment.Projectiles.arrow] = arrow;
-        Game1.MovingCollisionObjects.Add(arrow);
+        RoomAtlas.Instance.CurrentRoom._movingCollisionObjects.Add(arrow);
     }
 }

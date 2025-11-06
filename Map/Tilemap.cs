@@ -56,7 +56,7 @@ public class Tilemap
         Rows = rows;
         Columns = columns;
         Count = Columns * Rows;
-        Scale = Vector2.One;
+        Scale = new(Util.GlobalScale);
         _tiles = new int[Count];
     }
 

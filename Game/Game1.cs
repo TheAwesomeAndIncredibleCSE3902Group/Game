@@ -27,8 +27,6 @@ public class Game1 : Game
     // public RootElement RootUIElement;
 
     //Collision Variables, this needs to be improved sloppy solution for now
-    public static List<CollisionObject> MovingCollisionObjects { get; private set; } = new();
-    public List<CollisionObject> NonMovingCollisionObjects { get; private set; } = new();
     private AllCollisionHandler _allCollisionHandler;
 
     //Map Variables
@@ -66,21 +64,15 @@ public class Game1 : Game
         CharacterSpriteFactory.Instance.LoadAllTextures(Content, _spriteBatch);
 
         //World Creation
-        MapParser.Instance.LoadParser(this, RoomAtlas.Instance);
-        RoomAtlas.Instance.CurrentRoom = MapParser.Instance.RoomMapFromXML(Content, "MapItems\\Level0-0.xml", new Vector2(3, 3));
+        RoomAtlas.Instance.CurrentRoom = MapParser.RoomMapFromXML(Content, "MapItems\\Level0-0.xml");
         RoomAtlas.Instance.SetAtlas(new AtlasInitializer().InitializeAtlas(Content));
-        NonMovingCollisionObjects = RoomAtlas.Instance.CurrentRoom._nonMovingCollisionObjects;
-        MovingCollisionObjects = RoomAtlas.Instance.CurrentRoom._movingCollisionObjects;
 
         //Player declaration
         //TODO: PROBABLY WANNA HAVE A METHOD IN EACH LEVEL WHICH HANDLES ADDING THINGS TO COLLISION LIST
         Player = new Player(Content, _spriteBatch);
-        MovingCollisionObjects.Add(Player);
+        RoomAtlas.Instance.CurrentRoom._movingCollisionObjects.Add(Player);
         _controllersList.Add(new KeyboardController(this));
         _controllersList.Add(new MouseController(this));
-
-
-        TestEnemyCollision();
 
         // Temporarily commented out for Sprint3 submission
 
@@ -98,17 +90,6 @@ public class Game1 : Game
         //     RootUIElement.UIState.SelectionIndex -= 1;
         // });
     }
-    
-    private void TestEnemyCollision()
-    {
-        LinePathing pathing = new LinePathing(Util.Cardinal.up);
-        CharacterEnemyArmos enemy = new CharacterEnemyArmos(new Vector2(100, 150), Util.Cardinal.up);
-        enemy.Pathing = pathing;
-        RoomAtlas.Instance.CurrentRoom.Characters.Add(enemy);
-
-        //RoomMap._movingCollisionObjects.Add(enemy);
-        MovingCollisionObjects.Add(enemy);
-    }
 
     private void HandleCollisions()
     {
@@ -118,17 +99,17 @@ public class Game1 : Game
         // to simplify the interactions between the player and everything not just
         // for interactability with the world but also for battle mechanics with
         // turn order and any AoE damage on both sides.
-        for (int i = 0; i< MovingCollisionObjects.Count; i++)
+        for (int i = 0; i< RoomAtlas.Instance.CurrentRoom._movingCollisionObjects.Count; i++)
         {
-            foreach (CollisionObject nonMovingObject in NonMovingCollisionObjects)
+            foreach (CollisionObject nonMovingObject in RoomAtlas.Instance.CurrentRoom._nonMovingCollisionObjects)
             {
-                CollisionInfo collision = MovingCollisionObjects[i].DetectCollision(nonMovingObject);
+                CollisionInfo collision = RoomAtlas.Instance.CurrentRoom._movingCollisionObjects[i].DetectCollision(nonMovingObject);
                 _allCollisionHandler.HandleCollision(collision);
             }
 
-            for (int j = i+1; j < MovingCollisionObjects.Count; j++)
+            for (int j = i+1; j < RoomAtlas.Instance.CurrentRoom._movingCollisionObjects.Count; j++)
             {
-                CollisionInfo collision = MovingCollisionObjects[i].DetectCollision(MovingCollisionObjects[j]);
+                CollisionInfo collision = RoomAtlas.Instance.CurrentRoom._movingCollisionObjects[i].DetectCollision(RoomAtlas.Instance.CurrentRoom._movingCollisionObjects[j]);
                 _allCollisionHandler.HandleCollision(collision);
             }
         }
@@ -141,11 +122,11 @@ public class Game1 : Game
     {
         if(Player.spawnedProjectiles.Count == 0)
         {
-            for(int i = 0; i < MovingCollisionObjects.Count; i++)
+            for(int i = 0; i < RoomAtlas.Instance.CurrentRoom._movingCollisionObjects.Count; i++)
             {
-                if(MovingCollisionObjects[i].ObjectType == CollisionObjectType.PlayerProjectile)
+                if(RoomAtlas.Instance.CurrentRoom._movingCollisionObjects[i].ObjectType == CollisionObjectType.PlayerProjectile)
                 {
-                    MovingCollisionObjects.RemoveAt(i);
+                    RoomAtlas.Instance.CurrentRoom._movingCollisionObjects.RemoveAt(i);
                 }
             }
         }
@@ -158,11 +139,11 @@ public class Game1 : Game
     {
         if (prevPickups != 0 && RoomAtlas.Instance.CurrentRoom.Pickups.Count != prevPickups)
         {
-            for (int i = 0; i < NonMovingCollisionObjects.Count; i++)
+            for (int i = 0; i < RoomAtlas.Instance.CurrentRoom._nonMovingCollisionObjects.Count; i++)
             {
-                if (NonMovingCollisionObjects[i].ObjectType == CollisionObjectType.Pickup)
+                if (RoomAtlas.Instance.CurrentRoom._nonMovingCollisionObjects[i].ObjectType == CollisionObjectType.Pickup)
                 {
-                    NonMovingCollisionObjects.RemoveAt(i);
+                    RoomAtlas.Instance.CurrentRoom._nonMovingCollisionObjects.RemoveAt(i);
                 }
             }
             prevPickups--;

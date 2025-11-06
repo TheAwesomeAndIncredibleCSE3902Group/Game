@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Map>
   <Tilemap>
-    <Tileset width="80" height="80" tileWidth="20" tileHeight="20">TileImages/test_tiles</Tileset>
+    <Tileset tileWidth="20" tileHeight="20">TileImages/test_tiles</Tileset>
     <Tiles rows="9" columns="16">
       <Row>!00 !01 !02 !01 !02 !01 !02 !01 !02 !01 !02 !01 !02 !01 !02 !03</Row>
       <Row>!04  05  05  06  05  05  06  05  05  06  05  05  06  05  05 !07</Row>
@@ -15,9 +15,9 @@
     </Tiles>
   </Tilemap>
   <Entities>
-    <Entity x="40" y="60" pathing="random" facing="up">moblin</Entity>
+    <Entity x="60" y="60" pathing="random" facing="up">moblin</Entity>
     <Entity x="300" y="350" pathing="random" facing="down">armos</Entity>
-    <Entity x="500" y="50" pathing="line" facing="right">lynel</Entity>
+    <Entity x="500" y="70" pathing="line" facing="right">lynel</Entity>
     <Entity x="300" y="300" pathing="" facing="up">kris</Entity>
   </Entities>
   <Pickups>
