@@ -12,7 +12,7 @@ namespace AwesomeRPG.Map
         {
             Position = startPos;
             Collider = new CollisionRect(this, width, height);
-            ObjectType = CollisionObjectType.Wall;
+            ObjectType = CollisionObjectType.Entrance;
         }
     }
 }

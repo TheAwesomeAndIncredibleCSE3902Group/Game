@@ -203,8 +203,8 @@ public class AnimatableSprite : ISprite
 
     private void SetWidthNHeight(int width, int height)
     {
-        Width = width;
-        Height = height;
+        Width = width * (int)Util.GlobalScale;
+        Height = height * (int)Util.GlobalScale;
     }
 
 }

@@ -3,6 +3,8 @@ using static AwesomeRPG.Util;
 
 namespace AwesomeRPG.Commands
 {
+
+    //Why does this command exist, just use the Player singleton
     class GetPlayerStatsCommand
     {
         private Player _currentPlayer;

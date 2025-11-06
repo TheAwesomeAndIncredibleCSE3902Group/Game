@@ -181,7 +181,7 @@ public class Game1 : Game
     }
 
     /// <summary>
-    /// This ain't do nothin rn
+    /// This ain't do nothin rn, fix to interact with game state machine once it's ready
     /// </summary>
     public static void TransitionToBattleState()
     {

@@ -38,7 +38,6 @@ class PlayerStats : IStats
         return currentHealth;
     }
     #endregion
-
     #region Stats Methods
     #region Stat Getters
     public int GetSpecialPoint()
