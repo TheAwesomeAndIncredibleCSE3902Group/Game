@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using AwesomeRPG.Map;
 using System.Diagnostics;
 
 namespace AwesomeRPG;
@@ -22,7 +23,7 @@ public class SuperSwordSheathe : IEquipment
         spawnedProjectiles[IEquipment.Projectiles.sword] = sword;
         SwordBeam swordBeam = new SwordBeam(player.Position, player.FacingDirection);
         spawnedProjectiles[IEquipment.Projectiles.swordBeam] = swordBeam;
-        Game1.MovingCollisionObjects.Add(swordBeam);
-        Game1.MovingCollisionObjects.Add(sword);
+        RoomAtlas.Instance.CurrentRoom._movingCollisionObjects.Add(swordBeam);
+        RoomAtlas.Instance.CurrentRoom._movingCollisionObjects.Add(sword);
     }
 }

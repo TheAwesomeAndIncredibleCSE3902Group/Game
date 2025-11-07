@@ -13,9 +13,9 @@ public class CharacterEnemyMoblin : CharacterEnemyBase
     public CharacterEnemyMoblin(Vector2 position, Cardinal direction) : base(position, direction)
     {
         ChangeDirectionalSprite(direction);
-        int minCD = 2000;
-        int maxCD = 4000;
-        attackCD = new Random().Next(minCD,maxCD);//Generate a CD between 2 and 4
+        int minCD = 2000; //2 seconds
+        int maxCD = 4000; // 4 seconds
+        attackCD = new Random().Next(minCD,maxCD);
         remainingTime = attackCD;
     }
 

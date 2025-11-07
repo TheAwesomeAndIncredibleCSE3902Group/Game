@@ -15,7 +15,6 @@ public class Player : CollisionObject
     public static Player Instance { get; private set; }
     public Cardinal FacingDirection => PStateMachine.Direction;
     public PlayerStateMachine PStateMachine { get; private set; }
-    public PlayerCollisionHandler CollisionHandler { get; private set; }
 
     public Dictionary<IEquipment.Weapons, IEquipment> Equipment { get; } = new();
     public Dictionary<IEquipment.Projectiles, Projectile> spawnedProjectiles { get; set; } = new();
@@ -34,17 +33,15 @@ public class Player : CollisionObject
         Instance = this;
         InitializeEquipment();
         //Throwing in a random position so the sprite isn't halfway off the screen or something
-        Vector2 startingPos = new Vector2(200, 200);
+        Vector2 startingPos = new Vector2(300, 300);
         Position = startingPos;
 
         int spriteSize = 15;
-        Collider = new CollisionRect(this, spriteSize * 3, spriteSize * 3);
+        Collider = new CollisionRect(this, spriteSize * GlobalScale, spriteSize * GlobalScale);
         ObjectType = CollisionObjectType.Player;
 
         PStateMachine = new PlayerStateMachine();
         PStateMachine.LoadPlayer(content, _spriteBatch);
-
-        CollisionHandler = new PlayerCollisionHandler();
     }
 
     public void Draw(GameTime gt)
