@@ -4,7 +4,7 @@ using static AwesomeRPG.Util;
 
 namespace AwesomeRPG.Stats;
 
-class PlayerStats : IStats
+public class PlayerStats : IStats
 {
     private int currentHealth;
     private int currentOverallLevel;

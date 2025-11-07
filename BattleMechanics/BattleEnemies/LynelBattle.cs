@@ -1,30 +1,29 @@
-﻿using System;
+﻿using AwesomeRPG.Stats;
+using System;
 using static AwesomeRPG.Util;
 
 namespace AwesomeRPG.BattleMechanics.BattleEnemies;
-public class LynelBattle : IEnemyBattle
+public class LynelBattle : IBattle
 {
-    public static LynelBattle Instance { get; private set; }
-    public int CurrentHealth { get; set; }
+    public EnemyStats Stats { get; set; }
     public enum LynelActions { BrushBackHair, HardStomp, StabNSlash }
 
     public bool IsFainted { get; set; }
-    public int speed = 5;
-
-    public LynelBattle()
+    
+    public LynelBattle(EnemyStats stats)
     {
-        Instance = this;
-        CurrentHealth = 20;
+        Stats = stats;
         IsFainted = false;
+        Stats.ChangeHealth(Stats.GetMaxHealth());
     }
 
-    public int TakeActionTurn()
+    public int TakeTurn()
     {
         int damageOutput = 0;
         switch (ChooseAction())
         {
             case LynelActions.BrushBackHair:
-                CurrentHealth++;
+                Stats.ChangeHealth(1);
                 break;
             case LynelActions.HardStomp:
                 damageOutput = 3;
@@ -41,7 +40,7 @@ public class LynelBattle : IEnemyBattle
     {
         LynelActions lynelChoice = LynelActions.BrushBackHair;
 
-        if (CurrentHealth < 5)
+        if (Stats.GetHealth() < 5)
         {
             Random random = new();
             int coinFlip = random.Next(0, 2);

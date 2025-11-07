@@ -1,35 +1,34 @@
-﻿using System;
+﻿using AwesomeRPG.Stats;
+using System;
 using static AwesomeRPG.Util;
 
 namespace AwesomeRPG.BattleMechanics.BattleEnemies;
-public class MoblinBattle : IEnemyBattle
+public class MoblinBattle : IBattle
 {
-    public static MoblinBattle Instance { get; private set; }
-    public int CurrentHealth { get; set; }
+    public EnemyStats Stats { get; set; }
     public enum MoblinActions { ScratchBellyButton, RambleCharge, Dance }
     public bool IsFainted { get; set; }
-    public int speed = 3;
 
-    public MoblinBattle()
+    public MoblinBattle(EnemyStats stats)
     {
-        Instance = this;
-        CurrentHealth = 8;
+        Stats = stats;
         IsFainted = false;
+        Stats.ChangeHealth(Stats.GetMaxHealth());
     }
 
-    public int TakeActionTurn()
+    public int TakeTurn()
     {
         int damageOutput = 0;
         switch (ChooseAction())
         {
             case MoblinActions.ScratchBellyButton:
-                CurrentHealth += 3;
+                Stats.ChangeHealth(3);
                 break;
             case MoblinActions.RambleCharge:
                 damageOutput = 4;
                 break;
             case MoblinActions.Dance:
-                CurrentHealth--;
+                Stats.ChangeHealth(-1);
                 break;
         }
         return damageOutput;
@@ -38,7 +37,7 @@ public class MoblinBattle : IEnemyBattle
     private MoblinActions ChooseAction()
     {
         MoblinActions moblinChoice = MoblinActions.ScratchBellyButton;
-        if (CurrentHealth < 5)
+        if (Stats.GetHealth() < 5)
         {
             Random random = new();
             int danceChance = random.Next(0, 20);

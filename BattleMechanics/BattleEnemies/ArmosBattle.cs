@@ -1,30 +1,29 @@
-﻿using System;
+﻿using AwesomeRPG.Stats;
+using System;
 using static AwesomeRPG.Util;
 
 namespace AwesomeRPG.BattleMechanics.BattleEnemies;
-public class ArmosBattle : IEnemyBattle
+public class ArmosBattle : IBattle
 {
-    public static ArmosBattle Instance { get; private set; }
-    public int CurrentHealth { get; set; }
+    public EnemyStats Stats { get; set; }
     public enum ArmosActions { ShineArmour, ChargeForward}
 
     public bool IsFainted { get; set; }
-    public int speed = 2;
 
-    public ArmosBattle()
+    public ArmosBattle(EnemyStats stats)
     {
-        Instance = this;
-        CurrentHealth = 14;
+        Stats = stats;
         IsFainted = false;
+        Stats.ChangeHealth(Stats.GetMaxHealth());
     }
 
-    public int TakeActionTurn()
+    public int TakeTurn()
     {
         int damageOutput = 0;
         switch (ChooseAction())
         {
             case ArmosActions.ShineArmour:
-                CurrentHealth += 3;
+                Stats.ChangeHealth(3);
                 break;
             case ArmosActions.ChargeForward:
                 damageOutput = 4;
@@ -37,7 +36,7 @@ public class ArmosBattle : IEnemyBattle
     {
         ArmosActions armosChoice = ArmosActions.ShineArmour;
             
-        if (CurrentHealth < 5)
+        if (Stats.GetHealth() < 5)
         {
             armosChoice = ArmosActions.ChargeForward;
         }

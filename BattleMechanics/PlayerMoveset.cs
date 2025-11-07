@@ -25,7 +25,7 @@ namespace AwesomeRPG.BattleMechanics
 
         public void Defend()
         {
-            _player.PStateMachine.currentDamageIntake = 1 / 2;
+            
         }
 
         public void UseItem(Weapons selectedWeapon)

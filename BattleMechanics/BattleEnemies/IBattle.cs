@@ -2,8 +2,8 @@
 using static AwesomeRPG.Util;
 
 namespace AwesomeRPG.BattleMechanics.BattleEnemies;
-public interface IEnemyBattle
+public interface IBattle
 {
-    public int TakeActionTurn();
+    public int TakeTurn();
 
 }
