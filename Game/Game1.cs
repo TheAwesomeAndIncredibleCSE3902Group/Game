@@ -90,21 +90,31 @@ public class Game1 : Game
         // UI creation
         var spriteFont = Content.Load<SpriteFont>("Fonts\\MyFont");
         RootUIElement = new RootElement(_spriteBatch);
-        RootUIElement.AddChild(ButtonComponent.Create(RootUIElement, spriteFont, this, new Rectangle(400, 50, 300,100), Color.AliceBlue, Color.Black, "Test one"));
-        RootUIElement.AddChild(ButtonComponent.Create(RootUIElement, spriteFont, this, new Rectangle(400, 200, 300,100), Color.GreenYellow, Color.Black, "test 2"));
+
+        var bgUiElem = new RectElement(RootUIElement, Color.DarkBlue);
+        bgUiElem.OffsetAndSize = new Rectangle(0, 0, 10000, 10000);
+
+        RootUIElement.AddChild(bgUiElem);
+        RootUIElement.AddChild(ButtonComponent.Create(RootUIElement, spriteFont, this, new Rectangle(400, 50, 300,100), Color.Red, Color.White, "Test one"));
+        RootUIElement.AddChild(ButtonComponent.Create(RootUIElement, spriteFont, this, new Rectangle(400, 200, 300,100), Color.Green, Color.Black, "test 2"));
+        RootUIElement.AddChild(ButtonComponent.Create(RootUIElement, spriteFont, this, new Rectangle(400, 350, 300,100), Color.LightBlue, Color.Black, "Hellooooo"));
+
+        RootUIElement.UIState.SelectionIndex = 0;
 
         RootUIElement.AddActionOnUIEvent(UIEvent.ButtonDown, (e) =>
         {
-            var eventParams = (InputUIEventParams) e;
+            var eventParams = (InputUIEventParams)e;
+            System.Console.WriteLine("This is a test!!");
             if (eventParams.Controls.Contains(UIControl.MoveDown))
-            {            
-               RootUIElement.UIState.SelectionIndex += 1;
+            {
+                RootUIElement.UIState.SelectionIndex += 1;
             }
             if (eventParams.Controls.Contains(UIControl.MoveUp))
-            {            
-               RootUIElement.UIState.SelectionIndex -= 1;
+            {
+                RootUIElement.UIState.SelectionIndex -= 1;
             }
         });
+        
     }
     
     private void TestEnemyCollision()

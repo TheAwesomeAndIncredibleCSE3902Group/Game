@@ -58,7 +58,7 @@ public class KeyboardUIController : IController
         if (uiControlsUp.Count > 0)
         {
             InputUIEventParams upUIEventParams = new(_myGame1.RootUIElement, uiControlsUp);
-            _myGame1.RootUIElement.DispatchUIEvent(UIEvent.ButtonDown, upUIEventParams);
+            _myGame1.RootUIElement.DispatchUIEvent(UIEvent.ButtonUp, upUIEventParams);
         }
         if (uiControlsPress.Count > 0)
         {
