@@ -42,8 +42,8 @@ public abstract class CharacterEnemyBase : CollisionObject, ICharacter
         this.Position = position;
         this.Direction = direction;
 
-        int spriteSize = 15;
-        Collider = new CollisionRect(this, spriteSize * 3, spriteSize * 3);
+        ChangeDirectionalSprite(direction);
+        Collider = new CollisionRect(this, _sprite.Width, _sprite.Height);
         ObjectType = CollisionObjectType.Enemy;
     }
 
