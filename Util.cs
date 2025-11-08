@@ -4,6 +4,7 @@ using System.Numerics;
 
 namespace AwesomeRPG;
 
+
 /// <summary>
 /// This can be a nice storage bin for enums and math that might be needed by many classes
 /// Never change anything in here at runtime
@@ -14,7 +15,7 @@ public static class Util
     public enum Cardinal { up, right, down, left }
 
     // Global Scale DO NOT TOUCH
-    public readonly static float GlobalScale = 3.0f;
+    public readonly static int GlobalScale = 4;
 
     public static float Root2 { get => 1.41421356237f; }
 

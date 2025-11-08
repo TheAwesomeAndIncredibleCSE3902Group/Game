@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using AwesomeRPG.Commands;
 using AwesomeRPG.Map;
 using Microsoft.Xna.Framework;

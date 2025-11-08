@@ -4,7 +4,7 @@ using static AwesomeRPG.Util;
 
 namespace AwesomeRPG.Stats;
 
-class EnemyStats : IStats
+public class EnemyStats : IStats
 {
     private int maxHealth;
     private int health;

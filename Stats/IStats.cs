@@ -4,7 +4,7 @@ using static AwesomeRPG.Util;
 
 namespace AwesomeRPG.Stats;
 
-interface IStats
+public interface IStats
 {
     public int GetHealth();
     public int GetLevel();

@@ -2,7 +2,6 @@
 using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using AwesomeRPG.Characters;
 using AwesomeRPG.Controllers;
 using AwesomeRPG.Sprites;
 using AwesomeRPG.Map;
@@ -64,8 +63,8 @@ public class Game1 : Game
         CharacterSpriteFactory.Instance.LoadAllTextures(Content, _spriteBatch);
 
         //World Creation
-        RoomAtlas.Instance.CurrentRoom = MapParser.RoomMapFromXML(Content, "MapItems\\Level0-0.xml");
         RoomAtlas.Instance.SetAtlas(new AtlasInitializer().InitializeAtlas(Content));
+        RoomAtlas.Instance.CurrentRoom = RoomAtlas.Instance.GetRoom(0,0);
 
         //Player declaration
         //TODO: PROBABLY WANNA HAVE A METHOD IN EACH LEVEL WHICH HANDLES ADDING THINGS TO COLLISION LIST
@@ -93,12 +92,6 @@ public class Game1 : Game
 
     private void HandleCollisions()
     {
-        // This is solely detecting player collisions with everything because the
-        // movingCollisionObjects list has only the player and nothing else added.
-        // Might be good to separate the player out into it's own collision object
-        // to simplify the interactions between the player and everything not just
-        // for interactability with the world but also for battle mechanics with
-        // turn order and any AoE damage on both sides.
         for (int i = 0; i< RoomAtlas.Instance.CurrentRoom._movingCollisionObjects.Count; i++)
         {
             foreach (CollisionObject nonMovingObject in RoomAtlas.Instance.CurrentRoom._nonMovingCollisionObjects)
@@ -167,7 +160,7 @@ public class Game1 : Game
 
     protected override void Draw(GameTime gameTime)
     {
-        GraphicsDevice.Clear(Color.DarkSlateGray);
+        GraphicsDevice.Clear(Color.DarkGreen);
 
         _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp);
 
@@ -183,7 +176,7 @@ public class Game1 : Game
     }
 
     /// <summary>
-    /// This ain't do nothin rn
+    /// This ain't do nothin rn, fix to interact with game state machine once it's ready
     /// </summary>
     public static void TransitionToBattleState()
     {

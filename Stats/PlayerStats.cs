@@ -4,7 +4,7 @@ using static AwesomeRPG.Util;
 
 namespace AwesomeRPG.Stats;
 
-class PlayerStats : IStats
+public class PlayerStats : IStats
 {
     private int currentHealth;
     private int currentOverallLevel;
@@ -38,7 +38,6 @@ class PlayerStats : IStats
         return currentHealth;
     }
     #endregion
-
     #region Stats Methods
     #region Stat Getters
     public int GetSpecialPoint()

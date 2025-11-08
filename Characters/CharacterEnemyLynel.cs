@@ -8,7 +8,7 @@ public class CharacterEnemyLynel : CharacterEnemyBase
 {
     public CharacterEnemyLynel(Vector2 position, Cardinal direction) : base(position, direction)
     {
-        ChangeDirectionalSprite(direction);
+        
     }
 
     public override void ChangeDirectionalSprite(Cardinal direction)

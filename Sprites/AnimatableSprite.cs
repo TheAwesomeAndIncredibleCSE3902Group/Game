@@ -139,6 +139,7 @@ public class AnimatableSprite : ISprite
         int numberOfParams = spriteAtlasSource.GetLength(1);
 
         _numberOfFrames = (uint)numberOfFrames;
+        _globalScale = Util.GlobalScale;
 
         _sourceList = new Rectangle[numberOfFrames]; // all source rectangles set to 0,0,0,0
         _offsetList = new Vector2[numberOfFrames];  // all offsets set to 0.0f, 0.0f
@@ -202,8 +203,8 @@ public class AnimatableSprite : ISprite
 
     private void SetWidthNHeight(int width, int height)
     {
-        Width = width;
-        Height = height;
+        Width = width * (int)Util.GlobalScale;
+        Height = height * (int)Util.GlobalScale;
     }
 
 }
