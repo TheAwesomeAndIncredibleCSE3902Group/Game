@@ -61,8 +61,8 @@ public class Game1 : Game
         CharacterSpriteFactory.Instance.LoadAllTextures(Content, _spriteBatch);
 
         //World Creation
-        RoomAtlas.Instance.CurrentRoom = MapParser.RoomMapFromXML(Content, "MapItems\\Level1-0.xml");
         RoomAtlas.Instance.SetAtlas(new AtlasInitializer().InitializeAtlas(Content));
+        RoomAtlas.Instance.CurrentRoom = RoomAtlas.Instance.GetRoom(0,0);
 
         //Player declaration
         //TODO: PROBABLY WANNA HAVE A METHOD IN EACH LEVEL WHICH HANDLES ADDING THINGS TO COLLISION LIST
