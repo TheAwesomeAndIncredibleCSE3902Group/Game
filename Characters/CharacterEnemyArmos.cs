@@ -9,7 +9,7 @@ public class CharacterEnemyArmos : CharacterEnemyBase
 {
     public CharacterEnemyArmos(Vector2 position, Cardinal direction) : base(position, direction)
     {
-        ChangeDirectionalSprite(direction);
+        
     }
 
     public override void ChangeDirectionalSprite(Cardinal direction)

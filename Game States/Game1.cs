@@ -61,7 +61,7 @@ public class Game1 : Game
         CharacterSpriteFactory.Instance.LoadAllTextures(Content, _spriteBatch);
 
         //World Creation
-        RoomAtlas.Instance.CurrentRoom = MapParser.RoomMapFromXML(Content, "MapItems\\Level0-0.xml");
+        RoomAtlas.Instance.CurrentRoom = MapParser.RoomMapFromXML(Content, "MapItems\\Level1-0.xml");
         RoomAtlas.Instance.SetAtlas(new AtlasInitializer().InitializeAtlas(Content));
 
         //Player declaration
@@ -158,7 +158,7 @@ public class Game1 : Game
 
     protected override void Draw(GameTime gameTime)
     {
-        GraphicsDevice.Clear(Color.Black);
+        GraphicsDevice.Clear(Color.DarkGreen);
 
         _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp);
 
