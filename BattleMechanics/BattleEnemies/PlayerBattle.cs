@@ -5,15 +5,14 @@ using static AwesomeRPG.Util;
 namespace AwesomeRPG.BattleMechanics.BattleEnemies;
 public class PlayerBattle : IBattle
 {
-    public static PlayerBattle Instance { get; private set; }
+    public PlayerStats Stats { get; set; }
     public enum ArmosActions { ShineArmour, ChargeForward}
-    private IStats playerStats;
 
     public bool IsFainted { get; set; }
 
-    public PlayerBattle(IStats stats)
+    public PlayerBattle(PlayerStats stats)
     {
-        playerStats = stats;
+        Stats = stats;
     }
 
     public int TakeTurn()
