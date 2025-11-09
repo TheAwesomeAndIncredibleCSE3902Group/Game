@@ -13,13 +13,16 @@ namespace AwesomeRPG;
 public class PlayerBoomerang : Projectile
 {
     float initialSpeed;
+
+    //In pixels. Used to return this to the middle of the player
+    const float approxPlayerSize = 16 * 3;
     public PlayerBoomerang(Vector2 position, Cardinal direction)
     {
         this.direction = direction;
-        initialSpeed = 2;
+        initialSpeed = 6;
         movementSpeed = initialSpeed;
         initialSpeed = movementSpeed;
-        lifetime = 3;
+        lifetime = 2;
 
         //Didn't work with arrow sprite, rework later
         sprite = ProjectileSpriteFactory.CreateBoomerangSprite();
@@ -54,8 +57,8 @@ public class PlayerBoomerang : Projectile
     /// </summary>
     private void MoveBack()
     {
-
-        Vector2 toPlayer = Player.Instance.Position - Position;
+        //Vector2 toPlayer = Player.Instance.Position - Position;
+        Vector2 toPlayer = Player.Instance.Position - Position + new Vector2(approxPlayerSize / 2f);
         toPlayer.Normalize();
         Position += 2 * movementSpeed * toPlayer;
     }

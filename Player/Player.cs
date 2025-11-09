@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 using AwesomeRPG.Sprites;
 using static AwesomeRPG.Util;
 using AwesomeRPG.Collision;
+using System.Reflection.Metadata.Ecma335;
 
 namespace AwesomeRPG;
 
@@ -15,7 +16,6 @@ public class Player : CollisionObject
     public static Player Instance { get; private set; }
     public Cardinal FacingDirection => PStateMachine.Direction;
     public PlayerStateMachine PStateMachine { get; private set; }
-    public PlayerCollisionHandler CollisionHandler { get; private set; }
 
     public Dictionary<IEquipment.Weapons, IEquipment> Equipment { get; } = new();
     public Dictionary<IEquipment.Projectiles, Projectile> spawnedProjectiles { get; set; } = new();
@@ -24,7 +24,7 @@ public class Player : CollisionObject
     public bool HasMovedThisFrame { get; set; }
 
     //In pixels per second
-    private float movementSpeed = 120;
+    private float movementSpeed = 240;
     //Cache a reference to GameTime for movement. Gets updated at every Update() call
     private GameTime gt = new GameTime();
 
@@ -34,17 +34,15 @@ public class Player : CollisionObject
         Instance = this;
         InitializeEquipment();
         //Throwing in a random position so the sprite isn't halfway off the screen or something
-        Vector2 startingPos = new Vector2(200, 200);
+        Vector2 startingPos = new Vector2(500, 250);
         Position = startingPos;
 
         int spriteSize = 15;
-        Collider = new CollisionRect(this, spriteSize * 3, spriteSize * 3);
+        Collider = new CollisionRect(this, spriteSize * GlobalScale, spriteSize * GlobalScale);
         ObjectType = CollisionObjectType.Player;
 
         PStateMachine = new PlayerStateMachine();
         PStateMachine.LoadPlayer(content, _spriteBatch);
-
-        CollisionHandler = new PlayerCollisionHandler();
     }
 
     public void Draw(GameTime gt)
@@ -111,10 +109,12 @@ public class Player : CollisionObject
             Console.WriteLine("Tried to use an Equipment that doesn't exist!");
             return;
         }
-        
+
         PStateMachine.ChangeStateItemUse();
         playerEQ.Use();
     }
+
+    public float GetMovementSpeedPerSecond() => movementSpeed;
 
     //Declares values for all equipment
     private void InitializeEquipment()

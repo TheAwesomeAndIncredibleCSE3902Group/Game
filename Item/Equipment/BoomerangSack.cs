@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using AwesomeRPG.Map;
 using System.Diagnostics;
 
 namespace AwesomeRPG;
@@ -20,6 +21,6 @@ public class BoomerangSack : IEquipment
 
         PlayerBoomerang boomerang = new PlayerBoomerang(player.Position, player.FacingDirection);
         spawnedProjectiles[IEquipment.Projectiles.boomerang] = boomerang;
-        Game1.MovingCollisionObjects.Add(boomerang);
+        RoomAtlas.Instance.CurrentRoom._movingCollisionObjects.Add(boomerang);
     }
 }

@@ -4,6 +4,7 @@ using System.Numerics;
 
 namespace AwesomeRPG;
 
+
 /// <summary>
 /// This can be a nice storage bin for enums and math that might be needed by many classes
 /// Never change anything in here at runtime
@@ -12,6 +13,9 @@ namespace AwesomeRPG;
 public static class Util
 {
     public enum Cardinal { up, right, down, left }
+
+    // Global Scale DO NOT TOUCH
+    public readonly static int GlobalScale = 4;
 
     public static float Root2 { get => 1.41421356237f; }
 
@@ -38,6 +42,8 @@ public static class Util
 
         }
     }
+
+    public static float ApproxFramesPerSecond { get => 60f; }
 
     //*** These are extension methods! You can run them right off a Cardinal, as if it was a full-blooded class. ***
 

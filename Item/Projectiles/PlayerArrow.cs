@@ -16,8 +16,8 @@ public class PlayerArrow : Projectile
     {
         this.direction = direction;
 
-        this.movementSpeed = 2;
-        this.lifetime = 2;
+        this.movementSpeed = 6;
+        this.lifetime = 1;
 
         //Didn't work with arrow sprite, rework later
         sprite = ProjectileSpriteFactory.CreateArrowSprite(direction);

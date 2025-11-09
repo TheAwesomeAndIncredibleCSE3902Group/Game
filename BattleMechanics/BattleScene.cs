@@ -5,6 +5,8 @@ using AwesomeRPG.BattleMechanics.BattleEnemies;
 using System;
 using System.Collections.Generic;
 using static AwesomeRPG.Util;
+using AwesomeRPG.Stats;
+using System.Linq;
 
 namespace AwesomeRPG.BattleMechanics
 {
@@ -14,71 +16,61 @@ namespace AwesomeRPG.BattleMechanics
 
         private enum BattleMoves { Attack, Defend, ItemUse, Flee }
 
-        private Player link;
-        private ICharacter[] enemiesInBattle;
-        private EnemySet currentEnemySet;
+        private List<IStats> playersInBattle;
+        private List<IStats> enemiesInBattle;
+        private List<IBattle> turnOrder;
+        private BattleSet currentEnemySet;
+        private BattleSet currentPlayerSet;
+        private int currentTurnIndex = 0;
 
-        private ArmosBattle armos = new();
-        private MoblinBattle moblin = new();
-        private LynelBattle lynel = new();
-        public static Dictionary<string, IEnemyBattle[]> TotalEnemySets { get; set; }
+        public static Dictionary<string, IBattle[]> TotalEnemySets { get; set; }
 
-        private void PlayOutTurnOrder()
+        private void NextTurn()
         {
-            // When the player is active, they can take their time to choose their next action,
-            // otherwise the enemies in the current battle are active and thier turns play out.
-            if (!PlayerMoveset.TurnIsActive)
+            if (currentTurnIndex >= turnOrder.Count)
             {
-                currentEnemySet.RotateThroughActiveEnemies();
-                PlayerMoveset.TurnIsActive = true;
-                link.PStateMachine.currentDamageIntake = 1;
+                currentTurnIndex = 0;
             }
 
-
+            turnOrder[currentTurnIndex].TakeTurn();
+            currentTurnIndex++;
         }
         public void Update()
         {
-            if (enemiesInBattle.Length == 0)
+            if (enemiesInBattle.Count == 0)
             {
                 // TODO: put reward system in here and exit the battle
                 CurrentlyInBattle = false;
             } else
             {
-                PlayOutTurnOrder();
+                NextTurn();
             }
         }
 
-        public void InitializeBattleSequence(Player link, bool isPlayerStartingFirst, string currentBattleList)
+        public void InitializeBattleSequence(bool isPlayerStartingFirst, List<IBattle> enemiesInBattle, List<IBattle> playersInBattle)
         {
-            this.link = link;
-
-            TotalEnemySets.Add("dungeonArmos", [armos, lynel, moblin, moblin]);
-            TotalEnemySets.Add("fieldMoblinPair", [moblin, moblin]);
-            TotalEnemySets.Add("fieldMoblinFleet", [moblin, moblin, moblin, moblin, moblin, moblin]);
-            TotalEnemySets.Add("fieldLynelTwins", [lynel, lynel]);
-            TotalEnemySets.Add("fieldArmos", [armos]);
-
-            SetCurrentEnemiesInBattle(currentBattleList);
+            currentPlayerSet = new BattleSet(playersInBattle);
+            currentEnemySet = new BattleSet(enemiesInBattle);
             SetTurnOrder(isPlayerStartingFirst);
             CurrentlyInBattle = true;
         }
-        private void SetCurrentEnemiesInBattle(string currentBattleList)
-        {
-            TotalEnemySets.TryGetValue(currentBattleList, out IEnemyBattle[] currentEnemyList);
-            currentEnemySet = new EnemySet(currentEnemyList);
-        }
 
-        private static void SetTurnOrder(bool isPlayerStartingFirst)
+        private void SetTurnOrder(bool isPlayerStartingFirst)
         {
+            List<IBattle> enemyList = currentEnemySet.GetList();
+            List<IBattle> playerList = currentPlayerSet.GetList();
+
+            //We either do this or have a temporary speed boost to whoever starts first, what that specifically means depends on implementation of speed stat.
             if (isPlayerStartingFirst)
             {
-                PlayerMoveset.TurnIsActive = true;
+                turnOrder = playerList;
+                turnOrder.AddRange(enemyList);
             }
             else
             {
-                PlayerMoveset.TurnIsActive = false;
+                turnOrder = enemyList;
+                turnOrder.AddRange(playerList);
             }
-
         }
 
 
