@@ -81,7 +81,7 @@ public class Game1 : Game
 
         // Temporarily commented out for Sprint3 submission
 
-        // UI creation
+        // UI creation! This will eventually be moved to one of the battle state classes.
         var spriteFont = Content.Load<SpriteFont>("Fonts\\MyFont");
         RootUIElement = new RootElement(_spriteBatch);
 
@@ -97,7 +97,7 @@ public class Game1 : Game
         List<CommandElement> buttons = new List<CommandElement>();
         for (int i = 0; i < 6; i++)
         {
-            var currentButtonToAdd = ButtonComponent.Create(RootUIElement, spriteFont, this, new Rectangle(20 + (i / 3) * 365, 540 + (i % 3) * 75, 350, 60), Color.Purple, Color.White, "Test one");
+            var currentButtonToAdd = ButtonComponent.Create(RootUIElement, spriteFont, this, new Rectangle(20 + (i / 3) * 365, 540 + (i % 3) * 75, 350, 60), Color.Purple, Color.White, "Action " + i);
 
             buttons.Add(currentButtonToAdd);
             RootUIElement.AddChild(currentButtonToAdd);
