@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using AwesomeRPG.Collision;
 using AwesomeRPG.Map;
 using Microsoft.Xna.Framework;
@@ -15,7 +14,7 @@ namespace AwesomeRPG;
 public class OverworldState : IGameState
 {
     //Will eventually be used as a global scalar for time (ie affects everything in the Overworld)
-    public float TimeScale { get; private set; }
+    public float TimeScale { get; private set; } = 1;
     public Player Player { get; private set; }
 
     private AllCollisionHandler allCollisionHandler;
@@ -53,12 +52,12 @@ public class OverworldState : IGameState
     public void Update(GameTime gameTime)
     {
         gameTime = new GameTime(gameTime.TotalGameTime, gameTime.ElapsedGameTime * TimeScale);
-
+       
+        Player.Update(gameTime);
         RoomAtlas.Instance.CurrentRoom.Update(gameTime);
         HandleCollisions();
         //TODO: refresh HUD here
 
-        throw new System.NotImplementedException();
     }
 
     public BattleState ToBattleState()

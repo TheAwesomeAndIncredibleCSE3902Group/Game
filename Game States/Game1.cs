@@ -29,9 +29,6 @@ public class Game1 : Game
     // Temporarily commented out for Sprint3 submission
     public RootElement RootUIElement;
 
-    //Collision Variables, this needs to be improved sloppy solution for now
-    private AllCollisionHandler _allCollisionHandler;
-
     //Map Variables. (Unused?)
     public List<int> Tiles { get; set; }
 
@@ -51,7 +48,6 @@ public class Game1 : Game
 
     protected override void Initialize()
     {
-        _allCollisionHandler = new AllCollisionHandler();
         base.Initialize();
     }
 
@@ -59,21 +55,14 @@ public class Game1 : Game
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-        //Create sprite factories
+        //Create sprite factories; load textures
         MapItemSpriteFactory.LoadAllTextures(Content, _spriteBatch);
         ProjectileSpriteFactory.LoadAllTextures(Content, _spriteBatch);
-
-        //NPC creation
         CharacterSpriteFactory.Instance.LoadAllTextures(Content, _spriteBatch);
 
-        //World Creation
-        RoomAtlas.Instance.SetAtlas(new AtlasInitializer().InitializeAtlas(Content));
-        RoomAtlas.Instance.CurrentRoom = RoomAtlas.Instance.GetRoom(0,0);
-
         //Player declaration
-        //TODO: PROBABLY WANNA HAVE A METHOD IN EACH LEVEL WHICH HANDLES ADDING THINGS TO COLLISION LIST
         Player = new Player(Content, _spriteBatch);
-        RoomAtlas.Instance.CurrentRoom._movingCollisionObjects.Add(Player);
+        StateClass = new OverworldState(Content, Player);
         _controllersList.Add(new KeyboardController(this));
         _controllersList.Add(new KeyboardUIController(this));
         _controllersList.Add(new MouseController(this));
@@ -81,119 +70,65 @@ public class Game1 : Game
         // Temporarily commented out for Sprint3 submission
 
         // UI creation! This will eventually be moved to one of the battle state classes.
-        var spriteFont = Content.Load<SpriteFont>("Fonts\\MyFont");
-        RootUIElement = new RootElement(_spriteBatch);
-
-        var battleUiBoardBorder = new RectElement(RootUIElement, new Color(40, 0, 40));
-        battleUiBoardBorder.OffsetAndSize = new Rectangle(8, 528, 1008, 234);
-
-        var battleUiBoardBg = new RectElement(RootUIElement, new Color(80, 0, 80));
-        battleUiBoardBg.OffsetAndSize = new Rectangle(10, 530, 1004, 230);
-
-        RootUIElement.AddChild(battleUiBoardBorder);
-        RootUIElement.AddChild(battleUiBoardBg);
-
-        List<CommandElement> buttons = new List<CommandElement>();
-        for (int i = 0; i < 6; i++)
         {
-            var currentButtonToAdd = ButtonComponent.Create(RootUIElement, spriteFont, this, new Rectangle(20 + (i / 3) * 365, 540 + (i % 3) * 75, 350, 60), Color.Purple, Color.White, "Action " + i);
+            var spriteFont = Content.Load<SpriteFont>("Fonts\\MyFont");
+            RootUIElement = new RootElement(_spriteBatch);
 
-            buttons.Add(currentButtonToAdd);
-            RootUIElement.AddChild(currentButtonToAdd);
-        }
-        // buttons[5].IsVisible = false;
+            var battleUiBoardBorder = new RectElement(RootUIElement, new Color(40, 0, 40));
+            battleUiBoardBorder.OffsetAndSize = new Rectangle(8, 528, 1008, 234);
 
-        RootUIElement.UIState.SelectionIndex = 0;
+            var battleUiBoardBg = new RectElement(RootUIElement, new Color(80, 0, 80));
+            battleUiBoardBg.OffsetAndSize = new Rectangle(10, 530, 1004, 230);
 
-        RootUIElement.AddActionOnUIEvent(UIEvent.ButtonDown, (e) =>
-        {
-            var eventParams = (InputUIEventParams)e;
-            // System.Console.WriteLine("This is a test!!");
-            if (eventParams.Controls.Contains(UIControl.MoveDown))
-            {
-                RootUIElement.UIState.SelectionIndex += 1;
-            }
-            if (eventParams.Controls.Contains(UIControl.MoveUp))
-            {
-                RootUIElement.UIState.SelectionIndex -= 1;
-            }
-            if (eventParams.Controls.Contains(UIControl.MoveRight))
-            {
-                RootUIElement.UIState.SelectionIndex += 3;
-            }
-            if (eventParams.Controls.Contains(UIControl.MoveLeft))
-            {
-                RootUIElement.UIState.SelectionIndex -= 3;
-            }
-        });
-        
-    }
+            RootUIElement.AddChild(battleUiBoardBorder);
+            RootUIElement.AddChild(battleUiBoardBg);
 
-    private void HandleCollisions()
-    {
-        for (int i = 0; i< RoomAtlas.Instance.CurrentRoom._movingCollisionObjects.Count; i++)
-        {
-            foreach (CollisionObject nonMovingObject in RoomAtlas.Instance.CurrentRoom._nonMovingCollisionObjects)
+            List<CommandElement> buttons = new List<CommandElement>();
+            for (int i = 0; i < 6; i++)
             {
-                CollisionInfo collision = RoomAtlas.Instance.CurrentRoom._movingCollisionObjects[i].DetectCollision(nonMovingObject);
-                _allCollisionHandler.HandleCollision(collision);
-            }
+                var currentButtonToAdd = ButtonComponent.Create(RootUIElement, spriteFont, this, new Rectangle(20 + (i / 3) * 365, 540 + (i % 3) * 75, 350, 60), Color.Purple, Color.White, "Action " + i);
 
-            for (int j = i+1; j < RoomAtlas.Instance.CurrentRoom._movingCollisionObjects.Count; j++)
-            {
-                CollisionInfo collision = RoomAtlas.Instance.CurrentRoom._movingCollisionObjects[i].DetectCollision(RoomAtlas.Instance.CurrentRoom._movingCollisionObjects[j]);
-                _allCollisionHandler.HandleCollision(collision);
+                buttons.Add(currentButtonToAdd);
+                RootUIElement.AddChild(currentButtonToAdd);
             }
-        }
-        ClearProjectiles();
-        ClearPickups();
-    }
+            // buttons[5].IsVisible = false;
 
-    //Vile code, made by the most deprived of man. May this be fixed next sprint
-    private void ClearProjectiles()
-    {
-        if(Player.spawnedProjectiles.Count == 0)
-        {
-            for(int i = 0; i < RoomAtlas.Instance.CurrentRoom._movingCollisionObjects.Count; i++)
+            RootUIElement.UIState.SelectionIndex = 0;
+
+            RootUIElement.AddActionOnUIEvent(UIEvent.ButtonDown, (e) =>
             {
-                if(RoomAtlas.Instance.CurrentRoom._movingCollisionObjects[i].ObjectType == CollisionObjectType.PlayerProjectile)
+                var eventParams = (InputUIEventParams)e;
+                // System.Console.WriteLine("This is a test!!");
+                if (eventParams.Controls.Contains(UIControl.MoveDown))
                 {
-                    RoomAtlas.Instance.CurrentRoom._movingCollisionObjects.RemoveAt(i);
+                    RootUIElement.UIState.SelectionIndex += 1;
                 }
-            }
-        }
-    }
-
-
-    //Vile code, made by the most deprived of man. May this be fixed next sprint
-    private int prevPickups = 2;
-    private void ClearPickups()
-    {
-        if (prevPickups != 0 && RoomAtlas.Instance.CurrentRoom.Pickups.Count != prevPickups)
-        {
-            for (int i = 0; i < RoomAtlas.Instance.CurrentRoom._nonMovingCollisionObjects.Count; i++)
-            {
-                if (RoomAtlas.Instance.CurrentRoom._nonMovingCollisionObjects[i].ObjectType == CollisionObjectType.Pickup)
+                if (eventParams.Controls.Contains(UIControl.MoveUp))
                 {
-                    RoomAtlas.Instance.CurrentRoom._nonMovingCollisionObjects.RemoveAt(i);
+                    RootUIElement.UIState.SelectionIndex -= 1;
                 }
-            }
-            prevPickups--;
+                if (eventParams.Controls.Contains(UIControl.MoveRight))
+                {
+                    RootUIElement.UIState.SelectionIndex += 3;
+                }
+                if (eventParams.Controls.Contains(UIControl.MoveLeft))
+                {
+                    RootUIElement.UIState.SelectionIndex -= 3;
+                }
+            });
         }
+
     }
+    
     protected override void Update(GameTime gameTime)
     {
         //Time can be slowed like this
         //gameTime = new GameTime(gameTime.TotalGameTime / 2f, gameTime.ElapsedGameTime / 2f);
-        
-        foreach (IController controller in _controllersList) {
+
+        foreach (IController controller in _controllersList)
             controller.Update(GameState.overworld);
-        }
 
-        Player.Update(gameTime);
-
-        RoomAtlas.Instance.CurrentRoom.Update(gameTime);
-        HandleCollisions();
+        StateClass.Update(gameTime);
         base.Update(gameTime);
     }
 
@@ -203,12 +138,8 @@ public class Game1 : Game
 
         _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp);
 
-        {       //Will be taken by OverworldState
-            RoomAtlas.Instance.CurrentRoom.Draw(_spriteBatch, gameTime);
-            Player.Draw(gameTime);
-
-            RootUIElement.Draw(gameTime);
-        }
+        StateClass.Draw(_spriteBatch, gameTime);
+        RootUIElement.Draw(gameTime);
 
         _spriteBatch.End();
         base.Draw(gameTime);
