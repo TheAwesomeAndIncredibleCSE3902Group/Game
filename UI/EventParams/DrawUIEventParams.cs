@@ -6,10 +6,10 @@ using Microsoft.Xna.Framework;
 
 namespace AwesomeRPG.UI.Events;
 
-public class DrawUIEvent : UIEventBase
+public class DrawUIEventParams : UIEventParamsBase
 {
     public GameTime GameTime { get; set; }
-    public DrawUIEvent(ElementBase element, GameTime gameTime)
+    public DrawUIEventParams(ElementBase element, GameTime gameTime)
     {
         Element = element;
         GameTime = gameTime;

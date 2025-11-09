@@ -11,22 +11,16 @@ namespace AwesomeRPG.UI.Components;
 
 public static class ButtonComponent
 {
-    public static ElementBase Create(RootElement rootElement, SpriteFont spriteFont, Game1 game, Rectangle location)
+    private static readonly Color _selectedBgDim = new Color(220, 220, 220);
+    private static readonly Color _clickBgDim = new Color(180,180,180);
+    public static CommandElement Create(RootElement rootElement, SpriteFont spriteFont, Game1 game, Rectangle location, Color bgColor, Color textColor, string textString = "")
     {
-        TextElement textElem = new TextElement(rootElement, spriteFont, "test");
+        TextElement textElem = new TextElement(rootElement, spriteFont, textString, textColor);
         textElem.OffsetAndSize = new Rectangle(Point.Zero, location.Size);
 
-        RectElement rectElem = new RectElement(rootElement, Color.LightBlue);
+        RectElement rectElem = new RectElement(rootElement, bgColor);
         rectElem.OffsetAndSize = new Rectangle(Point.Zero, location.Size);
         rectElem.AddChild(textElem);
-
-        textElem.AddActionOnUIEvent(UIEvent.BeforeDraw, (e) =>
-        {
-            DrawUIEvent thisEvent = (DrawUIEvent)e;
-            GameTime eventGameTime = thisEvent.GameTime;
-            double seconds = eventGameTime.TotalGameTime.TotalSeconds;
-            textElem.TextString = "Time: " + seconds;
-        });
 
         textElem.HorizontalTextAlign = TextElement.TextAlign.Center;
         textElem.VerticalTextAlign = TextElement.TextAlign.Center;
@@ -36,9 +30,31 @@ public static class ButtonComponent
         selAnimElem.AddChild(rectElem);
 
         CommandElement commandElem = new CommandElement(rootElement);
-        commandElem.AssociatedCommand = new QuitCommand(game);
         commandElem.AddChild(selAnimElem);
         commandElem.MakeSelectable();
+
+        commandElem.AddActionOnUIEvent(UIEvent.Select, (e) =>
+        {
+            rectElem.FillColor = bgColor * _selectedBgDim;
+        });
+        commandElem.AddActionOnUIEvent(UIEvent.Unselect, (e) =>
+        {
+            rectElem.FillColor = bgColor;
+        });
+
+        rootElement.AddActionOnUIEvent(UIEvent.ButtonDown, (e) =>
+        {
+            InputUIEventParams inputEventParams = (InputUIEventParams) e;
+            if (commandElem.IsSelected && inputEventParams.Controls.Contains(UIControl.Interact))
+                rectElem.FillColor = bgColor * _clickBgDim;
+        });
+
+        rootElement.AddActionOnUIEvent(UIEvent.ButtonUp, (e) =>
+        {
+            InputUIEventParams inputEventParams = (InputUIEventParams) e;
+            if (commandElem.IsSelected && inputEventParams.Controls.Contains(UIControl.Interact))
+                rectElem.FillColor = bgColor;
+        });
 
         return commandElem;
     }

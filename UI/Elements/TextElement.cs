@@ -21,32 +21,36 @@ public class TextElement : ElementBase
     {
         CalculateDerivedValuesFromAncestors();
 
-        Vector2 textCalculatedPosition = DerivedAbsolutePosition.ToVector2();
-        Vector2 measuredText = SpriteFont.MeasureString(TextString);
+        DispatchUIEvent(UIEvent.BeforeDraw, new DrawUIEventParams(this, gameTime));
 
-        if (HorizontalTextAlign == TextAlign.Center)
+        if (DerivedAncestorIsVisible)
         {
-            textCalculatedPosition.X += (OffsetAndSize.Width - measuredText.X) / 2;
-        }
-        else if (HorizontalTextAlign == TextAlign.Right)
-        {
-            textCalculatedPosition.X += OffsetAndSize.Width - measuredText.X;
-        }
+            Vector2 textCalculatedPosition = DerivedAbsolutePosition.ToVector2();
+            Vector2 measuredText = SpriteFont.MeasureString(TextString);
 
-        if (VerticalTextAlign == TextAlign.Center)
-        {
-            textCalculatedPosition.Y += (OffsetAndSize.Height - measuredText.Y) / 2;
-        }
-        else if (VerticalTextAlign == TextAlign.Right)
-        {
-            textCalculatedPosition.Y += OffsetAndSize.Height - measuredText.Y;
-        }
+            if (HorizontalTextAlign == TextAlign.Center)
+            {
+                textCalculatedPosition.X += (OffsetAndSize.Width - measuredText.X) / 2;
+            }
+            else if (HorizontalTextAlign == TextAlign.Right)
+            {
+                textCalculatedPosition.X += OffsetAndSize.Width - measuredText.X;
+            }
 
-        DispatchUIEvent(UIEvent.BeforeDraw, new DrawUIEvent(this, gameTime));
-        RootElement.SpriteBatch.DrawString(SpriteFont, TextString, textCalculatedPosition, TextColor);
+            if (VerticalTextAlign == TextAlign.Center)
+            {
+                textCalculatedPosition.Y += (OffsetAndSize.Height - measuredText.Y) / 2;
+            }
+            else if (VerticalTextAlign == TextAlign.Right)
+            {
+                textCalculatedPosition.Y += OffsetAndSize.Height - measuredText.Y;
+            }
+
+            RootElement.SpriteBatch.DrawString(SpriteFont, TextString, textCalculatedPosition, TextColor);
+        }
 
         DrawChildren(gameTime);
-        DispatchUIEvent(UIEvent.AfterDraw, new DrawUIEvent(this, gameTime));
+        DispatchUIEvent(UIEvent.AfterDraw, new DrawUIEventParams(this, gameTime));
     }
 
     public TextElement(RootElement rootElement, SpriteFont spriteFont)

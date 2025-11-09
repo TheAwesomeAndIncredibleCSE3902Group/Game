@@ -13,9 +13,9 @@ public class SelectionAnimationElement : ElementBase
     public override void Draw(GameTime gameTime)
     {
         CalculateDerivedValuesFromAncestors();
-        DispatchUIEvent(UIEvent.BeforeDraw, new DrawUIEvent(this, gameTime));
+        DispatchUIEvent(UIEvent.BeforeDraw, new DrawUIEventParams(this, gameTime));
 
-        if (DerivedAncestorIsSelected)
+        if (DerivedAncestorIsSelected && IsVisible)
         {
             int animationFrame = (int)gameTime.TotalGameTime.TotalMicroseconds / 9000 % 100;
             // System.Console.WriteLine(animationFrame);
@@ -44,7 +44,7 @@ public class SelectionAnimationElement : ElementBase
         }
 
         DrawChildren(gameTime);
-        DispatchUIEvent(UIEvent.AfterDraw, new DrawUIEvent(this, gameTime));
+        DispatchUIEvent(UIEvent.AfterDraw, new DrawUIEventParams(this, gameTime));
     }
 
     public SelectionAnimationElement(RootElement rootElement)

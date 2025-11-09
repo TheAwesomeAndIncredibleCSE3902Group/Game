@@ -3,6 +3,7 @@
 
 // This is the element that holds commands.
 
+using System;
 using AwesomeRPG.Commands;
 using AwesomeRPG.UI.Events;
 using Microsoft.Xna.Framework;
@@ -17,19 +18,38 @@ public class CommandElement : ElementBase
     {
         CalculateDerivedValuesFromAncestors();
 
-        DispatchUIEvent(UIEvent.BeforeDraw, new DrawUIEvent(this, gameTime));
+        DispatchUIEvent(UIEvent.BeforeDraw, new DrawUIEventParams(this, gameTime));
         DrawChildren(gameTime);
-        DispatchUIEvent(UIEvent.AfterDraw, new DrawUIEvent(this, gameTime));
+        DispatchUIEvent(UIEvent.AfterDraw, new DrawUIEventParams(this, gameTime));
     }
 
     public CommandElement(RootElement rootElement)
     {
         SetUpElement(rootElement);
+        SetUpCommandInput();
     }
-    
+
     public CommandElement(RootElement rootElement, ICommand command)
     {
         SetUpElement(rootElement);
+        SetUpCommandInput();
         AssociatedCommand = command;
+    }
+    private void SetUpCommandInput()
+    {
+        RootElement.AddActionOnUIEvent(UIEvent.ButtonUp, (e) =>
+        {
+            InputUIEventParams inputEventParams = (InputUIEventParams) e;
+            if (inputEventParams.Controls.Contains(UIControl.Interact) && IsSelected)
+            {
+                if (AssociatedCommand == null)
+                {
+                    Console.WriteLine("WARNING: The clicked CommandElement has no associated Command!");
+                } else
+                {
+                    AssociatedCommand.Execute();
+                }
+            }
+        });
     }
 }

@@ -6,6 +6,10 @@ using AwesomeRPG.Controllers;
 using AwesomeRPG.Sprites;
 using AwesomeRPG.Map;
 using AwesomeRPG.Collision;
+using AwesomeRPG.UI.Elements;
+using AwesomeRPG.UI.Components;
+using AwesomeRPG.UI;
+using AwesomeRPG.UI.Events;
 
 namespace AwesomeRPG;
 
@@ -24,7 +28,7 @@ public class Game1 : Game
     public Player Player { get; private set; }
     
     // Temporarily commented out for Sprint3 submission
-    // public RootElement RootUIElement;
+    public RootElement RootUIElement;
 
     //Collision Variables, this needs to be improved sloppy solution for now
     private AllCollisionHandler _allCollisionHandler;
@@ -72,23 +76,58 @@ public class Game1 : Game
         Player = new Player(Content, _spriteBatch);
         RoomAtlas.Instance.CurrentRoom._movingCollisionObjects.Add(Player);
         _controllersList.Add(new KeyboardController(this));
+        _controllersList.Add(new KeyboardUIController(this));
         _controllersList.Add(new MouseController(this));
 
         // Temporarily commented out for Sprint3 submission
 
-        // UI creation
-        // var spriteFont = Content.Load<SpriteFont>("Fonts\\MyFont");
-        // RootUIElement = new RootElement(_spriteBatch);
-        // RootUIElement.AddChild(ButtonComponent.Create(RootUIElement, spriteFont, this, new Rectangle(400, 50, 300,100)));
+        // UI creation! This will eventually be moved to one of the battle state classes.
+        var spriteFont = Content.Load<SpriteFont>("Fonts\\MyFont");
+        RootUIElement = new RootElement(_spriteBatch);
 
-        // RootUIElement.UIState.AddActionOnUIControlEvent(UIControl.MoveDown, UIControlEvent.ButtonPress, () =>
-        // {
-        //     RootUIElement.UIState.SelectionIndex += 1;
-        // });
-        // RootUIElement.UIState.AddActionOnUIControlEvent(UIControl.MoveUp, UIControlEvent.ButtonPress, () =>
-        // {
-        //     RootUIElement.UIState.SelectionIndex -= 1;
-        // });
+        var battleUiBoardBorder = new RectElement(RootUIElement, new Color(40, 0, 40));
+        battleUiBoardBorder.OffsetAndSize = new Rectangle(8, 528, 1008, 234);
+
+        var battleUiBoardBg = new RectElement(RootUIElement, new Color(80, 0, 80));
+        battleUiBoardBg.OffsetAndSize = new Rectangle(10, 530, 1004, 230);
+
+        RootUIElement.AddChild(battleUiBoardBorder);
+        RootUIElement.AddChild(battleUiBoardBg);
+
+        List<CommandElement> buttons = new List<CommandElement>();
+        for (int i = 0; i < 6; i++)
+        {
+            var currentButtonToAdd = ButtonComponent.Create(RootUIElement, spriteFont, this, new Rectangle(20 + (i / 3) * 365, 540 + (i % 3) * 75, 350, 60), Color.Purple, Color.White, "Action " + i);
+
+            buttons.Add(currentButtonToAdd);
+            RootUIElement.AddChild(currentButtonToAdd);
+        }
+        // buttons[5].IsVisible = false;
+
+        RootUIElement.UIState.SelectionIndex = 0;
+
+        RootUIElement.AddActionOnUIEvent(UIEvent.ButtonDown, (e) =>
+        {
+            var eventParams = (InputUIEventParams)e;
+            // System.Console.WriteLine("This is a test!!");
+            if (eventParams.Controls.Contains(UIControl.MoveDown))
+            {
+                RootUIElement.UIState.SelectionIndex += 1;
+            }
+            if (eventParams.Controls.Contains(UIControl.MoveUp))
+            {
+                RootUIElement.UIState.SelectionIndex -= 1;
+            }
+            if (eventParams.Controls.Contains(UIControl.MoveRight))
+            {
+                RootUIElement.UIState.SelectionIndex += 3;
+            }
+            if (eventParams.Controls.Contains(UIControl.MoveLeft))
+            {
+                RootUIElement.UIState.SelectionIndex -= 3;
+            }
+        });
+        
     }
 
     private void HandleCollisions()
@@ -169,8 +208,7 @@ public class Game1 : Game
             RoomAtlas.Instance.CurrentRoom.Draw(_spriteBatch, gameTime);
             Player.Draw(gameTime);
 
-            // Temporarily commented out for Sprint3 submission
-            // RootUIElement.Draw(gameTime);
+        RootUIElement.Draw(gameTime);
 
             _spriteBatch.End();
         }
@@ -183,7 +221,7 @@ public class Game1 : Game
     /// </summary>
     public static void TransitionToBattleState()
     {
-        Debug.WriteLine("Battle State moment");
+        // Debug.WriteLine("Battle State moment");
     }
 
 }
