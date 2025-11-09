@@ -91,13 +91,24 @@ public class Game1 : Game
         var spriteFont = Content.Load<SpriteFont>("Fonts\\MyFont");
         RootUIElement = new RootElement(_spriteBatch);
 
-        var bgUiElem = new RectElement(RootUIElement, Color.DarkBlue);
-        bgUiElem.OffsetAndSize = new Rectangle(0, 0, 10000, 10000);
+        var battleUiBoardBorder = new RectElement(RootUIElement, new Color(40, 0, 40));
+        battleUiBoardBorder.OffsetAndSize = new Rectangle(8, 528, 1008, 234);
 
-        RootUIElement.AddChild(bgUiElem);
-        RootUIElement.AddChild(ButtonComponent.Create(RootUIElement, spriteFont, this, new Rectangle(400, 50, 300,100), Color.Red, Color.White, "Test one"));
-        RootUIElement.AddChild(ButtonComponent.Create(RootUIElement, spriteFont, this, new Rectangle(400, 200, 300,100), Color.Green, Color.Black, "test 2"));
-        RootUIElement.AddChild(ButtonComponent.Create(RootUIElement, spriteFont, this, new Rectangle(400, 350, 300,100), Color.LightBlue, Color.Black, "Hellooooo"));
+        var battleUiBoardBg = new RectElement(RootUIElement, new Color(80, 0, 80));
+        battleUiBoardBg.OffsetAndSize = new Rectangle(10, 530, 1004, 230);
+
+        RootUIElement.AddChild(battleUiBoardBorder);
+        RootUIElement.AddChild(battleUiBoardBg);
+
+        List<CommandElement> buttons = new List<CommandElement>();
+        for (int i = 0; i < 6; i++)
+        {
+            var currentButtonToAdd = ButtonComponent.Create(RootUIElement, spriteFont, this, new Rectangle(20 + (i / 3) * 365, 540 + (i % 3) * 75, 350, 60), Color.Purple, Color.White, "Test one");
+
+            buttons.Add(currentButtonToAdd);
+            RootUIElement.AddChild(currentButtonToAdd);
+        }
+        buttons[5].IsVisible = false;
 
         RootUIElement.UIState.SelectionIndex = 0;
 
@@ -112,6 +123,14 @@ public class Game1 : Game
             if (eventParams.Controls.Contains(UIControl.MoveUp))
             {
                 RootUIElement.UIState.SelectionIndex -= 1;
+            }
+            if (eventParams.Controls.Contains(UIControl.MoveRight))
+            {
+                RootUIElement.UIState.SelectionIndex += 3;
+            }
+            if (eventParams.Controls.Contains(UIControl.MoveLeft))
+            {
+                RootUIElement.UIState.SelectionIndex -= 3;
             }
         });
         

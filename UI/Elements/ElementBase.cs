@@ -21,6 +21,7 @@ public abstract class ElementBase
         }
     }
     public bool DerivedAncestorIsSelected { get; private set; } = false;
+    public bool DerivedAncestorIsVisible { get; private set; } = true;
     private List<ElementBase> _children = [];
     public bool IsSelectable { get; private set; } = false;
     public bool IsSelected = false;
@@ -67,6 +68,7 @@ public abstract class ElementBase
     {
         _derivedAbsolutePositionBase = Parent.DerivedAbsolutePosition;
         DerivedAncestorIsSelected = Parent.IsSelected || Parent.DerivedAncestorIsSelected;
+        DerivedAncestorIsVisible = Parent.IsVisible && Parent.DerivedAncestorIsVisible;
     }
 
     protected void RunBeforeDrawActions(GameTime gameTime)

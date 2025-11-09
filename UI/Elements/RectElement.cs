@@ -15,11 +15,14 @@ public class RectElement : ElementBase
         CalculateDerivedValuesFromAncestors();
         DispatchUIEvent(UIEvent.BeforeDraw, new DrawUIEventParams(this, gameTime));
 
-        RootElement.SpriteBatch.Draw(
-            RootElement.RectangleTexture,
-            new Rectangle(DerivedAbsolutePosition, OffsetAndSize.Size),
-            FillColor
-        );
+        if (DerivedAncestorIsVisible)
+        {
+            RootElement.SpriteBatch.Draw(
+                RootElement.RectangleTexture,
+                new Rectangle(DerivedAbsolutePosition, OffsetAndSize.Size),
+                FillColor
+            );
+        }
 
         // System.Console.WriteLine("drawing rect element at" + DerivedAbsolutePosition.ToString());
         DrawChildren(gameTime);
