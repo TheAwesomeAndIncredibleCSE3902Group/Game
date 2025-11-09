@@ -17,6 +17,8 @@ public class WaveyArrow : Projectile
     //seconds
     float baseAmplitude;
 
+    float phaseOffset;
+
     /// <summary>
     /// Creates a new WaveyArrow from @position
     /// </summary>
@@ -29,11 +31,15 @@ public class WaveyArrow : Projectile
         this.linearPos = position;
         this.direction = direction;
 
-        this.movementSpeed = 2;
-        this.lifetime = 3;
+        this.movementSpeed = 6;
+        this.lifetime = 2;
 
         this.baseFreq = baseFreq;
         this.baseAmplitude = baseAmplitude;
+
+        Random random = new Random();
+        phaseOffset = random.NextSingle() * (float)Math.Tau * baseFreq;
+        
 
         //Didn't work with arrow sprite, rework later
         sprite = ProjectileSpriteFactory.CreateArrowSprite(direction);
@@ -51,13 +57,14 @@ public class WaveyArrow : Projectile
     {
         linearPos += movementSpeed * Util.CardinalToUnitVector(direction);
         float x = (float)Math.Tau * baseFreq * age;
+        x += phaseOffset;
 
         //The specific waveform can be adjusted slightly for effect. Swap these lines for an example.
-        float offset = (float)(baseAmplitude * (Math.Sin(x) + Math.Sin(3 * x) / 3));
+        float waveComponent = (float)(baseAmplitude * (Math.Sin(x) + Math.Sin(3 * x) / 3f));
         //float offset = (float) (baseAmplitude * (Math.Sin(x) + Math.Sin(3 * x) / 6 + Math.Sin(5 * x) / 10));
 
         Cardinal modCardinal = direction.Rotate();
-        Vector2 vectorOffset = Util.CardinalToUnitVector(modCardinal) * offset;
+        Vector2 vectorOffset = Util.CardinalToUnitVector(modCardinal) * waveComponent;
         Position = linearPos + vectorOffset;
     }
 
