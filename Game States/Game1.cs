@@ -12,6 +12,7 @@ namespace AwesomeRPG;
 public class Game1 : Game
 {
     public enum GameState { overworld, battle }
+    public IGameState gameState { get; private set; }
     
     //Monogame required
     private GraphicsDeviceManager _graphics;
@@ -164,13 +165,15 @@ public class Game1 : Game
 
         _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp);
 
-        RoomAtlas.Instance.CurrentRoom.Draw(_spriteBatch, gameTime);
-        Player.Draw(gameTime);
+        {       //Will be taken by OverworldState
+            RoomAtlas.Instance.CurrentRoom.Draw(_spriteBatch, gameTime);
+            Player.Draw(gameTime);
 
-        // Temporarily commented out for Sprint3 submission
-        // RootUIElement.Draw(gameTime);
+            // Temporarily commented out for Sprint3 submission
+            // RootUIElement.Draw(gameTime);
 
-        _spriteBatch.End();
+            _spriteBatch.End();
+        }
 
         base.Draw(gameTime);
     }

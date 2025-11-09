@@ -4,20 +4,26 @@ using AwesomeRPG.Collision;
 using AwesomeRPG.Controllers;
 using AwesomeRPG.Map;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace AwesomeRPG;
 
+/// <summary>
+/// Will probably only be made once per play session and then just modified.
+/// </summary>
 public class OverworldState : IGameState
 {
     public float TimeScale { get; private set; }
     private List<IController> controllersList = new();
     public Player Player { get; private set; }
 
-//TODO: These two lists should definitely be moved into allCollisionHandler
+    //TODO: These two lists should definitely be moved into allCollisionHandler
     public static List<CollisionObject> MovingCollisionObjects { get; private set; } = new();
     public List<CollisionObject> NonMovingCollisionObjects { get; private set; } = new();
     private AllCollisionHandler allCollisionHandler;
-    public List<int> Tiles { get; set; }
+    public List<int> Tiles { get; private set; }
+
+    // public RootElement RootUIElement {get; private set; }
 
 
     public OverworldState()
@@ -25,14 +31,39 @@ public class OverworldState : IGameState
         throw new NotImplementedException();
     }
 
-    public void Draw(GameTime gameTime)
+    private void Initialize()
     {
-        throw new System.NotImplementedException();
+        NonMovingCollisionObjects = RoomAtlas.Instance.CurrentRoom._nonMovingCollisionObjects;
+        MovingCollisionObjects = RoomAtlas.Instance.CurrentRoom._movingCollisionObjects;
+
+        //Player declaration
+        //TODO: PROBABLY WANNA HAVE A METHOD IN EACH LEVEL WHICH HANDLES ADDING THINGS TO COLLISION LIST
+
+        //Do I actually want this here?
+        //Maybe set up the player in Game or something idk
+        //Player = new Player(Content, _spriteBatch);
+        MovingCollisionObjects.Add(Player);
+    }
+
+    public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
+    {
+        gameTime = new GameTime(gameTime.TotalGameTime, gameTime.ElapsedGameTime * TimeScale);
+
+        RoomAtlas.Instance.CurrentRoom.Draw(spriteBatch, gameTime);
+        Player.Draw(gameTime);
+
+        // Temporarily commented out for Sprint3 submission
+        // RootUIElement.Draw(gameTime);
+
+        spriteBatch.End();
     }
 
     public void Update(GameTime gameTime)
     {
-        foreach (IController controller in controllersList) {
+        gameTime = new GameTime(gameTime.TotalGameTime, gameTime.ElapsedGameTime * TimeScale);
+
+        foreach (IController controller in controllersList)
+        {
             controller.Update(Game1.GameState.overworld);
         }
 
@@ -82,15 +113,15 @@ public class OverworldState : IGameState
         ClearProjectiles();
         ClearPickups();
     }
-    
+
     //Vile code, made by the most deprived of man. May this be fixed next sprint
     private void ClearProjectiles()
     {
-        if(Player.spawnedProjectiles.Count == 0)
+        if (Player.spawnedProjectiles.Count == 0)
         {
-            for(int i = 0; i < MovingCollisionObjects.Count; i++)
+            for (int i = 0; i < MovingCollisionObjects.Count; i++)
             {
-                if(MovingCollisionObjects[i].ObjectType == CollisionObjectType.PlayerProjectile)
+                if (MovingCollisionObjects[i].ObjectType == CollisionObjectType.PlayerProjectile)
                 {
                     MovingCollisionObjects.RemoveAt(i);
                 }
