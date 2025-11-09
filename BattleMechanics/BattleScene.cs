@@ -13,38 +13,18 @@ namespace AwesomeRPG.BattleMechanics
     public class BattleScene
     {
         public bool CurrentlyInBattle { get; set; }
+        public IBattle CurrentBattle { get; private set; }
 
         private enum BattleMoves { Attack, Defend, ItemUse, Flee }
 
-        private List<IStats> playersInBattle;
-        private List<IStats> enemiesInBattle;
-        private List<IBattle> turnOrder;
+        private BattleSet turnOrder;
         private BattleSet currentEnemySet;
         private BattleSet currentPlayerSet;
-        private int currentTurnIndex = 0;
 
-        public static Dictionary<string, IBattle[]> TotalEnemySets { get; set; }
 
-        private void NextTurn()
+        public void NextTurn()
         {
-            if (currentTurnIndex >= turnOrder.Count)
-            {
-                currentTurnIndex = 0;
-            }
-
-            turnOrder[currentTurnIndex].TakeTurn();
-            currentTurnIndex++;
-        }
-        public void Update()
-        {
-            if (enemiesInBattle.Count == 0)
-            {
-                // TODO: put reward system in here and exit the battle
-                CurrentlyInBattle = false;
-            } else
-            {
-                NextTurn();
-            }
+            CurrentBattle = turnOrder.NextBattle();
         }
 
         public void InitializeBattleSequence(bool isPlayerStartingFirst, List<IBattle> enemiesInBattle, List<IBattle> playersInBattle)
@@ -52,6 +32,7 @@ namespace AwesomeRPG.BattleMechanics
             currentPlayerSet = new BattleSet(playersInBattle);
             currentEnemySet = new BattleSet(enemiesInBattle);
             SetTurnOrder(isPlayerStartingFirst);
+            CurrentBattle = turnOrder.GetBattle(0);
             CurrentlyInBattle = true;
         }
 
@@ -59,18 +40,23 @@ namespace AwesomeRPG.BattleMechanics
         {
             List<IBattle> enemyList = currentEnemySet.GetList();
             List<IBattle> playerList = currentPlayerSet.GetList();
+            List<IBattle> turnList = new List<IBattle>();
 
             //We either do this or have a temporary speed boost to whoever starts first, what that specifically means depends on implementation of speed stat.
             if (isPlayerStartingFirst)
             {
-                turnOrder = playerList;
-                turnOrder.AddRange(enemyList);
+                turnList = playerList;
+                turnList.AddRange(enemyList);
             }
             else
             {
-                turnOrder = enemyList;
-                turnOrder.AddRange(playerList);
+                turnList = enemyList;
+                turnList.AddRange(playerList);
             }
+
+            turnOrder = new BattleSet(turnList);
+            turnOrder.SetEnemies(enemyList);
+            turnOrder.SetAllies(playerList);
         }
 
 

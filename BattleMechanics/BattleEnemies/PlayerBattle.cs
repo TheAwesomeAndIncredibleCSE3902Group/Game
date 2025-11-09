@@ -1,12 +1,12 @@
 ﻿using AwesomeRPG.Stats;
 using System;
+using System.Collections.Generic;
 using static AwesomeRPG.Util;
 
 namespace AwesomeRPG.BattleMechanics.BattleEnemies;
 public class PlayerBattle : IBattle
 {
     public PlayerStats Stats { get; set; }
-    public enum ArmosActions { ShineArmour, ChargeForward}
 
     public bool IsFainted { get; set; }
 
@@ -15,11 +15,17 @@ public class PlayerBattle : IBattle
         Stats = stats;
     }
 
-    public int TakeTurn()
+
+    public void Attack(IStats enemyStats)
     {
-        int damageOutput = 0;
+        int attackVal = Stats.GetAttack();
+        int defenseVal = enemyStats.GetDefense();
+        int damageVal =  defenseVal - attackVal;
 
-        return damageOutput;
+        enemyStats.ChangeHealth(damageVal);
+        if (damageVal > 0)
+        {
+
+        }
     }
-
 }

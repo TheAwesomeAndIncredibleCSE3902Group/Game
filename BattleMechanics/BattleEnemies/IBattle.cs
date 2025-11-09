@@ -4,6 +4,6 @@ using static AwesomeRPG.Util;
 namespace AwesomeRPG.BattleMechanics.BattleEnemies;
 public interface IBattle
 {
-    public int TakeTurn();
+    public bool IsFainted { get; set; }
 
 }

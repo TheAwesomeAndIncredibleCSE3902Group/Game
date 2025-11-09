@@ -48,7 +48,7 @@ public class PlayerStats : IStats
     {
         return currentSpeedLevel;
     }
-    public int GetAttakc()
+    public int GetAttack()
     {
         return currentAttackLevel;
     }
