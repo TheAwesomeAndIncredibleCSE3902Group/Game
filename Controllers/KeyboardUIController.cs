@@ -23,7 +23,7 @@ public class KeyboardUIController : IController
     private KeyboardState _previousState;
 
     //Update all keyboard input for UI
-    public void Update()
+    public void Update(Game1.GameState gameState)
     {
         KeyboardState currentState = Keyboard.GetState();
         List<UIControl> uiControlsDown = [];
