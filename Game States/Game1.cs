@@ -102,14 +102,14 @@ public class Game1 : Game
             buttons.Add(currentButtonToAdd);
             RootUIElement.AddChild(currentButtonToAdd);
         }
-        buttons[5].IsVisible = false;
+        // buttons[5].IsVisible = false;
 
         RootUIElement.UIState.SelectionIndex = 0;
 
         RootUIElement.AddActionOnUIEvent(UIEvent.ButtonDown, (e) =>
         {
             var eventParams = (InputUIEventParams)e;
-            System.Console.WriteLine("This is a test!!");
+            // System.Console.WriteLine("This is a test!!");
             if (eventParams.Controls.Contains(UIControl.MoveDown))
             {
                 RootUIElement.UIState.SelectionIndex += 1;

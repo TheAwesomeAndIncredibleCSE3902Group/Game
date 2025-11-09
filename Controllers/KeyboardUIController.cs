@@ -36,17 +36,17 @@ public class KeyboardUIController : IController
             if (currentState.IsKeyDown(keyMapping.Key))
             {
                 uiControlsPress.Add(keyMapping.Value);
-                System.Console.WriteLine("keypress" + keyMapping.Value.ToString());
+                // System.Console.WriteLine("keypress" + keyMapping.Value.ToString());
             }
             if (currentState.IsKeyDown(keyMapping.Key) && _previousState.IsKeyUp(keyMapping.Key))
             {
                 uiControlsDown.Add(keyMapping.Value);
-                System.Console.WriteLine("keydown" + keyMapping.Value.ToString());
+                // System.Console.WriteLine("keydown" + keyMapping.Value.ToString());
             }
             if (currentState.IsKeyUp(keyMapping.Key) && _previousState.IsKeyDown(keyMapping.Key))
             {
                 uiControlsUp.Add(keyMapping.Value);
-                System.Console.WriteLine("keyup" + keyMapping.Value.ToString());
+                // System.Console.WriteLine("keyup" + keyMapping.Value.ToString());
             }
         }
 
