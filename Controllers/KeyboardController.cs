@@ -7,49 +7,77 @@ namespace AwesomeRPG.Controllers
 {
     public class KeyboardController : IController
     {
-        private Dictionary<Keys, ICommand> keyPressMappings;
-        private Dictionary<Keys, ICommand> keyDownMappings;
+        //Simply change these to switch between Overworld and BattleState
+        private Dictionary<Keys, ICommand> overworldKeyPressMappings;
+        private Dictionary<Keys, ICommand> overworldKeyDownMappings;
+
+        private Dictionary<Keys, ICommand> battleKeyPressMappings;
+        private Dictionary<Keys, ICommand> battleKeyDownMappings;        
 
         private KeyboardState _previousState;
         public KeyboardController(Game1 game)
         {
-            keyPressMappings = new Dictionary<Keys, ICommand>();
-            keyDownMappings = new Dictionary<Keys, ICommand>();
+            overworldKeyPressMappings = new Dictionary<Keys, ICommand>();
+            overworldKeyDownMappings = new Dictionary<Keys, ICommand>();
+
+            battleKeyPressMappings = new Dictionary<Keys, ICommand>();
+            battleKeyDownMappings = new Dictionary<Keys, ICommand>();
+            
             _previousState = Keyboard.GetState();
             InitializeCommands(game);
         }
 
         //Update all keyboard input
-        public void Update()
+        public void Update(Game1.GameState gameState)
         {
             KeyboardState currentState = Keyboard.GetState();
-            HandleKeyDowns(currentState);
-            HandleKeyPresses(currentState);
+
+            switch (gameState)
+            {
+                case Game1.GameState.overworld:
+                    HandleKeyDowns(currentState, overworldKeyDownMappings);
+                    HandleKeyPresses(currentState, overworldKeyPressMappings);
+                    break;
+                case Game1.GameState.battle:
+                    HandleKeyDowns(currentState, battleKeyDownMappings);
+                    HandleKeyPresses(currentState, battleKeyPressMappings);
+                    break;
+            }
+
+        }
+
+        /// <summary>
+        /// Run this when ie switching game states
+        /// Returns the controller to a base state, where no keys were pressed in the previous frame
+        /// </summary>
+        public void Flush()
+        {
+            _previousState = new KeyboardState();
         }
 
         //Checks keys in keyPressMappings to see if it just got pressed if so executes command
-        private void HandleKeyPresses(KeyboardState currentState)
+        private void HandleKeyPresses(KeyboardState currentState, Dictionary<Keys, ICommand> keyPressMapping)
         {
             foreach (Keys key in currentState.GetPressedKeys())
             {
                 // Only trigger if it wasn't down before
-                if (keyPressMappings.ContainsKey(key) && _previousState.IsKeyUp(key))
+                if (keyPressMapping.ContainsKey(key) && _previousState.IsKeyUp(key))
                 {
-                    keyPressMappings[key].Execute();
+                    keyPressMapping[key].Execute();
                 }
             }
             _previousState = currentState; // save for next frame
         }
 
         //Checks keys in keyDownMappings to see if it's pressed if so executes command continously
-        private void HandleKeyDowns(KeyboardState currentState)
+        private void HandleKeyDowns(KeyboardState currentState, Dictionary<Keys, ICommand> keyDownMapping)
         {
             foreach (Keys key in currentState.GetPressedKeys())
             {
                 // Only trigger if it wasn't down before
-                if (keyDownMappings.ContainsKey(key))
+                if (keyDownMapping.ContainsKey(key))
                 {
-                    keyDownMappings[key].Execute();
+                    keyDownMapping[key].Execute();
                 }
             }
         }
@@ -65,19 +93,19 @@ namespace AwesomeRPG.Controllers
         //Initialize commands which effect the application as a whole
         private void InitializeGameCommands(Game1 game)
         {
-            keyPressMappings[Keys.Q] = new QuitCommand(game);
-            keyPressMappings[Keys.R] = new ResetGameCommand(game);
-            keyPressMappings[Keys.E] = new DamagePlayerCommand(game);
+            overworldKeyPressMappings[Keys.Q] = new QuitCommand(game);
+            overworldKeyPressMappings[Keys.R] = new ResetGameCommand(game);
+            overworldKeyPressMappings[Keys.E] = new DamagePlayerCommand(game);
         }
         //Initialize commands which relate to weapons and item use
         private void InitializeWeaponCommands(Game1 game)
         {
-            keyPressMappings[Keys.D1] = new UseItemCommand(IEquipment.Weapons.bow);
-            keyPressMappings[Keys.D2] = new UseItemCommand(IEquipment.Weapons.boomerangSack);
-            keyPressMappings[Keys.D3] = new UseItemCommand(IEquipment.Weapons.superSwordSheathe);
+            overworldKeyPressMappings[Keys.D1] = new UseItemCommand(IEquipment.Weapons.bow);
+            overworldKeyPressMappings[Keys.D2] = new UseItemCommand(IEquipment.Weapons.boomerangSack);
+            overworldKeyPressMappings[Keys.D3] = new UseItemCommand(IEquipment.Weapons.superSwordSheathe);
             ICommand swordUse = new UseItemCommand(IEquipment.Weapons.swordSheathe);
-            keyPressMappings[Keys.Z] = swordUse;
-            keyPressMappings[Keys.N] = swordUse;
+            overworldKeyPressMappings[Keys.Z] = swordUse;
+            overworldKeyPressMappings[Keys.N] = swordUse;
         }
         //Initialize commands which relate to movement
         private void InitializeMovementCommands(Game1 game)
@@ -86,18 +114,20 @@ namespace AwesomeRPG.Controllers
             ICommand moveRight = new MovePlayerCommand(game, Util.Cardinal.right);
             ICommand moveUp = new MovePlayerCommand(game, Util.Cardinal.up);
             ICommand moveDown = new MovePlayerCommand(game, Util.Cardinal.down);
-            keyDownMappings[Keys.Left] = moveLeft;
-            keyDownMappings[Keys.A] = moveLeft;
-            keyDownMappings[Keys.Right] = moveRight;
-            keyDownMappings[Keys.D] = moveRight;
-            keyDownMappings[Keys.Up] = moveUp;
-            keyDownMappings[Keys.W] = moveUp;
-            keyDownMappings[Keys.Down] = moveDown;
-            keyDownMappings[Keys.S] = moveDown;
+            overworldKeyDownMappings[Keys.Left] = moveLeft;
+            overworldKeyDownMappings[Keys.A] = moveLeft;
+            overworldKeyDownMappings[Keys.Right] = moveRight;
+            overworldKeyDownMappings[Keys.D] = moveRight;
+            overworldKeyDownMappings[Keys.Up] = moveUp;
+            overworldKeyDownMappings[Keys.W] = moveUp;
+            overworldKeyDownMappings[Keys.Down] = moveDown;
+            overworldKeyDownMappings[Keys.S] = moveDown;
         }
         private void InitializeUICommands(Game1 game)
         {
             // RIGHT NOW THIS OVERWRITES THEM... SHOULD MAKE INTO LISTS?
+            //      Answer: these should assign to battleKeyMappings instead -- Lupine
+
             // Temporarily commented out for Sprint3 submission
             
             // keyDownMappings[Keys.Left] = new CommandUIControl(game, UI.UIControl.MoveLeft, UI.UIControlEvent.ButtonDown);

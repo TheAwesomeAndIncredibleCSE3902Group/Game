@@ -11,6 +11,9 @@ namespace AwesomeRPG;
 
 public class Game1 : Game
 {
+    public enum GameState { overworld, battle }
+    public IGameState gameState { get; private set; }
+    
     //Monogame required
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
@@ -146,7 +149,7 @@ public class Game1 : Game
         //gameTime = new GameTime(gameTime.TotalGameTime / 2f, gameTime.ElapsedGameTime / 2f);
         
         foreach (IController controller in _controllersList) {
-            controller.Update();
+            controller.Update(GameState.overworld);
         }
 
         Player.Update(gameTime);
@@ -162,13 +165,15 @@ public class Game1 : Game
 
         _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp);
 
-        RoomAtlas.Instance.CurrentRoom.Draw(_spriteBatch, gameTime);
-        Player.Draw(gameTime);
+        {       //Will be taken by OverworldState
+            RoomAtlas.Instance.CurrentRoom.Draw(_spriteBatch, gameTime);
+            Player.Draw(gameTime);
 
-        // Temporarily commented out for Sprint3 submission
-        // RootUIElement.Draw(gameTime);
+            // Temporarily commented out for Sprint3 submission
+            // RootUIElement.Draw(gameTime);
 
-        _spriteBatch.End();
+            _spriteBatch.End();
+        }
 
         base.Draw(gameTime);
     }

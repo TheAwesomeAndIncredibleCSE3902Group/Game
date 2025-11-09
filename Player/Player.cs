@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 using AwesomeRPG.Sprites;
 using static AwesomeRPG.Util;
 using AwesomeRPG.Collision;
+using System.Reflection.Metadata.Ecma335;
 
 namespace AwesomeRPG;
 
@@ -23,7 +24,7 @@ public class Player : CollisionObject
     public bool HasMovedThisFrame { get; set; }
 
     //In pixels per second
-    private float movementSpeed = 120;
+    private float movementSpeed = 240;
     //Cache a reference to GameTime for movement. Gets updated at every Update() call
     private GameTime gt = new GameTime();
 
@@ -108,10 +109,12 @@ public class Player : CollisionObject
             Console.WriteLine("Tried to use an Equipment that doesn't exist!");
             return;
         }
-        
+
         PStateMachine.ChangeStateItemUse();
         playerEQ.Use();
     }
+
+    public float GetMovementSpeedPerSecond() => movementSpeed;
 
     //Declares values for all equipment
     private void InitializeEquipment()

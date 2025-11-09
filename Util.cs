@@ -43,6 +43,8 @@ public static class Util
         }
     }
 
+    public static float ApproxFramesPerSecond { get => 60f; }
+
     //*** These are extension methods! You can run them right off a Cardinal, as if it was a full-blooded class. ***
 
     public static Cardinal Opposite(this Cardinal cardinal)
