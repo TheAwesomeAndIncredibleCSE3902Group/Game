@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using AwesomeRPG.Controllers;
@@ -16,7 +15,7 @@ namespace AwesomeRPG;
 public class Game1 : Game
 {
     public enum GameState { overworld, battle }
-    public IGameState gameState { get; private set; }
+    public IGameState StateClass { get; private set; }
     
     //Monogame required
     private GraphicsDeviceManager _graphics;
@@ -33,7 +32,7 @@ public class Game1 : Game
     //Collision Variables, this needs to be improved sloppy solution for now
     private AllCollisionHandler _allCollisionHandler;
 
-    //Map Variables
+    //Map Variables. (Unused?)
     public List<int> Tiles { get; set; }
 
     public Game1()
@@ -208,16 +207,15 @@ public class Game1 : Game
             RoomAtlas.Instance.CurrentRoom.Draw(_spriteBatch, gameTime);
             Player.Draw(gameTime);
 
-        RootUIElement.Draw(gameTime);
-
-            _spriteBatch.End();
+            RootUIElement.Draw(gameTime);
         }
 
+        _spriteBatch.End();
         base.Draw(gameTime);
     }
 
     /// <summary>
-    /// This ain't do nothin rn, fix to interact with game state machine once it's ready
+    /// TODO: change to StateClass = StateClass.ToBattleState();
     /// </summary>
     public static void TransitionToBattleState()
     {

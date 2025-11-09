@@ -18,13 +18,14 @@ public class BattleState : IGameState
 
     private List<IController> controllersList = new();
     //Caches the last OverworldState. This makes returning to the overworld much easier
-    private OverworldState overState;
+    private OverworldState overworldState;
+    public Game1.GameState CurrentState { get => Game1.GameState.battle; }
 
     //BattleState can only be made from an OverworldState
     public BattleState(OverworldState overState)
     {
 
-        this.overState = overState;
+        this.overworldState = overState;
     }
 
     public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
@@ -35,17 +36,11 @@ public class BattleState : IGameState
 
     public void Update(GameTime gameTime)
     {
-        foreach (IController controller in controllersList)
-        {
-            controller.Update(Game1.GameState.battle);
-        }
+        
         throw new System.NotImplementedException();
     }
 
-    public BattleState ToBattleState()
-    {
-        return this;
-    }
+    public BattleState ToBattleState() => this;
 
     public OverworldState ToOverworldState()
     {
@@ -54,7 +49,7 @@ public class BattleState : IGameState
         //And then return to that Overworld state
 
         //TODO: do changes to player, NPCs (ie health), and enemies
-        return overState;
+        return overworldState;
         throw new System.NotImplementedException();
     }
 
