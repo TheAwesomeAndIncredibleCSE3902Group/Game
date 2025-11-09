@@ -3,8 +3,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using AwesomeRPG.Controllers;
 using AwesomeRPG.Sprites;
-using AwesomeRPG.Map;
-using AwesomeRPG.Collision;
 using AwesomeRPG.UI.Elements;
 using AwesomeRPG.UI.Components;
 using AwesomeRPG.UI;
@@ -20,9 +18,9 @@ public class Game1 : Game
     //Monogame required
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
-    
+
     //Controls Variables
-    private List<IController> _controllersList = [];
+    private List<IController> _controllersList;
 
     public Player Player { get; private set; }
     
@@ -60,64 +58,78 @@ public class Game1 : Game
         ProjectileSpriteFactory.LoadAllTextures(Content, _spriteBatch);
         CharacterSpriteFactory.Instance.LoadAllTextures(Content, _spriteBatch);
 
-        //Player declaration
+        InitializeOverworldAndControllers();
+        InitializeUI();
+    }
+
+    private void InitializeOverworldAndControllers()
+    {
+        //Player must be declared before the Overworld
         Player = new Player(Content, _spriteBatch);
+
         StateClass = new OverworldState(Content, Player);
-        _controllersList.Add(new KeyboardController(this));
-        _controllersList.Add(new KeyboardUIController(this));
-        _controllersList.Add(new MouseController(this));
 
-        // Temporarily commented out for Sprint3 submission
+        _controllersList =
+        [
+            new KeyboardController(this),
+            new KeyboardUIController(this),
+            new MouseController(this),
+        ];
+    }
 
-        // UI creation! This will eventually be moved to one of the battle state classes.
+    // UI creation! This will eventually be moved to one of the battle state classes.
+    private void InitializeUI()
+    {
+        var spriteFont = Content.Load<SpriteFont>("Fonts\\MyFont");
+        RootUIElement = new RootElement(_spriteBatch);
+
+        var battleUiBoardBorder = new RectElement(RootUIElement, new Color(40, 0, 40));
+        battleUiBoardBorder.OffsetAndSize = new Rectangle(8, 528, 1008, 234);
+
+        var battleUiBoardBg = new RectElement(RootUIElement, new Color(80, 0, 80));
+        battleUiBoardBg.OffsetAndSize = new Rectangle(10, 530, 1004, 230);
+
+        RootUIElement.AddChild(battleUiBoardBorder);
+        RootUIElement.AddChild(battleUiBoardBg);
+
+        List<CommandElement> buttons = new List<CommandElement>();
+        for (int i = 0; i < 6; i++)
         {
-            var spriteFont = Content.Load<SpriteFont>("Fonts\\MyFont");
-            RootUIElement = new RootElement(_spriteBatch);
+            var currentButtonToAdd = ButtonComponent.Create(RootUIElement, spriteFont, this, new Rectangle(20 + (i / 3) * 365, 540 + (i % 3) * 75, 350, 60), Color.Purple, Color.White, "Action " + i);
 
-            var battleUiBoardBorder = new RectElement(RootUIElement, new Color(40, 0, 40));
-            battleUiBoardBorder.OffsetAndSize = new Rectangle(8, 528, 1008, 234);
-
-            var battleUiBoardBg = new RectElement(RootUIElement, new Color(80, 0, 80));
-            battleUiBoardBg.OffsetAndSize = new Rectangle(10, 530, 1004, 230);
-
-            RootUIElement.AddChild(battleUiBoardBorder);
-            RootUIElement.AddChild(battleUiBoardBg);
-
-            List<CommandElement> buttons = new List<CommandElement>();
-            for (int i = 0; i < 6; i++)
-            {
-                var currentButtonToAdd = ButtonComponent.Create(RootUIElement, spriteFont, this, new Rectangle(20 + (i / 3) * 365, 540 + (i % 3) * 75, 350, 60), Color.Purple, Color.White, "Action " + i);
-
-                buttons.Add(currentButtonToAdd);
-                RootUIElement.AddChild(currentButtonToAdd);
-            }
-            // buttons[5].IsVisible = false;
-
-            RootUIElement.UIState.SelectionIndex = 0;
-
-            RootUIElement.AddActionOnUIEvent(UIEvent.ButtonDown, (e) =>
-            {
-                var eventParams = (InputUIEventParams)e;
-                // System.Console.WriteLine("This is a test!!");
-                if (eventParams.Controls.Contains(UIControl.MoveDown))
-                {
-                    RootUIElement.UIState.SelectionIndex += 1;
-                }
-                if (eventParams.Controls.Contains(UIControl.MoveUp))
-                {
-                    RootUIElement.UIState.SelectionIndex -= 1;
-                }
-                if (eventParams.Controls.Contains(UIControl.MoveRight))
-                {
-                    RootUIElement.UIState.SelectionIndex += 3;
-                }
-                if (eventParams.Controls.Contains(UIControl.MoveLeft))
-                {
-                    RootUIElement.UIState.SelectionIndex -= 3;
-                }
-            });
+            buttons.Add(currentButtonToAdd);
+            RootUIElement.AddChild(currentButtonToAdd);
         }
+        // buttons[5].IsVisible = false;
 
+        RootUIElement.UIState.SelectionIndex = 0;
+
+        RootUIElement.AddActionOnUIEvent(UIEvent.ButtonDown, (e) =>
+        {
+            var eventParams = (InputUIEventParams)e;
+            // System.Console.WriteLine("This is a test!!");
+            if (eventParams.Controls.Contains(UIControl.MoveDown))
+            {
+                RootUIElement.UIState.SelectionIndex += 1;
+            }
+            if (eventParams.Controls.Contains(UIControl.MoveUp))
+            {
+                RootUIElement.UIState.SelectionIndex -= 1;
+            }
+            if (eventParams.Controls.Contains(UIControl.MoveRight))
+            {
+                RootUIElement.UIState.SelectionIndex += 3;
+            }
+            if (eventParams.Controls.Contains(UIControl.MoveLeft))
+            {
+                RootUIElement.UIState.SelectionIndex -= 3;
+            }
+        });
+    }
+
+    public void Reset()
+    {
+        InitializeOverworldAndControllers();
     }
     
     protected override void Update(GameTime gameTime)
