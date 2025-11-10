@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using AwesomeRPG.Collision;
 using AwesomeRPG.Map;
 using Microsoft.Xna.Framework;
@@ -87,13 +88,17 @@ public class OverworldState : IGameState
 
     private void HandleCollisions()
     {
-        for (int i = 0; i < RoomAtlas.Instance.CurrentRoom._movingCollisionObjects.Count; i++)
+        List<CollisionObject> movingCollisionObjects =  RoomAtlas.Instance.CurrentRoom._movingCollisionObjects;
+        List<CollisionObject> nonMovingCollisionObjects = RoomAtlas.Instance.CurrentRoom._nonMovingCollisionObjects;
+        for (int i = 0; i < movingCollisionObjects.Count; i++)
         {
-            foreach (CollisionObject nonMovingObject in RoomAtlas.Instance.CurrentRoom._nonMovingCollisionObjects)
+            for (int k = 0; k < nonMovingCollisionObjects.Count; k++)
             {
                 try
                 {
-                    CollisionInfo collision = RoomAtlas.Instance.CurrentRoom._movingCollisionObjects[i].DetectCollision(nonMovingObject);
+                    CollisionObject movingObject = RoomAtlas.Instance.CurrentRoom._movingCollisionObjects[i];
+                    CollisionObject nonMovingObject = nonMovingCollisionObjects[k];
+                    CollisionInfo collision = movingObject.DetectCollision(nonMovingObject);
                     allCollisionHandler.HandleCollision(collision);
                 }
                 catch

@@ -206,7 +206,8 @@ namespace AwesomeRPG.Map
 
         public void RemovePickup(Pickup pickup, int column, int row)
         {
-            GetRoom(column, row)._movingCollisionObjects.Remove(pickup);
+            GetRoom(column, row).Pickups.Remove(pickup);
+            GetRoom(column, row)._nonMovingCollisionObjects.Remove(pickup);
         }
 
     }
