@@ -17,6 +17,7 @@ public class OverworldState : IGameState
     public float TimeScale { get; private set; } = 1;
     public Player Player { get; private set; }
 
+    private Game1 game;
     private AllCollisionHandler allCollisionHandler;
     public Game1.GameState CurrentState { get => Game1.GameState.overworld; }
 
@@ -28,8 +29,10 @@ public class OverworldState : IGameState
     /// <param name="contentManager"></param>
     /// <param name="player"></param>
     /// <exception cref="NotImplementedException"></exception>
-    public OverworldState(ContentManager contentManager, Player player)
+    public OverworldState(ContentManager contentManager, Player player, Game1 game)
     {
+        this.game = game;
+
         allCollisionHandler = new AllCollisionHandler();
 
         CreateWorld(contentManager);
@@ -60,15 +63,15 @@ public class OverworldState : IGameState
 
     }
 
-    public BattleState ToBattleState()
+    public void ChangeToBattleState()
     {
         throw new System.NotImplementedException();
         //This will have to convert any relevant data to its battle representation
         //And return a new BattleState
-        return new BattleState(this);
+        game.SetStateClass(new BattleState(this, game));
     }
 
-    public OverworldState ToOverworldState() => this;
+    public void ChangeToOverworldState() { }
 
     private void CreateWorld(ContentManager contentManager)
     {
@@ -128,5 +131,15 @@ public class OverworldState : IGameState
             }
             prevPickups--;
         }
+    }
+
+    public bool TransitionAllowedTo(Game1.GameState state)
+    {
+        return state switch
+        {
+            Game1.GameState.battle => true,
+            Game1.GameState.overworld => true,
+            _ => false
+        };
     }
 }

@@ -14,6 +14,7 @@ public interface IGameState
     public void Draw(SpriteBatch spriteBatch, GameTime gameTime);
     public Game1.GameState CurrentState { get; }
 
-    public BattleState ToBattleState();
-    public OverworldState ToOverworldState();
+    public bool TransitionAllowedTo(Game1.GameState state);
+    public void ChangeToBattleState();
+    public void ChangeToOverworldState();
 }

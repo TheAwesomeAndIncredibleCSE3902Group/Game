@@ -12,7 +12,7 @@ namespace AwesomeRPG;
 
 public class Game1 : Game
 {
-    public enum GameState { overworld, battle }
+    public enum GameState { start, overworld, battle }
     public IGameState StateClass { get; private set; }
     
     //Monogame required
@@ -20,7 +20,7 @@ public class Game1 : Game
     private SpriteBatch _spriteBatch;
 
     //Controls Variables
-    private List<IController> _controllersList;
+    private List<IController> _controllersList = new();
 
     public Player Player { get; private set; }
     
@@ -58,16 +58,17 @@ public class Game1 : Game
         ProjectileSpriteFactory.LoadAllTextures(Content, _spriteBatch);
         CharacterSpriteFactory.Instance.LoadAllTextures(Content, _spriteBatch);
 
-        InitializeOverworldAndControllers();
+        StateClass = new StartScreenState(this);
+        //InitializeOverworldAndControllers();
         InitializeUI();
     }
 
-    private void InitializeOverworldAndControllers()
+    public void InitializeOverworldAndControllers()
     {
         //Player must be declared before the Overworld
         Player = new Player(Content, _spriteBatch);
 
-        StateClass = new OverworldState(Content, Player);
+        StateClass = new OverworldState(Content, Player, this);
 
         _controllersList =
         [
@@ -131,6 +132,17 @@ public class Game1 : Game
     {
         InitializeOverworldAndControllers();
     }
+
+    public Rectangle GetScreenRect()
+    {
+        return new Rectangle
+        (
+            0,
+            0,
+            _graphics.PreferredBackBufferWidth,
+            _graphics.PreferredBackBufferHeight
+        );
+    }
     
     protected override void Update(GameTime gameTime)
     {
@@ -163,6 +175,15 @@ public class Game1 : Game
     public static void TransitionToBattleState()
     {
         // Debug.WriteLine("Battle State moment");
+    }
+    
+    /// <summary>
+    /// This should ONLY be run by the States themselves
+    /// </summary>
+    /// <param name="newState"></param>
+    public void SetStateClass(IGameState newState)
+    {
+        StateClass = newState;
     }
 
 }
