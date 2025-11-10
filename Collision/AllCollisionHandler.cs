@@ -47,6 +47,9 @@ namespace AwesomeRPG.Collision
         {
             collisionResponses[new CollisionPair(CollisionObjectType.PlayerProjectile, CollisionObjectType.Enemy)] = new ProjectileEnemyCollideCommand();
             collisionResponses[new CollisionPair(CollisionObjectType.PlayerProjectile, CollisionObjectType.Wall)] = new ProjectileWallCollideCommand();
+
+            //This command will run for all player projectiles, but it only does something if it is a Boomerang
+            collisionResponses[new CollisionPair(CollisionObjectType.PlayerProjectile, CollisionObjectType.Player)] = new BoomerangPlayerCollideCommand();
         }
 
         private void InitializePlayerCollisions()
