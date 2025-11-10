@@ -8,7 +8,7 @@ public class MoblinBattle : IBattle
     public IStats Stats { get; set; }
     public enum MoblinActions { ScratchBellyButton, RambleCharge, Dance }
     public bool IsFainted { get; set; }
-    public bool IsFriend { get; private set; }
+    public bool IsFriend { get; set; }
 
     public MoblinBattle(EnemyStats stats)
     {
