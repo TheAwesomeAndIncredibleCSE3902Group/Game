@@ -91,8 +91,15 @@ public class OverworldState : IGameState
         {
             foreach (CollisionObject nonMovingObject in RoomAtlas.Instance.CurrentRoom._nonMovingCollisionObjects)
             {
-                CollisionInfo collision = RoomAtlas.Instance.CurrentRoom._movingCollisionObjects[i].DetectCollision(nonMovingObject);
-                allCollisionHandler.HandleCollision(collision);
+                try
+                {
+                    CollisionInfo collision = RoomAtlas.Instance.CurrentRoom._movingCollisionObjects[i].DetectCollision(nonMovingObject);
+                    allCollisionHandler.HandleCollision(collision);
+                }
+                catch
+                {
+                    return;
+                }
             }
 
             for (int j = i + 1; j < RoomAtlas.Instance.CurrentRoom._movingCollisionObjects.Count; j++)
