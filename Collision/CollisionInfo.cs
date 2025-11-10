@@ -47,6 +47,15 @@ namespace AwesomeRPG.Collision
             else return null;
         }
 
+        /// <summary>
+        /// This should only be used for collision response between two objects of the same Type
+        /// </summary>
+        /// <returns></returns>
+        public (CollisionObject, CollisionObject) GetBothCollisionObjects()
+        {
+            return (ReferenceCollisionObject, OtherCollisionObject);
+        }
+
         /*
         private CollisionDirection ReverseDirection(CollisionDirection direction)
         {
