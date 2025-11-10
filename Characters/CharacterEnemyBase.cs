@@ -13,7 +13,7 @@ public abstract class CharacterEnemyBase : CollisionObject, ICharacter
     protected AnimatableSprite _sprite;
     public IPathingScheme Pathing { get; set; } = null;
 
-    public int MoveSpeed { get; init; } = 100;
+    public int MoveSpeed { get; init; } = 133;
 
     private Cardinal direction;
 

@@ -37,9 +37,11 @@ public class PlayerEntranceCollideCommand : ICollisionCommand
             newRoom = roomAtlas.GetRoom(column, row + 1);
         }
 
+
         if (newRoom != null)
         {
             roomAtlas.CurrentRoom = newRoom;
+            newRoom._movingCollisionObjects.Add(Player.Instance);
         }
     }
 }
