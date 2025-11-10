@@ -6,71 +6,76 @@ namespace AwesomeRPG.Stats;
 
 public class PlayerStats : IStats
 {
-    private int currentHealth;
-    private int currentOverallLevel;
-    private int currentSpecialPointCount;
-    private int currentSpeedLevel;
-    private int currentAttackLevel;
-    private int currentDefenseLevel;
-    private int currentWeaponUseLevel;
-    private int currentSpecialAttackLevel;
-    private int currentSpecialDefenseLevel;
-    private int currentLuckLevel;
+    private int maxHealth;
+    private int health;
+    private int level;
+    private int specialPointCount;
+    private int speed;
+    private int attack;
+    private int defense;
+    private int weaponUse;
+    private int specialAttack;
+    private int specialDefense;
+    private int luck;
 
 
     #region Health Methods
+    public int GetMaxHealth()
+    {
+        return maxHealth;
+    }
     public int GetHealth()
     {
-        return currentHealth;
+        return health;
     }
     public int ChangeHealth(int updateHealth)
     {
         if (updateHealth != 0)
         {
-            currentHealth += updateHealth;
+            health += updateHealth;
         }
 
-        if (currentHealth < 0)
+        if (health < 0)
         {
-            currentHealth = 0;
+            health = 0;
         }
 
-        return currentHealth;
+        return health;
     }
     #endregion
     #region Stats Methods
     #region Stat Getters
     public int GetSpecialPoint()
     {
-        return currentSpecialPointCount;
+        return specialPointCount;
     }
     public int GetSpeed()
     {
-        return currentSpeedLevel;
+        return speed;
     }
     public int GetAttack()
     {
-        return currentAttackLevel;
+        return attack;
     }
     public int GetDefense()
     {
-        return currentDefenseLevel;
+        return defense;
     }
     public int GetWeaponUse()
     {
-        return currentWeaponUseLevel;
+        return weaponUse;
     }
     public int GetSpecialAttack()
     {
-        return currentSpecialAttackLevel;
+        return specialAttack;
     }
     public int GetSpecialDefense()
     {
-        return currentSpecialDefenseLevel;
+        return specialDefense;
     }
     public int GetLuck()
     {
-        return currentLuckLevel;
+        return luck;
     }
     #endregion
 
@@ -79,86 +84,86 @@ public class PlayerStats : IStats
     {
         if (updateSpecialPointCount != 0)
         {
-            currentSpecialPointCount += updateSpecialPointCount;
+            specialPointCount += updateSpecialPointCount;
         }
-        return currentSpecialPointCount;
+        return specialPointCount;
     }
     public int ChangeSpeed(int updateSpeed)
     {
         if (updateSpeed != 0)
         {
-            currentSpeedLevel += updateSpeed;
+            speed += updateSpeed;
         }
-        return currentSpeedLevel;
+        return speed;
     }
 
     public int ChangeAttack(int updateAttack)
     {
         if (updateAttack != 0)
         {
-            currentAttackLevel += updateAttack;
+            attack += updateAttack;
         }
-        return currentAttackLevel;
+        return attack;
     }
 
     public int ChangeDefense(int updateDefense)
     {
         if (updateDefense != 0)
         {
-            currentDefenseLevel += updateDefense;
+            defense += updateDefense;
         }
-        return currentDefenseLevel;
+        return defense;
     }
 
     public int ChangeWeaponUse(int updateWeaponUse)
     {
         if (updateWeaponUse != 0)
         {
-            currentWeaponUseLevel += updateWeaponUse;
+            weaponUse += updateWeaponUse;
         }
-        return currentWeaponUseLevel;
+        return weaponUse;
     }
 
     public int ChangeSpecialAttack(int updateSpecialAttack)
     {
         if (updateSpecialAttack != 0)
         {
-            currentSpecialAttackLevel += updateSpecialAttack;
+            specialAttack += updateSpecialAttack;
         }
-        return currentSpecialAttackLevel;
+        return specialAttack;
     }
 
     public int ChangeSpecialDefense(int updateSpecialDefense)
     {
         if (updateSpecialDefense != 0)
         {
-            currentSpecialDefenseLevel += updateSpecialDefense;
+            specialDefense += updateSpecialDefense;
         }
-        return currentSpecialDefenseLevel;
+        return specialDefense;
     }
 
     public int ChangeLuck(int updateLuck)
     {
         if (updateLuck != 0)
         {
-            currentLuckLevel += updateLuck;
+            luck += updateLuck;
         }
-        return currentLuckLevel;
+        return luck;
     }
     #endregion
     #endregion
     #region Level Methods
     public int GetLevel()
     {
-        return currentOverallLevel;
+        return level;
     }
     public int ChangeLevel(int updateOverallLevel)
     {
         if (updateOverallLevel != 0)
         {
-            currentOverallLevel += updateOverallLevel;
+            level += updateOverallLevel;
         }
-        return currentOverallLevel;
+        return level;
     }
     #endregion
 }
