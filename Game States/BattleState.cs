@@ -38,6 +38,8 @@ public class BattleState : IGameState
     }
 
     public void ChangeToBattleState() { }
+    public void ChangeToStartState() { }
+    public void ChangeToGameOverState() { }
 
     public void ChangeToOverworldState()
     {
@@ -59,4 +61,5 @@ public class BattleState : IGameState
             _ => false
         };
     }
+
 }
