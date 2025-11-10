@@ -13,18 +13,16 @@ public class BattleState : IGameState
     //This could still be used in case we want different text scrolling times or etc
     //public float TimeScale { get; private set; }
 
-    // Temporarily commented out for Sprint3 submission
-    // public RootElement RootUIElement{get; private set; }
-
-    private List<IController> controllersList = new();
     //Caches the last OverworldState. This makes returning to the overworld much easier
-    private OverworldState overState;
+    private OverworldState overworldState;
+    private Game1 game;
+    public Game1.GameState CurrentState { get => Game1.GameState.battle; }
 
     //BattleState can only be made from an OverworldState
-    public BattleState(OverworldState overState)
+    public BattleState(OverworldState overState, Game1 game)
     {
-
-        this.overState = overState;
+        this.game = game;
+        this.overworldState = overState;
     }
 
     public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
@@ -35,27 +33,30 @@ public class BattleState : IGameState
 
     public void Update(GameTime gameTime)
     {
-        foreach (IController controller in controllersList)
-        {
-            controller.Update(Game1.GameState.battle);
-        }
+
         throw new System.NotImplementedException();
     }
 
-    public BattleState ToBattleState()
-    {
-        return this;
-    }
+    public void ChangeToBattleState() { }
 
-    public OverworldState ToOverworldState()
+    public void ChangeToOverworldState()
     {
+        throw new System.NotImplementedException();
         //This will have to convert all relevant data to Overworld delta
         //Use that delta to modify the Overworld state
         //And then return to that Overworld state
 
         //TODO: do changes to player, NPCs (ie health), and enemies
-        return overState;
-        throw new System.NotImplementedException();
+        game.SetStateClass(overworldState);
     }
 
+    public bool TransitionAllowedTo(Game1.GameState state)
+    {
+        return state switch
+        {
+            Game1.GameState.battle => true,
+            Game1.GameState.overworld => true,
+            _ => false
+        };
+    }
 }

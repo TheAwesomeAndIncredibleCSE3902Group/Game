@@ -31,17 +31,12 @@ public class PlayerBoomerang : Projectile
         ObjectType = CollisionObjectType.PlayerProjectile;
     }
 
-/*
-    protected override void Move()
-    {
-        base.Move();
-        movementSpeed = initialSpeed - (age / lifetime) * 2 * initialSpeed; //Silly math to make the boomerang go back
-    }
-    */
+    //Moves forward for half its life, then moves backward
+    public bool IsMovingForward { get => age < lifetime / 2; }
 
     protected override void Move()
     {
-        if (age < lifetime / 2)
+        if (IsMovingForward)
             MoveForward();
         else
             MoveBack();

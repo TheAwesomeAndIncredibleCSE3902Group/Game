@@ -1,112 +1,99 @@
 using System;
-using System.Collections.Generic;
 using AwesomeRPG.Collision;
-using AwesomeRPG.Controllers;
 using AwesomeRPG.Map;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace AwesomeRPG;
 
 /// <summary>
-/// Will probably only be made once per play session and then just modified.
+/// Made once per sessions and only modified thereafter.
+/// Handles the updating and drawing of all overworld things: Rooms (which includes Characters), Player, and Collisions.
 /// </summary>
 public class OverworldState : IGameState
 {
-    public float TimeScale { get; private set; }
-    private List<IController> controllersList = new();
+    //Will eventually be used as a global scalar for time (ie affects everything in the Overworld)
+    public float TimeScale { get; private set; } = 1;
     public Player Player { get; private set; }
 
-    //TODO: These two lists should definitely be moved into allCollisionHandler
-    public static List<CollisionObject> MovingCollisionObjects { get; private set; } = new();
-    public List<CollisionObject> NonMovingCollisionObjects { get; private set; } = new();
+    private Game1 game;
     private AllCollisionHandler allCollisionHandler;
-    public List<int> Tiles { get; private set; }
+    public Game1.GameState CurrentState { get => Game1.GameState.overworld; }
 
     // public RootElement RootUIElement {get; private set; }
 
-
-    public OverworldState()
+    /// <summary>
+    /// Requires Content already loaded and Player fully constructed
+    /// </summary>
+    /// <param name="contentManager"></param>
+    /// <param name="player"></param>
+    /// <exception cref="NotImplementedException"></exception>
+    public OverworldState(ContentManager contentManager, Player player, Game1 game)
     {
-        throw new NotImplementedException();
-    }
+        this.game = game;
 
-    private void Initialize()
-    {
-        NonMovingCollisionObjects = RoomAtlas.Instance.CurrentRoom._nonMovingCollisionObjects;
-        MovingCollisionObjects = RoomAtlas.Instance.CurrentRoom._movingCollisionObjects;
+        allCollisionHandler = new AllCollisionHandler();
 
-        //Player declaration
-        //TODO: PROBABLY WANNA HAVE A METHOD IN EACH LEVEL WHICH HANDLES ADDING THINGS TO COLLISION LIST
+        CreateWorld(contentManager);
+        this.Player = player;
 
-        //Do I actually want this here?
-        //Maybe set up the player in Game or something idk
-        //Player = new Player(Content, _spriteBatch);
-        MovingCollisionObjects.Add(Player);
+        //Add player to the collision tracker of this room
+        RoomAtlas.Instance.CurrentRoom._movingCollisionObjects.Add(Player);
     }
 
     public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
     {
+        //Scale gameTime by TimeScale
         gameTime = new GameTime(gameTime.TotalGameTime, gameTime.ElapsedGameTime * TimeScale);
 
         RoomAtlas.Instance.CurrentRoom.Draw(spriteBatch, gameTime);
         Player.Draw(gameTime);
-
-        // Temporarily commented out for Sprint3 submission
-        // RootUIElement.Draw(gameTime);
-
-        spriteBatch.End();
+        //TODO: draw HUD here
     }
 
     public void Update(GameTime gameTime)
     {
         gameTime = new GameTime(gameTime.TotalGameTime, gameTime.ElapsedGameTime * TimeScale);
-
-        foreach (IController controller in controllersList)
-        {
-            controller.Update(Game1.GameState.overworld);
-        }
-
+       
         Player.Update(gameTime);
-
         RoomAtlas.Instance.CurrentRoom.Update(gameTime);
         HandleCollisions();
+        //TODO: refresh HUD here
 
-        throw new System.NotImplementedException();
     }
 
-    public BattleState ToBattleState()
+    public void ChangeToBattleState()
     {
+        throw new System.NotImplementedException();
         //This will have to convert any relevant data to its battle representation
         //And return a new BattleState
-        return new BattleState(this);
-        throw new System.NotImplementedException();
+        game.SetStateClass(new BattleState(this, game));
     }
 
-    public OverworldState ToOverworldState()
+    public void ChangeToOverworldState() { }
+
+    private void CreateWorld(ContentManager contentManager)
     {
-        return this;
+        RoomAtlas.Instance.SetAtlas(new AtlasInitializer().InitializeAtlas(contentManager));
+        RoomAtlas.Instance.CurrentRoom = RoomAtlas.Instance.GetRoom(0,0);
     }
+
+    //I don't really like this handling collisions. But there's no functional reason to move this functionality at this time. 
 
     private void HandleCollisions()
     {
-        // This is solely detecting player collisions with everything because the
-        // movingCollisionObjects list has only the player and nothing else added.
-        // Might be good to separate the player out into it's own collision object
-        // to simplify the interactions between the player and everything not just
-        // for interactability with the world but also for battle mechanics with
-        // turn order and any AoE damage on both sides.
-        for (int i = 0; i < MovingCollisionObjects.Count; i++)
+        for (int i = 0; i < RoomAtlas.Instance.CurrentRoom._movingCollisionObjects.Count; i++)
         {
-            foreach (CollisionObject nonMovingObject in NonMovingCollisionObjects)
+            foreach (CollisionObject nonMovingObject in RoomAtlas.Instance.CurrentRoom._nonMovingCollisionObjects)
             {
-                CollisionInfo collision = MovingCollisionObjects[i].DetectCollision(nonMovingObject);
+                CollisionInfo collision = RoomAtlas.Instance.CurrentRoom._movingCollisionObjects[i].DetectCollision(nonMovingObject);
                 allCollisionHandler.HandleCollision(collision);
             }
 
-            for (int j = i + 1; j < MovingCollisionObjects.Count; j++)
+            for (int j = i + 1; j < RoomAtlas.Instance.CurrentRoom._movingCollisionObjects.Count; j++)
             {
-                CollisionInfo collision = MovingCollisionObjects[i].DetectCollision(MovingCollisionObjects[j]);
+                CollisionInfo collision = RoomAtlas.Instance.CurrentRoom._movingCollisionObjects[i].DetectCollision(RoomAtlas.Instance.CurrentRoom._movingCollisionObjects[j]);
                 allCollisionHandler.HandleCollision(collision);
             }
         }
@@ -117,13 +104,13 @@ public class OverworldState : IGameState
     //Vile code, made by the most deprived of man. May this be fixed next sprint
     private void ClearProjectiles()
     {
-        if (Player.spawnedProjectiles.Count == 0)
+        if(Player.spawnedProjectiles.Count == 0)
         {
-            for (int i = 0; i < MovingCollisionObjects.Count; i++)
+            for(int i = 0; i < RoomAtlas.Instance.CurrentRoom._movingCollisionObjects.Count; i++)
             {
-                if (MovingCollisionObjects[i].ObjectType == CollisionObjectType.PlayerProjectile)
+                if(RoomAtlas.Instance.CurrentRoom._movingCollisionObjects[i].ObjectType == CollisionObjectType.PlayerProjectile)
                 {
-                    MovingCollisionObjects.RemoveAt(i);
+                    RoomAtlas.Instance.CurrentRoom._movingCollisionObjects.RemoveAt(i);
                 }
             }
         }
@@ -135,14 +122,24 @@ public class OverworldState : IGameState
     {
         if (prevPickups != 0 && RoomAtlas.Instance.CurrentRoom.Pickups.Count != prevPickups)
         {
-            for (int i = 0; i < NonMovingCollisionObjects.Count; i++)
+            for (int i = 0; i < RoomAtlas.Instance.CurrentRoom._nonMovingCollisionObjects.Count; i++)
             {
-                if (NonMovingCollisionObjects[i].ObjectType == CollisionObjectType.Pickup)
+                if (RoomAtlas.Instance.CurrentRoom._nonMovingCollisionObjects[i].ObjectType == CollisionObjectType.Pickup)
                 {
-                    NonMovingCollisionObjects.RemoveAt(i);
+                    RoomAtlas.Instance.CurrentRoom._nonMovingCollisionObjects.RemoveAt(i);
                 }
             }
             prevPickups--;
         }
+    }
+
+    public bool TransitionAllowedTo(Game1.GameState state)
+    {
+        return state switch
+        {
+            Game1.GameState.battle => true,
+            Game1.GameState.overworld => true,
+            _ => false
+        };
     }
 }
