@@ -5,15 +5,17 @@ using static AwesomeRPG.Util;
 namespace AwesomeRPG.BattleMechanics.BattleEnemies;
 public class LynelBattle : IBattle
 {
-    public EnemyStats Stats { get; set; }
+    public IStats Stats { get; set; }
     public enum LynelActions { BrushBackHair, HardStomp, StabNSlash }
 
+    public bool IsFriend { get; set; }
     public bool IsFainted { get; set; }
     
     public LynelBattle(EnemyStats stats)
     {
         Stats = stats;
         IsFainted = false;
+        IsFriend = false;
         Stats.ChangeHealth(Stats.GetMaxHealth());
     }
 

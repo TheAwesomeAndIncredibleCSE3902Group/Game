@@ -6,26 +6,29 @@ using static AwesomeRPG.Util;
 namespace AwesomeRPG.BattleMechanics.BattleEnemies;
 public class PlayerBattle : IBattle
 {
-    public PlayerStats Stats { get; set; }
+    public IStats Stats { get; set; }
 
+    public bool IsFriend { get; set; }
     public bool IsFainted { get; set; }
 
     public PlayerBattle(PlayerStats stats)
     {
         Stats = stats;
+        IsFainted = false;
+        IsFriend = true;
     }
 
 
-    public void Attack(IStats enemyStats)
+    public void Attack(IBattle enemy)
     {
         int attackVal = Stats.GetAttack();
-        int defenseVal = enemyStats.GetDefense();
+        int defenseVal = enemy.Stats.GetDefense();
         int damageVal =  defenseVal - attackVal;
 
-        enemyStats.ChangeHealth(damageVal);
-        if (damageVal > 0)
+        enemy.Stats.ChangeHealth(damageVal);
+        if (enemy.Stats.GetHealth() < 1)
         {
-
+            enemy.IsFainted = true;
         }
     }
 }

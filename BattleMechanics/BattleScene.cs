@@ -15,8 +15,6 @@ namespace AwesomeRPG.BattleMechanics
         public bool CurrentlyInBattle { get; set; }
         public IBattle CurrentBattle { get; private set; }
 
-        private enum BattleMoves { Attack, Defend, ItemUse, Flee }
-
         private BattleSet turnOrder;
         private BattleSet currentEnemySet;
         private BattleSet currentPlayerSet;
