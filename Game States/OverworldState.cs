@@ -73,6 +73,10 @@ public class OverworldState : IGameState
 
     public void ChangeToOverworldState() { }
 
+    public void ChangeToStartState() { }
+    
+    public void ChangeToGameOverState() { }
+
     private void CreateWorld(ContentManager contentManager)
     {
         RoomAtlas.Instance.SetAtlas(new AtlasInitializer().InitializeAtlas(contentManager));

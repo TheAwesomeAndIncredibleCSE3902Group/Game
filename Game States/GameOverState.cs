@@ -7,14 +7,14 @@ using Microsoft.Xna.Framework.Input;
 namespace AwesomeRPG;
 
 /// <summary>
-/// Start screen state does not inherit IGameState
+/// Game Over State  
 /// </summary>
-public class StartScreenState : IGameState
+public class GameOverState : IGameState
 {
     public Game1.GameState CurrentState { get => Game1.GameState.start; }
     private Game1 game;
     RootElement rootUIElement;
-    public StartScreenState(Game1 game)
+    public GameOverState(Game1 game)
     {
         this.game = game;
     }
@@ -35,27 +35,18 @@ public class StartScreenState : IGameState
         var spriteFont = game.Content.Load<SpriteFont>("Fonts\\MyFont");
 
         //Background, because I'm sorry but the green was so ugly
-        RectElement rect = new RectElement(rootUIElement, Color.BurlyWood);
+        RectElement rect = new RectElement(rootUIElement, Color.Black);
         rect.OffsetAndSize = game.GetScreenRect();
         rootUIElement.AddChild(rect);
 
         //Text element construction
-        String textString = "Press space to start game!";
-        Color textColor = LerpTextColors(gameTime);
-        TextElement textElem = new TextElement(rootUIElement, spriteFont, textString, textColor);
+        String textString = "Game Over! press Enter to return to title";
+        Color textColor = Color.White;
+        TextElement textElem = new(rootUIElement, spriteFont, textString, textColor);
         textElem.OffsetAndSize = game.GetScreenRect();
         textElem.HorizontalTextAlign = TextElement.TextAlign.Center;
         textElem.VerticalTextAlign = TextElement.TextAlign.Center;
         rootUIElement.AddChild(textElem);
-    }
-
-    private Color LerpTextColors(GameTime gameTime)
-    {
-        const float frequency = 0.5f;
-        double totalSeconds = gameTime.TotalGameTime.TotalSeconds * frequency;
-        //Create a sin wave that varies from [0,1] with a specified frequency
-        float lerp = (float)Math.Cos(Math.Tau * (totalSeconds - (int)totalSeconds)) / 2f + 0.5f;
-        return Color.Lerp(Color.DarkBlue, Color.BlueViolet, lerp);
     }
 
     public void Update(GameTime gameTime)
@@ -66,22 +57,21 @@ public class StartScreenState : IGameState
     private void ProcessInput()
     {
         KeyboardState keyboard = Keyboard.GetState();
-        if (keyboard.IsKeyDown(Keys.Space))
+        if (keyboard.IsKeyDown(Keys.Escape))
         {
-            ChangeToOverworldState();
+            ChangeToStartState();
         }
     }
 
     public void ChangeToBattleState() { }
 
-    public void ChangeToGameOverState() { }
-    
-    public void ChangeToStartState() { }
+    public void ChangeToOverworldState() { }
 
-    public void ChangeToOverworldState()
+    public void ChangeToGameOverState() { }
+
+    public void ChangeToStartState()
     {
-        //Sets the game.StateClass to a new OverworldState, so this is now orphaned (ie killed)
-        game.InitializeOverworldAndControllers();
+        game.Reset();
     }
 
     public bool TransitionAllowedTo(Game1.GameState state)
@@ -89,7 +79,8 @@ public class StartScreenState : IGameState
         return state switch
         {
             Game1.GameState.battle => false,
-            Game1.GameState.overworld => true,
+            Game1.GameState.overworld => false,
+            Game1.GameState.start => true,
             _ => false
         };
     }

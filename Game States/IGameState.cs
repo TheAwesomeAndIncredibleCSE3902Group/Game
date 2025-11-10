@@ -17,4 +17,6 @@ public interface IGameState
     public bool TransitionAllowedTo(Game1.GameState state);
     public void ChangeToBattleState();
     public void ChangeToOverworldState();
+    public void ChangeToStartState();
+    public void ChangeToGameOverState();
 }
