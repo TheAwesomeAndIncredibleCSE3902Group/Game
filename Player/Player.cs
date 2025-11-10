@@ -24,7 +24,8 @@ public class Player : CollisionObject
     public bool HasMovedThisFrame { get; set; }
 
     //In pixels per second
-    private float movementSpeed = 240;
+    public float MovementSpeed { get; private set; } = 240;
+
     //Cache a reference to GameTime for movement. Gets updated at every Update() call
     private GameTime gt = new GameTime();
 
@@ -90,7 +91,7 @@ public class Player : CollisionObject
 
             //Grabbing the direction from PlayerState here ensures that IPlayerState is the ultimate authority
             Cardinal newDirection = PStateMachine.Direction;
-            Position += (float)(gt.ElapsedGameTime.TotalSeconds * movementSpeed) * Util.CardinalToUnitVector(newDirection);
+            Position += (float)(gt.ElapsedGameTime.TotalSeconds * MovementSpeed) * Util.CardinalToUnitVector(newDirection);
             //Position += movementSpeed * Util.CardinalToUnitVector(newDirection);
         }
 
@@ -113,8 +114,6 @@ public class Player : CollisionObject
         PStateMachine.ChangeStateItemUse();
         playerEQ.Use();
     }
-
-    public float GetMovementSpeedPerSecond() => movementSpeed;
 
     //Declares values for all equipment
     private void InitializeEquipment()
