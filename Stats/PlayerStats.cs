@@ -18,7 +18,20 @@ public class PlayerStats : IStats
     private int specialDefense;
     private int luck;
 
-
+    public PlayerStats(int maxHealth, int specialPointCount, int speed, int attack, int defense, int weaponUse, int specialAttack, int specialDefense, int luck)
+    {
+        this.maxHealth = maxHealth;
+        this.health = maxHealth;
+        this.level = 1;
+        this.specialPointCount = specialPointCount;
+        this.speed = speed;
+        this.attack = attack;
+        this.defense = defense;
+        this.weaponUse = weaponUse;
+        this.specialAttack = specialAttack;
+        this.specialDefense = specialDefense;
+        this.luck = luck;
+    }
     #region Health Methods
     public int GetMaxHealth()
     {

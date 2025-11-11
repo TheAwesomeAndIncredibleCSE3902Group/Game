@@ -5,7 +5,7 @@ using System.Diagnostics;
 using static AwesomeRPG.Util;
 
 namespace AwesomeRPG.BattleMechanics.BattleEnemies;
-public class BattleSet
+public class TurnList
 {
     private int currentActiveBattle = 0;
 
@@ -15,7 +15,7 @@ public class BattleSet
 
     public bool battleLost;
 
-    public BattleSet(List<IBattle> battleSet) 
+    public TurnList(List<IBattle> battleSet) 
     {
         currentSet = battleSet;
     }

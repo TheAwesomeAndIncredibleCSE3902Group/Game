@@ -7,6 +7,7 @@ using AwesomeRPG.UI.Elements;
 using AwesomeRPG.UI.Components;
 using AwesomeRPG.UI;
 using AwesomeRPG.UI.Events;
+using AwesomeRPG.Commands.BattleCommands;
 
 namespace AwesomeRPG;
 
@@ -97,7 +98,7 @@ public class Game1 : Game
         for (int i = 0; i < 6; i++)
         {
             var currentButtonToAdd = ButtonComponent.Create(RootUIElement, spriteFont, this, new Rectangle(20 + (i / 3) * 365, 540 + (i % 3) * 75, 350, 60), Color.Purple, Color.White, "Action " + i);
-
+            currentButtonToAdd.AssociatedCommand = new SampleAttackBattleCommand();
             buttons.Add(currentButtonToAdd);
             RootUIElement.AddChild(currentButtonToAdd);
         }

@@ -1,6 +1,7 @@
 ﻿using AwesomeRPG.Stats;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using static AwesomeRPG.Util;
 
 namespace AwesomeRPG.BattleMechanics.BattleEnemies;
@@ -23,12 +24,15 @@ public class PlayerBattle : IBattle
     {
         int attackVal = Stats.GetAttack();
         int defenseVal = enemy.Stats.GetDefense();
+        Debug.WriteLine($"player attack value: {attackVal}. enemy defense value: {defenseVal}");
         int damageVal =  defenseVal - attackVal;
 
         enemy.Stats.ChangeHealth(damageVal);
+        Debug.WriteLine($"Player attacked for {damageVal} damage!");
         if (enemy.Stats.GetHealth() < 1)
         {
             enemy.IsFainted = true;
+            Debug.WriteLine($"Enemy has fainted! {enemy.IsFainted}");
         }
     }
 }

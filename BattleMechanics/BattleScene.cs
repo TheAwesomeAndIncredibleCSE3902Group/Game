@@ -1,12 +1,5 @@
-﻿using AwesomeRPG;
-using AwesomeRPG.BattleMechanics;
-using AwesomeRPG.Characters;
-using AwesomeRPG.BattleMechanics.BattleEnemies;
-using System;
+﻿using AwesomeRPG.BattleMechanics.BattleEnemies;
 using System.Collections.Generic;
-using static AwesomeRPG.Util;
-using AwesomeRPG.Stats;
-using System.Linq;
 
 namespace AwesomeRPG.BattleMechanics
 {
@@ -15,9 +8,7 @@ namespace AwesomeRPG.BattleMechanics
         public bool CurrentlyInBattle { get; set; }
         public IBattle CurrentBattle { get; private set; }
 
-        private BattleSet turnOrder;
-        private BattleSet currentEnemySet;
-        private BattleSet currentPlayerSet;
+        private TurnList turnOrder;
 
 
         public void NextTurn()
@@ -27,17 +18,13 @@ namespace AwesomeRPG.BattleMechanics
 
         public void InitializeBattleSequence(bool isPlayerStartingFirst, List<IBattle> enemiesInBattle, List<IBattle> playersInBattle)
         {
-            currentPlayerSet = new BattleSet(playersInBattle);
-            currentEnemySet = new BattleSet(enemiesInBattle);
-            SetTurnOrder(isPlayerStartingFirst);
+            SetTurnOrder(isPlayerStartingFirst, enemiesInBattle, playersInBattle);
             CurrentBattle = turnOrder.GetBattle(0);
             CurrentlyInBattle = true;
         }
 
-        private void SetTurnOrder(bool isPlayerStartingFirst)
+        private void SetTurnOrder(bool isPlayerStartingFirst, List<IBattle> enemyList, List<IBattle> playerList)
         {
-            List<IBattle> enemyList = currentEnemySet.GetList();
-            List<IBattle> playerList = currentPlayerSet.GetList();
             List<IBattle> turnList = new List<IBattle>();
 
             //We either do this or have a temporary speed boost to whoever starts first, what that specifically means depends on implementation of speed stat.
@@ -52,7 +39,7 @@ namespace AwesomeRPG.BattleMechanics
                 turnList.AddRange(playerList);
             }
 
-            turnOrder = new BattleSet(turnList);
+            turnOrder = new TurnList(turnList);
             turnOrder.SetEnemies(enemyList);
             turnOrder.SetAllies(playerList);
         }
