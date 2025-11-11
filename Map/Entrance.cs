@@ -1,16 +1,12 @@
 ﻿using Microsoft.Xna.Framework;
 using AwesomeRPG.Collision;
 using static AwesomeRPG.Util;
+using System.Diagnostics;
 
 namespace AwesomeRPG.Map
 {
     public class Entrance : CollisionObject
     {
-        public RoomAtlas roomAtlas;
-        public Game1 myGame;
-        private RoomMap oldRoom;
-        private RoomMap newRoom;
-
         public Entrance(Vector2 startPos, int width, int height)
         {
             Position = startPos;
@@ -18,10 +14,11 @@ namespace AwesomeRPG.Map
             ObjectType = CollisionObjectType.Entrance;
         }
 
-        public void changeRoom(CollisionObject player, Cardinal direction)
+        public static void changeRoom(CollisionObject player, Cardinal direction)
         {
-            roomAtlas = RoomAtlas.Instance;
-            oldRoom = roomAtlas.CurrentRoom;
+            RoomAtlas roomAtlas = RoomAtlas.Instance;
+            RoomMap oldRoom = roomAtlas.CurrentRoom;
+            RoomMap newRoom = null;
 
             int row = roomAtlas.GetRow(oldRoom);
             int column = roomAtlas.GetColumn(oldRoom);
@@ -50,7 +47,16 @@ namespace AwesomeRPG.Map
             if (newRoom != null)
             {
                 roomAtlas.CurrentRoom = newRoom;
+                UpdateRoomCollisionList(player, newRoom);
             }
         } 
+
+        private static void UpdateRoomCollisionList(CollisionObject player, RoomMap newRoom)
+        {
+            if (!newRoom._movingCollisionObjects.Contains(player))
+            {
+                newRoom._movingCollisionObjects.Add(player);
+            }
+        }
     }
 }

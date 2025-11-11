@@ -24,7 +24,8 @@ public class RandomWalkPathing : IPathingScheme
     public bool TrySetDirection(Cardinal direction)
     {
         this.direction = direction;
-        timeSinceLastSwap = 0;
+        //Commented out to fix enemies getting stuck bouncing between two close walls
+        //timeSinceLastSwap = 0;
         return true;
     }
 
