@@ -2,6 +2,8 @@ using Microsoft.Xna.Framework;
 using AwesomeRPG.Sprites;
 using static AwesomeRPG.Util;
 using System;
+using AwesomeRPG.Map;
+using System.Diagnostics;
 
 namespace AwesomeRPG.Characters;
 
@@ -45,7 +47,9 @@ public class CharacterEnemyMoblin : CharacterEnemyBase
 
     private void Attack()
     {
-        //Necesito mi universal projectileList antes de completar.
+        Debug.WriteLine("HI");
+        RoomAtlas.Instance.AddProjectile(new MoblinFire(Position,Direction));
+        remainingTime = attackCD;
     }
 
     #region Sprite Swapping

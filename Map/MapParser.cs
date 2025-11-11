@@ -217,7 +217,7 @@ public class MapParser
                 character = new CharacterEnemyMoblin(position, facing);
                 break;
             case "armos":
-                character = new CharacterEnemyMoblin(position, facing);
+                character = new CharacterEnemyArmos(position, facing);
                 break;
             case "lynel":
                 character = new CharacterEnemyLynel(position, facing);

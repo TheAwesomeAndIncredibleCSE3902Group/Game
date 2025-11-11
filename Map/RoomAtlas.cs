@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AwesomeRPG.Characters;
+using static AwesomeRPG.IEquipment;
 
 namespace AwesomeRPG.Map
 {
@@ -176,6 +177,7 @@ namespace AwesomeRPG.Map
 
         public void AddProjectile(Projectile projectile, int column, int row)
         {
+            GetRoom(column,row).Projectiles.Add(projectile);
             GetRoom(column, row)._movingCollisionObjects.Add(projectile);
         }
 
@@ -186,6 +188,7 @@ namespace AwesomeRPG.Map
 
         public void RemoveProjectile(Projectile projectile, int column, int row)
         {
+            GetRoom(column, row).Projectiles.Remove(projectile);
             GetRoom(column, row)._movingCollisionObjects.Remove(projectile);
         }
 
@@ -196,7 +199,8 @@ namespace AwesomeRPG.Map
 
         public void AddPickup(Pickup pickup, int column, int row)
         {
-            GetRoom(column, row)._movingCollisionObjects.Add(pickup);
+            GetRoom(column, row).Pickups.Add(pickup);
+            GetRoom(column, row)._nonMovingCollisionObjects.Add(pickup);
         }
         
         public void RemovePickup(Pickup pickup)
