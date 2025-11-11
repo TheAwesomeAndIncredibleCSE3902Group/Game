@@ -24,18 +24,6 @@ public class PlayerSword : Projectile
         ObjectType = CollisionObjectType.PlayerProjectile;
     }
 
-    private int GetSwordToHand(Cardinal direction)
-    {
-        if (direction == Cardinal.right || direction == Cardinal.left)
-        {
-            return sprite.Height;
-        }
-        else
-        {
-            return sprite.Width;
-        }
-    }
-
     protected override void Move()
     {
        //Sword tracks the player

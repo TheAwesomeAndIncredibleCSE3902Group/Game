@@ -77,12 +77,16 @@ public class PlayerStateMachine
 
     public void ChangeStateStanding()
     {
+        /*
+        if(currentState == States.SwordAttack)
+            spriteFactory.ChangeSpriteStanding();
+        */
         currentState = States.Standing;
     }
 
     public void ChangeStateWalking()
     {
-        if (currentState == States.Standing && currentState != States.ItemUse && currentState != States.SwordAttack)
+        if (currentState == States.Standing)
         {
             currentState = States.Walking;
         }
@@ -145,18 +149,14 @@ public class PlayerStateMachine
         timeSinceStateChange += (float)gt.ElapsedGameTime.TotalSeconds;
 
         if (currentState == States.Damaged && timeSinceStateChange > hurtTime)
-        {
             ChangeStateStanding();
-        }
+
         //This is coupled with Player, plus requires the correct order between the Controllers and This. Neither of which do I love
         else if (currentState == States.Walking && !Player.Instance.HasMovedThisFrame)
-        {
             ChangeStateStanding();
-        }
+
         else if (currentState == States.ItemUse && timeSinceStateChange > itemUseTime)
-        {
             ChangeStateStanding();
-        }
     }
 
     //This could be a Dictionary if we wanted to collapse this a bit
