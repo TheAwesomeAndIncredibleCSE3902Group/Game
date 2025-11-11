@@ -164,7 +164,7 @@ public class Game1 : Game
         _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp);
 
         StateClass.Draw(_spriteBatch, gameTime);
-        RootUIElement.Draw(gameTime);
+        //RootUIElement.Draw(gameTime);
 
         _spriteBatch.End();
         base.Draw(gameTime);

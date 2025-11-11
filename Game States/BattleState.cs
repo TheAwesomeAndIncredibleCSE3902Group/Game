@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using AwesomeRPG.Controllers;
+using AwesomeRPG.UI.Elements;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -13,6 +14,9 @@ public class BattleState : IGameState
     //This could still be used in case we want different text scrolling times or etc
     //public float TimeScale { get; private set; }
 
+    //Root of the UI
+    private RootElement RootUIElement { get; set; }
+
     //Caches the last OverworldState. This makes returning to the overworld much easier
     private OverworldState overworldState;
     private Game1 game;
@@ -23,10 +27,12 @@ public class BattleState : IGameState
     {
         this.game = game;
         this.overworldState = overState;
+        this.RootUIElement = game.RootUIElement;
     }
 
     public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
     {
+        RootUIElement.Draw(gameTime);
         //Drawing is currently unimplemented for the Battle State
         throw new System.NotImplementedException();
     }
