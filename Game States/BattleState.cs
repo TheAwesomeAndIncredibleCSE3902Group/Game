@@ -33,13 +33,11 @@ public class BattleState : IGameState
     public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
     {
         RootUIElement.Draw(gameTime);
-        //Drawing is currently unimplemented for the Battle State
-        throw new System.NotImplementedException();
     }
 
     public void Update(GameTime gameTime)
     {
-
+        //likely don't need update
         throw new System.NotImplementedException();
     }
 
