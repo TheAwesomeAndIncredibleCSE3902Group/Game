@@ -28,17 +28,17 @@ namespace AwesomeRPG.Controllers
         }
 
         //Update all keyboard input
-        public void Update(Game1.GameState gameState)
+        public void Update(GameState gameState)
         {
             KeyboardState currentState = Keyboard.GetState();
 
             switch (gameState)
             {
-                case Game1.GameState.overworld:
+                case GameState.overworld:
                     HandleKeyDowns(currentState, overworldKeyDownMappings);
                     HandleKeyPresses(currentState, overworldKeyPressMappings);
                     break;
-                case Game1.GameState.battle:
+                case GameState.battle:
                     HandleKeyDowns(currentState, battleKeyDownMappings);
                     HandleKeyPresses(currentState, battleKeyPressMappings);
                     break;
@@ -87,14 +87,14 @@ namespace AwesomeRPG.Controllers
         {
             InitializeGameCommands(game);
             InitializeWeaponCommands(game);
-            InitializeMovementCommands(game);
+            InitializeMovementCommands();
         }
         //Initialize commands which effect the application as a whole
         private void InitializeGameCommands(Game1 game)
         {
             overworldKeyPressMappings[Keys.Q] = new QuitCommand(game);
             overworldKeyPressMappings[Keys.R] = new ResetGameCommand(game);
-            overworldKeyPressMappings[Keys.E] = new DamagePlayerCommand(game);
+            overworldKeyPressMappings[Keys.E] = new DamagePlayerCommand();
         }
         //Initialize commands which relate to weapons and item use
         private void InitializeWeaponCommands(Game1 game)
@@ -107,12 +107,12 @@ namespace AwesomeRPG.Controllers
             overworldKeyPressMappings[Keys.N] = swordUse;
         }
         //Initialize commands which relate to movement
-        private void InitializeMovementCommands(Game1 game)
+        private void InitializeMovementCommands()
         {
-            ICommand moveLeft = new MovePlayerCommand(game, Util.Cardinal.left);
-            ICommand moveRight = new MovePlayerCommand(game, Util.Cardinal.right);
-            ICommand moveUp = new MovePlayerCommand(game, Util.Cardinal.up);
-            ICommand moveDown = new MovePlayerCommand(game, Util.Cardinal.down);
+            ICommand moveLeft = new MovePlayerCommand(Util.Cardinal.left);
+            ICommand moveRight = new MovePlayerCommand(Util.Cardinal.right);
+            ICommand moveUp = new MovePlayerCommand(Util.Cardinal.up);
+            ICommand moveDown = new MovePlayerCommand(Util.Cardinal.down);
             overworldKeyDownMappings[Keys.Left] = moveLeft;
             overworldKeyDownMappings[Keys.A] = moveLeft;
             overworldKeyDownMappings[Keys.Right] = moveRight;

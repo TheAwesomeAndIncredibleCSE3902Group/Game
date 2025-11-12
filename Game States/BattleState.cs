@@ -20,7 +20,7 @@ public class BattleState : IGameState
     //Caches the last OverworldState. This makes returning to the overworld much easier
     private OverworldState overworldState;
     private Game1 game;
-    public Game1.GameState CurrentState { get => Game1.GameState.battle; }
+    public GameState CurrentState { get => GameState.battle; }
 
     //BattleState can only be made from an OverworldState
     public BattleState(OverworldState overState, Game1 game)
@@ -56,12 +56,12 @@ public class BattleState : IGameState
         game.SetStateClass(overworldState);
     }
 
-    public bool TransitionAllowedTo(Game1.GameState state)
+    public bool TransitionAllowedTo(GameState state)
     {
         return state switch
         {
-            Game1.GameState.battle => true,
-            Game1.GameState.overworld => true,
+            GameState.battle => true,
+            GameState.overworld => true,
             _ => false
         };
     }

@@ -11,7 +11,7 @@ namespace AwesomeRPG;
 /// </summary>
 public class GameOverState : IGameState
 {
-    public Game1.GameState CurrentState { get => Game1.GameState.start; }
+    public GameState CurrentState { get => GameState.start; }
     private Game1 game;
     RootElement rootUIElement;
     public GameOverState(Game1 game)
@@ -74,13 +74,13 @@ public class GameOverState : IGameState
         game.Reset();
     }
 
-    public bool TransitionAllowedTo(Game1.GameState state)
+    public bool TransitionAllowedTo(GameState state)
     {
         return state switch
         {
-            Game1.GameState.battle => false,
-            Game1.GameState.overworld => false,
-            Game1.GameState.start => true,
+            GameState.battle => false,
+            GameState.overworld => false,
+            GameState.start => true,
             _ => false
         };
     }

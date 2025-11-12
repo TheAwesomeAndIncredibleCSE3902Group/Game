@@ -11,10 +11,10 @@ using AwesomeRPG.Commands.BattleCommands;
 
 namespace AwesomeRPG;
 
+public enum GameState { start, overworld, battle }
 public class Game1 : Game
 {
-    public enum GameState { start, overworld, battle }
-    public IGameState StateClass { get; private set; }
+    public static IGameState StateClass { get; private set; }
     
     //Monogame required
     private GraphicsDeviceManager _graphics;
@@ -22,14 +22,9 @@ public class Game1 : Game
 
     //Controls Variables
     private List<IController> _controllersList = new();
-
-    public Player Player { get; private set; }
     
     // Temporarily commented out for Sprint3 submission
     public RootElement RootUIElement;
-
-    //Map Variables. (Unused?)
-    public List<int> Tiles { get; set; }
 
     public Game1()
     {
@@ -70,9 +65,9 @@ public class Game1 : Game
     public void InitializeOverworldAndControllers()
     {
         //Player must be declared before the Overworld
-        Player = new Player(Content, _spriteBatch);
+        new Player(Content, _spriteBatch);
 
-        StateClass = new OverworldState(Content, Player, this);
+        StateClass = new OverworldState(Content, Player.Instance, this);
 
         _controllersList =
         [
@@ -179,7 +174,7 @@ public class Game1 : Game
     /// </summary>
     public static void TransitionToBattleState()
     {
-        // Debug.WriteLine("Battle State moment");
+        //StateClass.ChangeToBattleState();
     }
     
     /// <summary>

@@ -1,5 +1,4 @@
-﻿using System;
-using static AwesomeRPG.Util;
+﻿using System.Diagnostics;
 
 namespace AwesomeRPG.Commands
 {
@@ -17,6 +16,7 @@ namespace AwesomeRPG.Commands
         public void Execute()
         {
             _currentPlayer.UseEquipment(_weapon);
+            Debug.WriteLine(_currentPlayer.Position);
         }
     }
 }

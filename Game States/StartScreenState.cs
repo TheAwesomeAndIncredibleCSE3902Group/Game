@@ -11,7 +11,7 @@ namespace AwesomeRPG;
 /// </summary>
 public class StartScreenState : IGameState
 {
-    public Game1.GameState CurrentState { get => Game1.GameState.start; }
+    public GameState CurrentState { get => GameState.start; }
     private Game1 game;
     RootElement rootUIElement;
     public StartScreenState(Game1 game)
@@ -84,12 +84,12 @@ public class StartScreenState : IGameState
         game.InitializeOverworldAndControllers();
     }
 
-    public bool TransitionAllowedTo(Game1.GameState state)
+    public bool TransitionAllowedTo(GameState state)
     {
         return state switch
         {
-            Game1.GameState.battle => false,
-            Game1.GameState.overworld => true,
+            GameState.battle => false,
+            GameState.overworld => true,
             _ => false
         };
     }

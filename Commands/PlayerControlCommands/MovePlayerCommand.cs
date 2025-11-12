@@ -8,9 +8,9 @@ namespace AwesomeRPG.Commands
         private Player currentPlayer;
         private Cardinal inputDirection;
 
-        public MovePlayerCommand(Game1 game, Cardinal direction) 
+        public MovePlayerCommand(Cardinal direction) 
         {
-            currentPlayer = game.Player;
+            currentPlayer = Player.Instance;
             inputDirection = direction;
         }
 

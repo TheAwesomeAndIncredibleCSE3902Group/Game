@@ -20,7 +20,7 @@ public class OverworldState : IGameState
 
     private Game1 game;
     private AllCollisionHandler allCollisionHandler;
-    public Game1.GameState CurrentState { get => Game1.GameState.overworld; }
+    public GameState CurrentState { get => GameState.overworld; }
 
     // public RootElement RootUIElement {get; private set; }
 
@@ -149,12 +149,12 @@ public class OverworldState : IGameState
         }
     }
 
-    public bool TransitionAllowedTo(Game1.GameState state)
+    public bool TransitionAllowedTo(GameState state)
     {
         return state switch
         {
-            Game1.GameState.battle => true,
-            Game1.GameState.overworld => true,
+            GameState.battle => true,
+            GameState.overworld => true,
             _ => false
         };
     }

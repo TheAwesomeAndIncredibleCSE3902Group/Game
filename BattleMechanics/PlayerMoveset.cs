@@ -12,9 +12,9 @@ namespace AwesomeRPG.BattleMechanics
         private Player _player;
         static public bool TurnIsActive {  get; set; }
 
-        public void InitializePlayer(Game1 game)
+        public void InitializePlayer()
         {
-            _player = game.Player;
+            _player = Player.Instance;
         }
 
         public static int Attack()

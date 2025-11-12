@@ -12,9 +12,9 @@ public interface IGameState
 {
     public void Update(GameTime gameTime);
     public void Draw(SpriteBatch spriteBatch, GameTime gameTime);
-    public Game1.GameState CurrentState { get; }
+    public GameState CurrentState { get; }
 
-    public bool TransitionAllowedTo(Game1.GameState state);
+    public bool TransitionAllowedTo(GameState state);
     public void ChangeToBattleState();
     public void ChangeToOverworldState();
     public void ChangeToStartState();
