@@ -9,11 +9,11 @@ namespace AwesomeRPG.Commands;
 /// <summary>
 /// Destroys the projectile when it collides with a wall
 /// </summary>
-public class ProjectileWallCollideCommand : ICollisionCommand
+public class EnemyProjectileWallCollideCommand : ICollisionCommand
 {
     public void Execute(CollisionInfo collision)
     {
-        Projectile projectile = (Projectile)collision.GetCollisionObjectOfType(CollisionObjectType.PlayerProjectile);
+        Projectile projectile = (Projectile)collision.GetCollisionObjectOfType(CollisionObjectType.EnemyProjectile);
         projectile.Destroy();
     }
 }

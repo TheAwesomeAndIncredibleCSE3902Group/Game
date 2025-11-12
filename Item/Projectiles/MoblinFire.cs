@@ -14,7 +14,7 @@ public class MoblinFire : Projectile
     {
         this.direction = direction;
 
-        this.movementSpeed = 6;
+        this.movementSpeed = 3;
         this.lifetime = 1;
 
         sprite = ProjectileSpriteFactory.CreateFireSprite();
