@@ -174,7 +174,7 @@ public class Game1 : Game
     /// </summary>
     public static void TransitionToBattleState()
     {
-        //StateClass.ChangeToBattleState();
+        StateClass.ChangeToBattleState();
     }
     
     /// <summary>

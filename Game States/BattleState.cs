@@ -37,8 +37,7 @@ public class BattleState : IGameState
 
     public void Update(GameTime gameTime)
     {
-        //likely don't need update
-        throw new System.NotImplementedException();
+
     }
 
     public void ChangeToBattleState() { }

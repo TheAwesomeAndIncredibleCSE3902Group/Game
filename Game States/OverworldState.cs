@@ -66,7 +66,6 @@ public class OverworldState : IGameState
 
     public void ChangeToBattleState()
     {
-        throw new System.NotImplementedException();
         //This will have to convert any relevant data to its battle representation
         //And return a new BattleState
         game.SetStateClass(new BattleState(this, game));
