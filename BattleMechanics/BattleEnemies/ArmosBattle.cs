@@ -3,7 +3,7 @@ using System;
 using static AwesomeRPG.Util;
 
 namespace AwesomeRPG.BattleMechanics.BattleEnemies;
-public class ArmosBattle : IBattle
+public class ArmosBattle : IEnemyBattle
 {
     public IStats Stats { get; set; }
     public enum ArmosActions { ShineArmour, ChargeForward}
@@ -19,19 +19,19 @@ public class ArmosBattle : IBattle
         Stats.ChangeHealth(Stats.GetMaxHealth());
     }
 
-    public int TakeTurn()
+    public void TakeTurn()
     {
-        int damageOutput = 0;
+        int rand = new Random().Next(BattleScene.Instance.AllyList.Count);
+        IBattle target = BattleScene.Instance.AllyList[rand];
         switch (ChooseAction())
         {
             case ArmosActions.ShineArmour:
                 Stats.ChangeHealth(3);
                 break;
             case ArmosActions.ChargeForward:
-                damageOutput = 4;
+                target.Stats.ChangeHealth(-4);
                 break;
         }
-        return damageOutput;
     }
 
     private ArmosActions ChooseAction()

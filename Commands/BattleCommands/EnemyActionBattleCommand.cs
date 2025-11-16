@@ -11,8 +11,8 @@ namespace AwesomeRPG.Commands.BattleCommands
     public class EnemyActionBattleCommand : ICommand
     {
         public IEnemyBattle battle;
-        public EnemyActionBattleCommand(BattleScene currentBattle) {
-            battle = (IEnemyBattle)currentBattle.CurrentBattle;
+        public EnemyActionBattleCommand() {
+            battle = (IEnemyBattle)BattleScene.Instance.CurrentBattle;
         }
         public void Execute() {
             battle.TakeTurn();

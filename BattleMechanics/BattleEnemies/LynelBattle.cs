@@ -3,7 +3,7 @@ using System;
 using static AwesomeRPG.Util;
 
 namespace AwesomeRPG.BattleMechanics.BattleEnemies;
-public class LynelBattle : IBattle, IEnemyBattle
+public class LynelBattle : IEnemyBattle
 {
     public IStats Stats { get; set; }
     public enum LynelActions { BrushBackHair, HardStomp, StabNSlash }
@@ -19,23 +19,22 @@ public class LynelBattle : IBattle, IEnemyBattle
         Stats.ChangeHealth(Stats.GetMaxHealth());
     }
 
-    public int TakeTurn()
+    public void TakeTurn()
     {
-        int damageOutput = 0;
+        int rand = new Random().Next(BattleScene.Instance.AllyList.Count);
+        IBattle target = BattleScene.Instance.AllyList[rand];
         switch (ChooseAction())
         {
             case LynelActions.BrushBackHair:
                 Stats.ChangeHealth(1);
                 break;
             case LynelActions.HardStomp:
-                damageOutput = 3;
+                target.Stats.ChangeHealth(-3);
                 break;
             case LynelActions.StabNSlash:
-                damageOutput = 5;
+                target.Stats.ChangeHealth(-5);
                 break;
         }
-
-        return damageOutput;
     }
 
     private LynelActions ChooseAction()

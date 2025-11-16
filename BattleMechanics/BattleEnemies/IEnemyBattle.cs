@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AwesomeRPG.BattleMechanics.BattleEnemies
 {
-    public interface IEnemyBattle
+    public interface IEnemyBattle : IBattle
     {
         public void TakeTurn() { }
     }

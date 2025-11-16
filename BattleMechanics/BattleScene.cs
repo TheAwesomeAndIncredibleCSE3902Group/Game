@@ -54,7 +54,7 @@ namespace AwesomeRPG.BattleMechanics
             }
             else
             {
-                turnList = EnemyList;
+                turnList = ;
                 turnList.AddRange(AllyList);
             }
 
