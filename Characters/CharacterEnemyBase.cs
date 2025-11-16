@@ -88,6 +88,7 @@ public abstract class CharacterEnemyBase : CollisionObject, ICharacter
 
     /// <summary>
     /// Returns whether destruction (ie removal from the RoomMap) was successful
+    /// Please note this does NOT remove the projectiles that were shot by this
     /// </summary>
     /// <returns></returns>
     public virtual bool TryDestroy()

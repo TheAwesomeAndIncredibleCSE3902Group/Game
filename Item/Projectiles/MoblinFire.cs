@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using static AwesomeRPG.Util;
 using AwesomeRPG.Collision;
 using AwesomeRPG.Map;
+using AwesomeRPG.Characters;
 
 namespace AwesomeRPG;
 
@@ -10,9 +11,13 @@ namespace AwesomeRPG;
 /// </summary>
 public class MoblinFire : Projectile
 {
-    public MoblinFire(Vector2 position, Cardinal direction)
+    //That which fired this
+    public ICharacter Firee { get; private set; }
+
+    public MoblinFire(Vector2 position, Cardinal direction, ICharacter firee)
     {
         this.direction = direction;
+        this.Firee = firee;
 
         this.movementSpeed = 3;
         this.lifetime = 1;

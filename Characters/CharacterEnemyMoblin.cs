@@ -60,7 +60,7 @@ public class CharacterEnemyMoblin : CharacterEnemyBase
         _moving = false;
         timeTillRecover = recoverCD;
         ChangeAttackDirectionalSprite(Direction);
-        RoomAtlas.Instance.AddProjectile(new MoblinFire(Position,Direction));
+        RoomAtlas.Instance.AddProjectile(new MoblinFire(Position, Direction, this));
     }
 
     private void HandleRecovery(GameTime gameTime)
