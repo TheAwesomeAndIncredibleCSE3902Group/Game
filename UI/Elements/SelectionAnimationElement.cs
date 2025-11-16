@@ -37,7 +37,7 @@ public class SelectionAnimationElement : ElementBase
                 RootElement.SpriteBatch.Draw(
                     RootElement.RectangleTexture,
                     sizedRectangle,
-                    _selectColor * ((99 - animationFrame) / 2 / 255.0f)
+                    _selectColor * ((99 - animationFrame) / 2 / 255.0f) * Opacity
                 );
                 animationFrame = (animationFrame + 50) % 100;
             }

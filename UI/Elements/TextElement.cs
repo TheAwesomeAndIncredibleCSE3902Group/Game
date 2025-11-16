@@ -46,7 +46,7 @@ public class TextElement : ElementBase
                 textCalculatedPosition.Y += OffsetAndSize.Height - measuredText.Y;
             }
 
-            RootElement.SpriteBatch.DrawString(SpriteFont, TextString, textCalculatedPosition, TextColor);
+            RootElement.SpriteBatch.DrawString(SpriteFont, TextString, textCalculatedPosition, TextColor * Opacity);
         }
 
         DrawChildren(gameTime);

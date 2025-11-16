@@ -24,8 +24,9 @@ public abstract class ElementBase
     public bool DerivedAncestorIsVisible { get; private set; } = true;
     private List<ElementBase> _children = [];
     public bool IsSelectable { get; private set; } = false;
-    public bool IsSelected = false;
-    public bool IsVisible = true;
+    public bool IsSelected { get; set; } = false;
+    public bool IsVisible { get; set; } = true;
+    public float Opacity { get; set; } = 1f;
     public RootElement RootElement { get; protected set; }
     public ElementBase Parent { get; private set; }
     private readonly Dictionary<UIEvent, List<Action<UIEventParamsBase> >> _registeredUiEventActions = [];

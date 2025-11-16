@@ -98,6 +98,9 @@ public class Game1 : Game
         for (int i = 0; i < 6; i++)
         {
             var currentButtonToAdd = ButtonComponent.Create(RootUIElement, spriteFont, this, new Rectangle(20 + (i / 3) * 365, 540 + (i % 3) * 75, 350, 60), Color.Purple, Color.White, "Action " + i);
+            
+            // TEMPORARY TODO REMOVE THIS!!!
+            currentButtonToAdd.AddChild(new AnimSpriteElement(RootUIElement, CharacterSpriteFactory.Instance.KrisSprite()));
 
             buttons.Add(currentButtonToAdd);
             RootUIElement.AddChild(currentButtonToAdd);

@@ -9,6 +9,8 @@ namespace AwesomeRPG.UI.Elements;
 public class RectElement : ElementBase
 {
     public Color FillColor { get; set; }
+    public Color OutlineColor { get; set; } = Color.Black;
+    public int OutlineThickness { get; set; } = 0;
 
     public override void Draw(GameTime gameTime)
     {
@@ -20,8 +22,39 @@ public class RectElement : ElementBase
             RootElement.SpriteBatch.Draw(
                 RootElement.RectangleTexture,
                 new Rectangle(DerivedAbsolutePosition, OffsetAndSize.Size),
-                FillColor
+                FillColor * Opacity
             );
+            if (OutlineThickness > 0)
+            {
+                var outlineTopRect = new Rectangle(
+                    DerivedAbsolutePosition.X - OutlineThickness,
+                    DerivedAbsolutePosition.Y - OutlineThickness,
+                    OffsetAndSize.Width + OutlineThickness * 2,
+                    OutlineThickness
+                );
+                var outlineBottomRect = new Rectangle(
+                    DerivedAbsolutePosition.X - OutlineThickness,
+                    DerivedAbsolutePosition.Y + OffsetAndSize.Height,
+                    OffsetAndSize.Width + OutlineThickness * 2,
+                    OutlineThickness
+                );
+                var outlineLeftRect = new Rectangle(
+                    DerivedAbsolutePosition.X - OutlineThickness,
+                    DerivedAbsolutePosition.Y,
+                    OutlineThickness,
+                    OffsetAndSize.Height
+                );
+                var outlineRightRect = new Rectangle(
+                    DerivedAbsolutePosition.X + OffsetAndSize.Width,
+                    DerivedAbsolutePosition.Y,
+                    OutlineThickness,
+                    OffsetAndSize.Height
+                );
+                RootElement.SpriteBatch.Draw(RootElement.RectangleTexture, outlineTopRect, OutlineColor * Opacity);
+                RootElement.SpriteBatch.Draw(RootElement.RectangleTexture, outlineBottomRect, OutlineColor * Opacity);
+                RootElement.SpriteBatch.Draw(RootElement.RectangleTexture, outlineLeftRect, OutlineColor * Opacity);
+                RootElement.SpriteBatch.Draw(RootElement.RectangleTexture, outlineRightRect, OutlineColor * Opacity);
+            }
         }
 
         // System.Console.WriteLine("drawing rect element at" + DerivedAbsolutePosition.ToString());
@@ -39,5 +72,13 @@ public class RectElement : ElementBase
     {
         SetUpElement(rootElement);
         FillColor = fillColor;
+    }
+
+    public RectElement(RootElement rootElement, Color fillColor, int outlineThickness, Color outlineColor)
+    {
+        SetUpElement(rootElement);
+        FillColor = fillColor;
+        OutlineThickness = outlineThickness;
+        OutlineColor = outlineColor;
     }
 }

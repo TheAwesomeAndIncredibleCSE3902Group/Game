@@ -201,7 +201,7 @@ public class AnimatableSprite : ISprite
         DoDraw(gameTime, position);
     }
 
-    private void SetWidthNHeight(int width, int height)
+    public void SetWidthNHeight(int width, int height)
     {
         Width = width * (int)Util.GlobalScale;
         Height = height * (int)Util.GlobalScale;
