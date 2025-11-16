@@ -1,4 +1,5 @@
 using System;
+using AwesomeRPG.Characters;
 using AwesomeRPG.UI.Elements;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -72,7 +73,7 @@ public class StartScreenState : IGameState
         }
     }
 
-    public void ChangeToBattleState() { }
+    public void ChangeToBattleState(CharacterEnemyBase[] enemies) { }
 
     public void ChangeToGameOverState() { }
     

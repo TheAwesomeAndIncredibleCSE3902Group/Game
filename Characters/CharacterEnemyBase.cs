@@ -83,6 +83,15 @@ public abstract class CharacterEnemyBase : CollisionObject, ICharacter
 
         Direction = direction;
     }
-    
+
     public abstract void ChangeDirectionalSprite(Cardinal direction);
+
+    /// <summary>
+    /// Returns whether destruction (ie removal from the RoomMap) was successful
+    /// </summary>
+    /// <returns></returns>
+    public virtual bool TryDestroy()
+    {
+        return RoomAtlas.Instance.CurrentRoom.TryRemoveCharacter(this);
+    }
 }

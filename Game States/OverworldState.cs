@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using AwesomeRPG.Characters;
 using AwesomeRPG.Collision;
 using AwesomeRPG.Map;
 using Microsoft.Xna.Framework;
@@ -64,11 +65,11 @@ public class OverworldState : IGameState
 
     }
 
-    public void ChangeToBattleState()
+    public void ChangeToBattleState(CharacterEnemyBase[] enemies)
     {
         //This will have to convert any relevant data to its battle representation
         //And return a new BattleState
-        game.SetStateClass(new BattleState(this, game));
+        game.SetStateClass(new BattleState(this, game, enemies));
     }
 
     public void ChangeToOverworldState() { }

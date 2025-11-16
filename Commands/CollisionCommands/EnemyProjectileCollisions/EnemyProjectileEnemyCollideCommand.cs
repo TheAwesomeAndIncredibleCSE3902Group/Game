@@ -1,3 +1,4 @@
+using AwesomeRPG.Characters;
 using AwesomeRPG.Collision;
 using Microsoft.Xna.Framework;
 using System.Diagnostics;
@@ -9,7 +10,9 @@ public class EnemyProjectilePlayerCollideCommand : ICollisionCommand
     public void Execute(CollisionInfo collision)
     {
         Projectile projectile = (Projectile)collision.GetCollisionObjectOfType(CollisionObjectType.EnemyProjectile);
-        Game1.TransitionToBattleState();
+        CharacterEnemyBase enemy = (CharacterEnemyBase)collision.GetCollisionObjectOfType(CollisionObjectType.Enemy);
+
         projectile.Destroy();
+        Game1.TransitionToBattleState([enemy]);
     }
 }

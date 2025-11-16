@@ -77,6 +77,19 @@ public class RoomMap
         DrawProjectiles(gameTime);
     }
     
+    /// <summary>
+    /// Returns whether removal was successful
+    /// </summary>
+    /// <param name="character"></param>
+    /// <returns></returns>
+    public bool TryRemoveCharacter(CharacterEnemyBase character)
+    {
+        bool success = Characters.Remove(character);
+        _movingCollisionObjects.Remove(character);
+
+        return success;
+    }
+
     private void DrawTiles(SpriteBatch spriteBatch)
     {
         _tilemap.Draw(spriteBatch);

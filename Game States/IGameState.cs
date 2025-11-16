@@ -1,4 +1,5 @@
 
+using AwesomeRPG.Characters;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -15,7 +16,7 @@ public interface IGameState
     public GameState CurrentState { get; }
 
     public bool TransitionAllowedTo(GameState state);
-    public void ChangeToBattleState();
+    public void ChangeToBattleState(CharacterEnemyBase[] enemies);
     public void ChangeToOverworldState();
     public void ChangeToStartState();
     public void ChangeToGameOverState();

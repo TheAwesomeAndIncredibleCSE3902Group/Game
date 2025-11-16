@@ -1,4 +1,5 @@
 using System;
+using AwesomeRPG.Characters;
 using AwesomeRPG.UI.Elements;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -63,7 +64,7 @@ public class GameOverState : IGameState
         }
     }
 
-    public void ChangeToBattleState() { }
+    public void ChangeToBattleState(CharacterEnemyBase[] enemies) { }
 
     public void ChangeToOverworldState() { }
 

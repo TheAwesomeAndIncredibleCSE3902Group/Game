@@ -8,6 +8,9 @@ using AwesomeRPG.UI.Components;
 using AwesomeRPG.UI;
 using AwesomeRPG.UI.Events;
 using AwesomeRPG.Commands.BattleCommands;
+using AwesomeRPG.Commands;
+using AwesomeRPG.Map;
+using AwesomeRPG.Characters;
 
 namespace AwesomeRPG;
 
@@ -22,8 +25,7 @@ public class Game1 : Game
 
     //Controls Variables
     private List<IController> _controllersList = new();
-    
-    // Temporarily commented out for Sprint3 submission
+
     public RootElement RootUIElement;
 
     public Game1()
@@ -93,13 +95,14 @@ public class Game1 : Game
         RootUIElement.AddChild(battleUiBoardBg);
 
         List<CommandElement> buttons = new List<CommandElement>();
-        for (int i = 0; i < 6; i++)
+        for (int i = 0; i < 5; i++)
         {
             var currentButtonToAdd = ButtonComponent.Create(RootUIElement, spriteFont, this, new Rectangle(20 + (i / 3) * 365, 540 + (i % 3) * 75, 350, 60), Color.Purple, Color.White, "Action " + i);
             currentButtonToAdd.AssociatedCommand = new SampleAttackBattleCommand();
             buttons.Add(currentButtonToAdd);
             RootUIElement.AddChild(currentButtonToAdd);
         }
+        InitOverworldButton(spriteFont, buttons);
         // buttons[5].IsVisible = false;
 
         RootUIElement.UIState.SelectionIndex = 0;
@@ -125,6 +128,19 @@ public class Game1 : Game
                 RootUIElement.UIState.SelectionIndex -= 3;
             }
         });
+    }
+
+    /// <summary>
+    /// This is a little test helper to make a 6th button for returning to the overworld state
+    /// </summary>
+    private void InitOverworldButton(SpriteFont spriteFont, List<CommandElement> buttons)
+    {
+        //This is the 6th button
+        int i = 5;
+        var currentButtonToAdd = ButtonComponent.Create(RootUIElement, spriteFont, this, new Rectangle(20 + (i / 3) * 365, 540 + (i % 3) * 75, 350, 60), Color.Purple, Color.White, "Return to Overworld");
+        currentButtonToAdd.AssociatedCommand = new BattleStateToOverworldCommand();
+        buttons.Add(currentButtonToAdd);
+        RootUIElement.AddChild(currentButtonToAdd);
     }
 
     public void Reset()
@@ -172,9 +188,14 @@ public class Game1 : Game
     /// <summary>
     /// TODO: change to StateClass = StateClass.ToBattleState();
     /// </summary>
-    public static void TransitionToBattleState()
+    public static void TransitionToBattleState(CharacterEnemyBase[] enemies)
     {
-        StateClass.ChangeToBattleState();
+        StateClass.ChangeToBattleState(enemies);
+    }
+
+    public static void TransitionToOverworldState()
+    {
+        StateClass.ChangeToOverworldState();
     }
     
     /// <summary>
