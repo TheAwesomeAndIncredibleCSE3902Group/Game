@@ -11,7 +11,6 @@ namespace AwesomeRPG.Controllers;
 public class MouseController : IController
 {
     private readonly Game1 _gameObject;
-    private Action<int> SetChosenSprite;
     private bool _prevTickLeftMouse = false;
     private bool _prevTickRightMouse = false;
 
@@ -27,7 +26,7 @@ public class MouseController : IController
         InitializeCommands(game);
     }
     //TODO: make this work for the battle state. See KeyboardController for example
-    public void Update(Game1.GameState gameState)
+    public void Update(GameState gameState)
     {
         MouseState mouseState = Mouse.GetState();
         if (mouseState.LeftButton == ButtonState.Pressed && !_prevTickLeftMouse)

@@ -6,9 +6,9 @@ public class PlayerToStandingCommand : ICommand
 {
     private Player currentPlayer;
 
-    public PlayerToStandingCommand(Game1 game)
+    public PlayerToStandingCommand()
     {
-        currentPlayer = game.Player;
+        currentPlayer = Player.Instance;
     }
     
     public void Execute()

@@ -7,9 +7,9 @@ namespace AwesomeRPG.Commands
     {
         private Player currentPlayer;
 
-        public DamagePlayerCommand(Game1 game)
+        public DamagePlayerCommand()
         {
-            currentPlayer = game.Player;
+            currentPlayer = Player.Instance;
         }
 
         public void Execute()

@@ -4,6 +4,8 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AwesomeRPG.Characters;
+using static AwesomeRPG.IEquipment;
 
 namespace AwesomeRPG.Map
 {
@@ -147,5 +149,71 @@ namespace AwesomeRPG.Map
                 }
             }
         }
+
+        public void AddEnemy(CharacterEnemyBase enemy)
+        {
+            AddEnemy(enemy, GetColumn(CurrentRoom), GetRow(CurrentRoom));
+        }
+        public void AddEnemy(CharacterEnemyBase enemy, int column, int row)
+        {
+            GetRoom(column, row).Characters.Add(enemy);
+            GetRoom(column, row)._movingCollisionObjects.Add(enemy);
+        }
+
+        public void RemoveEnemy(CharacterEnemyBase enemy)
+        {
+            RemoveEnemy(enemy, GetColumn(CurrentRoom), GetRow(CurrentRoom));
+        }
+        public void RemoveEnemy(CharacterEnemyBase enemy, int column, int row)
+        {
+            GetRoom(column, row).Characters.Remove(enemy);
+            GetRoom(column, row)._movingCollisionObjects.Remove(enemy);
+        }
+
+        public void AddProjectile(Projectile projectile)
+        {
+            AddProjectile(projectile, GetColumn(CurrentRoom), GetRow(CurrentRoom));;
+        }
+
+        public void AddProjectile(Projectile projectile, int column, int row)
+        {
+            GetRoom(column,row).Projectiles.Add(projectile);
+            GetRoom(column, row)._movingCollisionObjects.Add(projectile);
+        }
+
+        public void RemoveProjectile(Projectile projectile)
+        {
+            RemoveProjectile(projectile, GetColumn(CurrentRoom), GetRow(CurrentRoom));
+        }
+
+        public void RemoveProjectile(Projectile projectile, int column, int row)
+        {
+            GetRoom(column, row).Projectiles.Remove(projectile);
+            GetRoom(column, row)._movingCollisionObjects.Remove(projectile);
+        }
+
+        public void AddPickup(Pickup pickup)
+        {
+            AddPickup(pickup, GetColumn(CurrentRoom), GetRow(CurrentRoom));
+        }
+
+        public void AddPickup(Pickup pickup, int column, int row)
+        {
+            GetRoom(column, row).Pickups.Add(pickup);
+            GetRoom(column, row)._nonMovingCollisionObjects.Add(pickup);
+        }
+        
+        public void RemovePickup(Pickup pickup)
+        {
+            RemovePickup(pickup, GetColumn(CurrentRoom), GetRow(CurrentRoom));
+        }
+
+        public void RemovePickup(Pickup pickup, int column, int row)
+        {
+            GetRoom(column, row).Pickups.Remove(pickup);
+            GetRoom(column, row)._nonMovingCollisionObjects.Remove(pickup);
+        }
+
     }
+
 }

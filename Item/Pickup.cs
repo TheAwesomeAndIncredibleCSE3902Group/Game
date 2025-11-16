@@ -38,7 +38,7 @@ public abstract class Pickup : CollisionObject
     protected abstract void Apply(Player player);
     private void Destroy()
     {
-        LevelMap.Pickups.Remove(this);
+        RoomAtlas.Instance.RemovePickup(this);
     }
 
 }

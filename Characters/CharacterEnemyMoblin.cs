@@ -2,6 +2,8 @@ using Microsoft.Xna.Framework;
 using AwesomeRPG.Sprites;
 using static AwesomeRPG.Util;
 using System;
+using AwesomeRPG.Map;
+using System.Diagnostics;
 
 namespace AwesomeRPG.Characters;
 
@@ -9,26 +11,36 @@ public class CharacterEnemyMoblin : CharacterEnemyBase
 {
     //Time is tracked in milliseconds
     private int attackCD;
-    private int remainingTime;
+    private int timeTillAttack;
+    private const int recoverCD = 1000;
+    private int timeTillRecover;
     public CharacterEnemyMoblin(Vector2 position, Cardinal direction) : base(position, direction)
     {
-        int minCD = 2000; //2 seconds
-        int maxCD = 4000; // 4 seconds
+        const int minCD = 2000; //2 seconds
+        const int maxCD = 4000; // 4 seconds
         attackCD = new Random().Next(minCD,maxCD);
-        remainingTime = attackCD;
+        timeTillAttack = attackCD;
+        timeTillRecover = recoverCD;
     }
 
     public override void Update(GameTime gameTime)
     {
         base.Update(gameTime);
-        if(_moving) HandleAttacking(gameTime); //TODO: NASTY
+        if (_moving)
+        {
+            HandleAttacking(gameTime);
+        }//TODO: NASTY
+        else
+        {
+            HandleRecovery(gameTime);
+        }
     }
 
-    private bool CheckCooldown(GameTime gameTime)
+    private bool DecrementTimer(GameTime gameTime, ref int time)
     {
         bool finishedCD = false;
-        remainingTime -= gameTime.ElapsedGameTime.Milliseconds;
-        if(remainingTime <= 0)
+        time -= gameTime.ElapsedGameTime.Milliseconds;
+        if(time <= 0)
         {
             finishedCD = true;
         }
@@ -37,7 +49,7 @@ public class CharacterEnemyMoblin : CharacterEnemyBase
 
     private void HandleAttacking(GameTime gameTime)
     {
-        if(CheckCooldown(gameTime))
+        if (DecrementTimer(gameTime, ref timeTillAttack))
         {
             Attack();
         }
@@ -45,7 +57,25 @@ public class CharacterEnemyMoblin : CharacterEnemyBase
 
     private void Attack()
     {
-        //Necesito mi universal projectileList antes de completar.
+        _moving = false;
+        timeTillRecover = recoverCD;
+        ChangeAttackDirectionalSprite(Direction);
+        RoomAtlas.Instance.AddProjectile(new MoblinFire(Position,Direction));
+    }
+
+    private void HandleRecovery(GameTime gameTime)
+    {
+        if (DecrementTimer(gameTime, ref timeTillRecover))
+        {
+            Recover();
+        }
+    }
+
+    private void Recover()
+    {
+        _moving = true;
+        timeTillAttack = attackCD;
+        ChangeMovingDirectionalSprite(Direction);
     }
 
     #region Sprite Swapping

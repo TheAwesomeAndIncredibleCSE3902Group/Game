@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.Immutable;
-using System.Diagnostics;
-using System.Linq;
-using System.Runtime.InteropServices.Marshalling;
+﻿using System.Collections.Generic;
 using AwesomeRPG.Commands;
 
 namespace AwesomeRPG.Collision
@@ -45,8 +40,14 @@ namespace AwesomeRPG.Collision
 
         private void InitializeProjectileCollisions()
         {
-            collisionResponses[new CollisionPair(CollisionObjectType.PlayerProjectile, CollisionObjectType.Enemy)] = new ProjectileEnemyCollideCommand();
-            collisionResponses[new CollisionPair(CollisionObjectType.PlayerProjectile, CollisionObjectType.Wall)] = new ProjectileWallCollideCommand();
+            collisionResponses[new CollisionPair(CollisionObjectType.PlayerProjectile, CollisionObjectType.Enemy)] = new PlayerProjectileEnemyCollideCommand();
+            collisionResponses[new CollisionPair(CollisionObjectType.PlayerProjectile, CollisionObjectType.Wall)] = new PlayerProjectileWallCollideCommand();
+
+            collisionResponses[new CollisionPair(CollisionObjectType.EnemyProjectile, CollisionObjectType.Wall)] = new EnemyProjectileWallCollideCommand();
+            collisionResponses[new CollisionPair(CollisionObjectType.EnemyProjectile, CollisionObjectType.Player)] = new EnemyProjectilePlayerCollideCommand();
+
+            //This command will run for all player projectiles, but it only does something if it is a Boomerang
+            collisionResponses[new CollisionPair(CollisionObjectType.PlayerProjectile, CollisionObjectType.Player)] = new BoomerangPlayerCollideCommand();
         }
 
         private void InitializePlayerCollisions()
@@ -62,7 +63,7 @@ namespace AwesomeRPG.Collision
             collisionResponses[new CollisionPair(CollisionObjectType.Enemy, CollisionObjectType.Wall)] = new EnemyWallCollideCommand();
             //Enemies treat Entrances as Walls
             collisionResponses[new CollisionPair(CollisionObjectType.Enemy, CollisionObjectType.Entrance)] = new EnemyWallCollideCommand();
+            collisionResponses[new CollisionPair(CollisionObjectType.Enemy, CollisionObjectType.Enemy)] = new EnemyEnemyCollideCommand();
         }
-        
     }
 }

@@ -5,33 +5,33 @@ using static AwesomeRPG.Util;
 namespace AwesomeRPG.BattleMechanics.BattleEnemies;
 public class MoblinBattle : IBattle
 {
-    public EnemyStats Stats { get; set; }
+    public IStats Stats { get; set; }
     public enum MoblinActions { ScratchBellyButton, RambleCharge, Dance }
     public bool IsFainted { get; set; }
+    public bool IsFriend { get; set; }
 
     public MoblinBattle(EnemyStats stats)
     {
         Stats = stats;
         IsFainted = false;
+        IsFriend = false;
         Stats.ChangeHealth(Stats.GetMaxHealth());
     }
 
-    public int TakeTurn()
+    public void TakeTurn(IBattle target)
     {
-        int damageOutput = 0;
         switch (ChooseAction())
         {
             case MoblinActions.ScratchBellyButton:
                 Stats.ChangeHealth(3);
                 break;
             case MoblinActions.RambleCharge:
-                damageOutput = 4;
+                target.Stats.ChangeHealth(-4);
                 break;
             case MoblinActions.Dance:
                 Stats.ChangeHealth(-1);
                 break;
         }
-        return damageOutput;
     }
 
     private MoblinActions ChooseAction()

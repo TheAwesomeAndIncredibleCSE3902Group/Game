@@ -1,40 +1,30 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using AwesomeRPG.Controllers;
 using AwesomeRPG.Sprites;
-using AwesomeRPG.Map;
-using AwesomeRPG.Collision;
 using AwesomeRPG.UI.Elements;
 using AwesomeRPG.UI.Components;
 using AwesomeRPG.UI;
 using AwesomeRPG.UI.Events;
+using AwesomeRPG.Commands.BattleCommands;
 
 namespace AwesomeRPG;
 
+public enum GameState { start, overworld, battle }
 public class Game1 : Game
 {
-    public enum GameState { overworld, battle }
-    public IGameState gameState { get; private set; }
+    public static IGameState StateClass { get; private set; }
     
     //Monogame required
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
-    
-    //Controls Variables
-    private List<IController> _controllersList = [];
 
-    public Player Player { get; private set; }
+    //Controls Variables
+    private List<IController> _controllersList = new();
     
     // Temporarily commented out for Sprint3 submission
     public RootElement RootUIElement;
-
-    //Collision Variables, this needs to be improved sloppy solution for now
-    private AllCollisionHandler _allCollisionHandler;
-
-    //Map Variables
-    public List<int> Tiles { get; set; }
 
     public Game1()
     {
@@ -52,7 +42,6 @@ public class Game1 : Game
 
     protected override void Initialize()
     {
-        _allCollisionHandler = new AllCollisionHandler();
         base.Initialize();
     }
 
@@ -60,28 +49,37 @@ public class Game1 : Game
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-        //Create sprite factories
+        //Create sprite factories; load textures
         MapItemSpriteFactory.LoadAllTextures(Content, _spriteBatch);
         ProjectileSpriteFactory.LoadAllTextures(Content, _spriteBatch);
-
-        //NPC creation
         CharacterSpriteFactory.Instance.LoadAllTextures(Content, _spriteBatch);
 
-        //World Creation
-        RoomAtlas.Instance.SetAtlas(new AtlasInitializer().InitializeAtlas(Content));
-        RoomAtlas.Instance.CurrentRoom = RoomAtlas.Instance.GetRoom(0,0);
+        //Create sound factories; load sound effects
+        GameSoundFactory.LoadAllSongs(Content);
 
-        //Player declaration
-        //TODO: PROBABLY WANNA HAVE A METHOD IN EACH LEVEL WHICH HANDLES ADDING THINGS TO COLLISION LIST
-        Player = new Player(Content, _spriteBatch);
-        RoomAtlas.Instance.CurrentRoom._movingCollisionObjects.Add(Player);
-        _controllersList.Add(new KeyboardController(this));
-        _controllersList.Add(new KeyboardUIController(this));
-        _controllersList.Add(new MouseController(this));
+        StateClass = new StartScreenState(this);
+        //InitializeOverworldAndControllers();
+        InitializeUI();
+    }
 
-        // Temporarily commented out for Sprint3 submission
+    public void InitializeOverworldAndControllers()
+    {
+        //Player must be declared before the Overworld
+        new Player(Content, _spriteBatch);
 
-        // UI creation! This will eventually be moved to one of the battle state classes.
+        StateClass = new OverworldState(Content, Player.Instance, this);
+
+        _controllersList =
+        [
+            new KeyboardController(this),
+            new KeyboardUIController(this),
+            new MouseController(this),
+        ];
+    }
+
+    // UI creation! This will eventually be moved to one of the battle state classes.
+    private void InitializeUI()
+    {
         var spriteFont = Content.Load<SpriteFont>("Fonts\\MyFont");
         RootUIElement = new RootElement(_spriteBatch);
 
@@ -98,9 +96,9 @@ public class Game1 : Game
         for (int i = 0; i < 6; i++)
         {
             var currentButtonToAdd = ButtonComponent.Create(RootUIElement, spriteFont, this, new Rectangle(20 + (i / 3) * 365, 540 + (i % 3) * 75, 350, 60), Color.Purple, Color.White, "Action " + i);
-            
             // TEMPORARY TODO REMOVE THIS!!!
             currentButtonToAdd.AddChild(new AnimSpriteElement(RootUIElement, CharacterSpriteFactory.Instance.KrisSprite()));
+            currentButtonToAdd.AssociatedCommand = new SampleAttackBattleCommand();            
 
             buttons.Add(currentButtonToAdd);
             RootUIElement.AddChild(currentButtonToAdd);
@@ -130,74 +128,34 @@ public class Game1 : Game
                 RootUIElement.UIState.SelectionIndex -= 3;
             }
         });
-        
     }
 
-    private void HandleCollisions()
+    public void Reset()
     {
-        for (int i = 0; i< RoomAtlas.Instance.CurrentRoom._movingCollisionObjects.Count; i++)
-        {
-            foreach (CollisionObject nonMovingObject in RoomAtlas.Instance.CurrentRoom._nonMovingCollisionObjects)
-            {
-                CollisionInfo collision = RoomAtlas.Instance.CurrentRoom._movingCollisionObjects[i].DetectCollision(nonMovingObject);
-                _allCollisionHandler.HandleCollision(collision);
-            }
-
-            for (int j = i+1; j < RoomAtlas.Instance.CurrentRoom._movingCollisionObjects.Count; j++)
-            {
-                CollisionInfo collision = RoomAtlas.Instance.CurrentRoom._movingCollisionObjects[i].DetectCollision(RoomAtlas.Instance.CurrentRoom._movingCollisionObjects[j]);
-                _allCollisionHandler.HandleCollision(collision);
-            }
-        }
-        ClearProjectiles();
-        ClearPickups();
+        InitializeOverworldAndControllers();
     }
 
-    //Vile code, made by the most deprived of man. May this be fixed next sprint
-    private void ClearProjectiles()
+    public Rectangle GetScreenRect()
     {
-        if(Player.spawnedProjectiles.Count == 0)
-        {
-            for(int i = 0; i < RoomAtlas.Instance.CurrentRoom._movingCollisionObjects.Count; i++)
-            {
-                if(RoomAtlas.Instance.CurrentRoom._movingCollisionObjects[i].ObjectType == CollisionObjectType.PlayerProjectile)
-                {
-                    RoomAtlas.Instance.CurrentRoom._movingCollisionObjects.RemoveAt(i);
-                }
-            }
-        }
+        return new Rectangle
+        (
+            0,
+            0,
+            _graphics.PreferredBackBufferWidth,
+            _graphics.PreferredBackBufferHeight
+        );
     }
-
-
-    //Vile code, made by the most deprived of man. May this be fixed next sprint
-    private int prevPickups = 2;
-    private void ClearPickups()
-    {
-        if (prevPickups != 0 && RoomAtlas.Instance.CurrentRoom.Pickups.Count != prevPickups)
-        {
-            for (int i = 0; i < RoomAtlas.Instance.CurrentRoom._nonMovingCollisionObjects.Count; i++)
-            {
-                if (RoomAtlas.Instance.CurrentRoom._nonMovingCollisionObjects[i].ObjectType == CollisionObjectType.Pickup)
-                {
-                    RoomAtlas.Instance.CurrentRoom._nonMovingCollisionObjects.RemoveAt(i);
-                }
-            }
-            prevPickups--;
-        }
-    }
+    
     protected override void Update(GameTime gameTime)
     {
         //Time can be slowed like this
         //gameTime = new GameTime(gameTime.TotalGameTime / 2f, gameTime.ElapsedGameTime / 2f);
-        
-        foreach (IController controller in _controllersList) {
+        GameSoundFactory.PlayOverworldMapTheme(gameTime);
+
+        foreach (IController controller in _controllersList)
             controller.Update(GameState.overworld);
-        }
 
-        Player.Update(gameTime);
-
-        RoomAtlas.Instance.CurrentRoom.Update(gameTime);
-        HandleCollisions();
+        StateClass.Update(gameTime);
         base.Update(gameTime);
     }
 
@@ -207,24 +165,28 @@ public class Game1 : Game
 
         _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp);
 
-        {       //Will be taken by OverworldState
-            RoomAtlas.Instance.CurrentRoom.Draw(_spriteBatch, gameTime);
-            Player.Draw(gameTime);
+        StateClass.Draw(_spriteBatch, gameTime);
+        //RootUIElement.Draw(gameTime);
 
-        RootUIElement.Draw(gameTime);
-
-            _spriteBatch.End();
-        }
-
+        _spriteBatch.End();
         base.Draw(gameTime);
     }
 
     /// <summary>
-    /// This ain't do nothin rn, fix to interact with game state machine once it's ready
+    /// TODO: change to StateClass = StateClass.ToBattleState();
     /// </summary>
     public static void TransitionToBattleState()
     {
-        // Debug.WriteLine("Battle State moment");
+        StateClass.ChangeToBattleState();
+    }
+    
+    /// <summary>
+    /// This should ONLY be run by the States themselves
+    /// </summary>
+    /// <param name="newState"></param>
+    public void SetStateClass(IGameState newState)
+    {
+        StateClass = newState;
     }
 
 }

@@ -2,7 +2,7 @@
 
 namespace AwesomeRPG.Collision
 {
-    public enum CollisionObjectType { Player, Enemy, Wall, Pickup, Entrance, PlayerProjectile }
+    public enum CollisionObjectType { Player, Enemy, Wall, Pickup, Entrance, PlayerProjectile, EnemyProjectile }
     public abstract class CollisionObject
     {
         public Vector2 Position { get; set; }

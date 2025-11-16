@@ -11,9 +11,12 @@ namespace AwesomeRPG;
 public interface IGameState
 {
     public void Update(GameTime gameTime);
-
     public void Draw(SpriteBatch spriteBatch, GameTime gameTime);
+    public GameState CurrentState { get; }
 
-    public BattleState ToBattleState();
-    public OverworldState ToOverworldState();
+    public bool TransitionAllowedTo(GameState state);
+    public void ChangeToBattleState();
+    public void ChangeToOverworldState();
+    public void ChangeToStartState();
+    public void ChangeToGameOverState();
 }

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using AwesomeRPG.Controllers;
+using AwesomeRPG.UI.Elements;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -13,49 +14,55 @@ public class BattleState : IGameState
     //This could still be used in case we want different text scrolling times or etc
     //public float TimeScale { get; private set; }
 
-    // Temporarily commented out for Sprint3 submission
-    // public RootElement RootUIElement{get; private set; }
+    //Root of the UI
+    private RootElement RootUIElement { get; set; }
 
-    private List<IController> controllersList = new();
     //Caches the last OverworldState. This makes returning to the overworld much easier
-    private OverworldState overState;
+    private OverworldState overworldState;
+    private Game1 game;
+    public GameState CurrentState { get => GameState.battle; }
 
     //BattleState can only be made from an OverworldState
-    public BattleState(OverworldState overState)
+    public BattleState(OverworldState overState, Game1 game)
     {
-
-        this.overState = overState;
+        this.game = game;
+        this.overworldState = overState;
+        this.RootUIElement = game.RootUIElement;
     }
 
     public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
     {
-        //Drawing is currently unimplemented for the Battle State
-        throw new System.NotImplementedException();
+        RootUIElement.Draw(gameTime);
     }
 
     public void Update(GameTime gameTime)
     {
-        foreach (IController controller in controllersList)
-        {
-            controller.Update(Game1.GameState.battle);
-        }
+
+    }
+
+    public void ChangeToBattleState() { }
+    public void ChangeToStartState() { }
+    public void ChangeToGameOverState() { }
+
+    public void ChangeToOverworldState()
+    {
         throw new System.NotImplementedException();
-    }
-
-    public BattleState ToBattleState()
-    {
-        return this;
-    }
-
-    public OverworldState ToOverworldState()
-    {
         //This will have to convert all relevant data to Overworld delta
         //Use that delta to modify the Overworld state
         //And then return to that Overworld state
 
         //TODO: do changes to player, NPCs (ie health), and enemies
-        return overState;
-        throw new System.NotImplementedException();
+        game.SetStateClass(overworldState);
+    }
+
+    public bool TransitionAllowedTo(GameState state)
+    {
+        return state switch
+        {
+            GameState.battle => true,
+            GameState.overworld => true,
+            _ => false
+        };
     }
 
 }

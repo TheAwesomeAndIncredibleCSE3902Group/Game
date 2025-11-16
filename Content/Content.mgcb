@@ -20,6 +20,36 @@
 /processorParam:TextureFormat=Compressed
 /build:Fonts/MyFont.spritefont
 
+#begin GameThemes/BattleSceneMusicIntro.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:GameThemes/BattleSceneMusicIntro.wav
+
+#begin GameThemes/BattleSceneMusicRepeat.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:GameThemes/BattleSceneMusicRepeat.wav
+
+#begin GameThemes/DungeonTheme.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:GameThemes/DungeonTheme.wav
+
+#begin GameThemes/OverworldMapThemeIntro.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:GameThemes/OverworldMapThemeIntro.wav
+
+#begin GameThemes/OverworldMapThemeRepeat.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:GameThemes/OverworldMapThemeRepeat.wav
+
 #begin MapItems/Level0-0.xml
 /copy:MapItems/Level0-0.xml
 
