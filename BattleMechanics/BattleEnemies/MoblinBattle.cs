@@ -1,14 +1,16 @@
 ﻿using AwesomeRPG.Stats;
 using System;
+using System.Collections.Generic;
 using static AwesomeRPG.Util;
 
 namespace AwesomeRPG.BattleMechanics.BattleEnemies;
-public class MoblinBattle : IBattle
+public class MoblinBattle : IBattle, IEnemyBattle
 {
     public IStats Stats { get; set; }
     public enum MoblinActions { ScratchBellyButton, RambleCharge, Dance }
     public bool IsFainted { get; set; }
     public bool IsFriend { get; set; }
+    public List<IBattle> Targets { get; set; }
 
     public MoblinBattle(EnemyStats stats)
     {
@@ -18,8 +20,10 @@ public class MoblinBattle : IBattle
         Stats.ChangeHealth(Stats.GetMaxHealth());
     }
 
-    public void TakeTurn(IBattle target)
+    public void TakeTurn()
     {
+        int rand = new Random().Next(Targets.Count);
+        IBattle target = Targets[rand];
         switch (ChooseAction())
         {
             case MoblinActions.ScratchBellyButton:

@@ -10,14 +10,22 @@ public class TurnList
     private int currentActiveBattle = 0;
 
     private List<IBattle> currentSet;
-    private List<IBattle> allySet;
-    private List<IBattle> enemySet;
+
+    private int allyCount;
+    private int enemyCount;
 
     public bool battleLost;
+    public bool battleEnd;
 
+    public TurnList() 
+    {
+        currentSet = new List<IBattle>();
+    }
     public TurnList(List<IBattle> battleSet) 
     {
         currentSet = battleSet;
+        allyCount = BattleScene.Instance.AllyList.Count;
+        enemyCount = BattleScene.Instance.EnemyList.Count;
     }
 
     #region Getters
@@ -37,16 +45,6 @@ public class TurnList
     }
 
     #endregion
-    #region Setters
-    public void SetAllies(List<IBattle> allies)
-    {
-        allySet = allies;
-    }
-    public void SetEnemies(List<IBattle> enemies)
-    {
-        enemySet = enemies;
-    }
-    #endregion
 
     public IBattle NextBattle()
     {
@@ -57,27 +55,34 @@ public class TurnList
         {
             RemoveDead(currentActiveBattle);
         }
-        if (allySet.Count < 1)
-        {
-            battleLost = true;
-        }
-        else if (enemySet.Count < 1)
-        {
-            battleLost = false;
-        }
+        battleEnd = BattleStatus();
 
         return currentSet[currentActiveBattle];
+    }
+    private bool BattleStatus()
+    {
+        if (allyCount < 1)
+        {
+            battleLost = true;
+            return true;
+        }
+        else if (enemyCount < 1)
+        {
+            battleLost = false;
+            return true;
+        }
+        return false;
     }
     public void RemoveDead(int deadIndex)
     {
         IBattle deadBattle = currentSet[deadIndex];
-        if (allySet.Contains(deadBattle))
+        if (BattleScene.Instance.AllyList.Contains(deadBattle))
         {
-            allySet.RemoveAt(deadIndex);
+            allyCount--;
         }
-        else if (enemySet.Contains(deadBattle))
+        else if (BattleScene.Instance.EnemyList.Contains(deadBattle))
         {
-            enemySet.RemoveAt(deadIndex);
+            enemyCount--;
         }
         else
         {

@@ -3,7 +3,7 @@ using System;
 using static AwesomeRPG.Util;
 
 namespace AwesomeRPG.BattleMechanics.BattleEnemies;
-public class LynelBattle : IBattle
+public class LynelBattle : IBattle, IEnemyBattle
 {
     public IStats Stats { get; set; }
     public enum LynelActions { BrushBackHair, HardStomp, StabNSlash }
