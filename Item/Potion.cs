@@ -13,7 +13,7 @@ public class Potion : Pickup
         Sprite = MapItemSpriteFactory.CreatePotionSprite();
         Collider = new CollisionRect(this, Sprite.Width, Sprite.Height);
     }
-    protected override void Apply(Player player)
+    protected override void Apply(PlayerOverworld player)
     {
         //TODO: this should definitely be a separate heal method
         Debug.WriteLine("Potion picked up");

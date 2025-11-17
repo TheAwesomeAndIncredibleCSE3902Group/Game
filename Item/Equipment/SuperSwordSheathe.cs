@@ -12,7 +12,7 @@ public class SuperSwordSheathe : Equipment
 {
     protected override List<Projectile> CreateProjectiles()
     {
-        Player player = Player.Instance;
+        PlayerOverworld player = PlayerOverworld.Instance;
         return [new PlayerSword(player.Position, player.FacingDirection),new SwordBeam(player.Position,player.FacingDirection)];
     }
 }

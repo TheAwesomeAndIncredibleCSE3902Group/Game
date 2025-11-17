@@ -12,7 +12,7 @@ public class SwordSheathe : Equipment
 {
     protected override List<Projectile> CreateProjectiles()
     {
-        Player player = Player.Instance;
+        PlayerOverworld player = PlayerOverworld.Instance;
         return [new PlayerSword(player.Position, player.FacingDirection)];
     }
 }

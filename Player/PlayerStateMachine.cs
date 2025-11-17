@@ -79,7 +79,7 @@ public class PlayerStateMachine
 
     public static void UseEquipment(Weapons weapon)
     {
-        Player.Instance.Equipment[weapon].Use();
+        PlayerOverworld.Instance.Equipment[weapon].Use();
     }
 
     /// <summary>
@@ -111,7 +111,7 @@ public class PlayerStateMachine
             ChangeStateStanding();
 
         //This is coupled with Player, plus requires the correct order between the Controllers and This. Neither of which do I love
-        else if (currentState == States.Walking && !Player.Instance.HasMovedThisFrame)
+        else if (currentState == States.Walking && !PlayerOverworld.Instance.HasMovedThisFrame)
             ChangeStateStanding();
 
         else if (currentState == States.ItemUse && timeSinceStateChange > itemUseTime)

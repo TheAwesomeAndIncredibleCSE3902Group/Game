@@ -13,102 +13,119 @@ namespace AwesomeRPG;
 
 public static class GameSoundFactory
 {
-    private static double timeSinceIntroStart = 0;
+    private static SoundEffect characterTextPrintSoundEffect;
+    private static SoundEffect overworldOceanAndWaterSoundEffect;
+    private static SoundEffect roomDiscoverySoundEffect;
+    private static SoundEffect roomOpeningSoundEffect;
 
+    // Holders to grab the time duration of intro portions for better looping
     private static SoundEffect overWorldThemeIntroHolder;
-    private static SoundEffect overWorldThemeMainLoopHolder;
     private static SoundEffect battleSceneThemeIntroHolder;
-    private static SoundEffect battleSceneThemeMainLoopHolder;
-    private static SoundEffect dungeonThemeHolder;
+    private static SoundEffect bossBattleSceneThemeIntroHolder;
 
-    private static SoundEffectInstance overWorldThemeIntro;
-    private static SoundEffectInstance overWorldThemeMainLoop;
     private static SoundEffectInstance battleSceneThemeIntro;
     private static SoundEffectInstance battleSceneThemeMainLoop;
+    private static SoundEffectInstance bossBattleSceneThemeIntro;
+    private static SoundEffectInstance bossBattleSceneThemeMainLoop;
     private static SoundEffectInstance dungeonTheme;
-
-    // To help pause and play
-    public static bool IsCurrentThemePlaying { get; set; }
-
-    /*
-     * Pause and Play need to be placed into their own sound class as sounds need to be instances to be 
-     * stopped and paused during gameplay
-     */
+    private static SoundEffectInstance overWorldThemeIntro;
+    private static SoundEffectInstance overWorldThemeMainLoop;
+    private static SoundEffectInstance startScreenTheme;
 
     public static void PlayOverworldMapTheme(GameTime gameTime)
     {
-        if (!IsCurrentThemePlaying)
-        {
-            overWorldThemeIntro.Play();
-            IsCurrentThemePlaying = true;
-        }
-
-        // Once the intro is done, continue to the main loop
-        if (timeSinceIntroStart > overWorldThemeIntroHolder.Duration.TotalNanoseconds)
-        {
-            overWorldThemeMainLoop.Play();
-        }
-
-        // Count the seconds that have played of the intro
-        if (timeSinceIntroStart <= overWorldThemeIntroHolder.Duration.TotalNanoseconds)
-        {
-            timeSinceIntroStart += gameTime.ElapsedGameTime.TotalNanoseconds;
-        }
+        ThemeController.PlayCurrentAreaTheme(gameTime, overWorldThemeIntro, overWorldThemeIntroHolder.Duration.Nanoseconds, overWorldThemeMainLoop);
     }
 
     public static void StopOverworldMapTheme()
     {
-        timeSinceIntroStart = 0;
-        overWorldThemeIntro.Stop();
-        overWorldThemeMainLoop.Stop();
-        IsCurrentThemePlaying = false;
+        ThemeController.StopCurrentAreaTheme(overWorldThemeIntro, overWorldThemeMainLoop);
     }
 
     public static void PlayBattleSceneTheme(GameTime gameTime)
     {
-        if (!IsCurrentThemePlaying)
-        {
-            battleSceneThemeIntro.Play();
-            IsCurrentThemePlaying = true;
-        }
-
-        if (timeSinceIntroStart > battleSceneThemeIntroHolder.Duration.TotalNanoseconds)
-        {
-            battleSceneThemeMainLoop.Play();
-        }
-
-        if (timeSinceIntroStart <= battleSceneThemeIntroHolder.Duration.TotalNanoseconds)
-        {
-            timeSinceIntroStart += gameTime.ElapsedGameTime.TotalNanoseconds;
-        }
+        ThemeController.PlayCurrentAreaTheme(gameTime, battleSceneThemeIntro, battleSceneThemeIntroHolder.Duration.TotalNanoseconds, battleSceneThemeMainLoop);
     }
     public static void StopBattleSceneTheme()
     {
-        timeSinceIntroStart = 0;
-        battleSceneThemeIntro.Stop();
-        battleSceneThemeMainLoop.Stop();
-        IsCurrentThemePlaying = false;
+        ThemeController.StopCurrentAreaTheme(battleSceneThemeIntro, battleSceneThemeMainLoop);
+    }
+    public static void PlayBossBattleSceneTheme(GameTime gameTime)
+    {
+        ThemeController.PlayCurrentAreaTheme(gameTime, bossBattleSceneThemeIntro, bossBattleSceneThemeIntroHolder.Duration.TotalNanoseconds, bossBattleSceneThemeMainLoop);
+    }
+    public static void StopBossBattleSceneTheme()
+    {
+        ThemeController.StopCurrentAreaTheme(bossBattleSceneThemeIntro, bossBattleSceneThemeMainLoop);
     }
 
-    public static void LoadAllSongs(ContentManager content)
+    public static void PlayDungeonTheme()
     {
-        IsCurrentThemePlaying = false;
+        ThemeController.PlayCurrentAreaTheme(dungeonTheme);
+    }
 
+    public static void StopDungeonTheme()
+    {
+        ThemeController.StopCurrentAreaTheme(dungeonTheme);
+    }
+    public static void PlayStartScreenTheme()
+    {
+        ThemeController.PlayCurrentAreaTheme(startScreenTheme);
+    }
+
+    public static void StopStartScreenTheme()
+    {
+        ThemeController.StopCurrentAreaTheme(startScreenTheme);
+    }
+
+    public static void PlayCharacterTextPrintSoundEffect()
+    {
+        characterTextPrintSoundEffect.Play();
+    }
+
+    public static void PlayOverworldOceanAndWaterSoundEffect()
+    {
+        overworldOceanAndWaterSoundEffect.Play();
+    }
+
+    public static void PlayRoomDiscoverySoundEffect()
+    {
+        roomDiscoverySoundEffect.Play();
+    }
+
+    public static void PlayRoomOpeningSoundEffect()
+    {
+        roomOpeningSoundEffect.Play();
+    }
+
+    public static void LoadAndSetUpAllThemes(ContentManager content)
+    {
+        ThemeController.IsCurrentThemePlaying = false;
+
+        characterTextPrintSoundEffect = content.Load<SoundEffect>("BackgroundSoundEffects/CharacterTextPrintSoundEffect");
+        overworldOceanAndWaterSoundEffect = content.Load<SoundEffect>("BackgroundSoundEffects/OverworldOceanAndWaterSoundEffect");
+        roomDiscoverySoundEffect = content.Load<SoundEffect>("BackgroundSoundEffects/RoomDiscoverySoundEffect");
+        roomOpeningSoundEffect = content.Load<SoundEffect>("BackgroundSoundEffects/RoomOpeningSoundEffect");
+
+        battleSceneThemeIntroHolder = content.Load<SoundEffect>("GameThemes/BattleSceneThemeIntro");
+        bossBattleSceneThemeIntroHolder = content.Load<SoundEffect>("GameThemes/BossBattleSceneThemeIntro");
         overWorldThemeIntroHolder = content.Load<SoundEffect>("GameThemes/OverworldMapThemeIntro");
-        overWorldThemeMainLoopHolder = content.Load<SoundEffect>("GameThemes/OverworldMapThemeRepeat");
-        battleSceneThemeIntroHolder = content.Load<SoundEffect>("GameThemes/BattleSceneMusicIntro");
-        battleSceneThemeMainLoopHolder = content.Load<SoundEffect>("GameThemes/BattleSceneMusicRepeat");
-        dungeonThemeHolder = content.Load<SoundEffect>("GameThemes/DungeonTheme");
 
+        battleSceneThemeIntro = battleSceneThemeIntroHolder.CreateInstance();
+        bossBattleSceneThemeIntro = bossBattleSceneThemeIntroHolder.CreateInstance();
         overWorldThemeIntro = overWorldThemeIntroHolder.CreateInstance();
-        overWorldThemeMainLoop = overWorldThemeMainLoopHolder.CreateInstance();
-        battleSceneThemeIntro = battleSceneThemeMainLoopHolder.CreateInstance();
-        battleSceneThemeMainLoop = battleSceneThemeMainLoopHolder.CreateInstance();
-        dungeonTheme = dungeonThemeHolder.CreateInstance();
+
+        battleSceneThemeMainLoop = content.Load<SoundEffect>("GameThemes/BattleSceneThemeRepeat").CreateInstance();
+        bossBattleSceneThemeMainLoop = content.Load<SoundEffect>("GameThemes/BossBattleSceneThemeRepeat").CreateInstance();
+        overWorldThemeMainLoop = content.Load<SoundEffect>("GameThemes/OverworldMapThemeRepeat").CreateInstance();
+        dungeonTheme = content.Load<SoundEffect>("GameThemes/DungeonTheme").CreateInstance();
+        startScreenTheme = content.Load<SoundEffect>("GameThemes/StartScreenTheme").CreateInstance();
 
         overWorldThemeMainLoop.IsLooped = true;
         battleSceneThemeMainLoop.IsLooped = true;
+        bossBattleSceneThemeMainLoop.IsLooped = true;
         dungeonTheme.IsLooped = true;
+        startScreenTheme.IsLooped = true;
     }
 
 

@@ -13,6 +13,72 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin BackgroundSoundEffects/CharacterTextPrintSoundEffect.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:BackgroundSoundEffects/CharacterTextPrintSoundEffect.mp3
+
+#begin BackgroundSoundEffects/OverworldOceanAndWaterSoundEffect.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:BackgroundSoundEffects/OverworldOceanAndWaterSoundEffect.mp3
+
+#begin BackgroundSoundEffects/RoomDiscoverySoundEffect.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:BackgroundSoundEffects/RoomDiscoverySoundEffect.mp3
+
+#begin BackgroundSoundEffects/RoomOpeningSoundEffect.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:BackgroundSoundEffects/RoomOpeningSoundEffect.mp3
+
+#begin EnemySoundEffects/BossDeathSoundEffect.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:EnemySoundEffects/BossDeathSoundEffect.mp3
+
+#begin EnemySoundEffects/BossHurtSoundEffect.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:EnemySoundEffects/BossHurtSoundEffect.mp3
+
+#begin EnemySoundEffects/BossRoarSoundEffect.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:EnemySoundEffects/BossRoarSoundEffect.mp3
+
+#begin EnemySoundEffects/EnemyKillSoundEffect.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:EnemySoundEffects/EnemyKillSoundEffect.mp3
+
+#begin EnemySoundEffects/EnemyRoarSoundEffect.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:EnemySoundEffects/EnemyRoarSoundEffect.mp3
+
+#begin EnemySoundEffects/EnemyShrinkingSoundEffect.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:EnemySoundEffects/EnemyShrinkingSoundEffect.mp3
+
+#begin EnemySoundEffects/EnemyZappedSoundEffect.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:EnemySoundEffects/EnemyZappedSoundEffect.mp3
+
 #begin Fonts/MyFont.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
@@ -20,17 +86,29 @@
 /processorParam:TextureFormat=Compressed
 /build:Fonts/MyFont.spritefont
 
-#begin GameThemes/BattleSceneMusicIntro.wav
+#begin GameThemes/BattleSceneThemeIntro.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:GameThemes/BattleSceneMusicIntro.wav
+/build:GameThemes/BattleSceneThemeIntro.wav
 
-#begin GameThemes/BattleSceneMusicRepeat.wav
+#begin GameThemes/BattleSceneThemeRepeat.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:GameThemes/BattleSceneMusicRepeat.wav
+/build:GameThemes/BattleSceneThemeRepeat.wav
+
+#begin GameThemes/BossBattleSceneThemeIntro.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:GameThemes/BossBattleSceneThemeIntro.wav
+
+#begin GameThemes/BossBattleSceneThemeRepeat.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:GameThemes/BossBattleSceneThemeRepeat.wav
 
 #begin GameThemes/DungeonTheme.wav
 /importer:WavImporter
@@ -49,6 +127,138 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:GameThemes/OverworldMapThemeRepeat.wav
+
+#begin GameThemes/StartScreenTheme.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:GameThemes/StartScreenTheme.wav
+
+#begin GameThemes/ZeldaHelpSong.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:GameThemes/ZeldaHelpSong.mp3
+
+#begin GameThemes/ZeldaRescuedSong.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:GameThemes/ZeldaRescuedSong.mp3
+
+#begin ItemSoundEffects/ArrowAndReflectSoundEffect.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:ItemSoundEffects/ArrowAndReflectSoundEffect.mp3
+
+#begin ItemSoundEffects/BombBlastSoundEffect.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:ItemSoundEffects/BombBlastSoundEffect.mp3
+
+#begin ItemSoundEffects/BombPlacementSoundEffect.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:ItemSoundEffects/BombPlacementSoundEffect.mp3
+
+#begin ItemSoundEffects/BoomerangSoundEffect.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:ItemSoundEffects/BoomerangSoundEffect.wav
+
+#begin ItemSoundEffects/FireSoundEffect.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:ItemSoundEffects/FireSoundEffect.mp3
+
+#begin ItemSoundEffects/FleeAndFluteSoundEffect.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:ItemSoundEffects/FleeAndFluteSoundEffect.mp3
+
+#begin ItemSoundEffects/HeartGetSoundEffect.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:ItemSoundEffects/HeartGetSoundEffect.mp3
+
+#begin ItemSoundEffects/HeartRevealSoundEffect.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:ItemSoundEffects/HeartRevealSoundEffect.mp3
+
+#begin ItemSoundEffects/ItemRevealAndGetSoundEffect.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:ItemSoundEffects/ItemRevealAndGetSoundEffect.mp3
+
+#begin ItemSoundEffects/MagicBeamSoundEffect.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:ItemSoundEffects/MagicBeamSoundEffect.mp3
+
+#begin ItemSoundEffects/RupeeGetSoundEffect.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:ItemSoundEffects/RupeeGetSoundEffect.mp3
+
+#begin ItemSoundEffects/SwordBeamSoundEffect.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:ItemSoundEffects/SwordBeamSoundEffect.mp3
+
+#begin ItemSoundEffects/SwordSlashSoundEffect.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:ItemSoundEffects/SwordSlashSoundEffect.mp3
+
+#begin LinkSoundEffects/BossBattleVictorySoundEffect.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:LinkSoundEffects/BossBattleVictorySoundEffect.mp3
+
+#begin LinkSoundEffects/LinkEnterRoomSoundEffect.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:LinkSoundEffects/LinkEnterRoomSoundEffect.mp3
+
+#begin LinkSoundEffects/LinkHurtSoundEffect.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:LinkSoundEffects/LinkHurtSoundEffect.mp3
+
+#begin LinkSoundEffects/LinkItemGetSoundEffect.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:LinkSoundEffects/LinkItemGetSoundEffect.mp3
+
+#begin LinkSoundEffects/UICursorMoveAndLinkDyingSoundEffect.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:LinkSoundEffects/UICursorMoveAndLinkDyingSoundEffect.mp3
+
+#begin LinkSoundEffects/VictoryFanfare.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:LinkSoundEffects/VictoryFanfare.mp3
 
 #begin MapItems/Level0-0.xml
 /copy:MapItems/Level0-0.xml

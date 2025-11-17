@@ -213,23 +213,23 @@ namespace AwesomeRPG.Map
             GetRoom(column, row).Pickups.Remove(pickup);
             GetRoom(column, row).NonMovingCollisionObjects.Remove(pickup);
         }
-        public void AddPlayer(Player player)
+        public void AddPlayer(PlayerOverworld player)
         {
             AddPlayer(player, GetColumn(CurrentRoom), GetRow(CurrentRoom));
         }
 
-        public void AddPlayer (Player player, int column, int row)
+        public void AddPlayer (PlayerOverworld player, int column, int row)
         {
             GetRoom(column, row).Player = player;
             GetRoom(column, row).MovingCollisionObjects.Add(player);
         }
 
-        public void RemovePlayer(Player player)
+        public void RemovePlayer(PlayerOverworld player)
         {
             RemovePlayer(player, GetColumn(CurrentRoom), GetRow(CurrentRoom));
         }
 
-        public void RemovePlayer(Player player, int column, int row)
+        public void RemovePlayer(PlayerOverworld player, int column, int row)
         {
             GetRoom(column, row).Player = null;
             GetRoom(column, row).MovingCollisionObjects.Remove(player);

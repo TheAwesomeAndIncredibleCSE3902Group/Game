@@ -53,7 +53,7 @@ public class PlayerBoomerang : Projectile
     private void MoveBack()
     {
         //Vector2 toPlayer = Player.Instance.Position - Position;
-        Vector2 toPlayer = Player.Instance.Position - Position + new Vector2(approxPlayerSize / 2f);
+        Vector2 toPlayer = PlayerOverworld.Instance.Position - Position + new Vector2(approxPlayerSize / 2f);
         toPlayer.Normalize();
         Position += 2 * movementSpeed * toPlayer;
     }

@@ -14,7 +14,7 @@ namespace AwesomeRPG.BattleMechanics
         public List<IBattle> SetUpAllies()
         {
             List<IBattle> battles = new List<IBattle>();
-            battles.Add(new PlayerBattle(new PlayerStats(20, 5, 5, 5, 5, 5, 5, 5, 100)));
+            battles.Add(new PlayerBattle(Player.Instance.PlayerStats));
             battles.Add(new PlayerBattle(new PlayerStats(20, 5, 5, 5, 5, 5, 5, 5, 100)));
             return battles;
         }

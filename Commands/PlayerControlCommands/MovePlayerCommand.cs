@@ -5,12 +5,12 @@ namespace AwesomeRPG.Commands
 {
     public class MovePlayerCommand : ICommand
     {
-        private Player currentPlayer;
+        private PlayerOverworld currentPlayer;
         private Cardinal inputDirection;
 
         public MovePlayerCommand(Cardinal direction) 
         {
-            currentPlayer = Player.Instance;
+            currentPlayer = PlayerOverworld.Instance;
             inputDirection = direction;
         }
 

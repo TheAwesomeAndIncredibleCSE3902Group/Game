@@ -11,6 +11,7 @@ using AwesomeRPG.Commands.BattleCommands;
 using AwesomeRPG.Commands;
 using AwesomeRPG.Map;
 using AwesomeRPG.Characters;
+using AwesomeRPG.Stats;
 
 namespace AwesomeRPG;
 
@@ -57,7 +58,7 @@ public class Game1 : Game
         CharacterSpriteFactory.Instance.LoadAllTextures(Content, _spriteBatch);
 
         //Create sound factories; load sound effects
-        GameSoundFactory.LoadAllSongs(Content);
+        GameSoundFactory.LoadAndSetUpAllThemes(Content);
 
         StateClass = new StartScreenState(this);
         //InitializeOverworldAndControllers();
@@ -67,9 +68,11 @@ public class Game1 : Game
     public void InitializeOverworldAndControllers()
     {
         //Player must be declared before the Overworld
-        new Player(Content, _spriteBatch);
+        PlayerOverworld pOverworld = new PlayerOverworld(Content, _spriteBatch);
+        PlayerStats pStats = new PlayerStats(20, 5, 5, 5, 5, 5, 5, 5, 100);
+        new Player(pStats, pOverworld);
 
-        StateClass = new OverworldState(Content, Player.Instance, this);
+        StateClass = new OverworldState(Content, PlayerOverworld.Instance, this);
 
         _controllersList =
         [
