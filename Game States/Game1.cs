@@ -105,6 +105,7 @@ public class Game1 : Game
         }
         // buttons[5].IsVisible = false;
 
+
         RootUIElement.UIState.SelectionIndex = 0;
 
         RootUIElement.AddActionOnUIEvent(UIEvent.ButtonDown, (e) =>

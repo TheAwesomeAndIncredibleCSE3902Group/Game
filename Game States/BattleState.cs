@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using AwesomeRPG.Controllers;
+using AwesomeRPG.UI.Components;
 using AwesomeRPG.UI.Elements;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -28,6 +29,10 @@ public class BattleState : IGameState
         this.game = game;
         this.overworldState = overState;
         this.RootUIElement = game.RootUIElement;
+
+        BattleUITextTyperComponent.NewTyper(RootUIElement, game.spriteFont, this, new Rectangle(10, 530, 1004, 230), Color.White);
+        RootUIElement.AddChild(BattleUITextTyperComponent.CreatedElement);
+
     }
 
     public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
@@ -37,7 +42,7 @@ public class BattleState : IGameState
 
     public void Update(GameTime gameTime)
     {
-
+        BattleUITextTyperComponent.Update(gameTime);
     }
 
     public void ChangeToBattleState() { }
