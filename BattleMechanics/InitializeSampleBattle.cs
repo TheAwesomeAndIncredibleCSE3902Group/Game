@@ -14,13 +14,15 @@ namespace AwesomeRPG.BattleMechanics
         public List<IBattle> SetUpAllies()
         {
             List<IBattle> battles = new List<IBattle>();
-            battles.Add(new PlayerBattle(new PlayerStats(20,5,5,5,5,5,5,5,100)));
+            battles.Add(new PlayerBattle(new PlayerStats(20, 5, 5, 5, 5, 5, 5, 5, 100)));
+            battles.Add(new PlayerBattle(new PlayerStats(20, 5, 5, 5, 5, 5, 5, 5, 100)));
             return battles;
         }
         public List<IBattle> SetUpEnemies()
         {
             List<IBattle> battles = new List<IBattle>();
-            battles.Add(new MoblinBattle(new EnemyStats(10,1,1,1,1,1,1,1,100)));
+            battles.Add(new MoblinBattle(new EnemyStats(10, 1, 1, 1, 1, 1, 1, 1, 100)));
+            battles.Add(new MoblinBattle(new EnemyStats(10, 1, 1, 1, 1, 1, 1, 1, 100)));
             return battles;
         }
     }

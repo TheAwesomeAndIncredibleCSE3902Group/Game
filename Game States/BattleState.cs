@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using AwesomeRPG.BattleMechanics;
 using AwesomeRPG.Characters;
 using AwesomeRPG.Controllers;
 using AwesomeRPG.UI.Elements;
@@ -32,6 +33,7 @@ public class BattleState : IGameState
         this.overworldState = overState;
         this.RootUIElement = game.RootUIElement;
         this.enemies = enemies;
+        InitializeBattle();
     }
 
     public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
@@ -72,6 +74,11 @@ public class BattleState : IGameState
             GameState.overworld => true,
             _ => false
         };
+    }
+
+    private void InitializeBattle()
+    {
+        BattleScene.Instance.InitializeBattleSequence(true,new InitializeSampleBattle().SetUpEnemies(), new InitializeSampleBattle().SetUpAllies());
     }
 
 }

@@ -98,7 +98,7 @@ public class Game1 : Game
         for (int i = 0; i < 5; i++)
         {
             var currentButtonToAdd = ButtonComponent.Create(RootUIElement, spriteFont, this, new Rectangle(20 + (i / 3) * 365, 540 + (i % 3) * 75, 350, 60), Color.Purple, Color.White, "Action " + i);
-            currentButtonToAdd.AssociatedCommand = new SampleAttackBattleCommand();
+            currentButtonToAdd.AssociatedCommand = new RegularAttackBattleCommand(0);
             buttons.Add(currentButtonToAdd);
             RootUIElement.AddChild(currentButtonToAdd);
         }

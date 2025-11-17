@@ -23,8 +23,9 @@ namespace AwesomeRPG.Commands.BattleCommands
 
         public void Execute() 
         {
+            //Command should no longer be functional
             Debug.WriteLine("SampleAttackBattleCommand Executed");
-            playerBattle.Attack(targetBattle);
+            playerBattle.Attack(1);
             Debug.WriteLine($"Target Health after attack: {targetBattle.Stats.GetHealth()}");
         }
     }

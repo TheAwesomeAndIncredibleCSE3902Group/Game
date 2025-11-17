@@ -20,19 +20,21 @@ public class PlayerBattle : IBattle
     }
 
 
-    public void Attack(IBattle enemy)
+    public void Attack(int enemyIndex)
     {
         int attackVal = Stats.GetAttack();
-        int defenseVal = enemy.Stats.GetDefense();
+        int defenseVal = BattleScene.Instance.EnemyList[enemyIndex].Stats.GetDefense();
         Debug.WriteLine($"player attack value: {attackVal}. enemy defense value: {defenseVal}");
         int damageVal =  defenseVal - attackVal;
 
-        enemy.Stats.ChangeHealth(damageVal);
+        BattleScene.Instance.EnemyList[enemyIndex].Stats.ChangeHealth(damageVal);
         Debug.WriteLine($"Player attacked for {damageVal} damage!");
-        if (enemy.Stats.GetHealth() < 1)
+        Debug.WriteLine($"Enemy's health is now {BattleScene.Instance.EnemyList[enemyIndex].Stats.GetHealth()}");
+
+        if (BattleScene.Instance.EnemyList[enemyIndex].Stats.GetHealth() < 1)
         {
-            enemy.IsFainted = true;
-            Debug.WriteLine($"Enemy has fainted! {enemy.IsFainted}");
+            BattleScene.Instance.EnemyList[enemyIndex].IsFainted = true;
+            Debug.WriteLine($"Enemy has fainted! {BattleScene.Instance.EnemyList[enemyIndex].IsFainted}");
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,17 +13,18 @@ namespace AwesomeRPG.Commands.BattleCommands
     public class RegularAttackBattleCommand : ICommand
     {
         private PlayerBattle playerBattle;
-        private IBattle targetBattle;
-        public RegularAttackBattleCommand(BattleScene currentBattle, IBattle target) 
-        { 
+        private int target;
+        public RegularAttackBattleCommand(int targetIndex) 
+        {
             //Command should only be able to be called when it is a Player turn since Enemies should be automated
-            playerBattle = (PlayerBattle)currentBattle.CurrentBattle;
-            targetBattle = target;
+            Debug.WriteLine($"IBattle exists? {BattleScene.Instance.CurrentBattle}");
+            playerBattle = (PlayerBattle)BattleScene.Instance.CurrentBattle;
+            target = targetIndex;
         }
 
         public void Execute() 
         {
-            playerBattle.Attack(targetBattle);
+            ((PlayerBattle)BattleScene.Instance.CurrentBattle).Attack(target);
         }
     }
 }
