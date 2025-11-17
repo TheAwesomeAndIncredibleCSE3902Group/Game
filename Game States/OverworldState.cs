@@ -6,6 +6,8 @@ using AwesomeRPG.Map;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using AwesomeRPG.UI.Elements;
+using System.Diagnostics;
 
 namespace AwesomeRPG;
 
@@ -18,10 +20,8 @@ public class OverworldState : IGameState
     //Will eventually be used as a global scalar for time (ie affects everything in the Overworld)
     public float TimeScale { get; private set; } = 1;
     private Game1 game;
-    private AllCollisionHandler allCollisionHandler;
     public GameState CurrentState { get => GameState.overworld; }
 
-    // public RootElement RootUIElement {get; private set; }
 
     /// <summary>
     /// Requires Content already loaded and Player fully constructed
@@ -29,7 +29,7 @@ public class OverworldState : IGameState
     /// <param name="contentManager"></param>
     /// <param name="player"></param>
     /// <exception cref="NotImplementedException"></exception>
-    public OverworldState(ContentManager contentManager, Player player, Game1 game)
+    public OverworldState(ContentManager contentManager, PlayerOverworld player, Game1 game)
     {
         this.game = game;
 
@@ -45,6 +45,7 @@ public class OverworldState : IGameState
 
         RoomAtlas.Instance.CurrentRoom.Draw(spriteBatch, gameTime);
         //TODO: draw HUD here
+        DrawPlayerHUD(gameTime,spriteBatch);
     }
 
     public void Update(GameTime gameTime)
@@ -83,5 +84,22 @@ public class OverworldState : IGameState
             GameState.overworld => true,
             _ => false
         };
+    }
+
+    private void DrawPlayerHUD(GameTime gameTime,SpriteBatch spriteBatch)
+    {
+        RootElement rootUIElement = new RootElement(spriteBatch);
+
+        //Ensure the font is loaded
+        var spriteFont = game.Content.Load<SpriteFont>("Fonts\\MyFont");
+
+        //Text element construction
+        String textString = Player.Instance.PlayerStats.GetHealth().ToString();
+        TextElement textElem = new TextElement(rootUIElement, spriteFont, textString, Color.White);
+        textElem.OffsetAndSize = game.GetScreenRect();
+        textElem.HorizontalTextAlign = TextElement.TextAlign.Left;
+        textElem.VerticalTextAlign = TextElement.TextAlign.Right;
+        rootUIElement.AddChild(textElem);
+        rootUIElement.Draw(gameTime);
     }
 }

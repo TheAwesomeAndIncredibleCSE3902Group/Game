@@ -9,7 +9,7 @@ public class PlayerPickupCollideCommand : ICollisionCommand
     public void Execute(CollisionInfo collision)
     {
         Pickup pickup = (Pickup)collision.GetCollisionObjectOfType(CollisionObjectType.Pickup);
-        Player player = (Player)collision.GetCollisionObjectOfType(CollisionObjectType.Player);
+        PlayerOverworld player = (PlayerOverworld)collision.GetCollisionObjectOfType(CollisionObjectType.Player);
         pickup.OnPlayerTouched(player);
     }
 }

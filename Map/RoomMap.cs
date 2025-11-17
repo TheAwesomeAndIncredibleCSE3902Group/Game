@@ -12,7 +12,7 @@ namespace AwesomeRPG.Map;
 public class RoomMap
 {
     private readonly Tilemap _tilemap;
-    public Player Player { private get; set; } 
+    public PlayerOverworld Player { private get; set; } 
     public List<ICharacter> Characters { get; private set; } = [];
     public List<Pickup> Pickups { get; private set; } = [];
     public List<Projectile> Projectiles { get; private set; } = [];

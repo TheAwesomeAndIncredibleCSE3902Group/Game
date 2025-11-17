@@ -11,7 +11,7 @@ public class Bow : Equipment
 {
     protected override List<Projectile> CreateProjectiles()
     {
-        Player player = Player.Instance;
+        PlayerOverworld player = PlayerOverworld.Instance;
         return [new WaveyArrow(player.Position,player.FacingDirection)];
     }
 }

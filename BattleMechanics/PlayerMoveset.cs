@@ -9,12 +9,12 @@ namespace AwesomeRPG.BattleMechanics
     public class PlayerMoveset
     {
 
-        private Player _player;
+        private PlayerOverworld _player;
         static public bool TurnIsActive {  get; set; }
 
         public void InitializePlayer()
         {
-            _player = Player.Instance;
+            _player = PlayerOverworld.Instance;
         }
 
         public static int Attack()

@@ -11,7 +11,7 @@ public class PlayerWallCollideCommand : ICollisionCommand
 
         //Player must be pushed by exactly as many pixels as it walked, otherwise there will be jitter
         const float backup = 240;
-        float pushPixels = ((player as Player)?.MovementSpeed ?? backup) / Util.ApproxFramesPerSecond;
+        float pushPixels = ((player as PlayerOverworld)?.MovementSpeed ?? backup) / Util.ApproxFramesPerSecond;
 
         Vector2 bumpUnitDirection = Util.CardinalToUnitVector(collision.Direction.ToCard().Opposite());
         player.Position += pushPixels * bumpUnitDirection;

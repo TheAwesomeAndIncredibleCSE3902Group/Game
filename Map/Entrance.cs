@@ -47,8 +47,8 @@ namespace AwesomeRPG.Map
             if (newRoom != null)
             {
                 roomAtlas.CurrentRoom = newRoom;
-                roomAtlas.AddPlayer(player as Player);
-                roomAtlas.RemovePlayer(player as Player,column,row);
+                roomAtlas.AddPlayer(player as PlayerOverworld);
+                roomAtlas.RemovePlayer(player as PlayerOverworld,column,row);
             }
         } 
     }

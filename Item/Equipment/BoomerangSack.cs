@@ -12,7 +12,7 @@ public class BoomerangSack : Equipment
 {
     protected override List<Projectile> CreateProjectiles()
     {
-        Player player = Player.Instance;
+        PlayerOverworld player = PlayerOverworld.Instance;
         return [new PlayerBoomerang(player.Position, player.FacingDirection)];
     }
 }

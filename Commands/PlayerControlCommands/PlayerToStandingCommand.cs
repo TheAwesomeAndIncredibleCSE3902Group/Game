@@ -4,11 +4,11 @@ namespace AwesomeRPG.Commands;
 
 public class PlayerToStandingCommand : ICommand
 {
-    private Player currentPlayer;
+    private PlayerOverworld currentPlayer;
 
     public PlayerToStandingCommand()
     {
-        currentPlayer = Player.Instance;
+        currentPlayer = PlayerOverworld.Instance;
     }
     
     public void Execute()

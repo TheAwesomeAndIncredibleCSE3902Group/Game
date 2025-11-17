@@ -5,11 +5,11 @@ namespace AwesomeRPG.Commands
 {
     public class DamagePlayerCommand : ICommand
     {
-        private Player currentPlayer;
+        private PlayerOverworld currentPlayer;
 
         public DamagePlayerCommand()
         {
-            currentPlayer = Player.Instance;
+            currentPlayer = PlayerOverworld.Instance;
         }
 
         public void Execute()
