@@ -16,9 +16,7 @@ namespace AwesomeRPG.Commands.BattleCommands
         private int target;
         public RegularAttackBattleCommand(int targetIndex) 
         {
-            //Command should only be able to be called when it is a Player turn since Enemies should be automated
-            Debug.WriteLine($"IBattle exists? {BattleScene.Instance.CurrentBattle}");
-            playerBattle = (PlayerBattle)BattleScene.Instance.CurrentBattle;
+            //Command should only be able to be called when it is a Player turn since Enemies should be automateds
             target = targetIndex;
         }
 

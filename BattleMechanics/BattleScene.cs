@@ -30,6 +30,11 @@ namespace AwesomeRPG.BattleMechanics
                 AllyList = new List<IBattle>();
                 EnemyList = new List<IBattle>();
                 turnOrder = new TurnList();
+                return;
+            }
+            if (!CurrentBattle.IsFriend)
+            {
+                //progress straight into text element with EnemyActionBattleCommand
             }
         }
 
