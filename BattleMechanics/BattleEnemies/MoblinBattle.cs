@@ -10,6 +10,7 @@ public class MoblinBattle : IEnemyBattle
     public enum MoblinActions { ScratchBellyButton, RambleCharge, Dance }
     public bool IsFainted { get; set; }
     public bool IsFriend { get; set; }
+    public String TurnText { get; set; }
 
     public MoblinBattle(EnemyStats stats)
     {
@@ -27,12 +28,15 @@ public class MoblinBattle : IEnemyBattle
         {
             case MoblinActions.ScratchBellyButton:
                 Stats.ChangeHealth(3);
+                TurnText = $"Moblin healed for 3";
                 break;
             case MoblinActions.RambleCharge:
                 target.Stats.ChangeHealth(-4);
+                TurnText = $"Moblin attacked someone for 4";
                 break;
             case MoblinActions.Dance:
-                Stats.ChangeHealth(-1);
+                target.Stats.ChangeHealth(-1);
+                TurnText = $"Moblin damaged someone for 1";
                 break;
         }
     }

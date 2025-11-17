@@ -10,7 +10,8 @@ public class LynelBattle : IEnemyBattle
 
     public bool IsFriend { get; set; }
     public bool IsFainted { get; set; }
-    
+    public String TurnText { get; set; }
+
     public LynelBattle(EnemyStats stats)
     {
         Stats = stats;
@@ -27,12 +28,15 @@ public class LynelBattle : IEnemyBattle
         {
             case LynelActions.BrushBackHair:
                 Stats.ChangeHealth(1);
+                TurnText = $"Lynel healed for 1";
                 break;
             case LynelActions.HardStomp:
                 target.Stats.ChangeHealth(-3);
+                TurnText = $"Moblin attacked someone for 3";
                 break;
             case LynelActions.StabNSlash:
                 target.Stats.ChangeHealth(-5);
+                TurnText = $"Moblin attacked someone for 5";
                 break;
         }
     }

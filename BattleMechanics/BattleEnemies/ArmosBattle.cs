@@ -10,6 +10,7 @@ public class ArmosBattle : IEnemyBattle
 
     public bool IsFriend { get; set; }
     public bool IsFainted { get; set; }
+    public String TurnText { get; set; }
 
     public ArmosBattle(EnemyStats stats)
     {
@@ -27,9 +28,11 @@ public class ArmosBattle : IEnemyBattle
         {
             case ArmosActions.ShineArmour:
                 Stats.ChangeHealth(3);
+                TurnText = $"Armos healed for 1";
                 break;
             case ArmosActions.ChargeForward:
                 target.Stats.ChangeHealth(-4);
+                TurnText = $"Armos attacked someone for 4";
                 break;
         }
     }
