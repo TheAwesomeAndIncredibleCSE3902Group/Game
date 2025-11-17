@@ -3,21 +3,21 @@
   <Tilemap>
     <Tileset tileWidth="16" tileHeight="16">TileImages/zelda_tiles</Tileset>
     <Tiles rows="9" columns="16">
-      <Row>!01 !01 !01 !01 !01 !01 !01 ?04 ?04 !01 !01 !01 !01 !01 !01 !01</Row>
-      <Row>!01  00  00  00  00  00  00  00  00  00  00  00  00  00  00 !01</Row>
-      <Row>!01  00 !01 !01 !01 !01  00  00  00  00 !01 !01 !01 !01  00 !01</Row>
-      <Row>!01  00 !01  00  00  00  00  00  00  00  00  00  00 !01  00 !01</Row>
-      <Row>!01  00 !01  00  00  00  00  00  00  00  00  00  00 !01  00 !01</Row>
-      <Row>!01  00 !01 !01 !01 !01  00  00  00  00 !01 !01 !01 !01  00 !01</Row>
-      <Row>!01  00  00  00  00  00  00  00  00  00  00  00  00  00  00 !01</Row>
-      <Row>!01  00  00  00  00  00  00  00  00  00  00  00  00  00  00 !01</Row>
-      <Row>!01 !01 !01 !01 !01 !01 !01 ?04 ?04 !01 !01 !01 !01 !01 !01 !01</Row>
+      <Row>!01 !01 !01 !01 !01 !01 !01 !01 !01 !01 !01 !01 !01 !01 !01 !01</Row>
+      <Row>!01  01  01  01  01  01  01  01 !01  01 !01  00  00  00  00 !01</Row>
+      <Row>!01  01  01  01  01  01  01  01 !01 !01  00  00  00  00  00 !01</Row>
+      <Row>!01 !01 !01 !01 !01 !01 !01 !01 !01  00  00  00  00  00  00 ?04</Row>
+      <Row>!01  00  00  00  00  00  00  00  00  00  00  00  00  00  00 ?04</Row>
+      <Row>!01 !01 !01 !01 !01 !01 !01 !01 !01  00  00  00  00  00  00 !01</Row>
+      <Row>!01  01  01  01  01  01  01  01 !01 !01  00  00  00  00  00 !01</Row>
+      <Row>!01  01  01  01  01  01  01  01 !01  01 !01  00  00  00  00 !01</Row>
+      <Row>!01 !01 !01 !01 !01 !01 !01 !01 !01 !01 !01 !01 !01 !01 !01 !01</Row>
     </Tiles>
   </Tilemap>
   <Entities>
-    <Entity x="260" y="218" pathing="random" facing="right">armos</Entity>
-    <Entity x="700" y="218" pathing="random" facing="left">armos</Entity>
+    <Entity x="512" y="258" pathing="line" facing="right">lynel</Entity><!--Make em stop moving later-->
   </Entities>
   <Pickups>
+    <Pickup x="82" y="258">potion</Pickup><!--Change this to a new teammate later-->
   </Pickups>
 </Map>
