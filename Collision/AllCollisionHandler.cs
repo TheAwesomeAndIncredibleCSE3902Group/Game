@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using AwesomeRPG.Commands;
+using AwesomeRPG.Map;
 
 namespace AwesomeRPG.Collision
 { 
@@ -11,7 +12,7 @@ namespace AwesomeRPG.Collision
         /// Calls a collision response based on the info of the collision given
         /// </summary>
         /// <param name="collision"></param>
-        public void HandleCollision(CollisionInfo collision)
+        private void HandleCollisionResponse(CollisionInfo collision)
         {
             
             if (collision.Direction == CollisionDirection.None) return;
@@ -31,6 +32,34 @@ namespace AwesomeRPG.Collision
           
         }
 
+        public void HandleCollisions(List<CollisionObject> movingCollisionObjects, List<CollisionObject> nonMovingCollisionObjects)
+        {
+            for (int i = 0; i < movingCollisionObjects.Count; i++)
+            {
+                for (int k = 0; k < nonMovingCollisionObjects.Count; k++)
+                {
+                    try
+                    {
+                        CollisionObject movingObject = RoomAtlas.Instance.CurrentRoom._movingCollisionObjects[i];
+                        CollisionObject nonMovingObject = nonMovingCollisionObjects[k];
+                        CollisionInfo collision = movingObject.DetectCollision(nonMovingObject);
+                        HandleCollisionResponse(collision);
+                    }
+                    catch
+                    {
+                        return;
+                    }
+                }
+
+                for (int j = i + 1; j < RoomAtlas.Instance.CurrentRoom._movingCollisionObjects.Count; j++)
+                {
+                    CollisionInfo collision = RoomAtlas.Instance.CurrentRoom._movingCollisionObjects[i].DetectCollision(RoomAtlas.Instance.CurrentRoom._movingCollisionObjects[j]);
+                    HandleCollisionResponse(collision);
+                }
+            }
+        }
+
+        #region Dictionary Declarations
         private void InitializeDict()
         {
             InitializePlayerCollisions();
@@ -38,6 +67,7 @@ namespace AwesomeRPG.Collision
             InitializeProjectileCollisions();
         }
 
+        
         private void InitializeProjectileCollisions()
         {
             collisionResponses[new CollisionPair(CollisionObjectType.PlayerProjectile, CollisionObjectType.Enemy)] = new PlayerProjectileEnemyCollideCommand();
@@ -65,5 +95,6 @@ namespace AwesomeRPG.Collision
             collisionResponses[new CollisionPair(CollisionObjectType.Enemy, CollisionObjectType.Entrance)] = new EnemyWallCollideCommand();
             collisionResponses[new CollisionPair(CollisionObjectType.Enemy, CollisionObjectType.Enemy)] = new EnemyEnemyCollideCommand();
         }
+        #endregion
     }
 }

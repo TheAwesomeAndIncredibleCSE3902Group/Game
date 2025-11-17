@@ -26,8 +26,4 @@ public class SwordBeam : Projectile
         ObjectType = CollisionObjectType.PlayerProjectile;
     }
 
-    public override void Destroy()
-    {
-        Player.Instance.spawnedProjectiles.Remove(IEquipment.Projectiles.swordBeam);
-    }
 }

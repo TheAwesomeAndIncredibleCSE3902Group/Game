@@ -68,8 +68,4 @@ public class WaveyArrow : Projectile
         Position = linearPos + vectorOffset;
     }
 
-    public override void Destroy()
-    {
-        Player.Instance.spawnedProjectiles.Remove(IEquipment.Projectiles.arrow);
-    }
 }

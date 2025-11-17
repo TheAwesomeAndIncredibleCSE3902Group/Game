@@ -28,8 +28,4 @@ public class MoblinFire : Projectile
         ObjectType = CollisionObjectType.EnemyProjectile;
     }
 
-    public override void Destroy()
-    {
-        RoomAtlas.Instance.RemoveProjectile(this);
-    }
 }

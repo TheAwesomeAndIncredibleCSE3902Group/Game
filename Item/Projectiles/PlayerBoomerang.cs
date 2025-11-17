@@ -58,8 +58,4 @@ public class PlayerBoomerang : Projectile
         Position += 2 * movementSpeed * toPlayer;
     }
 
-    public override void Destroy()
-    {
-        Player.Instance.spawnedProjectiles.Remove(IEquipment.Projectiles.boomerang);
-    }
 }

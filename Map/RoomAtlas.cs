@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AwesomeRPG.Characters;
-using static AwesomeRPG.IEquipment;
+using static AwesomeRPG.Equipment;
 
 namespace AwesomeRPG.Map
 {

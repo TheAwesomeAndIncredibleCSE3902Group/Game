@@ -7,19 +7,11 @@ namespace AwesomeRPG;
 /// <summary>
 /// The Bow can shoot an Arrow
 /// </summary>
-public class Bow : IEquipment
+public class Bow : Equipment
 {
-    public void Use()
+    protected override List<Projectile> CreateProjectiles()
     {
         Player player = Player.Instance;
-        Dictionary<IEquipment.Projectiles,Projectile> spawnedProjectiles = player.spawnedProjectiles;
-
-        //Player can only ever have one arrow on screen, so if arrow already exists then abort
-        if (spawnedProjectiles.ContainsKey(IEquipment.Projectiles.arrow))
-            return;
-
-        WaveyArrow arrow = new WaveyArrow(player.Position, player.FacingDirection);
-        spawnedProjectiles[IEquipment.Projectiles.arrow] = arrow;
-        RoomAtlas.Instance.CurrentRoom._movingCollisionObjects.Add(arrow);
+        return [new WaveyArrow(player.Position,player.FacingDirection)];
     }
 }

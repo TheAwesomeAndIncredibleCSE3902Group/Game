@@ -30,8 +30,4 @@ public class PlayerSword : Projectile
        this.Position = Player.Instance.Position + Util.CardinalToUnitVector(direction) * swordOffset;
     }
 
-    public override void Destroy()
-    {
-        Player.Instance.spawnedProjectiles.Remove(IEquipment.Projectiles.sword);
-    }
 }

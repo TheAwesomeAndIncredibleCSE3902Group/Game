@@ -118,7 +118,7 @@ public class PlayerStateMachine
         currentHealth += amount;
     }
 
-    public static void UseEquipment(IEquipment.Weapons weapon)
+    public static void UseEquipment(Weapons weapon)
     {
         Player.Instance.Equipment[weapon].Use();
     }

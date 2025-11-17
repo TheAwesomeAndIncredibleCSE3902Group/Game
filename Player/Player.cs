@@ -17,8 +17,7 @@ public class Player : CollisionObject
     public Cardinal FacingDirection => PStateMachine.Direction;
     public PlayerStateMachine PStateMachine { get; private set; }
 
-    public Dictionary<IEquipment.Weapons, IEquipment> Equipment { get; } = new();
-    public Dictionary<IEquipment.Projectiles, Projectile> spawnedProjectiles { get; set; } = new();
+    public Dictionary<Weapons, Equipment> Equipment { get; } = new();
 
     //Whether this has moved yet this frame. Please be careful of any timing issues / race conditions with the Controllers.
     public bool HasMovedThisFrame { get; set; }
@@ -49,23 +48,12 @@ public class Player : CollisionObject
     public void Draw(GameTime gt)
     {
         PStateMachine.Draw(gt, Position);
-
-        foreach (Projectile projectile in spawnedProjectiles.Values)
-        {
-            projectile.Draw(gt);
-        }
     }
 
     public void Update(GameTime gt)
     {
         this.gt = gt;
         HasMovedThisFrame = false;
-
-        foreach (Projectile projectile in spawnedProjectiles.Values)
-        {
-            projectile.Update(gt);
-        }
-
         PStateMachine.Update(gt);
     }
 
@@ -103,9 +91,9 @@ public class Player : CollisionObject
         PStateMachine.ChangeStateDamaged();
     }
 
-    public void UseEquipment(IEquipment.Weapons requestedEQ)
+    public void UseEquipment(Weapons requestedEQ)
     {
-        if (!Equipment.TryGetValue(requestedEQ, out IEquipment playerEQ))
+        if (!Equipment.TryGetValue(requestedEQ, out Equipment playerEQ))
         {
             Console.WriteLine("Tried to use an Equipment that doesn't exist!");
             return;
@@ -118,9 +106,9 @@ public class Player : CollisionObject
     //Declares values for all equipment
     private void InitializeEquipment()
     {
-        Equipment.Add(IEquipment.Weapons.bow, new Bow());
-        Equipment.Add(IEquipment.Weapons.boomerangSack, new BoomerangSack());
-        Equipment.Add(IEquipment.Weapons.swordSheathe, new SwordSheathe());
-        Equipment.Add(IEquipment.Weapons.superSwordSheathe, new SuperSwordSheathe());
+        Equipment.Add(Weapons.bow, new Bow());
+        Equipment.Add(Weapons.boomerangSack, new BoomerangSack());
+        Equipment.Add(Weapons.swordSheathe, new SwordSheathe());
+        Equipment.Add(Weapons.superSwordSheathe, new SuperSwordSheathe());
     }
 }

@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using AwesomeRPG.Sprites;
 using static AwesomeRPG.Util;
 using AwesomeRPG.Collision;
+using AwesomeRPG.Map;
 
 namespace AwesomeRPG;
 
@@ -42,5 +43,8 @@ public abstract class Projectile : CollisionObject
         sprite.Draw(gt, Position);
     }
 
-    public abstract void Destroy();
+    public void Destroy()
+    {
+        RoomAtlas.Instance.RemoveProjectile(this);
+    }
 }

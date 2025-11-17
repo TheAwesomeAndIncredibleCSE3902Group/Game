@@ -8,22 +8,11 @@ namespace AwesomeRPG;
 /// <summary>
 /// The SuperSwordSheathe that holds a sword with a swordBeam
 /// </summary>
-public class SuperSwordSheathe : IEquipment
+public class SuperSwordSheathe : Equipment
 {
-    public void Use()
+    protected override List<Projectile> CreateProjectiles()
     {
         Player player = Player.Instance;
-        Dictionary<IEquipment.Projectiles,Projectile> spawnedProjectiles = player.spawnedProjectiles;
-
-        //Player can only ever have one arrow on screen, so if arrow already exists then abort
-        if (spawnedProjectiles.ContainsKey(IEquipment.Projectiles.sword))
-            return;
-
-        PlayerSword sword = new PlayerSword(player.Position, player.FacingDirection);
-        spawnedProjectiles[IEquipment.Projectiles.sword] = sword;
-        SwordBeam swordBeam = new SwordBeam(player.Position, player.FacingDirection);
-        spawnedProjectiles[IEquipment.Projectiles.swordBeam] = swordBeam;
-        RoomAtlas.Instance.CurrentRoom._movingCollisionObjects.Add(swordBeam);
-        RoomAtlas.Instance.CurrentRoom._movingCollisionObjects.Add(sword);
+        return [new PlayerSword(player.Position, player.FacingDirection),new SwordBeam(player.Position,player.FacingDirection)];
     }
 }

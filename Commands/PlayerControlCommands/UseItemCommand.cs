@@ -5,9 +5,9 @@ namespace AwesomeRPG.Commands
     public class UseItemCommand : ICommand
     {
         private Player _currentPlayer;
-        private IEquipment.Weapons _weapon;
+        private Weapons _weapon;
 
-        public UseItemCommand(IEquipment.Weapons weapon)
+        public UseItemCommand(Weapons weapon)
         {
             _currentPlayer = Player.Instance;
             _weapon = weapon;

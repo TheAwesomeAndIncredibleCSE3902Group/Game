@@ -111,10 +111,10 @@ public class KeyboardController : IController
     //Initialize commands which relate to weapons and item use
     private void InitializeWeaponCommands(Game1 game)
     {
-        overworldKeyPressMappings[Keys.D1] = new UseItemCommand(IEquipment.Weapons.bow);
-        overworldKeyPressMappings[Keys.D2] = new UseItemCommand(IEquipment.Weapons.boomerangSack);
-        overworldKeyPressMappings[Keys.D3] = new UseItemCommand(IEquipment.Weapons.superSwordSheathe);
-        ICommand swordUse = new UseItemCommand(IEquipment.Weapons.swordSheathe);
+        overworldKeyPressMappings[Keys.D1] = new UseItemCommand(Weapons.bow);
+        overworldKeyPressMappings[Keys.D2] = new UseItemCommand(Weapons.boomerangSack);
+        overworldKeyPressMappings[Keys.D3] = new UseItemCommand(Weapons.superSwordSheathe);
+        ICommand swordUse = new UseItemCommand(Weapons.swordSheathe);
         overworldKeyPressMappings[Keys.Z] = swordUse;
         overworldKeyPressMappings[Keys.N] = swordUse;
     }

@@ -1,7 +1,7 @@
 ﻿using AwesomeRPG.Characters;
 using System;
 using System.Security.Cryptography;
-using static AwesomeRPG.IEquipment;
+using static AwesomeRPG.Equipment;
 using static AwesomeRPG.Util;
 
 namespace AwesomeRPG.BattleMechanics
