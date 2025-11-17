@@ -157,7 +157,7 @@ namespace AwesomeRPG.Map
         public void AddEnemy(CharacterEnemyBase enemy, int column, int row)
         {
             GetRoom(column, row).Characters.Add(enemy);
-            GetRoom(column, row)._movingCollisionObjects.Add(enemy);
+            GetRoom(column, row).MovingCollisionObjects.Add(enemy);
         }
 
         public void RemoveEnemy(CharacterEnemyBase enemy)
@@ -167,7 +167,7 @@ namespace AwesomeRPG.Map
         public void RemoveEnemy(CharacterEnemyBase enemy, int column, int row)
         {
             GetRoom(column, row).Characters.Remove(enemy);
-            GetRoom(column, row)._movingCollisionObjects.Remove(enemy);
+            GetRoom(column, row).MovingCollisionObjects.Remove(enemy);
         }
 
         public void AddProjectile(Projectile projectile)
@@ -178,7 +178,7 @@ namespace AwesomeRPG.Map
         public void AddProjectile(Projectile projectile, int column, int row)
         {
             GetRoom(column,row).Projectiles.Add(projectile);
-            GetRoom(column, row)._movingCollisionObjects.Add(projectile);
+            GetRoom(column, row).MovingCollisionObjects.Add(projectile);
         }
 
         public void RemoveProjectile(Projectile projectile)
@@ -189,7 +189,7 @@ namespace AwesomeRPG.Map
         public void RemoveProjectile(Projectile projectile, int column, int row)
         {
             GetRoom(column, row).Projectiles.Remove(projectile);
-            GetRoom(column, row)._movingCollisionObjects.Remove(projectile);
+            GetRoom(column, row).MovingCollisionObjects.Remove(projectile);
         }
 
         public void AddPickup(Pickup pickup)
@@ -200,7 +200,7 @@ namespace AwesomeRPG.Map
         public void AddPickup(Pickup pickup, int column, int row)
         {
             GetRoom(column, row).Pickups.Add(pickup);
-            GetRoom(column, row)._nonMovingCollisionObjects.Add(pickup);
+            GetRoom(column, row).NonMovingCollisionObjects.Add(pickup);
         }
         
         public void RemovePickup(Pickup pickup)
@@ -211,8 +211,30 @@ namespace AwesomeRPG.Map
         public void RemovePickup(Pickup pickup, int column, int row)
         {
             GetRoom(column, row).Pickups.Remove(pickup);
-            GetRoom(column, row)._nonMovingCollisionObjects.Remove(pickup);
+            GetRoom(column, row).NonMovingCollisionObjects.Remove(pickup);
         }
+        public void AddPlayer(Player player)
+        {
+            AddPlayer(player, GetColumn(CurrentRoom), GetRow(CurrentRoom));
+        }
+
+        public void AddPlayer (Player player, int column, int row)
+        {
+            GetRoom(column, row).Player = player;
+            GetRoom(column, row).MovingCollisionObjects.Add(player);
+        }
+
+        public void RemovePlayer(Player player)
+        {
+            RemovePlayer(player, GetColumn(CurrentRoom), GetRow(CurrentRoom));
+        }
+
+        public void RemovePlayer(Player player, int column, int row)
+        {
+            GetRoom(column, row).Player = null;
+            GetRoom(column, row).MovingCollisionObjects.Remove(player);
+        }
+
 
     }
 

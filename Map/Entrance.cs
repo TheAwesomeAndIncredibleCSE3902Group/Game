@@ -47,16 +47,9 @@ namespace AwesomeRPG.Map
             if (newRoom != null)
             {
                 roomAtlas.CurrentRoom = newRoom;
-                UpdateRoomCollisionList(player, newRoom);
+                roomAtlas.AddPlayer(player as Player);
+                roomAtlas.RemovePlayer(player as Player,column,row);
             }
         } 
-
-        private static void UpdateRoomCollisionList(CollisionObject player, RoomMap newRoom)
-        {
-            if (!newRoom._movingCollisionObjects.Contains(player))
-            {
-                newRoom._movingCollisionObjects.Add(player);
-            }
-        }
     }
 }

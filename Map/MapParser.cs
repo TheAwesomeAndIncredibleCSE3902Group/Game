@@ -154,11 +154,11 @@ public class MapParser
                 Vector2 position = new(j * width, i * height);
                 if (collisionMatrix[i][j] == 1)
                 {
-                    map._nonMovingCollisionObjects.Add(new Wall(position, width, height));
+                    map.NonMovingCollisionObjects.Add(new Wall(position, width, height));
                 }
                 else if (collisionMatrix[i][j] == 2)
                 {
-                    map._nonMovingCollisionObjects.Add(new Entrance(position, width, height));
+                    map.NonMovingCollisionObjects.Add(new Entrance(position, width, height));
                 }
             }
         }
@@ -237,7 +237,7 @@ public class MapParser
         CharacterEnemyBase enemyBase = character as CharacterEnemyBase;
         if (enemyBase is not null)
         {
-            map._movingCollisionObjects.Add(enemyBase);
+            map.MovingCollisionObjects.Add(enemyBase);
         }
         return;
     }
@@ -266,7 +266,7 @@ public class MapParser
                 break;
         }
         map.Pickups.Add(pickupToAdd);
-        map._nonMovingCollisionObjects.Add(pickupToAdd);
+        map.NonMovingCollisionObjects.Add(pickupToAdd);
         
         return;
     }

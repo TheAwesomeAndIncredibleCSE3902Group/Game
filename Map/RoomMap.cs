@@ -12,11 +12,12 @@ namespace AwesomeRPG.Map;
 public class RoomMap
 {
     private readonly Tilemap _tilemap;
-    public List<ICharacter> Characters = [];
-    public List<Pickup> Pickups = [];
-    public List<Projectile> Projectiles = [];
-    public List<CollisionObject> _movingCollisionObjects = [];
-    public List<CollisionObject> _nonMovingCollisionObjects = [];
+    public Player Player { private get; set; } 
+    public List<ICharacter> Characters { get; private set; } = [];
+    public List<Pickup> Pickups { get; private set; } = [];
+    public List<Projectile> Projectiles { get; private set; } = [];
+    public List<CollisionObject> MovingCollisionObjects { get; private set; } = [];
+    public List<CollisionObject> NonMovingCollisionObjects { get; private set; } = [];
     private readonly Tilemap _minimap;
 
     public RoomMap(Tilemap map)
@@ -40,10 +41,32 @@ public class RoomMap
 
     }
 
+    /// <summary>
+    /// Returns whether removal was successful
+    /// </summary>
+    /// <param name="character"></param>
+    /// <returns></returns>
+    public bool TryRemoveCharacter(CharacterEnemyBase character)
+    {
+        bool success = Characters.Remove(character);
+        MovingCollisionObjects.Remove(character);
+
+        return success;
+    }
+
+
+    #region Update
     public void Update(GameTime gameTime)
     {
+        UpdatePlayer(gameTime);
         UpdateCharacters(gameTime);
         UpdateProjectiles(gameTime);
+        UpdateCollision();
+    }
+
+    private void UpdatePlayer(GameTime gameTime)
+    {
+        Player.Update(gameTime);
     }
 
     private void UpdateCharacters(GameTime gameTime)
@@ -69,27 +92,26 @@ public class RoomMap
         }
     }
 
+    private void UpdateCollision()
+    {
+        AllCollisionHandler.Instance.HandleCollisions(MovingCollisionObjects, NonMovingCollisionObjects);
+    }
+    #endregion
+
+    #region Draw
     public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
     {
         DrawTiles(spriteBatch);
         DrawPickups(gameTime);
         DrawCharacters(gameTime);
         DrawProjectiles(gameTime);
+        DrawPlayer(gameTime);
     }
     
-    /// <summary>
-    /// Returns whether removal was successful
-    /// </summary>
-    /// <param name="character"></param>
-    /// <returns></returns>
-    public bool TryRemoveCharacter(CharacterEnemyBase character)
+    private void DrawPlayer(GameTime gameTime)
     {
-        bool success = Characters.Remove(character);
-        _movingCollisionObjects.Remove(character);
-
-        return success;
+        Player.Draw(gameTime);
     }
-
     private void DrawTiles(SpriteBatch spriteBatch)
     {
         _tilemap.Draw(spriteBatch);
@@ -118,6 +140,7 @@ public class RoomMap
             p.Draw(gameTime);
         }
     }
+    #endregion
 
     
 }

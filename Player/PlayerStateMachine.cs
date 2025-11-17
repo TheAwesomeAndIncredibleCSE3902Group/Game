@@ -9,11 +9,7 @@ namespace AwesomeRPG;
 
 public class PlayerStateMachine
 {
-
-    private Cardinal currentDirection;
-    private int currentHealth;
-    private int currentMaxHealth;
-    public float currentDamageIntake { get; set; }
+    public Cardinal Direction { get; private set; }
     public enum States { Standing, Walking, SwordAttack, ItemUse, Damaged };
     private States currentState;
     private States previousState;
@@ -24,11 +20,8 @@ public class PlayerStateMachine
 
     public PlayerStateMachine()
     {
-        currentDirection = Util.Cardinal.down;
+        Direction = Cardinal.down;
         currentState = States.Standing;
-        currentHealth = 3;
-        currentMaxHealth = currentHealth;
-        currentDamageIntake = 1;
 
         spriteFactory = new PlayerSpriteFactory();
     }
@@ -36,16 +29,8 @@ public class PlayerStateMachine
     public void LoadPlayer(ContentManager content, SpriteBatch spriteBatch)
     {
         spriteFactory.LoadPlayer(content, spriteBatch);
-        spriteFactory.ChangeDirection(currentDirection);
+        spriteFactory.ChangeDirection(Direction);
         spriteFactory.ChangeSpriteStanding();
-    }
-
-    public Cardinal Direction
-    {
-        get
-        {
-            return currentDirection;
-        }
     }
 
     public States GetCurrentState()
@@ -53,26 +38,10 @@ public class PlayerStateMachine
         return currentState;
     }
 
-    public int Health
-    {
-        get
-        {
-            return currentHealth;
-        }
-    }
-
-    public int MaxHealth
-    {
-        get
-        {
-            return currentMaxHealth;
-        }
-    }
-
     public void ChangeDirection(Cardinal newDirection)
     {
         spriteFactory.ChangeDirection(newDirection);
-        currentDirection = newDirection;
+        Direction = newDirection;
     }
 
     public void ChangeStateStanding()
@@ -106,16 +75,6 @@ public class PlayerStateMachine
         {
             currentState = States.Damaged;
         }
-    }
-
-    public void TakeDamage(int amount)
-    {
-        currentHealth -= (int)(amount * currentDamageIntake);
-    }
-
-    public void Heal(int amount)
-    {
-        currentHealth += amount;
     }
 
     public static void UseEquipment(Weapons weapon)

@@ -6,6 +6,7 @@ namespace AwesomeRPG.Collision
 { 
     public class AllCollisionHandler
     {
+        public static AllCollisionHandler Instance { get; private set; } = new AllCollisionHandler();
         private Dictionary<CollisionPair, ICollisionCommand> collisionResponses;
 
         /// <summary>
@@ -25,11 +26,10 @@ namespace AwesomeRPG.Collision
             collisionResponses[objectTypes].Execute(collision);
         }
 
-        public AllCollisionHandler()
+        private AllCollisionHandler()
         {
             collisionResponses = new Dictionary<CollisionPair, ICollisionCommand>();
             InitializeDict();
-          
         }
 
         public void HandleCollisions(List<CollisionObject> movingCollisionObjects, List<CollisionObject> nonMovingCollisionObjects)
@@ -40,7 +40,7 @@ namespace AwesomeRPG.Collision
                 {
                     try
                     {
-                        CollisionObject movingObject = RoomAtlas.Instance.CurrentRoom._movingCollisionObjects[i];
+                        CollisionObject movingObject = RoomAtlas.Instance.CurrentRoom.MovingCollisionObjects[i];
                         CollisionObject nonMovingObject = nonMovingCollisionObjects[k];
                         CollisionInfo collision = movingObject.DetectCollision(nonMovingObject);
                         HandleCollisionResponse(collision);
@@ -51,9 +51,9 @@ namespace AwesomeRPG.Collision
                     }
                 }
 
-                for (int j = i + 1; j < RoomAtlas.Instance.CurrentRoom._movingCollisionObjects.Count; j++)
+                for (int j = i + 1; j < RoomAtlas.Instance.CurrentRoom.MovingCollisionObjects.Count; j++)
                 {
-                    CollisionInfo collision = RoomAtlas.Instance.CurrentRoom._movingCollisionObjects[i].DetectCollision(RoomAtlas.Instance.CurrentRoom._movingCollisionObjects[j]);
+                    CollisionInfo collision = RoomAtlas.Instance.CurrentRoom.MovingCollisionObjects[i].DetectCollision(RoomAtlas.Instance.CurrentRoom.MovingCollisionObjects[j]);
                     HandleCollisionResponse(collision);
                 }
             }

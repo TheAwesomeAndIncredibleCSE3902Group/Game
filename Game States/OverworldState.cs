@@ -17,8 +17,6 @@ public class OverworldState : IGameState
 {
     //Will eventually be used as a global scalar for time (ie affects everything in the Overworld)
     public float TimeScale { get; private set; } = 1;
-    public Player Player { get; private set; }
-
     private Game1 game;
     private AllCollisionHandler allCollisionHandler;
     public GameState CurrentState { get => GameState.overworld; }
@@ -35,13 +33,9 @@ public class OverworldState : IGameState
     {
         this.game = game;
 
-        allCollisionHandler = new AllCollisionHandler();
-
         CreateWorld(contentManager);
-        this.Player = player;
 
-        //Add player to the collision tracker of this room
-        RoomAtlas.Instance.CurrentRoom._movingCollisionObjects.Add(Player);
+        RoomAtlas.Instance.AddPlayer(player);
     }
 
     public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
@@ -50,18 +44,14 @@ public class OverworldState : IGameState
         gameTime = new GameTime(gameTime.TotalGameTime, gameTime.ElapsedGameTime * TimeScale);
 
         RoomAtlas.Instance.CurrentRoom.Draw(spriteBatch, gameTime);
-        Player.Draw(gameTime);
         //TODO: draw HUD here
     }
 
     public void Update(GameTime gameTime)
     {
-        RoomMap currentRoom = RoomAtlas.Instance.CurrentRoom;
         gameTime = new GameTime(gameTime.TotalGameTime, gameTime.ElapsedGameTime * TimeScale);
-       
-        Player.Update(gameTime);
-        currentRoom.Update(gameTime);
-        allCollisionHandler.HandleCollisions(currentRoom._movingCollisionObjects, currentRoom._nonMovingCollisionObjects);
+
+        RoomAtlas.Instance.CurrentRoom.Update(gameTime);
         //TODO: refresh HUD here
 
     }
