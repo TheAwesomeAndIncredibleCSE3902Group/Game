@@ -9,4 +9,6 @@ public interface IBattle
     public bool IsFriend { get; set; }
     public IStats Stats { get; set; }
 
+    public String TurnText { get; set; }
+
 }
