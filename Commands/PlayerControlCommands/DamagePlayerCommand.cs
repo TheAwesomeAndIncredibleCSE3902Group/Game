@@ -14,6 +14,7 @@ namespace AwesomeRPG.Commands
 
         public void Execute()
         {
+            PlayerSoundFactory.PlayLinkHurtSoundEffect();
             currentPlayer.TakeDamage();
         }
 
