@@ -91,8 +91,8 @@ public abstract class CharacterEnemyBase : CollisionObject, ICharacter
     /// Please note this does NOT remove the projectiles that were shot by this
     /// </summary>
     /// <returns></returns>
-    public virtual bool TryDestroy()
+    public virtual void TryDestroy()
     {
-        return RoomAtlas.Instance.CurrentRoom.TryRemoveCharacter(this);
+        RoomAtlas.Instance.RemoveEnemy(this);
     }
 }

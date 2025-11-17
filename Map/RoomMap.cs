@@ -41,20 +41,6 @@ public class RoomMap
 
     }
 
-    /// <summary>
-    /// Returns whether removal was successful
-    /// </summary>
-    /// <param name="character"></param>
-    /// <returns></returns>
-    public bool TryRemoveCharacter(CharacterEnemyBase character)
-    {
-        bool success = Characters.Remove(character);
-        MovingCollisionObjects.Remove(character);
-
-        return success;
-    }
-
-
     #region Update
     public void Update(GameTime gameTime)
     {
