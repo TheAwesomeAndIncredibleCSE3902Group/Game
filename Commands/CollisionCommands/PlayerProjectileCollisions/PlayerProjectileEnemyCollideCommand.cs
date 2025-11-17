@@ -12,6 +12,12 @@ public class PlayerProjectileEnemyCollideCommand : ICollisionCommand
         Projectile projectile = (Projectile)collision.GetCollisionObjectOfType(CollisionObjectType.PlayerProjectile);
         CharacterEnemyBase enemy = (CharacterEnemyBase)collision.GetCollisionObjectOfType(CollisionObjectType.Enemy);
 
+        if (enemy is null)
+        {
+            Debug.WriteLine("Enemy was null! Have they already been destroyed?");
+            return;
+        }
+
         Game1.TransitionToBattleState([enemy]);
         Debug.WriteLine("DEBUG ProjectileEnemyCollideCommand: Enter the battle state");
         projectile.Destroy();
