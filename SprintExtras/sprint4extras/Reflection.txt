@@ -1,0 +1,6 @@
+John
+--------------
+I feel like we have a tendency as a group to prioritize code quality over functionality. It is nice to have good code quality, 
+but we end up falling behind a bit on what functionality we actually need to achieve. Besides this point, I honestly kind of felt
+like this Sprint went better than our last ones. I'm not sure if everyone in the group felt the same, but we felt a little less
+disorganized in my opinion. Even if we still fell into the issue of falling behind on some parts of work.
