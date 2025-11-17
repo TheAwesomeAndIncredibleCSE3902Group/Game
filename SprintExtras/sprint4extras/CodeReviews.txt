@@ -1,0 +1,19 @@
+John
+Nov 17, 2025
+Sprint 4
+-----------------
+Author of code: Jesse
+Code under review: Whole SoundManager Folder
+Review time: 3 minutes
+The code at least at a glance seems fine, the SoundFactories are all very simple and contain a lot of variables for each sound file. 
+I think some regions and comments would be useful to have for these, but not necessary. ThemeController similarily is pretty simple
+a very small fix is that the if statements about timeSinceIntroStart for PlayCurrentAreaTheme should probably be if else instead of
+two if statements that need to be chacked everytime.
+
+Author of code: Eli
+Code under review: UI for readability
+Review time: 5 minutes
+I know you are in the works for a big code change, but I will still give feedback on what is currently here since it could be useful.
+This code could definitely benefit from some more comments. For example I think a little summary description at the top of classes 
+would be good, especially since a lot of the classes are just constructors and a draw method. ElementBase could use some comments
+and regions especially due to its length. Besides that I think the naems of functions and variables are good.
