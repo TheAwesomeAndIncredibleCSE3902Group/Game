@@ -22,8 +22,7 @@ public class Game1 : Game
 
     //Controls Variables
     private List<IController> _controllersList = new();
-    
-    // Temporarily commented out for Sprint3 submission
+    public SpriteFont GlobalSpriteFont;
     public RootElement RootUIElement;
 
     public Game1()
@@ -81,6 +80,7 @@ public class Game1 : Game
     private void InitializeUI()
     {
         var spriteFont = Content.Load<SpriteFont>("Fonts\\MyFont");
+        GlobalSpriteFont = spriteFont;
         RootUIElement = new RootElement(_spriteBatch);
 
         var battleUiBoardBorder = new RectElement(RootUIElement, new Color(40, 0, 40));
@@ -92,10 +92,10 @@ public class Game1 : Game
         RootUIElement.AddChild(battleUiBoardBorder);
         RootUIElement.AddChild(battleUiBoardBg);
 
-        List<CommandElement> buttons = new List<CommandElement>();
+        List<ButtonComponent> buttons = new List<ButtonComponent>();
         for (int i = 0; i < 6; i++)
         {
-            var currentButtonToAdd = ButtonComponent.Create(RootUIElement, spriteFont, this, new Rectangle(20 + (i / 3) * 365, 540 + (i % 3) * 75, 350, 60), Color.Purple, Color.White, "Action " + i);
+            var currentButtonToAdd = new ButtonComponent(RootUIElement, spriteFont, this, new Rectangle(20 + (i / 3) * 365, 540 + (i % 3) * 75, 350, 60), Color.Purple, Color.White, "Action " + i);
             // TEMPORARY TODO REMOVE THIS!!!
             currentButtonToAdd.AddChild(new AnimSpriteElement(RootUIElement, CharacterSpriteFactory.Instance.KrisSprite()));
             currentButtonToAdd.AssociatedCommand = new SampleAttackBattleCommand();            

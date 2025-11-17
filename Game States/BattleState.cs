@@ -30,19 +30,9 @@ public class BattleState : IGameState
         this.overworldState = overState;
         this.RootUIElement = game.RootUIElement;
 
-        BattleUITextTyperComponent.NewTyper(RootUIElement, game.spriteFont, this, new Rectangle(10, 530, 1004, 230), Color.White);
-        RootUIElement.AddChild(BattleUITextTyperComponent.CreatedElement);
+        var textTyperComponent =  new BattleUITextTyperComponent(RootUIElement, game.GlobalSpriteFont, game, new Rectangle(10, 530, 1004, 230), Color.White);
+        RootUIElement.AddChild(textTyperComponent);
 
-    }
-
-    public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
-    {
-        RootUIElement.Draw(gameTime);
-    }
-
-    public void Update(GameTime gameTime)
-    {
-        BattleUITextTyperComponent.Update(gameTime);
     }
 
     public void ChangeToBattleState() { }
@@ -68,6 +58,14 @@ public class BattleState : IGameState
             GameState.overworld => true,
             _ => false
         };
+    }
+    public void Update(GameTime gameTime)
+    {
+        RootUIElement.Update(gameTime);
+    }
+    public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
+    {
+        RootUIElement.Draw(gameTime);
     }
 
 }

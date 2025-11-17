@@ -20,16 +20,9 @@ class AnimSpriteElement : ElementBase
             _associatedAnimSprite.SetWidthNHeight(OffsetAndSize.Width, OffsetAndSize.Height);
         } 
     }
-    public override void Draw(GameTime gameTime)
+    protected internal override void Draw(GameTime gameTime)
     {
-        CalculateDerivedValuesFromAncestors();
-        DispatchUIEvent(UIEvent.BeforeDraw, new DrawUIEventParams(this, gameTime));
-
         AssociatedAnimSprite.Draw(gameTime, DerivedAbsolutePosition.ToVector2());
-
-        DrawChildren(gameTime);
-        DispatchUIEvent(AwesomeRPG.UI.UIEvent.AfterDraw, new DrawUIEventParams(this, gameTime));
-
     }
     
     public AnimSpriteElement(RootElement rootElement, AnimatableSprite animSprite)

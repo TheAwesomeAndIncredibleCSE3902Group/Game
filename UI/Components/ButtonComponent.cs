@@ -9,11 +9,19 @@ using AwesomeRPG.UI.Events;
 
 namespace AwesomeRPG.UI.Components;
 
-public static class ButtonComponent
+public class ButtonComponent : ComponentBase
 {
-    private static readonly Color _selectedBgDim = new Color(220, 220, 220);
-    private static readonly Color _clickBgDim = new Color(180,180,180);
-    public static CommandElement Create(RootElement rootElement, SpriteFont spriteFont, Game1 game, Rectangle location, Color bgColor, Color textColor, string textString = "")
+    private readonly Color _selectedBgDim = new Color(220, 220, 220);
+    private readonly Color _clickBgDim = new Color(180,180,180);
+    public ICommand AssociatedCommand {
+        get {
+            return ((CommandElement)ComponentBaseElement).AssociatedCommand;
+        }
+        set {
+            ((CommandElement)ComponentBaseElement).AssociatedCommand = value;
+        }
+    }
+    public ButtonComponent(RootElement rootElement, SpriteFont spriteFont, Game1 game, Rectangle location, Color bgColor, Color textColor, string textString = "")
     {
         TextElement textElem = new TextElement(rootElement, spriteFont, textString, textColor);
         textElem.OffsetAndSize = new Rectangle(Point.Zero, location.Size);
@@ -56,6 +64,12 @@ public static class ButtonComponent
                 rectElem.FillColor = bgColor;
         });
 
-        return commandElem;
+        ComponentBaseElement = commandElem;
+    }
+    protected internal override void Draw(GameTime gameTime)
+    {
+        base.Draw(gameTime);
+        System.Console.WriteLine("DRAWING BUTTON");
+        System.Console.WriteLine(OffsetAndSize);
     }
 }

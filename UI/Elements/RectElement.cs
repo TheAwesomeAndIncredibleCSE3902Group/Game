@@ -12,54 +12,44 @@ public class RectElement : ElementBase
     public Color OutlineColor { get; set; } = Color.Black;
     public int OutlineThickness { get; set; } = 0;
 
-    public override void Draw(GameTime gameTime)
+    protected internal override void Draw(GameTime gameTime)
     {
-        CalculateDerivedValuesFromAncestors();
-        DispatchUIEvent(UIEvent.BeforeDraw, new DrawUIEventParams(this, gameTime));
-
-        if (DerivedAncestorIsVisible)
+        RootElement.SpriteBatch.Draw(
+            RootElement.RectangleTexture,
+            new Rectangle(DerivedAbsolutePosition, OffsetAndSize.Size),
+            FillColor * Opacity
+        );
+        if (OutlineThickness > 0)
         {
-            RootElement.SpriteBatch.Draw(
-                RootElement.RectangleTexture,
-                new Rectangle(DerivedAbsolutePosition, OffsetAndSize.Size),
-                FillColor * Opacity
+            var outlineTopRect = new Rectangle(
+                DerivedAbsolutePosition.X - OutlineThickness,
+                DerivedAbsolutePosition.Y - OutlineThickness,
+                OffsetAndSize.Width + OutlineThickness * 2,
+                OutlineThickness
             );
-            if (OutlineThickness > 0)
-            {
-                var outlineTopRect = new Rectangle(
-                    DerivedAbsolutePosition.X - OutlineThickness,
-                    DerivedAbsolutePosition.Y - OutlineThickness,
-                    OffsetAndSize.Width + OutlineThickness * 2,
-                    OutlineThickness
-                );
-                var outlineBottomRect = new Rectangle(
-                    DerivedAbsolutePosition.X - OutlineThickness,
-                    DerivedAbsolutePosition.Y + OffsetAndSize.Height,
-                    OffsetAndSize.Width + OutlineThickness * 2,
-                    OutlineThickness
-                );
-                var outlineLeftRect = new Rectangle(
-                    DerivedAbsolutePosition.X - OutlineThickness,
-                    DerivedAbsolutePosition.Y,
-                    OutlineThickness,
-                    OffsetAndSize.Height
-                );
-                var outlineRightRect = new Rectangle(
-                    DerivedAbsolutePosition.X + OffsetAndSize.Width,
-                    DerivedAbsolutePosition.Y,
-                    OutlineThickness,
-                    OffsetAndSize.Height
-                );
-                RootElement.SpriteBatch.Draw(RootElement.RectangleTexture, outlineTopRect, OutlineColor * Opacity);
-                RootElement.SpriteBatch.Draw(RootElement.RectangleTexture, outlineBottomRect, OutlineColor * Opacity);
-                RootElement.SpriteBatch.Draw(RootElement.RectangleTexture, outlineLeftRect, OutlineColor * Opacity);
-                RootElement.SpriteBatch.Draw(RootElement.RectangleTexture, outlineRightRect, OutlineColor * Opacity);
-            }
+            var outlineBottomRect = new Rectangle(
+                DerivedAbsolutePosition.X - OutlineThickness,
+                DerivedAbsolutePosition.Y + OffsetAndSize.Height,
+                OffsetAndSize.Width + OutlineThickness * 2,
+                OutlineThickness
+            );
+            var outlineLeftRect = new Rectangle(
+                DerivedAbsolutePosition.X - OutlineThickness,
+                DerivedAbsolutePosition.Y,
+                OutlineThickness,
+                OffsetAndSize.Height
+            );
+            var outlineRightRect = new Rectangle(
+                DerivedAbsolutePosition.X + OffsetAndSize.Width,
+                DerivedAbsolutePosition.Y,
+                OutlineThickness,
+                OffsetAndSize.Height
+            );
+            RootElement.SpriteBatch.Draw(RootElement.RectangleTexture, outlineTopRect, OutlineColor * Opacity);
+            RootElement.SpriteBatch.Draw(RootElement.RectangleTexture, outlineBottomRect, OutlineColor * Opacity);
+            RootElement.SpriteBatch.Draw(RootElement.RectangleTexture, outlineLeftRect, OutlineColor * Opacity);
+            RootElement.SpriteBatch.Draw(RootElement.RectangleTexture, outlineRightRect, OutlineColor * Opacity);
         }
-
-        // System.Console.WriteLine("drawing rect element at" + DerivedAbsolutePosition.ToString());
-        DrawChildren(gameTime);
-        DispatchUIEvent(UIEvent.AfterDraw, new DrawUIEventParams(this, gameTime));
     }
 
     public RectElement(RootElement rootElement)

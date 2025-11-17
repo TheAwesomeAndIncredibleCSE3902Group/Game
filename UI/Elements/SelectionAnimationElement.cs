@@ -10,12 +10,10 @@ namespace AwesomeRPG.UI.Elements;
 public class SelectionAnimationElement : ElementBase
 {
     private Color _selectColor = Color.LightBlue;
-    public override void Draw(GameTime gameTime)
-    {
-        CalculateDerivedValuesFromAncestors();
-        DispatchUIEvent(UIEvent.BeforeDraw, new DrawUIEventParams(this, gameTime));
 
-        if (DerivedAncestorIsSelected && IsVisible)
+    protected internal override void Draw(GameTime gameTime)
+    {
+        if (DerivedAncestorIsSelected)
         {
             int animationFrame = (int)gameTime.TotalGameTime.TotalMicroseconds / 9000 % 100;
             // System.Console.WriteLine(animationFrame);
@@ -42,9 +40,6 @@ public class SelectionAnimationElement : ElementBase
                 animationFrame = (animationFrame + 50) % 100;
             }
         }
-
-        DrawChildren(gameTime);
-        DispatchUIEvent(UIEvent.AfterDraw, new DrawUIEventParams(this, gameTime));
     }
 
     public SelectionAnimationElement(RootElement rootElement)

@@ -17,40 +17,30 @@ public class TextElement : ElementBase
     public TextAlign HorizontalTextAlign = TextAlign.Left;
     public TextAlign VerticalTextAlign = TextAlign.Left;
 
-    public override void Draw(GameTime gameTime)
+    protected internal override void Draw(GameTime gameTime)
     {
-        CalculateDerivedValuesFromAncestors();
+        Vector2 textCalculatedPosition = DerivedAbsolutePosition.ToVector2();
+        Vector2 measuredText = SpriteFont.MeasureString(TextString);
 
-        DispatchUIEvent(UIEvent.BeforeDraw, new DrawUIEventParams(this, gameTime));
-
-        if (DerivedAncestorIsVisible)
+        if (HorizontalTextAlign == TextAlign.Center)
         {
-            Vector2 textCalculatedPosition = DerivedAbsolutePosition.ToVector2();
-            Vector2 measuredText = SpriteFont.MeasureString(TextString);
-
-            if (HorizontalTextAlign == TextAlign.Center)
-            {
-                textCalculatedPosition.X += (OffsetAndSize.Width - measuredText.X) / 2;
-            }
-            else if (HorizontalTextAlign == TextAlign.Right)
-            {
-                textCalculatedPosition.X += OffsetAndSize.Width - measuredText.X;
-            }
-
-            if (VerticalTextAlign == TextAlign.Center)
-            {
-                textCalculatedPosition.Y += (OffsetAndSize.Height - measuredText.Y) / 2;
-            }
-            else if (VerticalTextAlign == TextAlign.Right)
-            {
-                textCalculatedPosition.Y += OffsetAndSize.Height - measuredText.Y;
-            }
-
-            RootElement.SpriteBatch.DrawString(SpriteFont, TextString, textCalculatedPosition, TextColor * Opacity);
+            textCalculatedPosition.X += (OffsetAndSize.Width - measuredText.X) / 2;
+        }
+        else if (HorizontalTextAlign == TextAlign.Right)
+        {
+            textCalculatedPosition.X += OffsetAndSize.Width - measuredText.X;
         }
 
-        DrawChildren(gameTime);
-        DispatchUIEvent(UIEvent.AfterDraw, new DrawUIEventParams(this, gameTime));
+        if (VerticalTextAlign == TextAlign.Center)
+        {
+            textCalculatedPosition.Y += (OffsetAndSize.Height - measuredText.Y) / 2;
+        }
+        else if (VerticalTextAlign == TextAlign.Right)
+        {
+            textCalculatedPosition.Y += OffsetAndSize.Height - measuredText.Y;
+        }
+
+        RootElement.SpriteBatch.DrawString(SpriteFont, TextString, textCalculatedPosition, TextColor * Opacity);
     }
 
     public TextElement(RootElement rootElement, SpriteFont spriteFont)

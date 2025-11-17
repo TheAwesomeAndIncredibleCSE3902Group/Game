@@ -14,15 +14,6 @@ public class CommandElement : ElementBase
 {
     public ICommand AssociatedCommand { get; set; }
 
-    public override void Draw(GameTime gameTime)
-    {
-        CalculateDerivedValuesFromAncestors();
-
-        DispatchUIEvent(UIEvent.BeforeDraw, new DrawUIEventParams(this, gameTime));
-        DrawChildren(gameTime);
-        DispatchUIEvent(UIEvent.AfterDraw, new DrawUIEventParams(this, gameTime));
-    }
-
     public CommandElement(RootElement rootElement)
     {
         SetUpElement(rootElement);
@@ -51,5 +42,9 @@ public class CommandElement : ElementBase
                 }
             }
         });
+    }
+    protected internal override void Draw(GameTime gameTime)
+    {
+        base.Draw(gameTime);
     }
 }

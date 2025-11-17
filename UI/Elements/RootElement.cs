@@ -5,6 +5,7 @@
 // Unlike the other elements, this will also contain references to objects needed to draw the UI.
 
 using System;
+using AwesomeRPG.UI.Components;
 using AwesomeRPG.UI.Events;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -17,17 +18,57 @@ public class RootElement : ElementBase
     public Texture2D RectangleTexture { get; } // The RectangleTexture used to draw rectangles-- a 1x1 white pixel
     public UIState UIState { get; private set; } // The UI State that is attached to this root element
 
-    public override void Draw(GameTime gameTime)
+    public new void Draw(GameTime gameTime)
     {
-        // The root element does not draw anything for itself, (no background color or animatable sprite)
-        // We will not run CalculateDerivedValuesFromAncestors. DerivedAbsolutePosition is always 0, 0 and does not need to be updated
+        RecursiveDraw(this, gameTime);
+    }
 
-        // We will draw each of this element's children.
-        // System.Console.WriteLine("drawing root element");
-        DispatchUIEvent(UIEvent.BeforeDraw, new DrawUIEventParams(this, gameTime));
-        UIState.UpdateElementsAreSelected();
-        DrawChildren(gameTime);
-        DispatchUIEvent(UIEvent.AfterDraw, new DrawUIEventParams(this, gameTime));
+    private void RecursiveDraw(ElementBase element, GameTime gameTime)
+    {
+        DispatchUIEvent(UIEvent.BeforeDraw, new DrawUIEventParams(element, gameTime));
+        element.CalculateDerivedValuesFromAncestors();
+        if (element.IsVisible)
+        {
+            element.Draw(gameTime);
+            if (element is ComponentBase) {
+                foreach (ElementBase child in ((ComponentBase)element).ComponentBaseElement._children)
+                {
+                    RecursiveDraw(child, gameTime);
+                }
+            } else
+            {
+                foreach (ElementBase child in element._children)
+                {
+                    RecursiveDraw(child, gameTime);
+                }
+            }
+        }
+        DispatchUIEvent(UIEvent.AfterDraw, new DrawUIEventParams(element, gameTime));
+    }
+
+    public new void Update(GameTime gameTime)
+    {
+        RecursiveUpdate(this, gameTime);
+    }
+
+    private void RecursiveUpdate(ElementBase element, GameTime gameTime)
+    {
+        DispatchUIEvent(UIEvent.BeforeUpdate, new DrawUIEventParams(element, gameTime));
+        element.CalculateDerivedValuesFromAncestors();
+        element.Update(gameTime);
+        if (element is ComponentBase) {
+            foreach (ElementBase child in ((ComponentBase)element).ComponentBaseElement._children)
+            {
+                RecursiveUpdate(child, gameTime);
+            }
+        } else
+        {
+            foreach (ElementBase child in element._children)
+            {
+                RecursiveUpdate(child, gameTime);
+            }
+        }
+        DispatchUIEvent(UIEvent.AfterUpdate, new DrawUIEventParams(element, gameTime));
     }
     
     public RootElement(SpriteBatch spriteBatch)

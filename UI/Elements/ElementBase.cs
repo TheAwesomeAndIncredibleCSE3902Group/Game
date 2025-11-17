@@ -11,8 +11,8 @@ namespace AwesomeRPG.UI.Elements;
 
 public abstract class ElementBase
 {
-    public Rectangle OffsetAndSize { get; set; } = new Rectangle();
-    private Point _derivedAbsolutePositionBase;
+    public virtual Rectangle OffsetAndSize { get; set; } = new Rectangle();
+    protected Point _derivedAbsolutePositionBase = Point.Zero;
     public Point DerivedAbsolutePosition
     {
         get
@@ -22,22 +22,31 @@ public abstract class ElementBase
     }
     public bool DerivedAncestorIsSelected { get; private set; } = false;
     public bool DerivedAncestorIsVisible { get; private set; } = true;
-    private List<ElementBase> _children = [];
+    protected internal List<ElementBase> _children = [];
     public bool IsSelectable { get; private set; } = false;
     public bool IsSelected { get; set; } = false;
     public bool IsVisible { get; set; } = true;
     public float Opacity { get; set; } = 1f;
     public RootElement RootElement { get; protected set; }
     public ElementBase Parent { get; private set; }
-    private readonly Dictionary<UIEvent, List<Action<UIEventParamsBase> >> _registeredUiEventActions = [];
+    protected internal readonly Dictionary<UIEvent, List<Action<UIEventParamsBase> >> _registeredUiEventActions = [];
 
-    public abstract void Draw(GameTime gameTime);
+    protected internal virtual void Draw(GameTime gameTime)
+    {
+        // Do nothing by default
+        System.Console.WriteLine("DRAWING DEFAULT?");
+    }
+
+    protected internal virtual void Update(GameTime gameTime)
+    {
+        // Do nothing by default
+    }
 
     public void AddChild(ElementBase element)
     {
         if (element.Parent == null)
         {
-            element.Parent = this;
+            element.SetUpAsChild(this);
             _children.Add(element);
         } else
         {
@@ -45,17 +54,10 @@ public abstract class ElementBase
         }
     }
 
-    public void RemoveChild(ElementBase element)
+    // This will remove the element from its parent.
+    public void Remove()
     {
-        if (element.Parent == this)
-        {
-            element.Parent = null;
-            _children.Remove(element);
-        }
-        else
-        {
-            Console.Error.WriteLine("Child does not have this element as a parent!");
-        }
+        Parent._children.Remove(this);
     }
 
     // make shallow clone of list, so anything done with this list
@@ -65,11 +67,14 @@ public abstract class ElementBase
         return new(_children);
     }
 
-    protected void CalculateDerivedValuesFromAncestors()
+    protected internal void CalculateDerivedValuesFromAncestors()
     {
-        _derivedAbsolutePositionBase = Parent.DerivedAbsolutePosition;
-        DerivedAncestorIsSelected = Parent.IsSelected || Parent.DerivedAncestorIsSelected;
-        DerivedAncestorIsVisible = Parent.IsVisible && Parent.DerivedAncestorIsVisible;
+        if (Parent != null)
+        {
+            _derivedAbsolutePositionBase = Parent.DerivedAbsolutePosition;
+            DerivedAncestorIsSelected = Parent.IsSelected || Parent.DerivedAncestorIsSelected;
+            DerivedAncestorIsVisible = Parent.IsVisible && Parent.DerivedAncestorIsVisible;
+        }
     }
 
     protected void RunBeforeDrawActions(GameTime gameTime)
@@ -89,15 +94,6 @@ public abstract class ElementBase
         }
     }
 
-    protected void DrawChildren(GameTime gameTime)
-    {
-        // We will draw each of this element's children.
-        foreach (ElementBase child in _children)
-        {
-            child.Draw(gameTime);
-        }
-    }
-
     public void MakeSelectable()
     {
         if (!IsSelectable)
@@ -113,14 +109,18 @@ public abstract class ElementBase
         RootElement.UIState.UnregisterSelectableElement(this);
     }
 
+    // deprecated
     protected void SetUpElement(RootElement rootElement)
     {
         RootElement = rootElement;
         foreach (UIEvent uiEventType in Enum.GetValues<UIEvent>())
         {
             _registeredUiEventActions[uiEventType] = [];
-            // System.Console.WriteLine(uiEventType);
         }
+    }
+    
+    protected void SetUpAsChild(ElementBase parentElement)
+    {
     }
 
     public void AddActionOnUIEvent(UIEvent uiEvent, Action<UIEventParamsBase> action)
