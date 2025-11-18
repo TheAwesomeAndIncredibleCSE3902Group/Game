@@ -108,3 +108,30 @@ Code under review: BattleEnemies for readability
 Use of enums for actions aids readabiliy. Variables and methods have good names. I suggest long lines
 (ie string concatination) get broken up. It also isn't immediately clear what the TurnList class does 
 by its name. Documentation for that class would be welcome. CurrentSet is a List, not a Set.
+
+
+
+Jesse
+Nov 18, 2025
+Sprint 4
+_________________
+Author of code: Eli
+Code under review: UI for quality
+Quality concerns are pretty minimal here. Little to no coupling, and the coupling used seems to be 
+necessary for our UI to work. Comments explaining what each method is for, or better named methods
+and classes would be nice to have because SelectionAnimationElement is more difficult to understand
+than PlayerBattleOptionHighlighterElement (if SelectionAnimationElement is supposed to highlight a 
+player's current UI option in battle before they select said option). Most method names are easy to
+read and understand what their job is, but there are some that are confusing and one that has a
+rediculously long parameter list being the ButtonComponent.Create() method.
+
+
+Author of code: Lupine
+Code under review: GameStates for readability
+Easy to read in terms of methods and comments with good names. Lines are bunched up in some spots which
+might make the code harder to maintain, and StartScreenState with GameOverState have similar if not the
+same InitUI and Draw methods with only the background and the text color and string being different. 
+Could be abstracted into its own abstract class shared between the two, but they are both fine as is. 
+Additionally, there seem to be quite a few comments that are unnecessary within the game state classes
+since the names of the variables within as well as the names of the methods implemented should explain 
+themselves.
