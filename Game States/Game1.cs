@@ -14,6 +14,7 @@ using AwesomeRPG.Characters;
 using AwesomeRPG.Stats;
 using AwesomeRPG.BattleMechanics;
 using AwesomeRPG.BattleMechanics.BattleEnemies;
+using System.Diagnostics;
 
 namespace AwesomeRPG;
 
@@ -71,7 +72,7 @@ public class Game1 : Game
     {
         //Player must be declared before the Overworld
         PlayerOverworld pOverworld = new PlayerOverworld(Content, _spriteBatch);
-        PlayerStats pStats = new PlayerStats(20, 5, 5, 5, 5, 5, 5, 5, 100);
+        PlayerStats pStats = new PlayerStats(50, 5, 5, 10, 5, 5, 5, 5, 100);
         new Player(pStats, pOverworld);
 
         StateClass = new OverworldState(Content, PlayerOverworld.Instance, this);
@@ -119,86 +120,72 @@ public class Game1 : Game
         // TODO: Yes this code is very ass but it is temporary for sprint 4 submission!!!!!
         RootUIElement.AddActionOnUIEvent(UIEvent.ButtonUp, (e) =>
         {
-            // If in battle and Interact button pressed.
-            if (BattleScene.Instance.CurrentlyInBattle && ((InputUIEventParams) e).Controls.Contains(UIControl.Interact))
-            {
-                int indexOfSelectedButton = buttons.IndexOf((CommandElement) RootUIElement.UIState.SelectedElement);
-                if (battleText.IsVisible) {
-                    // If we are on an enemy now, we make it do its action and update the text string.
-                    if (BattleScene.Instance.CurrentBattle is IEnemyBattle)
-                    {
-                        ((IEnemyBattle)BattleScene.Instance.CurrentBattle).TakeTurn();
-                        battleText.TextString = BattleScene.Instance.CurrentBattle.TurnText;
-                    } 
-                    else
-                    {
-                        // But if we are on a player now, 
-                        // We will show the buttons again. and hide battle text
-                        foreach (CommandElement button in buttons)
-                        {
-                            button.IsVisible = true;
-                            button.MakeSelectable();
-                        }
-                        RootUIElement.UIState.SelectionIndex = 0;
-                        battleText.IsVisible = false;
-                    }
-                    BattleScene.Instance.NextTurn(); // Move on to the next enemy or the player.
-                }
-                if (BattleScene.Instance.CurrentBattle is PlayerBattle)
+            if (((InputUIEventParams)e).Controls.Contains(UIControl.Interact)) {
+                // If in battle and Interact button pressed.
+                if (BattleScene.Instance.CurrentlyInBattle)
                 {
-                    if (indexOfSelectedButton < 5 && indexOfSelectedButton >= 0)
-                    {
-                        // We are pressing one of the buttons and are acting as player.
-                        // For now we will attack lowest index alive enemy!
-                        int idx = -1;
-                        foreach (IEnemyBattle enemyBattle in BattleScene.Instance.EnemyList)
+                    int indexOfSelectedButton = buttons.IndexOf((CommandElement)RootUIElement.UIState.SelectedElement);
+                    if (battleText.IsVisible) {
+                        // If we are on an enemy now, we make it do its action and update the text string.
+                        if (BattleScene.Instance.CurrentBattle is IEnemyBattle)
                         {
-                            idx++;
-                            if (!enemyBattle.IsFainted)
-                            {
-                                break;
-                            }
-                        }
-                        ((PlayerBattle) BattleScene.Instance.CurrentBattle).Attack(idx);
-
-                        // Update battleText with turn text (player)
-                        if (BattleScene.Instance.CurrentBattle.TurnText != null)
-                        {
+                            ((IEnemyBattle)BattleScene.Instance.CurrentBattle).TakeTurn();
                             battleText.TextString = BattleScene.Instance.CurrentBattle.TurnText;
                         }
-
-                        // check for all dead enemiesw
-                        int deadEnemies = -1;
-                        foreach (IEnemyBattle enemyBattle in BattleScene.Instance.EnemyList)
+                        else
                         {
-                            deadEnemies++;
-                            if (!enemyBattle.IsFainted)
+                            // But if we are on a player now, 
+                            // We will show the buttons again. and hide battle text
+                            foreach (CommandElement button in buttons)
                             {
-                                break;
+                                button.IsVisible = true;
+                                button.MakeSelectable();
                             }
-                        }
-                        // if all of the enemies died we go to overworld.
-                        // Right now for sprint4 submission we dont care if player dies-- will change later!!
-                        if (deadEnemies == BattleScene.Instance.EnemyList.Count)
-                        {
-                            StateClass.ChangeToOverworldState();
-                            return;
-                        } else
-                        {
-                            // if not we will switch to the next turn.
-                            BattleScene.Instance.NextTurn(); 
-                            
+                            RootUIElement.UIState.SelectionIndex = 0;
+                            battleText.IsVisible = false;
                         }
                         
-                        // Hide buttons and show battle text
-                        foreach (CommandElement button in buttons)
+                        BattleScene.Instance.NextTurn(); // Move on to the next enemy or the player.
+                        
+                    }
+                    if (BattleScene.Instance.CurrentBattle is PlayerBattle)
+                    {
+                        if (indexOfSelectedButton < 5 && indexOfSelectedButton >= 0)
                         {
-                            button.IsVisible = false;
-                            button.MakeUnselectable();
+                            // We are pressing one of the buttons and are acting as player.
+                            // For now we will attack lowest index alive enemy!
+                            int idx = -1;
+                            foreach (IEnemyBattle enemyBattle in BattleScene.Instance.EnemyList)
+                            {
+                                idx++;
+                                if (!enemyBattle.IsFainted)
+                                {
+                                    break;
+                                }
+                            }
+                            ((PlayerBattle)BattleScene.Instance.CurrentBattle).Attack(idx);
+
+                            // Update battleText with turn text (player)
+                            if (BattleScene.Instance.CurrentBattle.TurnText != null)
+                            {
+                                battleText.TextString = BattleScene.Instance.CurrentBattle.TurnText;
+                            }
+
+                            BattleScene.Instance.NextTurn();
+
+                            // Hide buttons and show battle text
+                            foreach (CommandElement button in buttons)
+                            {
+                                button.IsVisible = false;
+                                button.MakeUnselectable();
+                            }
+                            RootUIElement.UIState.SelectionIndex = -1;
+                            battleText.IsVisible = true;
                         }
-                        RootUIElement.UIState.SelectionIndex = -1;
-                        battleText.IsVisible = true;
-                    } 
+                    }
+                } else
+                {
+                    StateClass.ChangeToOverworldState();
                 }
             }
         });

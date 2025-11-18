@@ -54,8 +54,10 @@ public class TurnList
         while (currentSet[currentActiveBattle].IsFainted)
         {
             RemoveDead(currentActiveBattle);
+            currentActiveBattle = (currentActiveBattle) % currentSet.Count;
         }
         battleEnd = BattleStatus();
+        
 
         return currentSet[currentActiveBattle];
     }

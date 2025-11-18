@@ -44,7 +44,7 @@ public class MoblinBattle : IEnemyBattle
     private MoblinActions ChooseAction()
     {
         MoblinActions moblinChoice = MoblinActions.ScratchBellyButton;
-        if (Stats.GetHealth() < 5)
+        if (Stats.GetHealth() < 10)
         {
             Random random = new();
             int danceChance = random.Next(0, 20);

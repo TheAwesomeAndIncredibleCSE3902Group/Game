@@ -54,13 +54,13 @@ namespace AwesomeRPG.BattleMechanics
             //We either do this or have a temporary speed boost to whoever starts first, what that specifically means depends on implementation of speed stat.
             if (isPlayerStartingFirst)
             {
-                turnList = AllyList;
-                turnList.AddRange(EnemyList);
+                turnList = new List<IBattle>(AllyList);
+                turnList.AddRange(new List<IBattle>(EnemyList));
             }
             else
             {
-                turnList = EnemyList;
-                turnList.AddRange(AllyList);
+                turnList = new List<IBattle>(EnemyList);
+                turnList.AddRange(new List<IBattle>(AllyList));
             }
 
             turnOrder = new TurnList(turnList);
