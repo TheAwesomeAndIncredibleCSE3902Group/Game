@@ -10,3 +10,12 @@ Iris
 I think we overall got a lot done this sprint. I think we were a little light on outward facing functionality, but we have a really 
 good foundation going into sprint 5 to build off of. We also all had a much better idea of what we would be working on individually, 
 as we divided things into tasks and assigned them early on. 
+
+Eli
+--------------
+I think we did an alright job! I believe that we (or at least John and I) sort of rushed towards the end of the sprint. 
+We were trying to combine the UI stuff with the "backend" battle mechanics, and we (or at least I) underestimated the 
+amount of work it would take, misjudged what to prioritize (like John said, I believe I prioritized quality over 
+functionality), and I did not manage my time well, and all of these factors kinda shot us in the foot at the end. 
+I believe that if I had planned time better we would've had a more complete implementation of the battle UI by the 
+end of this sprint.
