@@ -32,11 +32,11 @@ public class LynelBattle : IEnemyBattle
                 break;
             case LynelActions.HardStomp:
                 target.Stats.ChangeHealth(-3);
-                TurnText = $"Moblin attacked someone for 3";
+                TurnText = $"Lynel attacked someone for 3";
                 break;
             case LynelActions.StabNSlash:
                 target.Stats.ChangeHealth(-5);
-                TurnText = $"Moblin attacked someone for 5";
+                TurnText = $"Lynel attacked someone for 5";
                 break;
         }
     }
