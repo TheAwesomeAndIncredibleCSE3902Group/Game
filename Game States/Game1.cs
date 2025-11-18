@@ -123,9 +123,30 @@ public class Game1 : Game
             if (BattleScene.Instance.CurrentlyInBattle && ((InputUIEventParams) e).Controls.Contains(UIControl.Interact))
             {
                 int indexOfSelectedButton = buttons.IndexOf((CommandElement) RootUIElement.UIState.SelectedElement);
-                if (indexOfSelectedButton != -1)
+                if (battleText.IsVisible) {
+                    // If we are on an enemy now, we make it do its action and update the text string.
+                    if (BattleScene.Instance.CurrentBattle is IEnemyBattle)
+                    {
+                        ((IEnemyBattle)BattleScene.Instance.CurrentBattle).TakeTurn();
+                        battleText.TextString = BattleScene.Instance.CurrentBattle.TurnText;
+                    } 
+                    else
+                    {
+                        // But if we are on a player now, 
+                        // We will show the buttons again. and hide battle text
+                        foreach (CommandElement button in buttons)
+                        {
+                            button.IsVisible = true;
+                            button.MakeSelectable();
+                        }
+                        RootUIElement.UIState.SelectionIndex = 0;
+                        battleText.IsVisible = false;
+                    }
+                    BattleScene.Instance.NextTurn(); // Move on to the next enemy or the player.
+                }
+                if (BattleScene.Instance.CurrentBattle is PlayerBattle)
                 {
-                    if (indexOfSelectedButton < 5 && BattleScene.Instance.CurrentBattle is PlayerBattle)
+                    if (indexOfSelectedButton < 5 && indexOfSelectedButton >= 0)
                     {
                         // We are pressing one of the buttons and are acting as player.
                         // For now we will attack lowest index alive enemy!
@@ -145,6 +166,29 @@ public class Game1 : Game
                         {
                             battleText.TextString = BattleScene.Instance.CurrentBattle.TurnText;
                         }
+
+                        // check for all dead enemiesw
+                        int deadEnemies = -1;
+                        foreach (IEnemyBattle enemyBattle in BattleScene.Instance.EnemyList)
+                        {
+                            deadEnemies++;
+                            if (!enemyBattle.IsFainted)
+                            {
+                                break;
+                            }
+                        }
+                        // if all of the enemies died we go to overworld.
+                        // Right now for sprint4 submission we dont care if player dies-- will change later!!
+                        if (deadEnemies == BattleScene.Instance.EnemyList.Count)
+                        {
+                            StateClass.ChangeToOverworldState();
+                            return;
+                        } else
+                        {
+                            // if not we will switch to the next turn.
+                            BattleScene.Instance.NextTurn(); 
+                            
+                        }
                         
                         // Hide buttons and show battle text
                         foreach (CommandElement button in buttons)
@@ -154,36 +198,8 @@ public class Game1 : Game
                         }
                         RootUIElement.UIState.SelectionIndex = -1;
                         battleText.IsVisible = true;
-                    }
-                    // If we are pressing one of the buttons or not player dont do anything :P
-                } else
-                {
-                    // Either swtich to enemy attacking or switch to player selecting action
-                    BattleScene.Instance.NextTurn();
-                    if (BattleScene.Instance.CurrentBattle is PlayerBattle)
-                    {
-                        // We will show the buttons again. and hide battle text
-                        foreach (CommandElement button in buttons)
-                        {
-                            button.IsVisible = true;
-                            button.MakeSelectable();
-                        }
-                        RootUIElement.UIState.SelectionIndex = 0;
-                        battleText.IsVisible = false;
-                    } else
-                    {
-                        ((IEnemyBattle)BattleScene.Instance.CurrentBattle).TakeTurn();
-                        // Update battle text with new turn text. (enemy)
-                        if (BattleScene.Instance.CurrentBattle.TurnText != null)
-                        {
-                            battleText.TextString = BattleScene.Instance.CurrentBattle.TurnText;
-                        }
-                    }
+                    } 
                 }
-            }
-            if (!BattleScene.Instance.CurrentlyInBattle)
-            {
-                System.Console.WriteLine("OUT OF BATTLE");
             }
         });
         
