@@ -12,7 +12,6 @@ public class EnemyEnemyCollideCommand : ICollisionCommand
 {
     public void Execute(CollisionInfo collision)
     {
-        Console.WriteLine("Enemy collided with enemy! Yay!");
         //CharacterEnemyBase enemy = (CharacterEnemyBase)collision.GetCollisionObjectOfType(CollisionObjectType.Enemy);
         CharacterEnemyBase enemy = PickBestChar(collision.GetBothCollisionObjects(), collision.Direction.ToCard());
         float pushPixels = enemy.MoveSpeed * 2 / Util.ApproxFramesPerSecond;

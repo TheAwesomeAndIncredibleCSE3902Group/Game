@@ -34,21 +34,27 @@ namespace AwesomeRPG.Collision
 
         public void HandleCollisions(List<CollisionObject> movingCollisionObjects, List<CollisionObject> nonMovingCollisionObjects)
         {
+            CollisionObject movingObject;
+            CollisionObject nonMovingObject;
+
             for (int i = 0; i < movingCollisionObjects.Count; i++)
             {
                 for (int k = 0; k < nonMovingCollisionObjects.Count; k++)
                 {
-                    try
-                    {
-                        CollisionObject movingObject = RoomAtlas.Instance.CurrentRoom.MovingCollisionObjects[i];
-                        CollisionObject nonMovingObject = nonMovingCollisionObjects[k];
-                        CollisionInfo collision = movingObject.DetectCollision(nonMovingObject);
-                        HandleCollisionResponse(collision);
-                    }
-                    catch
-                    {
+                    //Checking to make sure the ith element wasn't removed from MovingCollisionObjects
+                    if (RoomAtlas.Instance.CurrentRoom.MovingCollisionObjects.Count > i)
+                        movingObject = RoomAtlas.Instance.CurrentRoom.MovingCollisionObjects[i];
+                    else
                         return;
-                    }
+
+                    //Checking to make sure the kth element wasn't removed from nonMovingCollisionObjects
+                    if (nonMovingCollisionObjects.Count > k)
+                        nonMovingObject = nonMovingCollisionObjects[k];
+                    else
+                        continue;
+
+                    CollisionInfo collision = movingObject.DetectCollision(nonMovingObject);
+                    HandleCollisionResponse(collision);
                 }
 
                 for (int j = i + 1; j < RoomAtlas.Instance.CurrentRoom.MovingCollisionObjects.Count; j++)
