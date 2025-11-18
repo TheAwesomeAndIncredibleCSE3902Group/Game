@@ -32,7 +32,7 @@ public class MoblinBattle : IEnemyBattle
                 break;
             case MoblinActions.RambleCharge:
                 target.Stats.ChangeHealth(-4);
-                TurnText = $"Moblin attacked someone for 4";
+                TurnText = $"Moblin attacked someone for 4\nTheir health is now: {target.Stats.GetHealth()}";
                 break;
             case MoblinActions.Dance:
                 target.Stats.ChangeHealth(-1);

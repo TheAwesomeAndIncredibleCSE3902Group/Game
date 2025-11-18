@@ -34,7 +34,7 @@ public class PlayerBattle : IBattle
         if (BattleScene.Instance.EnemyList[enemyIndex].Stats.GetHealth() < 1)
         {
             BattleScene.Instance.EnemyList[enemyIndex].IsFainted = true;
-            TurnText += $"Enemy has fainted! {BattleScene.Instance.EnemyList[enemyIndex].IsFainted}";
+            TurnText += $"Enemy has fainted!";
         }
     }
 }
