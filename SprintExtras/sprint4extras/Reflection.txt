@@ -19,3 +19,10 @@ amount of work it would take, misjudged what to prioritize (like John said, I be
 functionality), and I did not manage my time well, and all of these factors kinda shot us in the foot at the end. 
 I believe that if I had planned time better we would've had a more complete implementation of the battle UI by the 
 end of this sprint.
+
+Lupine
+--------------
+The team got a little caught up in the churn of implementing big systems that were pushed forward after not being
+completely implemented in Sprint 3. But there were big accomplishments for this sprint: UI is completed up to polish,
+different game states are possible, rudimentary battle logic has been demonstrated, sounds are demonstrated, and 
+collision and the map have been enhanced.

@@ -66,3 +66,24 @@ state without worrying about removing/hiding elements from a single RootElement 
 There may be a better approach to having multiple ChangeTo___State methods throughout 
 each -ScreenState class because we could probably just handle it with an abstract class 
 that StartScreenState and other -ScreenState classes would implement.
+
+
+Lupine
+Nov 17, 2025
+Sprint 4
+-----------------
+Author of code: John and Jesse
+Code under review: BattleEnemies for quality
+Review time: 15 minutes
+Enemies are set up in a way that makes them clear and easy to add to. Enemies are relatively simple,
+but if they had more functionality some changes could be made, like putting each action in its
+own method. Also, these classes have an interface that inherents from another interface. My personal
+preference is to have the class inherent from both interfaces in a flat organization, rather than a
+hierarchy. But, either way works. BattleScene could be changed to have a method that returns a random
+ally, rather than each individual enemy handling it.
+
+Author of code: John and Jesse
+Code under review: BattleEnemies for readability
+Use of enums for actions aids readabiliy. Variables and methods have good names. I suggest long lines
+(ie string concatination) get broken up. It also isn't immediately clear what the TurnList class does 
+by its name. Documentation for that class would be welcome. CurrentSet is a List, not a Set.
