@@ -4,3 +4,9 @@ I feel like we have a tendency as a group to prioritize code quality over functi
 but we end up falling behind a bit on what functionality we actually need to achieve. Besides this point, I honestly kind of felt
 like this Sprint went better than our last ones. I'm not sure if everyone in the group felt the same, but we felt a little less
 disorganized in my opinion. Even if we still fell into the issue of falling behind on some parts of work.
+
+Iris
+--------------
+I think we overall got a lot done this sprint. I think we were a little light on outward facing functionality, but we have a really 
+good foundation going into sprint 5 to build off of. We also all had a much better idea of what we would be working on individually, 
+as we divided things into tasks and assigned them early on. 

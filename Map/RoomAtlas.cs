@@ -29,17 +29,16 @@ namespace AwesomeRPG.Map
         }
         public RoomMap GetRoom(int column, int row)
         {
-            Debug.WriteLine("Columns: " + atlas.Count + ". Row: " + atlas[0].Count);
             if (column > atlas.Count - 1 || column < 0)
             {
-                Debug.WriteLine("column out of bounds");
+                Debug.WriteLine("Column out of bounds! Tried to get " + column + " but only " + (atlas.Count - 1) + " exist");
                 return null;
             }
             else
             {
                 if (row > atlas[column].Count - 1 || row < 0)
                 {
-                    Debug.WriteLine("row out of bounds");
+                    Debug.WriteLine("Row out of bounds! Tried to get " + row + " but only " + (atlas[column].Count - 1) + " exist");
                     return null;
                 }
                 return atlas[column][row];
@@ -52,7 +51,7 @@ namespace AwesomeRPG.Map
             {
                 if (atlas[i].Contains(room))
                 {
-                    Debug.WriteLine(i);
+                    //Debug.WriteLine(i);
                     return i;
                 }
             }
@@ -67,8 +66,8 @@ namespace AwesomeRPG.Map
             {
                 if (atlas[i].Contains(room))
                 {
-                    Debug.WriteLine(i);
-                    Debug.WriteLine(atlas[i].IndexOf(room));
+                    //Debug.WriteLine(i);
+                    //Debug.WriteLine(atlas[i].IndexOf(room));
                     return atlas[i].IndexOf(room);
                 }
             }

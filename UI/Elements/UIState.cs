@@ -10,7 +10,7 @@ namespace AwesomeRPG.UI.Elements;
 public class UIState
 {
     private readonly List<ElementBase> _selectableElements = [];
-    private int _selectionIndex = 0; // This is the "location" of the currently selected element. Can be null
+    private int _selectionIndex = -1; // This is the "location" of the currently selected element. Can be null
     public int SelectionIndex
     {
         get
@@ -19,9 +19,15 @@ public class UIState
         }
         set
         {
-            SelectedElement.DispatchUIEvent(UIEvent.Unselect, new PlainUIEventParams(SelectedElement));
-            _selectionIndex = ((value % _selectableElements.Count) + _selectableElements.Count) % _selectableElements.Count;
-            SelectedElement.DispatchUIEvent(UIEvent.Select, new PlainUIEventParams(SelectedElement));
+            if (_selectableElements.Count == 0)
+            {
+                _selectionIndex = -1;
+            } else
+            {
+                SelectedElement?.DispatchUIEvent(UIEvent.Unselect, new PlainUIEventParams(SelectedElement));
+                _selectionIndex = ((value % _selectableElements.Count) + _selectableElements.Count) % _selectableElements.Count;
+                SelectedElement.DispatchUIEvent(UIEvent.Select, new PlainUIEventParams(SelectedElement));
+            }
         }
     }
     // private Dictionary<(UIControl, UIControlEvent), List<Action>> UIControlActions = [];
@@ -30,7 +36,7 @@ public class UIState
     {
         get
         {
-            if (_selectionIndex >= 0 || _selectionIndex < _selectableElements.Count)
+            if (_selectionIndex >= 0 && _selectionIndex < _selectableElements.Count)
             {
                 return _selectableElements[_selectionIndex];
             }

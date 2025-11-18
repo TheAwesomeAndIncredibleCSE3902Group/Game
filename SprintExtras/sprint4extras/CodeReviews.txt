@@ -17,3 +17,21 @@ I know you are in the works for a big code change, but I will still give feedbac
 This code could definitely benefit from some more comments. For example I think a little summary description at the top of classes 
 would be good, especially since a lot of the classes are just constructors and a draw method. ElementBase could use some comments
 and regions especially due to its length. Besides that I think the naems of functions and variables are good.
+
+
+Iris
+Nov 17, 2025
+Sprint 4
+-----------------
+Author of code: Lupine
+Code under review: OverworldState for quality
+Review time: 5 minutes
+The OverworldState is well put together. The main change I would make would be moving the UI elements into their own class that the 
+overworld state could manipulate. The UI is still under construction so abstracting it out would mean we have less to change 
+when it is completed. It could also be converted to a singleton, but it works well as-is.
+
+Author of code: Lupine
+Code under review: OverworldState for readability
+Review time: 5 minutes
+There are a lot of comments, both function descriptions and in function comments. All of the related functions are next to each other
+and the comments are descriptive enough to know what is going on. 
