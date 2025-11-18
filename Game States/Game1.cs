@@ -12,6 +12,8 @@ using AwesomeRPG.Commands;
 using AwesomeRPG.Map;
 using AwesomeRPG.Characters;
 using AwesomeRPG.Stats;
+using AwesomeRPG.BattleMechanics;
+using AwesomeRPG.BattleMechanics.BattleEnemies;
 
 namespace AwesomeRPG;
 
@@ -97,16 +99,94 @@ public class Game1 : Game
         RootUIElement.AddChild(battleUiBoardBorder);
         RootUIElement.AddChild(battleUiBoardBg);
 
+        var battleText = new TextElement(RootUIElement, spriteFont, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur ut facilisis libero. Fusce nec eleifend turpis. Curabitur condimentum dapibus nisl. Ut metus sapien, auctor et justo non, condimentum gravida risus. Donec varius pellentesque felis non ultricies. Quisque fermentum, augue eu pellentesque dictum, ante sapien elementum enim, sed ultricies mauris dui ut lorem. Donec vitae semper enim, sed ornare libero.");
+        battleText.TextColor = Color.White;
+        battleText.OffsetAndSize = new Rectangle(20, 540, 984, 210);
+        RootUIElement.AddChild(battleText);
+
         List<CommandElement> buttons = new List<CommandElement>();
         for (int i = 0; i < 5; i++)
         {
             var currentButtonToAdd = ButtonComponent.Create(RootUIElement, spriteFont, this, new Rectangle(20 + (i / 3) * 365, 540 + (i % 3) * 75, 350, 60), Color.Purple, Color.White, "Action " + i);
-            currentButtonToAdd.AssociatedCommand = new RegularAttackBattleCommand(0);
+            // TODO: temporary edit for sprint 4 submission. Uncomment later!
+            // currentButtonToAdd.AssociatedCommand = new RegularAttackBattleCommand(0);
             buttons.Add(currentButtonToAdd);
             RootUIElement.AddChild(currentButtonToAdd);
         }
         InitOverworldButton(spriteFont, buttons);
         // buttons[5].IsVisible = false;
+
+        // TODO: Yes this code is very ass but it is temporary for sprint 4 submission!!!!!
+        RootUIElement.AddActionOnUIEvent(UIEvent.ButtonUp, (e) =>
+        {
+            // If in battle and Interact button pressed.
+            if (BattleScene.Instance.CurrentlyInBattle && ((InputUIEventParams) e).Controls.Contains(UIControl.Interact))
+            {
+                int indexOfSelectedButton = buttons.IndexOf((CommandElement) RootUIElement.UIState.SelectedElement);
+                if (indexOfSelectedButton != -1)
+                {
+                    if (indexOfSelectedButton < 5 && BattleScene.Instance.CurrentBattle is PlayerBattle)
+                    {
+                        // We are pressing one of the buttons and are acting as player.
+                        // For now we will attack lowest index alive enemy!
+                        int idx = -1;
+                        foreach (IEnemyBattle enemyBattle in BattleScene.Instance.EnemyList)
+                        {
+                            idx++;
+                            if (!enemyBattle.IsFainted)
+                            {
+                                break;
+                            }
+                        }
+                        ((PlayerBattle) BattleScene.Instance.CurrentBattle).Attack(idx);
+
+                        // Update battleText with turn text (player)
+                        if (BattleScene.Instance.CurrentBattle.TurnText != null)
+                        {
+                            battleText.TextString = BattleScene.Instance.CurrentBattle.TurnText;
+                        }
+                        
+                        // Hide buttons and show battle text
+                        foreach (CommandElement button in buttons)
+                        {
+                            button.IsVisible = false;
+                            button.MakeUnselectable();
+                        }
+                        RootUIElement.UIState.SelectionIndex = -1;
+                        battleText.IsVisible = true;
+                    }
+                    // If we are pressing one of the buttons or not player dont do anything :P
+                } else
+                {
+                    // Either swtich to enemy attacking or switch to player selecting action
+                    BattleScene.Instance.NextTurn();
+                    if (BattleScene.Instance.CurrentBattle is PlayerBattle)
+                    {
+                        // We will show the buttons again. and hide battle text
+                        foreach (CommandElement button in buttons)
+                        {
+                            button.IsVisible = true;
+                            button.MakeSelectable();
+                        }
+                        RootUIElement.UIState.SelectionIndex = 0;
+                        battleText.IsVisible = false;
+                    } else
+                    {
+                        ((IEnemyBattle)BattleScene.Instance.CurrentBattle).TakeTurn();
+                        // Update battle text with new turn text. (enemy)
+                        if (BattleScene.Instance.CurrentBattle.TurnText != null)
+                        {
+                            battleText.TextString = BattleScene.Instance.CurrentBattle.TurnText;
+                        }
+                    }
+                }
+            }
+            if (!BattleScene.Instance.CurrentlyInBattle)
+            {
+                System.Console.WriteLine("OUT OF BATTLE");
+            }
+        });
+        
 
         RootUIElement.UIState.SelectionIndex = 0;
 

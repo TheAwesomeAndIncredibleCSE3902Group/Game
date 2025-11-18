@@ -15,7 +15,7 @@ public class SelectionAnimationElement : ElementBase
         CalculateDerivedValuesFromAncestors();
         DispatchUIEvent(UIEvent.BeforeDraw, new DrawUIEventParams(this, gameTime));
 
-        if (DerivedAncestorIsSelected && IsVisible)
+        if (DerivedAncestorIsSelected && DerivedAncestorIsVisible)
         {
             int animationFrame = (int)gameTime.TotalGameTime.TotalMicroseconds / 9000 % 100;
             // System.Console.WriteLine(animationFrame);
