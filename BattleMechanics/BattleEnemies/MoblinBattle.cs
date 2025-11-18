@@ -10,7 +10,7 @@ public class MoblinBattle : IEnemyBattle
     public enum MoblinActions { ScratchBellyButton, RambleCharge, Dance }
     public bool IsFainted { get; set; }
     public bool IsFriend { get; set; }
-    public String TurnText { get; set; }
+    public String TurnText { get; set; } = null;
 
     public MoblinBattle(EnemyStats stats)
     {

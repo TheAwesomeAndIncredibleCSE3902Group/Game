@@ -12,7 +12,7 @@ public class PlayerBattle : IBattle
     public bool IsFriend { get; set; }
     public bool IsFainted { get; set; }
 
-    public String TurnText { get; set; }
+    public String TurnText { get; set; } = null;
 
     public PlayerBattle(PlayerStats stats)
     {

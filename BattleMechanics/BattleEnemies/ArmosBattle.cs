@@ -10,7 +10,7 @@ public class ArmosBattle : IEnemyBattle
 
     public bool IsFriend { get; set; }
     public bool IsFainted { get; set; }
-    public String TurnText { get; set; }
+    public String TurnText { get; set; } = null;
 
     public ArmosBattle(EnemyStats stats)
     {
