@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Map>
+  <Tilemap>
+    <Tileset tileWidth="16" tileHeight="16">TileImages/zelda_tiles</Tileset>
+    <Tiles rows="9" columns="16">
+      <Row>!01 !01 !01 !01 !01 !01 !01 ?04 ?04 !01 !01 !01 !01 !01 !01 !01</Row>
+      <Row>!01 !01 !09  00  00  00  00  00  00  00  00  00  00 !03 !01 !01</Row>
+      <Row>!01  01 !01  00  00  00  00  00  00  00  00  00  00 !01  01 !01</Row>
+      <Row>!01  06  01 !01 !09  00  00  00  00  00  00 !03 !01  01  06 !01</Row>
+      <Row>!01  06  06  01 !01  00  00  00  00  00  00 !01  01  06  06 !01</Row>
+      <Row>!01  06  06  06  01 !01 !09  05  05 !03 !01 !01  06  06  06 !01</Row>
+      <Row>!01  06  06  06  06  01 !01  05  05 !01  01  06  06  06  06 !01</Row>
+      <Row>!01  06  06  06  06  06 !01 !01 !01 !01  06  06  06  06  06 !01</Row>
+      <Row>!01 !01 !01 !01 !01 !01 !01 !01 !01 !01 !01 !01 !01 !01 !01 !01</Row>
+    </Tiles>
+  </Tilemap>
+  <Entities>
+  </Entities>
+  <Pickups>
+    <Pickup x="500" y="340">potion</Pickup><!--Make this a teammate later-->
+    <Pickup x="600" y="260">potion</Pickup>
+    <Pickup x="350" y="260">potion</Pickup>
+  </Pickups>
+</Map>

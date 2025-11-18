@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Map>
+  <Tilemap>
+    <Tileset tileWidth="16" tileHeight="16">TileImages/zelda_tiles</Tileset>
+    <Tiles rows="9" columns="16">
+      <Row>!01 !01 !01 !01 !01 !01 !01 !01 !01 !01 !01 !01 !01 !01 !01 !01</Row>
+      <Row>!01  06  06  06  06  06 !06  00  00 !06  06  06  06  06  06 !01</Row>
+      <Row>!01 !06 !06 !06 !06 !06 !06  00  00 !06 !06 !06 !06 !06 !06 !01</Row>
+      <Row>?04  00  00  00  00  00  00  00  00  00  00  00  00  00  00 ?04</Row>
+      <Row>?04  00  00  00  00  00  00  00  00  00  00  00  00  00  00 ?04</Row>
+      <Row>!01 !06 !06 !06 !06 !06 !06  00  00 !06 !06 !06 !06 !06 !06 !01</Row>
+      <Row>!01  06  06  06  06  06 !06  00  00 !06  06  06  06  06  06 !01</Row>
+      <Row>!01  06  06  06  06  06 !06  00  00 !06  06  06  06  06  06 !01</Row>
+      <Row>!01 !01 !01 !01 !01 !01 !01 !01 !01 !01 !01 !01 !01 !01 !01 !01</Row>
+    </Tiles>
+  </Tilemap>
+  <Entities>
+    <Entity x="480" y="90" pathing="line" facing="down">armos</Entity>
+    <Entity x="850" y="195" pathing="random" facing="left">moblin</Entity>
+  </Entities>
+  <Pickups>
+  </Pickups>
+</Map>

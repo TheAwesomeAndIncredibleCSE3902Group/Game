@@ -72,7 +72,7 @@ public class OverworldState : IGameState
 
     private void CreateWorld(ContentManager contentManager)
     {
-        RoomAtlas.Instance.SetAtlas(new AtlasInitializer().InitializeAtlas(contentManager));
+        RoomAtlas.Instance.SetAtlas(AtlasInitializer.InitializeAtlas(contentManager));
         RoomAtlas.Instance.CurrentRoom = RoomAtlas.Instance.GetRoom(0,0);
     }
 

@@ -269,6 +269,9 @@
 #begin MapItems/Level0-2.xml
 /copy:MapItems/Level0-2.xml
 
+#begin MapItems/Level0-3.xml
+/copy:MapItems/Level0-3.xml
+
 #begin MapItems/Level1-0.xml
 /copy:MapItems/Level1-0.xml
 
@@ -278,6 +281,9 @@
 #begin MapItems/Level1-2.xml
 /copy:MapItems/Level1-2.xml
 
+#begin MapItems/Level1-3.xml
+/copy:MapItems/Level1-3.xml
+
 #begin MapItems/Level2-0.xml
 /copy:MapItems/Level2-0.xml
 
@@ -286,6 +292,35 @@
 
 #begin MapItems/Level2-2.xml
 /copy:MapItems/Level2-2.xml
+
+#begin MapItems/Level2-3.xml
+/copy:MapItems/Level2-3.xml
+
+#begin MapItems/Level3-0.xml
+/copy:MapItems/Level3-0.xml
+
+#begin MapItems/Level3-1.xml
+/copy:MapItems/Level3-1.xml
+
+#begin MapItems/Level3-2.xml
+/copy:MapItems/Level3-2.xml
+
+#begin MapItems/Level3-3.xml
+/copy:MapItems/Level3-3.xml
+
+#begin MapItems/Level4-0.xml
+/copy:MapItems/Level4-0.xml
+
+#begin MapItems/Level4-1.xml
+/copy:MapItems/Level4-1.xml
+
+#begin MapItems/Level4-2.xml
+/copy:MapItems/Level4-2.xml
+
+#begin MapItems/Level4-3.xml
+/copy:MapItems/Level4-3.xml
+
+
 
 #begin SpriteImages/enemy_sprites.png
 /importer:TextureImporter

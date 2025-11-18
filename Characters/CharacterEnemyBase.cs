@@ -5,6 +5,7 @@ using AwesomeRPG.Map;
 using Microsoft.Xna.Framework;
 using AwesomeRPG.Collision;
 using static AwesomeRPG.Util;
+using System.Diagnostics;
 
 namespace AwesomeRPG.Characters;
 
