@@ -29,7 +29,8 @@ public static class PlayerSoundFactory
     
     public static void PlayLinkHurtSoundEffect()
     {
-        linkHurtSoundEffect.Play();
+        //This was causing a NullReferenceException
+        //linkHurtSoundEffect.Play();
     }
     
     public static void PlayLinkItemGetSoundEffect()
