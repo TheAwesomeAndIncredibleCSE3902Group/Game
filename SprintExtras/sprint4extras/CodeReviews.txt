@@ -68,6 +68,27 @@ each -ScreenState class because we could probably just handle it with an abstrac
 that StartScreenState and other -ScreenState classes would implement.
 
 
+Caleb 
+Nov 17, 2025
+Sprint 4
+-----------------
+Author of Code: Iris
+Code Under Review: GameOverState for Code Quality
+Review time: 2 minutes
+Overall the GameOverState is fairly simple and therefore doesn't have too many issues which could arise.
+Nitpick I really have is the processInput function. It breaks our abstraction of having keyboard inputs 
+all being handled in the keyboard controller. I understand why it was done like that since it would be annoying
+to add a command for a single thing, but for code cohesion it would likely be good to do.
+
+Author of Code: John
+Code Under Review: BattleState for Readability
+Review time: 2 Minutes
+Another fairly simple battle state tho that simplicity comes from obscuring lots of what it does in
+the BattleScene class. It might be good to move a few more bits of data to the battle state so that
+it can serve as the global manager rather than a separate coupled class.
+
+
+
 Lupine
 Nov 17, 2025
 Sprint 4

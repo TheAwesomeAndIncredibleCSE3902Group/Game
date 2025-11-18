@@ -26,3 +26,12 @@ The team got a little caught up in the churn of implementing big systems that we
 completely implemented in Sprint 3. But there were big accomplishments for this sprint: UI is completed up to polish,
 different game states are possible, rudimentary battle logic has been demonstrated, sounds are demonstrated, and 
 collision and the map have been enhanced.
+
+Caleb
+--------------
+There is a bad trend of creating frameworks for systems without applying them along with overplanning features.
+As in trying to figure out how the entirety of a system will work before coding it which often leads to no work
+being done as it becomes a refactor hell. Additionally we allowed for too many bottlenecks in the project's development.
+Felt like this sprint more than any other, people were waiting for other to finish their work, which is no bueno for speedy
+development. For this final sprint we gotta get something out the door, something with scuffed code but complete 
+is better than something with perfect code but half-finished. 
