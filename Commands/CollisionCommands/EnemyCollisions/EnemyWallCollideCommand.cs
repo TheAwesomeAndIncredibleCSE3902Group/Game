@@ -12,7 +12,6 @@ public class EnemyWallCollideCommand : ICollisionCommand
 {
     public void Execute(CollisionInfo collision)
     {
-        Console.WriteLine("Enemy collided with wall! Yay!");
         CharacterEnemyBase enemy = (CharacterEnemyBase)collision.GetCollisionObjectOfType(CollisionObjectType.Enemy);
         float pushPixels = enemy.MoveSpeed/Util.ApproxFramesPerSecond;
         Vector2 bumpUnitDirection = Util.CardinalToUnitVector(collision.Direction.ToCard().Opposite());
