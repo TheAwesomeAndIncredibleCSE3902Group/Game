@@ -35,3 +35,34 @@ Code under review: OverworldState for readability
 Review time: 5 minutes
 There are a lot of comments, both function descriptions and in function comments. All of the related functions are next to each other
 and the comments are descriptive enough to know what is going on. 
+
+
+Eli
+Nov 17, 2025
+Sprint 4
+-----------------
+Author of code: John
+Code under review: BattleScene and general battle mechanics for readability
+Review time: 5 minutes
+When first reading over the BattleScene I had a little bit of trouble understanding
+how it functioned, and it would be nice if there were some comments that explained
+what each method did, the steps that each method should run in for properly running
+a battle, etc. Right now we don't need AllyList but may be useful if we ever
+implement multiple players.
+Additionally, how each of the "battle" classses worked was a little bit confusing
+at first, especially with the enemies and player deriving from the same class.
+But it made sense after reading throgho it.
+For each of the classes, the names of the properties and methods make sense for
+what they are used for.
+
+Author of code: Lupine
+Code under review: StartScreenState for quality
+Review time: 5 minutes
+Using a method specifically for lerping the text color is a good approach; I believe
+that when I did something similar for the SelectionAnimationElement I did it all inline.
+Additionally, I believe that this approach of having dedicated ScreenState classes containing 
+the RootElement is good because it allows different UIs to be drawn easily between each
+state without worrying about removing/hiding elements from a single RootElement of Game1.
+There may be a better approach to having multiple ChangeTo___State methods throughout 
+each -ScreenState class because we could probably just handle it with an abstract class 
+that StartScreenState and other -ScreenState classes would implement.
