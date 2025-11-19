@@ -43,7 +43,7 @@ public class BattleState : IGameState
 
     public void Update(GameTime gameTime)
     {
-
+        GameSoundFactory.PlayBattleSceneTheme(gameTime);
     }
 
     public void ChangeToBattleState(CharacterEnemyBase[] enemies) { }
@@ -56,7 +56,8 @@ public class BattleState : IGameState
         //This will have to convert all relevant data to Overworld delta
         //Use that delta to modify the Overworld state
         //And then return to that Overworld state
-
+        GameSoundFactory.StopBattleSceneTheme();
+        //PlayerSoundFactory.PlayVictoryFanfare();
         foreach (CharacterEnemyBase enemy in enemies)
         {
             enemy.TryDestroy();

@@ -61,6 +61,7 @@ public class StartScreenState : IGameState
 
     public void Update(GameTime gameTime)
     {
+        GameSoundFactory.PlayStartScreenTheme();
         ProcessInput();
     }
     
@@ -69,6 +70,7 @@ public class StartScreenState : IGameState
         KeyboardState keyboard = Keyboard.GetState();
         if (keyboard.IsKeyDown(Keys.Space))
         {
+            GameSoundFactory.StopStartScreenTheme();
             ChangeToOverworldState();
         }
     }

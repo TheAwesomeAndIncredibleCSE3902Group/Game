@@ -52,7 +52,7 @@ public static class PlayerSoundFactory
     {
         bossBattleVictorySoundEffect = content.Load<SoundEffect>("LinkSoundEffects/BossBattleVictorySoundEffect");
         linkEnterRoomSoundEffect = content.Load<SoundEffect>("LinkSoundEffects/LinkEnterRoomSoundEffect");
-        linkHurtSoundEffect = content.Load<SoundEffect>("LinkSoundEffects/LinkHurtPlacementSoundEffect");
+        linkHurtSoundEffect = content.Load<SoundEffect>("LinkSoundEffects/LinkHurtSoundEffect");
         linkItemGetSoundEffect = content.Load<SoundEffect>("LinkSoundEffects/LinkItemGetSoundEffect");
         playerUICursorMoveAndLinkDyingSoundEffect = content.Load<SoundEffect>("LinkSoundEffects/UICursorMoveAndLinkDyingSoundEffect");
         victoryFanfareSoundEffect = content.Load<SoundEffect>("LinkSoundEffects/VictoryFanfare");

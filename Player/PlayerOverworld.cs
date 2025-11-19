@@ -86,11 +86,28 @@ public class PlayerOverworld : CollisionObject
 
     public void TakeDamage(int amount = 1)
     {
+        PlayerSoundFactory.PlayLinkHurtSoundEffect();
         PStateMachine.ChangeStateDamaged();
     }
 
     public void UseEquipment(Weapons requestedEQ)
     {
+        switch (requestedEQ)
+        {
+            case Weapons.bow:
+                ItemSoundFactory.PlayArrowAndReflectSoundEffect();
+                break;
+            case Weapons.boomerangSack:
+                ItemSoundFactory.PlayBoomerangSoundEffect();
+                break;
+            case Weapons.swordSheathe:
+                ItemSoundFactory.PlaySwordSlashSoundEffect();
+                break;
+            case Weapons.superSwordSheathe:
+                ItemSoundFactory.PlaySwordSlashSoundEffect();
+                ItemSoundFactory.PlaySwordBeamSoundEffect();
+                break;
+        }
         if (!Equipment.TryGetValue(requestedEQ, out Equipment playerEQ))
         {
             Console.WriteLine("Tried to use an Equipment that doesn't exist!");

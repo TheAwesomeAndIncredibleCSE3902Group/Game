@@ -34,7 +34,7 @@ public static class GameSoundFactory
 
     public static void PlayOverworldMapTheme(GameTime gameTime)
     {
-        ThemeController.PlayCurrentAreaTheme(gameTime, overWorldThemeIntro, overWorldThemeIntroHolder.Duration.Nanoseconds, overWorldThemeMainLoop);
+        ThemeController.PlayCurrentAreaTheme(gameTime, overWorldThemeIntro, overWorldThemeIntroHolder.Duration.TotalNanoseconds, overWorldThemeMainLoop);
     }
 
     public static void StopOverworldMapTheme()
