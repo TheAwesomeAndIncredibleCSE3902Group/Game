@@ -254,7 +254,7 @@ public class Game1 : Game
         //gameTime = new GameTime(gameTime.TotalGameTime / 2f, gameTime.ElapsedGameTime / 2f);
 
         foreach (IController controller in _controllersList)
-            controller.Update(GameState.overworld);
+            controller.Update(StateClass.CurrentState);
 
         StateClass.Update(gameTime);
         base.Update(gameTime);
