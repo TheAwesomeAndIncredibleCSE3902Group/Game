@@ -50,6 +50,7 @@ public class OverworldState : IGameState
 
     public void Update(GameTime gameTime)
     {
+        GameSoundFactory.PlayOverworldMapTheme(gameTime);
         gameTime = new GameTime(gameTime.TotalGameTime, gameTime.ElapsedGameTime * TimeScale);
 
         RoomAtlas.Instance.CurrentRoom.Update(gameTime);
@@ -61,6 +62,7 @@ public class OverworldState : IGameState
     {
         //This will have to convert any relevant data to its battle representation
         //And return a new BattleState
+        GameSoundFactory.StopOverworldMapTheme();
         game.SetStateClass(new BattleState(this, game, enemies));
     }
 
@@ -72,7 +74,7 @@ public class OverworldState : IGameState
 
     private void CreateWorld(ContentManager contentManager)
     {
-        RoomAtlas.Instance.SetAtlas(new AtlasInitializer().InitializeAtlas(contentManager));
+        RoomAtlas.Instance.SetAtlas(AtlasInitializer.InitializeAtlas(contentManager));
         RoomAtlas.Instance.CurrentRoom = RoomAtlas.Instance.GetRoom(0,0);
     }
 

@@ -62,6 +62,9 @@ public class Game1 : Game
 
         //Create sound factories; load sound effects
         GameSoundFactory.LoadAndSetUpAllThemes(Content);
+        PlayerSoundFactory.LoadAndSetUpAllPlayerSounds(Content);
+        ItemSoundFactory.LoadAndSetUpAllItemSounds(Content);
+        EnemySoundFactory.LoadAndSetUpAllEnemySounds(Content);
 
         StateClass = new StartScreenState(this);
         //InitializeOverworldAndControllers();
@@ -249,10 +252,9 @@ public class Game1 : Game
     {
         //Time can be slowed like this
         //gameTime = new GameTime(gameTime.TotalGameTime / 2f, gameTime.ElapsedGameTime / 2f);
-        GameSoundFactory.PlayOverworldMapTheme(gameTime);
 
         foreach (IController controller in _controllersList)
-            controller.Update(GameState.overworld);
+            controller.Update(StateClass.CurrentState);
 
         StateClass.Update(gameTime);
         base.Update(gameTime);

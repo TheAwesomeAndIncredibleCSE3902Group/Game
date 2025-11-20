@@ -19,3 +19,31 @@ amount of work it would take, misjudged what to prioritize (like John said, I be
 functionality), and I did not manage my time well, and all of these factors kinda shot us in the foot at the end. 
 I believe that if I had planned time better we would've had a more complete implementation of the battle UI by the 
 end of this sprint.
+
+Lupine
+--------------
+The team got a little caught up in the churn of implementing big systems that were pushed forward after not being
+completely implemented in Sprint 3. But there were big accomplishments for this sprint: UI is completed up to polish,
+different game states are possible, rudimentary battle logic has been demonstrated, sounds are demonstrated, and 
+collision and the map have been enhanced.
+
+Caleb
+--------------
+There is a bad trend of creating frameworks for systems without applying them along with overplanning features.
+As in trying to figure out how the entirety of a system will work before coding it which often leads to no work
+being done as it becomes a refactor hell. Additionally we allowed for too many bottlenecks in the project's development.
+Felt like this sprint more than any other, people were waiting for other to finish their work, which is no bueno for speedy
+development. For this final sprint we gotta get something out the door, something with scuffed code but complete 
+is better than something with perfect code but half-finished. 
+
+Jesse
+______________
+We got a lot done in this sprint; however, there are clear signs of unorganization in terms of time management within the group.
+Just like the sprints before, we each rushed to finish what we got at the last second with commits being made heavily during the
+last week before the due date (I take accountability since I have been guilty of this the most). Additionally, we have each 
+placed pretty heavy tasks onto ourselves, and as Caleb said some of these tasks required other massive tasks to be completed first
+(UI for rpg battle scenes being the main one). These long waiting periods bottlenecked our progress, but we did recognize this 
+during the last week of the sprint and we each tried to take on more than what we could handle to catch up to where we needed to be.
+In the end, I think we got a great foundation for the last sprint; however, we need to just get a small chunk of code down in the 
+project, test and fix any issues after (there have been moments where team members including myself have pushed code that was not 
+battle tested), then commit and push what we wrote. Step by step.

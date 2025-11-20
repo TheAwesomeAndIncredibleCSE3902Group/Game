@@ -5,33 +5,33 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
+using System.Reflection.Metadata;
 
 namespace AwesomeRPG.Map
 {
     public class AtlasInitializer
     {
-        private List<List<RoomMap>> atlas;
-
-        public AtlasInitializer()
+        public static List<List<RoomMap>> InitializeAtlas(ContentManager content)
         {
-        }
-        public List<List<RoomMap>> InitializeAtlas(ContentManager content)
-        {
-            atlas = new List<List<RoomMap>>();
             // Initialize with the starting rooms
-            RoomMap room_0_0 = MapParser.RoomMapFromXML(content, "MapItems\\Level0-0.xml");
-            RoomMap room_0_1 = MapParser.RoomMapFromXML(content, "MapItems\\Level0-1.xml");
-            RoomMap room_0_2 = MapParser.RoomMapFromXML(content, "MapItems\\Level0-2.xml");
-            RoomMap room_1_0 = MapParser.RoomMapFromXML(content, "MapItems\\Level1-0.xml");
-            RoomMap room_1_1 = MapParser.RoomMapFromXML(content, "MapItems\\Level1-1.xml");
-            RoomMap room_1_2 = MapParser.RoomMapFromXML(content, "MapItems\\Level1-2.xml");
-            RoomMap room_2_0 = MapParser.RoomMapFromXML(content, "MapItems\\Level2-0.xml");
-            RoomMap room_2_1 = MapParser.RoomMapFromXML(content, "MapItems\\Level2-1.xml");
-            RoomMap room_2_2 = MapParser.RoomMapFromXML(content, "MapItems\\Level2-2.xml");
-            atlas.Add(new List<RoomMap> { room_0_0, room_0_1, room_0_2 });
-            atlas.Add(new List<RoomMap> { room_1_0, room_1_1, room_1_2 });
-            atlas.Add(new List<RoomMap> { room_2_0, room_2_1, room_2_2 });
+            return ParseRoomsFromXML(content);
+        }
 
+        private static List<List<RoomMap>> ParseRoomsFromXML(ContentManager content)
+        {
+            List<List<RoomMap>> atlas = [];
+            int numRows = 5;
+            int numCols = 4;
+            for (int i = 0; i < numRows; i++)
+            {
+                List<RoomMap> roomRow = [];
+                for (int j = 0; j < numCols; j++)
+                {
+                    RoomMap room = MapParser.RoomMapFromXML(content, $"MapItems\\Level{i}-{j}.xml");
+                    roomRow.Add(room);
+                }
+                atlas.Add(roomRow);
+            }
             return atlas;
         }
     }
