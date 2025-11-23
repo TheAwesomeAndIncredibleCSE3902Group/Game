@@ -9,7 +9,7 @@ namespace AwesomeRPG.Commands
 
         public UseItemCommand(Weapons weapon)
         {
-            _currentPlayer = PlayerOverworld.Instance;
+            _currentPlayer = Player.Instance.PlayerOverworld;
             _weapon = weapon;
         }
 

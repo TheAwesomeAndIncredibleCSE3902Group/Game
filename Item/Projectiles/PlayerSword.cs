@@ -27,7 +27,7 @@ public class PlayerSword : Projectile
     protected override void Move()
     {
        //Sword tracks the player
-       this.Position = PlayerOverworld.Instance.Position + Util.CardinalToUnitVector(direction) * swordOffset;
+       this.Position = Player.Instance.PlayerOverworld.Position + Util.CardinalToUnitVector(direction) * swordOffset;
     }
 
 }

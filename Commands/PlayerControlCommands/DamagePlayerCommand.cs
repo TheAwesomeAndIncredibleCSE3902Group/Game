@@ -9,7 +9,7 @@ namespace AwesomeRPG.Commands
 
         public DamagePlayerCommand()
         {
-            currentPlayer = PlayerOverworld.Instance;
+            currentPlayer = Player.Instance.PlayerOverworld;
         }
 
         public void Execute()

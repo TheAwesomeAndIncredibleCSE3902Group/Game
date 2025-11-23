@@ -10,7 +10,7 @@ namespace AwesomeRPG.Commands
 
         public MovePlayerCommand(Cardinal direction) 
         {
-            currentPlayer = PlayerOverworld.Instance;
+            currentPlayer = Player.Instance.PlayerOverworld;
             inputDirection = direction;
         }
 

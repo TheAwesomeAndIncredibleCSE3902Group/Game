@@ -8,7 +8,7 @@ public class PlayerToStandingCommand : ICommand
 
     public PlayerToStandingCommand()
     {
-        currentPlayer = PlayerOverworld.Instance;
+        currentPlayer = Player.Instance.PlayerOverworld;
     }
     
     public void Execute()

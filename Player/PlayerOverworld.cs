@@ -10,8 +10,6 @@ namespace AwesomeRPG;
 
 public class PlayerOverworld : CollisionObject
 {
-    //Singleton pattern seems acceptable for the player
-    public static PlayerOverworld Instance { get; private set; }
     public Cardinal FacingDirection => PStateMachine.Direction;
     public PlayerStateMachine PStateMachine { get; private set; }
 
@@ -29,7 +27,6 @@ public class PlayerOverworld : CollisionObject
 
     public PlayerOverworld(ContentManager content, SpriteBatch _spriteBatch)
     {
-        Instance = this;
         InitializeEquipment();
         //Throwing in a random position so the sprite isn't halfway off the screen or something
         Vector2 startingPos = new Vector2(500, 250);

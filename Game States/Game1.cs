@@ -83,7 +83,7 @@ public class Game1 : Game
         );
         new Player(pStats, pOverworld);
 
-        StateClass = new OverworldState(Content, PlayerOverworld.Instance, this);
+        StateClass = new OverworldState(Content, Player.Instance.PlayerOverworld, this);
 
         _controllersList =
         [
