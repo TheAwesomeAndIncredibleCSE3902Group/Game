@@ -68,8 +68,8 @@ public class PlayerOverworld : CollisionObject
         PStateMachine.ChangeStateWalking();
 
         PlayerStateMachine.States newState = PStateMachine.GetCurrentState();
-        if (newState == PlayerStateMachine.States.Walking 
-            || newState == PlayerStateMachine.States.Damaged 
+        if (newState == PlayerStateMachine.States.Walking
+            || newState == PlayerStateMachine.States.Damaged
             || newState == PlayerStateMachine.States.ItemUse)
         {
             if (PStateMachine.Direction != direction)
@@ -88,6 +88,8 @@ public class PlayerOverworld : CollisionObject
     {
         PlayerSoundFactory.PlayLinkHurtSoundEffect();
         PStateMachine.ChangeStateDamaged();
+
+        Player.Instance.PlayerStats.ChangeHealth(amount);
     }
 
     public void UseEquipment(Weapons requestedEQ)

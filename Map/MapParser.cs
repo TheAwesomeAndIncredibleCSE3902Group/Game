@@ -257,12 +257,12 @@ public class MapParser
         switch (type)
         {
             case "potion":
-                pickupToAdd = new Potion(map);
+                pickupToAdd = new PotionOverworld(map);
                 pickupToAdd.Position = position;
                 break;
             default:
                 Console.WriteLine("Pickup type not supported: " + type);
-                pickupToAdd = new Potion(map); //Arbitrary
+                pickupToAdd = new PotionOverworld(map); //Arbitrary
                 break;
         }
         map.Pickups.Add(pickupToAdd);
