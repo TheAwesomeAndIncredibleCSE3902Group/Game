@@ -76,19 +76,27 @@ namespace AwesomeRPG.Collision
         
         private void InitializeProjectileCollisions()
         {
+            InitializePlayerProjectileCollisions();
+            InitializeEnemyProjectileCollisions();
+        }
+
+        private void InitializePlayerProjectileCollisions()
+        {
             collisionResponses[new CollisionPair(CollisionObjectType.PlayerProjectile, CollisionObjectType.Enemy)] = new PlayerProjectileEnemyCollideCommand();
             collisionResponses[new CollisionPair(CollisionObjectType.PlayerProjectile, CollisionObjectType.Wall)] = new PlayerProjectileWallCollideCommand();
-
-            collisionResponses[new CollisionPair(CollisionObjectType.EnemyProjectile, CollisionObjectType.Wall)] = new EnemyProjectileWallCollideCommand();
-            collisionResponses[new CollisionPair(CollisionObjectType.EnemyProjectile, CollisionObjectType.Player)] = new EnemyProjectilePlayerCollideCommand();
-
             //This command will run for all player projectiles, but it only does something if it is a Boomerang
             collisionResponses[new CollisionPair(CollisionObjectType.PlayerProjectile, CollisionObjectType.Player)] = new BoomerangPlayerCollideCommand();
         }
 
+        private void InitializeEnemyProjectileCollisions()
+        {
+            collisionResponses[new CollisionPair(CollisionObjectType.EnemyProjectile, CollisionObjectType.Wall)] = new EnemyProjectileWallCollideCommand();
+            collisionResponses[new CollisionPair(CollisionObjectType.EnemyProjectile, CollisionObjectType.Player)] = new EnemyProjectilePlayerCollideCommand();
+        }
         private void InitializePlayerCollisions()
         {
             collisionResponses[new CollisionPair(CollisionObjectType.Player, CollisionObjectType.Wall)] = new PlayerWallCollideCommand();
+            collisionResponses[new CollisionPair(CollisionObjectType.Player, CollisionObjectType.Lava)] = new PlayerWallCollideCommand();
             collisionResponses[new CollisionPair(CollisionObjectType.Player, CollisionObjectType.Pickup)] = new PlayerPickupCollideCommand();
             collisionResponses[new CollisionPair(CollisionObjectType.Player, CollisionObjectType.Enemy)] = new PlayerEnemyCollideCommand();
             collisionResponses[new CollisionPair(CollisionObjectType.Player, CollisionObjectType.Entrance)] = new PlayerEntranceCollideCommand();
@@ -97,6 +105,7 @@ namespace AwesomeRPG.Collision
         private void InitializeEnemyCollisions()
         {
             collisionResponses[new CollisionPair(CollisionObjectType.Enemy, CollisionObjectType.Wall)] = new EnemyWallCollideCommand();
+            collisionResponses[new CollisionPair(CollisionObjectType.Enemy, CollisionObjectType.Lava)] = new EnemyWallCollideCommand();
             //Enemies treat Entrances as Walls
             collisionResponses[new CollisionPair(CollisionObjectType.Enemy, CollisionObjectType.Entrance)] = new EnemyWallCollideCommand();
             collisionResponses[new CollisionPair(CollisionObjectType.Enemy, CollisionObjectType.Enemy)] = new EnemyEnemyCollideCommand();

@@ -123,11 +123,15 @@ public class MapParser
                 {
                     collisionMatrix[i].Add(2);
                 }
+                else if(tileInfo.StartsWith('.'))
+                {
+                    collisionMatrix[i].Add(3);
+                }
                 else
                 {
                     collisionMatrix[i].Add(0);
                 }
-                int tilesetIndex = int.Parse(tileInfo.Trim('!').Trim('?'));
+                int tilesetIndex = int.Parse(tileInfo.Trim('!').Trim('?').Trim('.'));
 
                 tilemap.SetTile(column, i, tilesetIndex);
 
@@ -159,6 +163,10 @@ public class MapParser
                 else if (collisionMatrix[i][j] == 2)
                 {
                     map.NonMovingCollisionObjects.Add(new Entrance(position, width, height));
+                }
+                else if((collisionMatrix[i][j] == 3))
+                {
+                    map.NonMovingCollisionObjects.Add(new Lava(position, width, height));
                 }
             }
         }
