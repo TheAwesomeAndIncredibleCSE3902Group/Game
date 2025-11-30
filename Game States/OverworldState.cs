@@ -70,7 +70,10 @@ public class OverworldState : IGameState
 
     public void ChangeToStartState() { }
     
-    public void ChangeToGameOverState() { }
+    public void ChangeToGameOverState()
+    {
+        game.SetStateClass(new GameOverState(game));
+    }
 
     private void CreateWorld(ContentManager contentManager)
     {

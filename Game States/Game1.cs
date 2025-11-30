@@ -290,6 +290,11 @@ public class Game1 : Game
     {
         StateClass.ChangeToOverworldState();
     }
+
+    public static void TransitionToGameOverState()
+    {
+        StateClass.ChangeToGameOverState();
+    }
     
     /// <summary>
     /// This should ONLY be run by the States themselves

@@ -22,9 +22,10 @@ public class GameOverState : IGameState
 
     public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
     {
-        //Yeah, initilizes the UI every frame.
-        //This was the cleanest solution
-        InitUI(spriteBatch, gameTime);
+        if (rootUIElement == null)
+        {
+            InitUI(spriteBatch, gameTime);            
+        }
         rootUIElement.Draw(gameTime);
     }
 
@@ -35,18 +36,20 @@ public class GameOverState : IGameState
         //Ensure the font is loaded
         var spriteFont = game.Content.Load<SpriteFont>("Fonts\\MyFont");
 
-        //Background, because I'm sorry but the green was so ugly
+        //Black background
         RectElement rect = new RectElement(rootUIElement, Color.Black);
         rect.OffsetAndSize = game.GetScreenRect();
         rootUIElement.AddChild(rect);
 
         //Text element construction
-        String textString = "Game Over! press Enter to return to title";
+        String textString = "Game Over! Press Escape to return to title.";
         Color textColor = Color.White;
-        TextElement textElem = new(rootUIElement, spriteFont, textString, textColor);
-        textElem.OffsetAndSize = game.GetScreenRect();
-        textElem.HorizontalTextAlign = TextElement.TextAlign.Center;
-        textElem.VerticalTextAlign = TextElement.TextAlign.Center;
+        TextElement textElem = new(rootUIElement, spriteFont, textString, textColor)
+        {
+            OffsetAndSize = game.GetScreenRect(),
+            HorizontalTextAlign = TextElement.TextAlign.Center,
+            VerticalTextAlign = TextElement.TextAlign.Center
+        };
         rootUIElement.AddChild(textElem);
     }
 
@@ -72,7 +75,7 @@ public class GameOverState : IGameState
 
     public void ChangeToStartState()
     {
-        game.Reset();
+        game.SetStateClass(new StartScreenState(game));
     }
 
     public bool TransitionAllowedTo(GameState state)
