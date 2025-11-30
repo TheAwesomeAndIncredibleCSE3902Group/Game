@@ -18,7 +18,7 @@ using System.Diagnostics;
 
 namespace AwesomeRPG;
 
-public enum GameState { start, overworld, battle }
+public enum GameState { start, overworld, battle, gameover, win}
 public class Game1 : Game
 {
     public static IGameState StateClass { get; private set; }
@@ -294,6 +294,11 @@ public class Game1 : Game
     public static void TransitionToGameOverState()
     {
         StateClass.ChangeToGameOverState();
+    }
+
+    public static void TransitionToWinState()
+    {
+        StateClass.ChangeToWinState();
     }
     
     /// <summary>

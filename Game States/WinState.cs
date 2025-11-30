@@ -10,15 +10,11 @@ namespace AwesomeRPG;
 /// <summary>
 /// Game Over State  
 /// </summary>
-public class GameOverState : IGameState
+public class WinState(Game1 game) : IGameState
 {
     public GameState CurrentState { get => GameState.start; }
-    private Game1 game;
+    private Game1 game = game;
     RootElement rootUIElement;
-    public GameOverState(Game1 game)
-    {
-        this.game = game;
-    }
 
     public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
     {
@@ -34,16 +30,14 @@ public class GameOverState : IGameState
         rootUIElement = new RootElement(spriteBatch);
 
         //Ensure the font is loaded
-        var spriteFont = game.Content.Load<SpriteFont>("Fonts\\MyFont");
-
-        //Black background
-        RectElement rect = new RectElement(rootUIElement, Color.Black);
+        SpriteFont spriteFont = game.Content.Load<SpriteFont>("Fonts\\MyFont");
+        
+        RectElement rect = new RectElement(rootUIElement, Color.Khaki);
         rect.OffsetAndSize = game.GetScreenRect();
         rootUIElement.AddChild(rect);
-
         //Text element construction
-        String textString = "Game Over! Press Escape to return to title.";
-        Color textColor = Color.White;
+        String textString = String.Format("You win! Final Level: {0}. Press escape to return to the start.", Player.Instance.PlayerStats.GetLevel());
+        Color textColor = Color.Black;
         TextElement textElem = new(rootUIElement, spriteFont, textString, textColor)
         {
             OffsetAndSize = game.GetScreenRect(),
@@ -72,7 +66,6 @@ public class GameOverState : IGameState
     public void ChangeToOverworldState() { }
 
     public void ChangeToGameOverState() { }
-    
     public void ChangeToWinState() { }
 
     public void ChangeToStartState()

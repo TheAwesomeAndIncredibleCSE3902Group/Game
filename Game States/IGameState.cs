@@ -20,4 +20,5 @@ public interface IGameState
     public void ChangeToOverworldState();
     public void ChangeToStartState();
     public void ChangeToGameOverState();
+    public void ChangeToWinState();
 }

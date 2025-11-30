@@ -80,6 +80,7 @@ public class StartScreenState : IGameState
     public void ChangeToGameOverState() { }
     
     public void ChangeToStartState() { }
+    public void ChangeToWinState() { }
 
     public void ChangeToOverworldState()
     {

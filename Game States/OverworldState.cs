@@ -74,6 +74,11 @@ public class OverworldState : IGameState
     {
         game.SetStateClass(new GameOverState(game));
     }
+    
+    public void ChangeToWinState()
+    {
+        game.SetStateClass(new WinState(game));
+    }
 
     private void CreateWorld(ContentManager contentManager)
     {

@@ -49,6 +49,7 @@ public class BattleState : IGameState
     public void ChangeToBattleState(CharacterEnemyBase[] enemies) { }
     public void ChangeToStartState() { }
     public void ChangeToGameOverState() { }
+    public void ChangeToWinState() { }
 
     public void ChangeToOverworldState()
     {

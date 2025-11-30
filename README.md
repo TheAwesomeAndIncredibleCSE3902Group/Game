@@ -14,6 +14,9 @@ Items like potions will be picked up in the overworld but used in battle.
 | Movement          | W, A, S, D, up, down, left, right |
 | Quit Game         | Q             |
 | Reset Game        | R             |
+| Move to Game Over | Home          |
+| Move to Win       | End           |
+| Reset Game        | R             |
 | Damage Player     | E             |
 | Use Sword         | Z, N          |
 | Use Bow           | 1             |
