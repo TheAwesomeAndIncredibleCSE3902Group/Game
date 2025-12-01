@@ -10,6 +10,8 @@ public class MoblinBattle : IEnemyBattle
     public enum MoblinActions { ScratchBellyButton, RambleCharge, Dance }
     public bool IsFainted { get; set; }
     public bool IsFriend { get; set; }
+
+    public String Name { get; set; } = "Moblin";
     public String TurnText { get; set; } = null;
 
     public MoblinBattle(EnemyStats stats)
@@ -24,19 +26,24 @@ public class MoblinBattle : IEnemyBattle
     {
         int rand = new Random().Next(BattleScene.Instance.AllyList.Count);
         IBattle target = BattleScene.Instance.AllyList[rand];
+        int healthChangeVal = 0;
+
         switch (ChooseAction())
         {
             case MoblinActions.ScratchBellyButton:
-                Stats.ChangeHealth(3);
-                TurnText = $"Moblin healed for 3";
+                healthChangeVal = 3;
+                Stats.ChangeHealth(healthChangeVal);
+                TurnText = $"{Name} scratched its belly and healed for {healthChangeVal}";
                 break;
             case MoblinActions.RambleCharge:
-                target.Stats.ChangeHealth(-4);
-                TurnText = $"Moblin attacked someone for 4\nTheir health is now: {target.Stats.GetHealth()}";
+                healthChangeVal = 4;
+                target.Stats.ChangeHealth(-healthChangeVal);
+                TurnText = $"The {Name} charged at {target.Name} for {healthChangeVal}\nTheir health is now: {target.Stats.GetHealth()}";
                 break;
             case MoblinActions.Dance:
-                target.Stats.ChangeHealth(-1);
-                TurnText = $"Moblin damaged someone for 1";
+                healthChangeVal = 1;
+                target.Stats.ChangeHealth(-healthChangeVal);
+                TurnText = $"The {Name}'s horrible dance caused {target.Name} to suffer {healthChangeVal} damage";
                 break;
         }
     }
@@ -47,8 +54,8 @@ public class MoblinBattle : IEnemyBattle
         if (Stats.GetHealth() < 10)
         {
             Random random = new();
-            int danceChance = random.Next(0, 20);
-            if (danceChance % 2 == 7)
+            int danceChance = random.Next(0, 3);
+            if (danceChance % 2 == 0)
             {
                 moblinChoice = MoblinActions.RambleCharge;
             }

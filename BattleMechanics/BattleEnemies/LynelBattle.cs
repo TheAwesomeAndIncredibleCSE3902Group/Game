@@ -10,6 +10,8 @@ public class LynelBattle : IEnemyBattle
 
     public bool IsFriend { get; set; }
     public bool IsFainted { get; set; }
+
+    public String Name { get; set; } = "Lynel";
     public String TurnText { get; set; } = null;
 
     public LynelBattle(EnemyStats stats)
@@ -24,19 +26,24 @@ public class LynelBattle : IEnemyBattle
     {
         int rand = new Random().Next(BattleScene.Instance.AllyList.Count);
         IBattle target = BattleScene.Instance.AllyList[rand];
+        int healthChangeVal = 0;
+
         switch (ChooseAction())
         {
             case LynelActions.BrushBackHair:
-                Stats.ChangeHealth(1);
-                TurnText = $"Lynel healed for 1";
+                healthChangeVal = 1;
+                Stats.ChangeHealth(healthChangeVal);
+                TurnText = $"{Name} healed for {healthChangeVal}";
                 break;
             case LynelActions.HardStomp:
-                target.Stats.ChangeHealth(-3);
-                TurnText = $"Lynel attacked someone for 3";
+                healthChangeVal = 3;
+                target.Stats.ChangeHealth(-healthChangeVal);
+                TurnText = $"{Name} attacked {target.Name} for {healthChangeVal}";
                 break;
             case LynelActions.StabNSlash:
-                target.Stats.ChangeHealth(-5);
-                TurnText = $"Lynel attacked someone for 5";
+                healthChangeVal = 5;
+                target.Stats.ChangeHealth(-healthChangeVal);
+                TurnText = $"{Name} attacked {target.Name} for {healthChangeVal}";
                 break;
         }
     }

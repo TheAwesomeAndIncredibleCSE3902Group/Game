@@ -10,6 +10,8 @@ public class ArmosBattle : IEnemyBattle
 
     public bool IsFriend { get; set; }
     public bool IsFainted { get; set; }
+
+    public String Name { get; set; } = "Armos";
     public String TurnText { get; set; } = null;
 
     public ArmosBattle(EnemyStats stats)
@@ -24,15 +26,19 @@ public class ArmosBattle : IEnemyBattle
     {
         int rand = new Random().Next(BattleScene.Instance.AllyList.Count);
         IBattle target = BattleScene.Instance.AllyList[rand];
+        int healthChangeVal = 0;
+
         switch (ChooseAction())
         {
             case ArmosActions.ShineArmour:
-                Stats.ChangeHealth(3);
-                TurnText = $"Armos healed for 1";
+                healthChangeVal = 3;
+                Stats.ChangeHealth(healthChangeVal);
+                TurnText = $"{Name} healed for {healthChangeVal}";
                 break;
             case ArmosActions.ChargeForward:
-                target.Stats.ChangeHealth(-4);
-                TurnText = $"Armos attacked someone for 4";
+                healthChangeVal = 4;
+                target.Stats.ChangeHealth(-healthChangeVal);
+                TurnText = $"{Name} attacked {target.Name} for {healthChangeVal}";
                 break;
         }
     }
