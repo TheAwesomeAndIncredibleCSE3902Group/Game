@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
 using static AwesomeRPG.Util;
+using System.IO.Pipes;
 
 
 namespace AwesomeRPG.Map;
@@ -127,11 +128,15 @@ public class MapParser
                 {
                     collisionMatrix[i].Add(3);
                 }
+                else if(tileInfo.StartsWith('-'))
+                {
+                    collisionMatrix[i].Add(4);
+                }
                 else
                 {
                     collisionMatrix[i].Add(0);
                 }
-                int tilesetIndex = int.Parse(tileInfo.Trim('!').Trim('?').Trim('.'));
+                int tilesetIndex = int.Parse(tileInfo.Trim('!').Trim('?').Trim('.').Trim('-'));
 
                 tilemap.SetTile(column, i, tilesetIndex);
 
@@ -266,6 +271,13 @@ public class MapParser
         {
             case "potion":
                 pickupToAdd = new PotionOverworld(map);
+                pickupToAdd.Position = position;
+                break;
+            case "key":
+                int roomX = int.Parse(pickup.Attribute("roomX").Value);
+                int roomY = int.Parse(pickup.Attribute("roomY").Value);
+                int lockID = int.Parse(pickup.Attribute("lockID").Value);
+                pickupToAdd = new KeyOverworld(map, roomX, roomY, lockID);
                 pickupToAdd.Position = position;
                 break;
             default:

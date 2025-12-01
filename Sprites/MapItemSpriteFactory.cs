@@ -8,6 +8,7 @@ namespace AwesomeRPG.Sprites;
 public class MapItemSpriteFactory
 {
     private static Texture2D _itemSpriteSheet;
+    private static Texture2D _tileSpriteSheet;
     private static SpriteBatch _spriteBatch;
 
     public static MapItemSpriteFactory Instance = new MapItemSpriteFactory();
@@ -15,6 +16,7 @@ public class MapItemSpriteFactory
     public static void LoadAllTextures(ContentManager content, SpriteBatch spriteBatch)
     {
         _itemSpriteSheet = content.Load<Texture2D>("SpriteImages/misc_items");
+        _tileSpriteSheet = content.Load<Texture2D>("TileImages/zelda_tiles");
         _spriteBatch = spriteBatch;
     }
 
@@ -34,6 +36,12 @@ public class MapItemSpriteFactory
     {
         Rectangle rupeeSourceRect = new Rectangle(72, 0, 8, 16);
         return new AnimatableSprite(_spriteBatch, _itemSpriteSheet, rupeeSourceRect);
+    }
+
+    public static ISprite CreateKeySprite()
+    {
+        Rectangle lockSourceRect = new Rectangle(240, 0, 8, 16);
+        return new AnimatableSprite(_spriteBatch, _itemSpriteSheet, lockSourceRect);
     }
 
 }
