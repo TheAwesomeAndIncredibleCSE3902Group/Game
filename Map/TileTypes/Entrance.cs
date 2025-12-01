@@ -10,7 +10,7 @@ namespace AwesomeRPG.Map
         public Entrance(Vector2 startPos, int width, int height)
         {
             Position = startPos;
-            Collider = new CollisionRect(this, width, height);
+            Collider = new CollisionRect(this, width+1, height+1);
             ObjectType = CollisionObjectType.Entrance;
         }
 

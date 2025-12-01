@@ -86,7 +86,7 @@ public class PlayerOverworld : CollisionObject
         PlayerSoundFactory.PlayLinkHurtSoundEffect();
         PStateMachine.ChangeStateDamaged();
 
-        Player.Instance.PlayerStats.ChangeHealth(amount);
+        Player.Instance.Party[0].ChangeHealth(amount);
     }
 
     public void UseEquipment(Weapons requestedEQ)

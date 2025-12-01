@@ -18,7 +18,8 @@ public class Player
     public Player(PlayerStats pStats, PlayerOverworld pOverworld)
     {
         Instance = this;
-        Party[0] = pStats;
+        Party = new List<PlayerStats>();
+        Party.Add(pStats);
         PlayerOverworld = pOverworld;
         
         InitInventory();
