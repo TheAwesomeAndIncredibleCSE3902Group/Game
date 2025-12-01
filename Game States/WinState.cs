@@ -36,7 +36,7 @@ public class WinState(Game1 game) : IGameState
         rect.OffsetAndSize = game.GetScreenRect();
         rootUIElement.AddChild(rect);
         //Text element construction
-        String textString = String.Format("You win! Final Level: {0}. Press escape to return to the start.", Player.Instance.PlayerStats.GetLevel());
+        String textString = String.Format("You win! Final Level: {0}. Press escape to return to the start.", Player.Instance.Party[0].GetLevel());
         Color textColor = Color.Black;
         TextElement textElem = new(rootUIElement, spriteFont, textString, textColor)
         {

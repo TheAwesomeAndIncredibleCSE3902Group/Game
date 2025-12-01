@@ -11,14 +11,14 @@ namespace AwesomeRPG;
 public class Player
 {
     public static Player Instance { get; private set; }
-    public PlayerStats PlayerStats { get; init; }
+    public List<PlayerStats> Party { get; init; }
     public PlayerOverworld PlayerOverworld { get; init; }
     public Dictionary<IInventoryItem.Type, int> Inventory { get; private set; }
 
     public Player(PlayerStats pStats, PlayerOverworld pOverworld)
     {
         Instance = this;
-        PlayerStats = pStats;
+        Party[0] = pStats;
         PlayerOverworld = pOverworld;
         
         InitInventory();

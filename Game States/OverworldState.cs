@@ -104,7 +104,7 @@ public class OverworldState : IGameState
         var spriteFont = game.Content.Load<SpriteFont>("Fonts\\MyFont");
 
         //Text element construction
-        String textString = Player.Instance.PlayerStats.GetHealth().ToString();
+        String textString = Player.Instance.Party[0].GetHealth().ToString();
         TextElement textElem = new TextElement(rootUIElement, spriteFont, textString, Color.White);
         textElem.OffsetAndSize = game.GetScreenRect();
         textElem.HorizontalTextAlign = TextElement.TextAlign.Left;
