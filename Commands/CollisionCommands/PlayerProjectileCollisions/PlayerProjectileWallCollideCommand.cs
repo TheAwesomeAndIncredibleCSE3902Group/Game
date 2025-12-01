@@ -14,6 +14,9 @@ public class PlayerProjectileWallCollideCommand : ICollisionCommand
     public void Execute(CollisionInfo collision)
     {
         Projectile projectile = (Projectile)collision.GetCollisionObjectOfType(CollisionObjectType.PlayerProjectile);
-        projectile.Destroy();
+        if(projectile.GetType() != typeof(PlayerSword))
+        {
+            projectile.Destroy();
+        }
     }
 }
