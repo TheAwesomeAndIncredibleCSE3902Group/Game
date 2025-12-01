@@ -11,8 +11,8 @@ public class LynelBattle : IEnemyBattle
     public bool IsFriend { get; set; } = false;
     public bool IsFainted { get; set; } = false;
 
-    public String Name { get; set; } = "Lynel";
-    public String TurnText { get; set; } = null;
+    public string Name { get; set; } = "Lynel";
+    public string TurnText { get; set; } = null;
 
     public LynelBattle(EnemyStats stats)
     {

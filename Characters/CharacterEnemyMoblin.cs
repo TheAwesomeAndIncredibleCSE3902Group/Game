@@ -16,6 +16,7 @@ public class CharacterEnemyMoblin : CharacterEnemyBase
     private int timeTillRecover;
     public CharacterEnemyMoblin(Vector2 position, Cardinal direction) : base(position, direction)
     {
+        Name = "Moblin";
         const int minCD = 2000; //2 seconds
         const int maxCD = 4000; // 4 seconds
         attackCD = new Random().Next(minCD,maxCD);

@@ -12,6 +12,7 @@ namespace AwesomeRPG.Characters;
 public abstract class CharacterEnemyBase : CollisionObject, ICharacter
 {
     protected AnimatableSprite _sprite;
+    public string Name { get; set; } = "Enemy";
     public IPathingScheme Pathing { get; set; } = null;
 
     public int MoveSpeed { get; init; } = 133;

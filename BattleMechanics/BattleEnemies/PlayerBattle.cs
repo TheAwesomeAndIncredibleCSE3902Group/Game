@@ -12,8 +12,8 @@ public class PlayerBattle : IBattle
     public bool IsFriend { get; set; } = true;
     public bool IsFainted { get; set; } = false;
 
-    public String Name { get; set; } = "Player";
-    public String TurnText { get; set; } = null;
+    public string Name { get; set; } = "Player";
+    public string TurnText { get; set; } = null;
 
     public PlayerBattle(PlayerStats stats)
     {

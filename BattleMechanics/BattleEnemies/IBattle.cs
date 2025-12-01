@@ -9,7 +9,7 @@ public interface IBattle
     public bool IsFriend { get; set; }
     public IStats Stats { get; set; }
 
-    public String Name { get; set; }
-    public String TurnText { get; set; }
+    public string Name { get; set; }
+    public string TurnText { get; set; }
 
 }

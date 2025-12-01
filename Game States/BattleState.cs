@@ -24,6 +24,7 @@ public class BattleState : IGameState
     private OverworldState overworldState;
     private Game1 game;
     private CharacterEnemyBase[] enemies;
+    private string enemyType;
     public GameState CurrentState { get => GameState.battle; }
 
     //BattleState can only be made from an OverworldState
@@ -33,6 +34,7 @@ public class BattleState : IGameState
         this.overworldState = overState;
         this.RootUIElement = game.RootUIElement;
         this.enemies = enemies;
+        enemyType = enemies[0].Name;
         InitializeBattle();
     }
 

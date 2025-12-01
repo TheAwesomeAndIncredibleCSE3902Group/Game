@@ -11,8 +11,8 @@ public class MoblinBattle : IEnemyBattle
     public bool IsFainted { get; set; } = false;
     public bool IsFriend { get; set; } = false;
 
-    public String Name { get; set; } = "Moblin";
-    public String TurnText { get; set; } = null;
+    public string Name { get; set; } = "Moblin";
+    public string TurnText { get; set; } = null;
 
     public MoblinBattle(EnemyStats stats)
     {

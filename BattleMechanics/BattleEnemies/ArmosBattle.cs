@@ -11,8 +11,8 @@ public class ArmosBattle : IEnemyBattle
     public bool IsFriend { get; set; } = false;
     public bool IsFainted { get; set; } = false;
 
-    public String Name { get; set; } = "Armos";
-    public String TurnText { get; set; } = null;
+    public string Name { get; set; } = "Armos";
+    public string TurnText { get; set; } = null;
 
     public ArmosBattle(EnemyStats stats)
     {
