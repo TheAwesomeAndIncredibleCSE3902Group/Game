@@ -18,6 +18,22 @@ public class EnemyStats : IStats
     private int level;
     private int xpReward;
 
+    #region Constructors
+    public EnemyStats(int level)
+    {
+        this.level = level;
+
+        // Basic stat scaling based on level
+        maxHealth = 10 + (level * 2);
+        health = maxHealth;
+        speed = 5 + level;
+        attack = 4 + level;
+        defense = 3 + level;
+        specialAttack = 2 + level;
+        specialDefense = 2 + level;
+        luck = 1 + (level / 2);
+        xpReward = 5 + (level * 3);
+    }
     public EnemyStats(int maxHealth, int speed, int attack, int defense,
                       int specialAttack, int specialDefense, int luck,
                       int level, int xpReward)
@@ -33,6 +49,7 @@ public class EnemyStats : IStats
         this.level = level;
         this.xpReward = xpReward;
     }
+    #endregion
 
     #region Health Methods
     public int GetMaxHealth()
