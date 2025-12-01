@@ -8,8 +8,8 @@ public class LynelBattle : IEnemyBattle
     public IStats Stats { get; set; }
     public enum LynelActions { BrushBackHair, HardStomp, StabNSlash }
 
-    public bool IsFriend { get; set; }
-    public bool IsFainted { get; set; }
+    public bool IsFriend { get; set; } = false;
+    public bool IsFainted { get; set; } = false;
 
     public String Name { get; set; } = "Lynel";
     public String TurnText { get; set; } = null;

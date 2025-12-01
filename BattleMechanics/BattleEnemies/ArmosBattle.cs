@@ -8,8 +8,8 @@ public class ArmosBattle : IEnemyBattle
     public IStats Stats { get; set; }
     public enum ArmosActions { ShineArmour, ChargeForward}
 
-    public bool IsFriend { get; set; }
-    public bool IsFainted { get; set; }
+    public bool IsFriend { get; set; } = false;
+    public bool IsFainted { get; set; } = false;
 
     public String Name { get; set; } = "Armos";
     public String TurnText { get; set; } = null;

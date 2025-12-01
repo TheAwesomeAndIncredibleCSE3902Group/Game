@@ -9,8 +9,8 @@ public class PlayerBattle : IBattle
 {
     public IStats Stats { get; set; }
 
-    public bool IsFriend { get; set; }
-    public bool IsFainted { get; set; }
+    public bool IsFriend { get; set; } = true;
+    public bool IsFainted { get; set; } = false;
 
     public String Name { get; set; } = "Player";
     public String TurnText { get; set; } = null;

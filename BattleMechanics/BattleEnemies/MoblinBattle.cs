@@ -8,8 +8,8 @@ public class MoblinBattle : IEnemyBattle
 {
     public IStats Stats { get; set; }
     public enum MoblinActions { ScratchBellyButton, RambleCharge, Dance }
-    public bool IsFainted { get; set; }
-    public bool IsFriend { get; set; }
+    public bool IsFainted { get; set; } = false;
+    public bool IsFriend { get; set; } = false;
 
     public String Name { get; set; } = "Moblin";
     public String TurnText { get; set; } = null;
