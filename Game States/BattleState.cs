@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using AwesomeRPG.BattleMechanics;
 using AwesomeRPG.Characters;
 using AwesomeRPG.Controllers;
-using AwesomeRPG.UI.Elements;
+using AwesomeRPG.UI;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -44,6 +44,7 @@ public class BattleState : IGameState
     public void Update(GameTime gameTime)
     {
         GameSoundFactory.PlayBattleSceneTheme(gameTime);
+        RootUIElement.Update(gameTime);
     }
 
     public void ChangeToBattleState(CharacterEnemyBase[] enemies) { }
