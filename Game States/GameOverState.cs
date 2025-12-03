@@ -1,9 +1,10 @@
 using System;
 using AwesomeRPG.Characters;
-using AwesomeRPG.UI.Elements;
+using AwesomeRPG.UI.ElementFactories;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using AwesomeRPG.UI;
 
 namespace AwesomeRPG;
 
@@ -37,25 +38,26 @@ public class GameOverState : IGameState
         var spriteFont = game.Content.Load<SpriteFont>("Fonts\\MyFont");
 
         //Black background
-        RectElement rect = new RectElement(rootUIElement, Color.Black);
+        var rectFactory = new RectElementFactory(rootUIElement);
+        var rect = rectFactory.CreateNew(Color.Black);
         rect.OffsetAndSize = game.GetScreenRect();
         rootUIElement.AddChild(rect);
 
         //Text element construction
         String textString = "Game Over! Press Escape to return to title.";
         Color textColor = Color.White;
-        TextElement textElem = new(rootUIElement, spriteFont, textString, textColor)
-        {
-            OffsetAndSize = game.GetScreenRect(),
-            HorizontalTextAlign = TextElement.TextAlign.Center,
-            VerticalTextAlign = TextElement.TextAlign.Center
-        };
+        var textFactory = new TextElementFactory(rootUIElement);
+        var textElem = textFactory.CreateNew(spriteFont, textString, textColor);
+        textElem.OffsetAndSize = game.GetScreenRect();
+        textElem.Attributes["horizontal_align"] = TextElementFactory.TextAlign.Center;
+        textElem.Attributes["vertical_align"] = TextElementFactory.TextAlign.Center;
         rootUIElement.AddChild(textElem);
     }
 
     public void Update(GameTime gameTime)
     {
         ProcessInput();
+        rootUIElement.Update(gameTime);
     }
     
     private void ProcessInput()

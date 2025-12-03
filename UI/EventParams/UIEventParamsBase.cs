@@ -1,11 +1,11 @@
 // Originally written by Eli L
 // If you need help with working on UI, feel free to ask me!!!
 
-using AwesomeRPG.UI.Elements;
+using AwesomeRPG.UI.ElementFactories;
 
 namespace AwesomeRPG.UI.Events;
 
 public abstract class UIEventParamsBase
 {
-    public ElementBase Element { get; protected set; }
+    public Element Element { get; protected set; }
 }

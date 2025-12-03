@@ -53,17 +53,26 @@ public class KeyboardUIController : IController
         if (uiControlsDown.Count > 0)
         {
             InputUIEventParams downUIEventParams = new(_myGame1.RootUIElement, uiControlsDown);
+            // dispatch button down event to root element
             _myGame1.RootUIElement.DispatchUIEvent(UIEvent.ButtonDown, downUIEventParams);
+            // dispatch button down event to selected element if it isn't null
+            _myGame1.RootUIElement.UIState.SelectedElement?.DispatchUIEvent(UIEvent.ButtonDown, downUIEventParams);
         }
         if (uiControlsUp.Count > 0)
         {
             InputUIEventParams upUIEventParams = new(_myGame1.RootUIElement, uiControlsUp);
+            // dispatch button up event to root element
             _myGame1.RootUIElement.DispatchUIEvent(UIEvent.ButtonUp, upUIEventParams);
+            // dispatch button up event to selected element if it isn't null
+            _myGame1.RootUIElement.UIState.SelectedElement?.DispatchUIEvent(UIEvent.ButtonDown, upUIEventParams);
         }
         if (uiControlsPress.Count > 0)
         {
             InputUIEventParams pressUIEventParams = new(_myGame1.RootUIElement, uiControlsPress);
+            // dispatch button press event to root element
             _myGame1.RootUIElement.DispatchUIEvent(UIEvent.ButtonPress, pressUIEventParams);
+            // dispatch button press event to selected element if it isn't null
+            _myGame1.RootUIElement.UIState.SelectedElement?.DispatchUIEvent(UIEvent.ButtonDown, pressUIEventParams);
         }
 
         _previousState = currentState;

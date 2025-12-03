@@ -6,7 +6,7 @@ using AwesomeRPG.Map;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using AwesomeRPG.UI.Elements;
+using AwesomeRPG.UI.ElementFactories;
 using System.Diagnostics;
 
 namespace AwesomeRPG;
@@ -98,18 +98,26 @@ public class OverworldState : IGameState
 
     private void DrawPlayerHUD(GameTime gameTime,SpriteBatch spriteBatch)
     {
-        RootElement rootUIElement = new RootElement(spriteBatch);
+        /*
+            Caleb, you probably shouldn't be creating a new RootUIElement every frame!
+            Make sure only one is created and have it be stored as a field/property
+            within this class. Create each element in there and then call the root
+            element's Draw and Update method within the respective methods of this class
+            -Eli
+        */
 
-        //Ensure the font is loaded
-        var spriteFont = game.Content.Load<SpriteFont>("Fonts\\MyFont");
+        // RootElement rootUIElement = new RootElement(spriteBatch);
 
-        //Text element construction
-        String textString = Player.Instance.PlayerStats.GetHealth().ToString();
-        TextElement textElem = new TextElement(rootUIElement, spriteFont, textString, Color.White);
-        textElem.OffsetAndSize = game.GetScreenRect();
-        textElem.HorizontalTextAlign = TextElement.TextAlign.Left;
-        textElem.VerticalTextAlign = TextElement.TextAlign.Right;
-        rootUIElement.AddChild(textElem);
-        rootUIElement.Draw(gameTime);
+        // //Ensure the font is loaded
+        // var spriteFont = game.Content.Load<SpriteFont>("Fonts\\MyFont");
+
+        // //Text element construction
+        // String textString = Player.Instance.PlayerStats.GetHealth().ToString();
+        // TextElement textElem = new TextElement(rootUIElement, spriteFont, textString, Color.White);
+        // textElem.OffsetAndSize = game.GetScreenRect();
+        // textElem.HorizontalTextAlign = TextElement.TextAlign.Left;
+        // textElem.VerticalTextAlign = TextElement.TextAlign.Right;
+        // rootUIElement.AddChild(textElem);
+        // rootUIElement.Draw(gameTime);
     }
 }
