@@ -1,9 +1,10 @@
 using System;
 using AwesomeRPG.Characters;
-using AwesomeRPG.UI.Elements;
+using AwesomeRPG.UI.ElementFactories;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using AwesomeRPG.UI;
 
 namespace AwesomeRPG;
 
@@ -36,17 +37,19 @@ public class StartScreenState : IGameState
         var spriteFont = game.Content.Load<SpriteFont>("Fonts\\MyFont");
 
         //Background, because I'm sorry but the green was so ugly
-        RectElement rect = new RectElement(rootUIElement, Color.BurlyWood);
+        var rectFactory = new RectElementFactory(rootUIElement);
+        var rect = rectFactory.CreateNew(Color.BurlyWood);
         rect.OffsetAndSize = game.GetScreenRect();
         rootUIElement.AddChild(rect);
 
         //Text element construction
         String textString = "Press space to start game!";
         Color textColor = LerpTextColors(gameTime);
-        TextElement textElem = new TextElement(rootUIElement, spriteFont, textString, textColor);
+        var textFactory = new TextElementFactory(rootUIElement);
+        var textElem = textFactory.CreateNew(spriteFont, textString, textColor);
         textElem.OffsetAndSize = game.GetScreenRect();
-        textElem.HorizontalTextAlign = TextElement.TextAlign.Center;
-        textElem.VerticalTextAlign = TextElement.TextAlign.Center;
+        textElem.Attributes["horizontal_align"] = TextElementFactory.TextAlign.Center;
+        textElem.Attributes["vertical_align"] = TextElementFactory.TextAlign.Center;
         rootUIElement.AddChild(textElem);
     }
 
@@ -63,6 +66,8 @@ public class StartScreenState : IGameState
     {
         GameSoundFactory.PlayStartScreenTheme();
         ProcessInput();
+        if (rootUIElement != null)
+            rootUIElement.Update(gameTime);
     }
     
     private void ProcessInput()

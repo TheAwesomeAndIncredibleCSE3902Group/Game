@@ -5,11 +5,11 @@ using System;
 using System.Collections.Generic;
 using AwesomeRPG.UI.Events;
 
-namespace AwesomeRPG.UI.Elements;
+namespace AwesomeRPG.UI;
 
 public class UIState
 {
-    private readonly List<ElementBase> _selectableElements = [];
+    private readonly List<Element> _selectableElements = [];
     private int _selectionIndex = -1; // This is the "location" of the currently selected element. Can be null
     public int SelectionIndex
     {
@@ -32,7 +32,7 @@ public class UIState
     }
     // private Dictionary<(UIControl, UIControlEvent), List<Action>> UIControlActions = [];
     private RootElement _rootElement;
-    public ElementBase SelectedElement
+    public Element SelectedElement
     {
         get
         {
@@ -57,7 +57,7 @@ public class UIState
         }
     }
 
-    public void RegisterSelectableElement(ElementBase element)
+    public void RegisterSelectableElement(Element element)
     {
         if (element.RootElement != _rootElement)
         {
@@ -74,7 +74,7 @@ public class UIState
         }
     }
 
-    public void UnregisterSelectableElement(ElementBase element)
+    public void UnregisterSelectableElement(Element element)
     {
         bool removed = _selectableElements.Remove(element);
         if (!removed)
@@ -90,7 +90,7 @@ public class UIState
     public void UpdateElementsAreSelected()
     {
         int idx = 0;
-        foreach (ElementBase element in _selectableElements)
+        foreach (Element element in _selectableElements)
         {
             element.IsSelected = _selectionIndex == idx;
             idx++;

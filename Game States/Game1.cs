@@ -3,8 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using AwesomeRPG.Controllers;
 using AwesomeRPG.Sprites;
-using AwesomeRPG.UI.Elements;
-using AwesomeRPG.UI.Components;
+using AwesomeRPG.UI.ElementFactories;
 using AwesomeRPG.UI;
 using AwesomeRPG.UI.Events;
 using AwesomeRPG.Commands.BattleCommands;
@@ -99,24 +98,27 @@ public class Game1 : Game
         var spriteFont = Content.Load<SpriteFont>("Fonts\\MyFont");
         RootUIElement = new RootElement(_spriteBatch);
 
-        var battleUiBoardBorder = new RectElement(RootUIElement, new Color(40, 0, 40));
+        var rectBorderFactory = new RectElementFactory(RootUIElement);
+        var battleUiBoardBorder = rectBorderFactory.CreateNew(new Color(40, 0, 40));
         battleUiBoardBorder.OffsetAndSize = new Rectangle(8, 528, 1008, 234);
 
-        var battleUiBoardBg = new RectElement(RootUIElement, new Color(80, 0, 80));
+        var rectBgFactory = new RectElementFactory(RootUIElement);
+        var battleUiBoardBg = rectBgFactory.CreateNew(new Color(80, 0, 80));
         battleUiBoardBg.OffsetAndSize = new Rectangle(10, 530, 1004, 230);
 
         RootUIElement.AddChild(battleUiBoardBorder);
         RootUIElement.AddChild(battleUiBoardBg);
 
-        var battleText = new TextElement(RootUIElement, spriteFont, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur ut facilisis libero. Fusce nec eleifend turpis. Curabitur condimentum dapibus nisl. Ut metus sapien, auctor et justo non, condimentum gravida risus. Donec varius pellentesque felis non ultricies. Quisque fermentum, augue eu pellentesque dictum, ante sapien elementum enim, sed ultricies mauris dui ut lorem. Donec vitae semper enim, sed ornare libero.");
-        battleText.TextColor = Color.White;
-        battleText.OffsetAndSize = new Rectangle(20, 540, 984, 210);
-        RootUIElement.AddChild(battleText);
+        var battleText = new TextElementFactory(RootUIElement);
+        var battleTextElem = battleText.CreateNew(spriteFont, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur ut facilisis libero. Fusce nec eleifend turpis. Curabitur condimentum dapibus nisl. Ut metus sapien, auctor et justo non, condimentum gravida risus. Donec varius pellentesque felis non ultricies. Quisque fermentum, augue eu pellentesque dictum, ante sapien elementum enim, sed ultricies mauris dui ut lorem. Donec vitae semper enim, sed ornare libero.", Color.White);
+        battleTextElem.OffsetAndSize = new Rectangle(20, 540, 984, 210);
+        RootUIElement.AddChild(battleTextElem);
 
-        List<CommandElement> buttons = new List<CommandElement>();
+        List<Element> buttons = new List<Element>();
         for (int i = 0; i < 5; i++)
         {
-            var currentButtonToAdd = ButtonComponent.Create(RootUIElement, spriteFont, this, new Rectangle(20 + (i / 3) * 365, 540 + (i % 3) * 75, 350, 60), Color.Purple, Color.White, "Action " + i);
+            var buttonFactory = new ButtonElementFactory(RootUIElement);
+            var currentButtonToAdd = buttonFactory.CreateNew(spriteFont, this, new Rectangle(20 + (i / 3) * 365, 540 + (i % 3) * 75, 350, 60), Color.Purple, Color.White, "Action " + i);
             // TODO: temporary edit for sprint 4 submission. Uncomment later!
             // currentButtonToAdd.AssociatedCommand = new RegularAttackBattleCommand(0);
             buttons.Add(currentButtonToAdd);
@@ -132,25 +134,25 @@ public class Game1 : Game
                 // If in battle and Interact button pressed.
                 if (BattleScene.Instance.CurrentlyInBattle)
                 {
-                    int indexOfSelectedButton = buttons.IndexOf((CommandElement)RootUIElement.UIState.SelectedElement);
-                    if (battleText.IsVisible) {
+                    int indexOfSelectedButton = buttons.IndexOf(RootUIElement.UIState.SelectedElement);
+                    if (battleTextElem.IsVisible) {
                         // If we are on an enemy now, we make it do its action and update the text string.
                         if (BattleScene.Instance.CurrentBattle is IEnemyBattle)
                         {
                             ((IEnemyBattle)BattleScene.Instance.CurrentBattle).TakeTurn();
-                            battleText.TextString = BattleScene.Instance.CurrentBattle.TurnText;
+                            battleTextElem.Attributes["text_string"] = BattleScene.Instance.CurrentBattle.TurnText;
                         }
                         else
                         {
                             // But if we are on a player now, 
                             // We will show the buttons again. and hide battle text
-                            foreach (CommandElement button in buttons)
+                            foreach (Element button in buttons)
                             {
                                 button.IsVisible = true;
                                 button.MakeSelectable();
                             }
                             RootUIElement.UIState.SelectionIndex = 0;
-                            battleText.IsVisible = false;
+                            battleTextElem.IsVisible = false;
                         }
                         
                         BattleScene.Instance.NextTurn(); // Move on to the next enemy or the player.
@@ -176,19 +178,19 @@ public class Game1 : Game
                             // Update battleText with turn text (player)
                             if (BattleScene.Instance.CurrentBattle.TurnText != null)
                             {
-                                battleText.TextString = BattleScene.Instance.CurrentBattle.TurnText;
+                                battleTextElem.Attributes["text_string"] = BattleScene.Instance.CurrentBattle.TurnText;
                             }
 
                             BattleScene.Instance.NextTurn();
 
                             // Hide buttons and show battle text
-                            foreach (CommandElement button in buttons)
+                            foreach (Element button in buttons)
                             {
                                 button.IsVisible = false;
                                 button.MakeUnselectable();
                             }
                             RootUIElement.UIState.SelectionIndex = -1;
-                            battleText.IsVisible = true;
+                            battleTextElem.IsVisible = true;
                         }
                     }
                 } else
@@ -227,12 +229,14 @@ public class Game1 : Game
     /// <summary>
     /// This is a little test helper to make a 6th button for returning to the overworld state
     /// </summary>
-    private void InitOverworldButton(SpriteFont spriteFont, List<CommandElement> buttons)
+    private void InitOverworldButton(SpriteFont spriteFont, List<Element> buttons)
     {
         //This is the 6th button
         int i = 5;
-        var currentButtonToAdd = ButtonComponent.Create(RootUIElement, spriteFont, this, new Rectangle(20 + (i / 3) * 365, 540 + (i % 3) * 75, 350, 60), Color.Purple, Color.White, "Return to Overworld");
-        currentButtonToAdd.AssociatedCommand = new BattleStateToOverworldCommand();
+        var buttonFactory = new ButtonElementFactory(RootUIElement);
+        var currentButtonToAdd = buttonFactory.CreateNew(spriteFont, this, new Rectangle(20 + (i / 3) * 365, 540 + (i % 3) * 75, 350, 60), Color.Purple, Color.White, "Return to Overworld");
+        // TODO: Set associated command via attributes
+        currentButtonToAdd.Attributes["associated_command"] = new BattleStateToOverworldCommand();
         buttons.Add(currentButtonToAdd);
         RootUIElement.AddChild(currentButtonToAdd);
     }

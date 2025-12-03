@@ -1,9 +1,10 @@
 using System;
 using AwesomeRPG.Characters;
-using AwesomeRPG.UI.Elements;
+using AwesomeRPG.UI.ElementFactories;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using AwesomeRPG.UI;
 
 namespace AwesomeRPG;
 
@@ -32,24 +33,25 @@ public class WinState(Game1 game) : IGameState
         //Ensure the font is loaded
         SpriteFont spriteFont = game.Content.Load<SpriteFont>("Fonts\\MyFont");
         
-        RectElement rect = new RectElement(rootUIElement, Color.Khaki);
+        var rectFactory = new RectElementFactory(rootUIElement);
+        var rect = rectFactory.CreateNew(Color.Khaki);
         rect.OffsetAndSize = game.GetScreenRect();
         rootUIElement.AddChild(rect);
         //Text element construction
         String textString = String.Format("You win! Final Level: {0}. Press escape to return to the start.", Player.Instance.Party[0].GetLevel());
         Color textColor = Color.Black;
-        TextElement textElem = new(rootUIElement, spriteFont, textString, textColor)
-        {
-            OffsetAndSize = game.GetScreenRect(),
-            HorizontalTextAlign = TextElement.TextAlign.Center,
-            VerticalTextAlign = TextElement.TextAlign.Center
-        };
+        var textFactory = new TextElementFactory(rootUIElement);
+        var textElem = textFactory.CreateNew(spriteFont, textString, textColor);
+        textElem.OffsetAndSize = game.GetScreenRect();
+        textElem.Attributes["horizontal_align"] = TextElementFactory.TextAlign.Center;
+        textElem.Attributes["vertical_align"] = TextElementFactory.TextAlign.Center;
         rootUIElement.AddChild(textElem);
     }
 
     public void Update(GameTime gameTime)
     {
         ProcessInput();
+        rootUIElement.Update(gameTime);
     }
     
     private void ProcessInput()
