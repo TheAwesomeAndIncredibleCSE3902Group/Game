@@ -27,7 +27,7 @@ namespace AwesomeRPG.Commands
 
         public void Execute() 
         {
-            Entrance.changeRoom(Player.Instance.PlayerOverworld, changeDirection);
+            Entrance.ChangeRoom(Player.Instance.PlayerOverworld, changeDirection);
         }
     }
 }
