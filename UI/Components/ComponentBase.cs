@@ -9,50 +9,48 @@ namespace AwesomeRPG.UI.Components;
 
 public abstract class ComponentBase : ElementBase
 {
-    private ElementBase _componentBaseElement;
-    public ElementBase ComponentBaseElement {
+    private ElementBase _ComponentRootElement;
+    public ElementBase ComponentRootElement {
         get
         {
-            return _componentBaseElement;
+            return _ComponentRootElement;
         } 
         protected set
         {
-            _componentBaseElement = value;
+            if (_ComponentRootElement != null)
+            {
+                _ComponentRootElement.UndoUseAsComponentRoot(this);
+            }
+            _ComponentRootElement = value;
+            if (value != null)
+            {
+                _ComponentRootElement.UseAsComponentRoot(this);
+            }
         }
     }
 
-    public override Rectangle OffsetAndSize {
-        get
-        {
-            return ComponentBaseElement.OffsetAndSize;
-        }
-        set
-        {
-            ComponentBaseElement.OffsetAndSize = value;
-        }
-    }
-    
+    public override Rectangle OffsetAndSize { get => ComponentRootElement.OffsetAndSize; set => ComponentRootElement.OffsetAndSize = value; }
     protected internal override void Draw(GameTime gameTime)
     {
-        ComponentBaseElement.CalculateDerivedValuesFromAncestors();
-        ComponentBaseElement.Draw(gameTime);
+        ComponentRootElement.CalculateDerivedValuesFromAncestors();
+        ComponentRootElement.Draw(gameTime);
     }
     protected internal override void Update(GameTime gameTime)
     {
-        ComponentBaseElement.CalculateDerivedValuesFromAncestors();
-        ComponentBaseElement.Update(gameTime);
+        ComponentRootElement.CalculateDerivedValuesFromAncestors();
+        ComponentRootElement.Update(gameTime);
     }
     public new void AddActionOnUIEvent(UIEvent uiEvent, Action<UIEventParamsBase> action)
     {
-        ComponentBaseElement._registeredUiEventActions[uiEvent].Add(action);
+        ComponentRootElement._registeredUiEventActions[uiEvent].Add(action);
     }
     public new void RemoveActionOnUIEvent(UIEvent uiEvent, Action<UIEventParamsBase> action)
     {
-        ComponentBaseElement._registeredUiEventActions[uiEvent].Remove(action);
+        ComponentRootElement._registeredUiEventActions[uiEvent].Remove(action);
     }
     public new void DispatchUIEvent(UIEvent uiEvent, UIEventParamsBase uiEventInfo)
     {
-        foreach (Action<UIEventParamsBase> uiAction in ComponentBaseElement._registeredUiEventActions[uiEvent])
+        foreach (Action<UIEventParamsBase> uiAction in ComponentRootElement._registeredUiEventActions[uiEvent])
         {
             uiAction(uiEventInfo);
         }

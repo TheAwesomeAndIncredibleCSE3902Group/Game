@@ -27,6 +27,7 @@ public class SelectionAnimationElement : ElementBase
             );
             for (int i = 0; i < 1; i++)
             {
+                System.Console.WriteLine("doing SelectionAnimationElement draw");
                 _selectColor = new Color(255, 255, 255);
 
                 var sizedRectangle = new Rectangle(DerivedAbsolutePosition, OffsetAndSize.Size);

@@ -17,6 +17,7 @@ public class BattleUITextTyperComponent : ComponentBase
 
     public BattleUITextTyperComponent(RootElement rootElement, SpriteFont spriteFont, Game1 game, Rectangle location, Color textColor, string textString = "No text string provided")
     {
+        SetUpElement(rootElement);
         _stringToType = textString;
 
         _textElem = new TextElement(rootElement, spriteFont, _stringToType, textColor);
@@ -24,7 +25,7 @@ public class BattleUITextTyperComponent : ComponentBase
         CommandElement commandElem = new(rootElement);
         commandElem.AddChild(_textElem);
 
-        ComponentBaseElement = commandElem;
+        ComponentRootElement = commandElem;
     }
 
     protected internal override void Update(GameTime gameTime)

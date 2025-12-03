@@ -15,14 +15,15 @@ public class ButtonComponent : ComponentBase
     private readonly Color _clickBgDim = new Color(180,180,180);
     public ICommand AssociatedCommand {
         get {
-            return ((CommandElement)ComponentBaseElement).AssociatedCommand;
+            return ((CommandElement)ComponentRootElement).AssociatedCommand;
         }
         set {
-            ((CommandElement)ComponentBaseElement).AssociatedCommand = value;
+            ((CommandElement)ComponentRootElement).AssociatedCommand = value;
         }
     }
     public ButtonComponent(RootElement rootElement, SpriteFont spriteFont, Game1 game, Rectangle location, Color bgColor, Color textColor, string textString = "")
     {
+        SetUpElement(rootElement);
         TextElement textElem = new TextElement(rootElement, spriteFont, textString, textColor);
         textElem.OffsetAndSize = new Rectangle(Point.Zero, location.Size);
 
@@ -34,7 +35,7 @@ public class ButtonComponent : ComponentBase
         textElem.VerticalTextAlign = TextElement.TextAlign.Center;
 
         SelectionAnimationElement selAnimElem = new SelectionAnimationElement(rootElement);
-        selAnimElem.OffsetAndSize = location;
+        selAnimElem.OffsetAndSize = new Rectangle(Point.Zero, location.Size);
         selAnimElem.AddChild(rectElem);
 
         CommandElement commandElem = new CommandElement(rootElement);
@@ -50,6 +51,8 @@ public class ButtonComponent : ComponentBase
             rectElem.FillColor = bgColor;
         });
 
+        commandElem.OffsetAndSize = location;
+
         rootElement.AddActionOnUIEvent(UIEvent.ButtonDown, (e) =>
         {
             InputUIEventParams inputEventParams = (InputUIEventParams) e;
@@ -64,7 +67,7 @@ public class ButtonComponent : ComponentBase
                 rectElem.FillColor = bgColor;
         });
 
-        ComponentBaseElement = commandElem;
+        ComponentRootElement = commandElem;
     }
     protected internal override void Draw(GameTime gameTime)
     {

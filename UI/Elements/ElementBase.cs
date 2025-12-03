@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using AwesomeRPG.Sprites;
+using AwesomeRPG.UI.Components;
 using AwesomeRPG.UI.Events;
 using Microsoft.Xna.Framework;
 
@@ -29,12 +30,13 @@ public abstract class ElementBase
     public float Opacity { get; set; } = 1f;
     public RootElement RootElement { get; protected set; }
     public ElementBase Parent { get; private set; }
+    private bool _isBeingUsedAsComponentRoot = false;
     protected internal readonly Dictionary<UIEvent, List<Action<UIEventParamsBase> >> _registeredUiEventActions = [];
 
     protected internal virtual void Draw(GameTime gameTime)
     {
         // Do nothing by default
-        System.Console.WriteLine("DRAWING DEFAULT?");
+        System.Console.WriteLine("DRAWING DEFAULT FOR:" + this);
     }
 
     protected internal virtual void Update(GameTime gameTime)
@@ -69,7 +71,12 @@ public abstract class ElementBase
 
     protected internal void CalculateDerivedValuesFromAncestors()
     {
-        if (Parent != null)
+        if (_isBeingUsedAsComponentRoot)
+        {
+            _derivedAbsolutePositionBase = Parent.Parent.DerivedAbsolutePosition;
+            DerivedAncestorIsSelected = Parent.Parent.IsSelected || Parent.Parent.DerivedAncestorIsSelected;
+            DerivedAncestorIsVisible = Parent.Parent.IsVisible && Parent.Parent.DerivedAncestorIsVisible;
+        } else if (Parent != null)
         {
             _derivedAbsolutePositionBase = Parent.DerivedAbsolutePosition;
             DerivedAncestorIsSelected = Parent.IsSelected || Parent.DerivedAncestorIsSelected;
@@ -109,7 +116,6 @@ public abstract class ElementBase
         RootElement.UIState.UnregisterSelectableElement(this);
     }
 
-    // deprecated
     protected void SetUpElement(RootElement rootElement)
     {
         RootElement = rootElement;
@@ -121,6 +127,7 @@ public abstract class ElementBase
     
     protected void SetUpAsChild(ElementBase parentElement)
     {
+        this.Parent = parentElement;
     }
 
     public void AddActionOnUIEvent(UIEvent uiEvent, Action<UIEventParamsBase> action)
@@ -133,9 +140,33 @@ public abstract class ElementBase
     }
     public void DispatchUIEvent(UIEvent uiEvent, UIEventParamsBase uiEventInfo)
     {
+        System.Console.WriteLine(this + " is used as component root? " + this._isBeingUsedAsComponentRoot);
         foreach (Action<UIEventParamsBase> uiAction in _registeredUiEventActions[uiEvent])
         {
             uiAction(uiEventInfo);
         }
+    }
+
+    protected internal void UseAsComponentRoot(ComponentBase component)
+    {
+        if (_isBeingUsedAsComponentRoot == true)
+        {
+            throw new Exception("Attempted to use element as component root when it is already being used as a component root.");
+        }
+        if (this.Parent != null)
+        {
+            throw new Exception("Cannot use element as compoment root if it has a parent element.");
+        }
+        this._isBeingUsedAsComponentRoot = true;
+        this.Parent = component;
+    }
+
+    protected internal void UndoUseAsComponentRoot(ComponentBase component)
+    {
+        if (_isBeingUsedAsComponentRoot == false)
+        {
+            throw new Exception("Attempted to undo element being used as component root when it already isn't being used as one.");
+        }
+        this.Parent = null;
     }
 }

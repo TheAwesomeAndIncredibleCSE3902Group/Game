@@ -25,13 +25,14 @@ public class RootElement : ElementBase
 
     private void RecursiveDraw(ElementBase element, GameTime gameTime)
     {
-        DispatchUIEvent(UIEvent.BeforeDraw, new DrawUIEventParams(element, gameTime));
+        System.Console.WriteLine("Bout to draw elem: " + element);
+        element.DispatchUIEvent(UIEvent.BeforeDraw, new DrawUIEventParams(element, gameTime));
         element.CalculateDerivedValuesFromAncestors();
         if (element.IsVisible)
         {
             element.Draw(gameTime);
             if (element is ComponentBase) {
-                foreach (ElementBase child in ((ComponentBase)element).ComponentBaseElement._children)
+                foreach (ElementBase child in ((ComponentBase)element).ComponentRootElement._children)
                 {
                     RecursiveDraw(child, gameTime);
                 }
@@ -43,7 +44,7 @@ public class RootElement : ElementBase
                 }
             }
         }
-        DispatchUIEvent(UIEvent.AfterDraw, new DrawUIEventParams(element, gameTime));
+        element.DispatchUIEvent(UIEvent.AfterDraw, new DrawUIEventParams(element, gameTime));
     }
 
     public new void Update(GameTime gameTime)
@@ -53,11 +54,11 @@ public class RootElement : ElementBase
 
     private void RecursiveUpdate(ElementBase element, GameTime gameTime)
     {
-        DispatchUIEvent(UIEvent.BeforeUpdate, new DrawUIEventParams(element, gameTime));
+        element.DispatchUIEvent(UIEvent.BeforeUpdate, new DrawUIEventParams(element, gameTime));
         element.CalculateDerivedValuesFromAncestors();
         element.Update(gameTime);
         if (element is ComponentBase) {
-            foreach (ElementBase child in ((ComponentBase)element).ComponentBaseElement._children)
+            foreach (ElementBase child in ((ComponentBase)element).ComponentRootElement._children)
             {
                 RecursiveUpdate(child, gameTime);
             }
@@ -68,7 +69,7 @@ public class RootElement : ElementBase
                 RecursiveUpdate(child, gameTime);
             }
         }
-        DispatchUIEvent(UIEvent.AfterUpdate, new DrawUIEventParams(element, gameTime));
+        element.DispatchUIEvent(UIEvent.AfterUpdate, new DrawUIEventParams(element, gameTime));
     }
     
     public RootElement(SpriteBatch spriteBatch)
