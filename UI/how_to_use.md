@@ -326,6 +326,118 @@ rootElement.AddActionOnUIEvent(UIEvent.ButtonDown, (eventParams) =>
 
 **Note**: `UIControl` has values like: `MoveUp`, `MoveLeft`, `MoveRight`, `MoveDown`, `Interact`, `Return`
 
+## Working with Input
+
+### Input Event Dispatch
+
+Input events (`ButtonDown`, `ButtonUp`, `ButtonPress`) are automatically dispatched to **both**:
+1. The **RootElement** - for global input handling
+2. The **currently selected element** - for element-specific input handling
+
+This two-tier system allows you to handle input at different levels:
+
+**Global Input (RootElement)**:
+```csharp
+rootUIElement.AddActionOnUIEvent(UIEvent.ButtonPress, (eventParams) =>
+{
+    var inputParams = (InputUIEventParams)eventParams;
+    // This runs for ALL button presses, regardless of selection
+    if (inputParams.Controls.Contains(UIControl.Return))
+    {
+        HandlePauseMenu(); // Global action
+    }
+});
+```
+
+**Selected Element Input**:
+```csharp
+var button = new TextElement(rootUIElement, font, "Attack");
+button.MakeSelectable();
+
+button.AddActionOnUIEvent(UIEvent.ButtonPress, (eventParams) =>
+{
+    var inputParams = (InputUIEventParams)eventParams;
+    // This only runs when this button is selected
+    if (inputParams.Controls.Contains(UIControl.Interact))
+    {
+        ExecuteAttack(); // Element-specific action
+    }
+});
+```
+
+### Common Input Patterns
+
+**Button with Interact Handler**:
+```csharp
+var actionButton = new TextElement(rootUIElement, spriteFont, "Use Item");
+actionButton.MakeSelectable();
+
+actionButton.AddActionOnUIEvent(UIEvent.ButtonPress, (eventParams) =>
+{
+    var inputParams = (InputUIEventParams)eventParams;
+    if (inputParams.Controls.Contains(UIControl.Interact))
+    {
+        // Perform the action
+        inventory.UseSelectedItem();
+    }
+});
+```
+
+**Global Navigation vs Selected Navigation**:
+```csharp
+// Global navigation (all arrow keys work)
+rootUIElement.AddActionOnUIEvent(UIEvent.ButtonDown, (eventParams) =>
+{
+    var inputParams = (InputUIEventParams)eventParams;
+    
+    if (inputParams.Controls.Contains(UIControl.MoveDown))
+    {
+        rootUIElement.UIState.SelectionIndex++;
+    }
+    if (inputParams.Controls.Contains(UIControl.MoveUp))
+    {
+        rootUIElement.UIState.SelectionIndex--;
+    }
+});
+
+// Selected element can have its own handlers
+selectedElement.AddActionOnUIEvent(UIEvent.ButtonDown, (eventParams) =>
+{
+    var inputParams = (InputUIEventParams)eventParams;
+    if (inputParams.Controls.Contains(UIControl.MoveRight))
+    {
+        AdjustValue(1); // Element-specific action
+    }
+});
+```
+
+**Checking Multiple Controls**:
+```csharp
+element.AddActionOnUIEvent(UIEvent.ButtonDown, (eventParams) =>
+{
+    var inputParams = (InputUIEventParams)eventParams;
+    List<UIControl> controls = inputParams.Controls;
+    
+    // Multiple conditions
+    if (controls.Contains(UIControl.Interact) && isConfirmation)
+    {
+        ConfirmSelection();
+    }
+    
+    // Check for multiple buttons pressed
+    if (controls.Contains(UIControl.MoveLeft) && controls.Contains(UIControl.MoveUp))
+    {
+        MoveDiagonalUpLeft();
+    }
+});
+```
+
+### Input Event Types
+
+- **`ButtonDown`**: Triggered when a button is first pressed (single frame when transition from not-pressed to pressed)
+- **`ButtonUp`**: Triggered when a button is released (single frame when transition from pressed to not-pressed)
+- **`ButtonPress`**: Triggered while a button is held down (every frame the button remains pressed)
+
 ## Selection Management
 
 The `UIState` class manages which element is currently selected.
