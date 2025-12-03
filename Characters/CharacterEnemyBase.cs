@@ -58,7 +58,10 @@ public abstract class CharacterEnemyBase : CollisionObject, ICharacter
                 Pathing.Update(gameTime);
                 Direction = Pathing.GetDirection();
             }
-            Position += CardinalToUnitVector(Direction) * (float)gameTime.ElapsedGameTime.TotalSeconds * MoveSpeed;
+            if (Pathing is not StandPathing)
+            {
+                Position += CardinalToUnitVector(Direction) * (float)gameTime.ElapsedGameTime.TotalSeconds * MoveSpeed;
+            } 
         }
     }
 

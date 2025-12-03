@@ -9,6 +9,8 @@ Interacting with an enemy sends the player to the turn-based realm, where they
     can return to the overworld and continue their quest.
 Items like potions will be picked up in the overworld but used in battle.
 
+Overworld
+
 |Control            | Keys          |
 | -------------     | ------------- |
 | Movement          | W, A, S, D, up, down, left, right |
@@ -22,6 +24,13 @@ Items like potions will be picked up in the overworld but used in battle.
 | Use Bow           | 1             |
 | Use Boomerang     | 2             |
 | Use Super Sword   | 3             |
+
+Combat
+
+|Control            | Keys          |
+| -------------     | ------------- |
+| Move between Options | up, down, left, right |
+| Select Option     | enter |
 
 The UI is manipulated with the arrow keys for navigation and the enter button
     to make a selection.
