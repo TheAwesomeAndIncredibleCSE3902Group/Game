@@ -6,6 +6,7 @@ namespace AwesomeRPG.Characters;
 
 public class CharacterEnemyLynel : CharacterEnemyBase
 {
+    public override CType Type { get => CType.lynel; }
     public CharacterEnemyLynel(Vector2 position, Cardinal direction) : base(position, direction)
     {
         Name = "Lynel";

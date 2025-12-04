@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using AwesomeRPG.BattleMechanics;
 using AwesomeRPG.Characters;
 using AwesomeRPG.Controllers;
@@ -23,7 +25,10 @@ public class BattleState : IGameState
     //Caches the last OverworldState. This makes returning to the overworld much easier
     private OverworldState overworldState;
     private Game1 game;
+    //Ideally enemies and enemySprites would be combined into a BattleEnemy
     private CharacterEnemyBase[] enemies;
+    private CharacterBattleSprite[] enemySprites;
+
     private string enemyType;
     public GameState CurrentState { get => GameState.battle; }
 
@@ -41,6 +46,8 @@ public class BattleState : IGameState
     public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
     {
         RootUIElement.Draw(gameTime);
+        foreach (CharacterBattleSprite enemy in enemySprites)
+            enemy.Draw(gameTime);
     }
 
     public void Update(GameTime gameTime)
@@ -83,7 +90,72 @@ public class BattleState : IGameState
 
     private void InitializeBattle()
     {
-        BattleScene.Instance.InitializeBattleSequence(true,new InitializeSampleBattle().SetUpEnemies(), new InitializeSampleBattle().SetUpAllies());
+        BattleScene.Instance.InitializeBattleSequence(true, new InitializeSampleBattle().SetUpEnemies(), new InitializeSampleBattle().SetUpAllies());
+        BuildBattlePanel();
+    }
+    
+    //Little test method to test displaying multiple enemies
+    private void TESTDupeEnemies()
+    {
+        const int num = 3;
+
+        CharacterEnemyBase[] oldEnemies = enemies;
+        enemies = new CharacterEnemyBase[num];
+
+        for (int i = 0; i < num; i++)
+        {
+            enemies[i] = oldEnemies[0];
+        }
+        enemies[1] = new CharacterEnemyMoblin(Vector2.Zero, Util.Cardinal.down);
+    }
+
+    private void BuildBattlePanel()
+    {
+        TESTDupeEnemies();
+
+        //TODO: background
+
+        Vector2[] enemyOffsets = FindEnemyOffsets(enemies.Length);
+        enemySprites = new CharacterBattleSprite[enemies.Length];
+
+        for (int i = 0; i < enemies.Length; i++)
+            enemySprites[i] = new CharacterBattleSprite(enemies[i].Type, enemyOffsets[i]);
+
+        enemySprites[1].Hurt = true;
+    }
+    
+
+    /// <summary>
+    /// This is a simple and very hacky aligner for up to three enemies
+    ///     If you need more than that then we'll have to make a proper solution
+    /// </summary>
+    /// <param name="enemies"></param>
+    /// <returns></returns>
+    private static Vector2[] FindEnemyOffsets(int enemies)
+    {
+        const int enemyWidth = 15;
+        const int verticalPadding = 50;
+        const int horizontalPadding = 50;
+
+        if (enemies > 3)
+            Debug.WriteLine("Warning! FindEnemyOffsets does not work for more than 3 enemies!");
+
+        Rectangle screenRect = Util.ScreenRect;
+        Vector2[] offset = new Vector2[enemies];
+
+        offset[0] = new Vector2(horizontalPadding, verticalPadding);
+        int thirdHorizontal = screenRect.Width - horizontalPadding - enemyWidth * Util.BattleScale;
+        int secondHorizontal = horizontalPadding + (int)((thirdHorizontal - horizontalPadding) / 2f);
+
+        if (enemies == 2)
+            offset[1] = new Vector2(thirdHorizontal, verticalPadding);
+        else if (enemies == 3)
+        {
+            offset[1] = new Vector2(secondHorizontal, verticalPadding);
+            offset[2] = new Vector2(thirdHorizontal, verticalPadding);
+        }
+
+        return offset;
     }
 
 }

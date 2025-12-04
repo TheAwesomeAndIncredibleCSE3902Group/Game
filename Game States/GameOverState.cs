@@ -40,7 +40,7 @@ public class GameOverState : IGameState
         //Black background
         var rectFactory = new RectElementFactory(rootUIElement);
         var rect = rectFactory.CreateNew(Color.Black);
-        rect.OffsetAndSize = game.GetScreenRect();
+        rect.OffsetAndSize = Util.ScreenRect;
         rootUIElement.AddChild(rect);
 
         //Text element construction
@@ -48,7 +48,7 @@ public class GameOverState : IGameState
         Color textColor = Color.White;
         var textFactory = new TextElementFactory(rootUIElement);
         var textElem = textFactory.CreateNew(spriteFont, textString, textColor);
-        textElem.OffsetAndSize = game.GetScreenRect();
+        textElem.OffsetAndSize = Util.ScreenRect;
         textElem.Attributes["horizontal_align"] = TextElementFactory.TextAlign.Center;
         textElem.Attributes["vertical_align"] = TextElementFactory.TextAlign.Center;
         rootUIElement.AddChild(textElem);

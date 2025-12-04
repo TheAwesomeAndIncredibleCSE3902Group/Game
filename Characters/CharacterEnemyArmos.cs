@@ -7,6 +7,7 @@ namespace AwesomeRPG.Characters;
 
 public class CharacterEnemyArmos : CharacterEnemyBase
 {
+    public override CType Type { get => CType.armos; }
     public CharacterEnemyArmos(Vector2 position, Cardinal direction) : base(position, direction)
     {
         Name = "Armos";

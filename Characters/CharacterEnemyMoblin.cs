@@ -9,6 +9,8 @@ namespace AwesomeRPG.Characters;
 
 public class CharacterEnemyMoblin : CharacterEnemyBase
 {
+    public override CType Type { get => CType.moblin; }
+
     //Time is tracked in milliseconds
     private int attackCD;
     private int timeTillAttack;

@@ -11,7 +11,8 @@ public class AnimatableSprite : ISprite
     // So, there are 10000 ticks in a millisecond.
     private const ulong TICKS_IN_ONE_MILLISECOND = 10000ul;
 
-    private readonly float _globalScale;
+    private float _globalScale;
+    public Color Color { get; set; } = Color.White;
 
     private readonly Texture2D _texture;
     private readonly Rectangle[] _sourceList;
@@ -170,7 +171,18 @@ public class AnimatableSprite : ISprite
         throw new System.Exception("Invalid spriteAtlasSource 2D array! Must either have 6 columns (X,Y,W,H,offsetX,offsetY) or 4 columns (X,Y,W,H)");
     }
 
-    private void updateAnimationFrameAndOffset(GameTime gameTime, ref Vector2 position, float frameScale)
+    public void SetScale(float scale)
+    {
+        _globalScale = scale;
+    }
+
+    public void RandomizeAnimationStart()
+    {
+        Random ran = new Random();
+        _elapsedTicksOnCurrentFrame = (ulong)ran.NextInt64(0, (long)_ticksBetweenFrames - 1);
+    }
+
+    private void UpdateAnimationFrameAndOffset(GameTime gameTime, ref Vector2 position, float frameScale)
     {
         _elapsedTicksOnCurrentFrame += (ulong)gameTime.ElapsedGameTime.Ticks;
         if (_elapsedTicksOnCurrentFrame >= _ticksBetweenFrames)
@@ -187,8 +199,8 @@ public class AnimatableSprite : ISprite
 
     private void DoDraw(GameTime gameTime, Vector2 position)
     {
-        updateAnimationFrameAndOffset(gameTime, ref position, _globalScale);
-        _spriteBatch.Draw(_texture, position, _sourceList[_currentFrame], Color.White, 0.0f, Vector2.Zero, _globalScale, SpriteEffects.None, 0.0f);
+        UpdateAnimationFrameAndOffset(gameTime, ref position, _globalScale);
+        _spriteBatch.Draw(_texture, position, _sourceList[_currentFrame], Color, 0.0f, Vector2.Zero, _globalScale, SpriteEffects.None, 0.0f);
     }
 
     /// <summary>

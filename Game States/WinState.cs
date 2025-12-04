@@ -35,14 +35,14 @@ public class WinState(Game1 game) : IGameState
         
         var rectFactory = new RectElementFactory(rootUIElement);
         var rect = rectFactory.CreateNew(Color.Khaki);
-        rect.OffsetAndSize = game.GetScreenRect();
+        rect.OffsetAndSize = Util.ScreenRect;
         rootUIElement.AddChild(rect);
         //Text element construction
         String textString = String.Format("You win! Final Level: {0}. Press escape to return to the start.", Player.Instance.Party[0].GetLevel());
         Color textColor = Color.Black;
         var textFactory = new TextElementFactory(rootUIElement);
         var textElem = textFactory.CreateNew(spriteFont, textString, textColor);
-        textElem.OffsetAndSize = game.GetScreenRect();
+        textElem.OffsetAndSize = Util.ScreenRect;
         textElem.Attributes["horizontal_align"] = TextElementFactory.TextAlign.Center;
         textElem.Attributes["vertical_align"] = TextElementFactory.TextAlign.Center;
         rootUIElement.AddChild(textElem);

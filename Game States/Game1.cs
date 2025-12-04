@@ -42,6 +42,13 @@ public class Game1 : Game
 
         _graphics.PreferredBackBufferWidth = 1024;
         _graphics.PreferredBackBufferHeight = 768;
+        Util.ScreenRect = new Rectangle
+        (
+            0,
+            0,
+            _graphics.PreferredBackBufferWidth,
+            _graphics.PreferredBackBufferHeight
+        );
         //See Game.TargetElapsedTime if we'd like to change refresh rate
     }
 
@@ -246,17 +253,6 @@ public class Game1 : Game
         InitializeOverworldAndControllers();
     }
 
-    public Rectangle GetScreenRect()
-    {
-        return new Rectangle
-        (
-            0,
-            0,
-            _graphics.PreferredBackBufferWidth,
-            _graphics.PreferredBackBufferHeight
-        );
-    }
-    
     protected override void Update(GameTime gameTime)
     {
         //Time can be slowed like this

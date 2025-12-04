@@ -39,7 +39,7 @@ public class StartScreenState : IGameState
         //Background, because I'm sorry but the green was so ugly
         var rectFactory = new RectElementFactory(rootUIElement);
         var rect = rectFactory.CreateNew(Color.BurlyWood);
-        rect.OffsetAndSize = game.GetScreenRect();
+        rect.OffsetAndSize = Util.ScreenRect;
         rootUIElement.AddChild(rect);
 
         //Text element construction
@@ -47,7 +47,7 @@ public class StartScreenState : IGameState
         Color textColor = LerpTextColors(gameTime);
         var textFactory = new TextElementFactory(rootUIElement);
         var textElem = textFactory.CreateNew(spriteFont, textString, textColor);
-        textElem.OffsetAndSize = game.GetScreenRect();
+        textElem.OffsetAndSize = Util.ScreenRect;
         textElem.Attributes["horizontal_align"] = TextElementFactory.TextAlign.Center;
         textElem.Attributes["vertical_align"] = TextElementFactory.TextAlign.Center;
         rootUIElement.AddChild(textElem);
