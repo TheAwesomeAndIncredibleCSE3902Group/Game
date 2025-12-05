@@ -5,6 +5,8 @@ using AwesomeRPG.BattleMechanics;
 using AwesomeRPG.Characters;
 using AwesomeRPG.Controllers;
 using AwesomeRPG.UI;
+using AwesomeRPG.UI.ElementFactories;
+using AwesomeRPG.UI.Events;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -20,7 +22,7 @@ public class BattleState : IGameState
 
     //Root of the UI. 
     //Currently the UI is initialized at the beginning in Game1 and safely stored in OverworldState.
-    private RootElement RootUIElement { get; set; }
+    public RootElement RootUIElement { get; private set; }
 
     //Caches the last OverworldState. This makes returning to the overworld much easier
     private OverworldState overworldState;
@@ -37,7 +39,6 @@ public class BattleState : IGameState
     {
         this.game = game;
         this.overworldState = overState;
-        this.RootUIElement = game.RootUIElement;
         this.enemies = enemies;
         enemyType = enemies[0].Name;
         InitializeBattle();
@@ -45,6 +46,10 @@ public class BattleState : IGameState
 
     public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
     {
+        if (RootUIElement == null)
+        {
+            InitializeUI(spriteBatch);            
+        }
         RootUIElement.Draw(gameTime);
         foreach (CharacterBattleSprite enemy in enemySprites)
             enemy.Draw(gameTime);
@@ -158,4 +163,57 @@ public class BattleState : IGameState
         return offset;
     }
 
+    private void InitializeUI(SpriteBatch spriteBatch)
+    {
+        RootUIElement = new RootElement(spriteBatch);
+
+        var rectBorderFactory = new RectElementFactory(RootUIElement);
+        var battleUiBoardBorder = rectBorderFactory.CreateNew(new Color(40, 0, 40));
+        battleUiBoardBorder.OffsetAndSize = new Rectangle(8, 528, 1008, 234);
+
+        var rectBgFactory = new RectElementFactory(RootUIElement);
+        var battleUiBoardBg = rectBgFactory.CreateNew(new Color(80, 0, 80));
+        battleUiBoardBg.OffsetAndSize = new Rectangle(10, 530, 1004, 230);
+
+        RootUIElement.AddChild(battleUiBoardBorder);
+        RootUIElement.AddChild(battleUiBoardBg);
+
+        var battleText = new TextElementFactory(RootUIElement);
+        var battleTextElem = battleText.CreateNew(game.DefaultSpriteFont, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur ut facilisis libero. Fusce nec eleifend turpis. Curabitur condimentum dapibus nisl. Ut metus sapien, auctor et justo non, condimentum gravida risus. Donec varius pellentesque felis non ultricies. Quisque fermentum, augue eu pellentesque dictum, ante sapien elementum enim, sed ultricies mauris dui ut lorem. Donec vitae semper enim, sed ornare libero.", Color.White);
+        battleTextElem.OffsetAndSize = new Rectangle(20, 540, 984, 210);
+        RootUIElement.AddChild(battleTextElem);
+
+        List<Element> buttons = new List<Element>();
+        for (int i = 0; i < 6; i++)
+        {
+            var buttonFactory = new ButtonElementFactory(RootUIElement);
+            var currentButtonToAdd = buttonFactory.CreateNew(game.DefaultSpriteFont, game, new Rectangle(20 + (i / 3) * 365, 540 + (i % 3) * 75, 350, 60), Color.Purple, Color.White, "Action " + i);
+            buttons.Add(currentButtonToAdd);
+            RootUIElement.AddChild(currentButtonToAdd);
+        }
+        
+        RootUIElement.UIState.SelectionIndex = 0;
+
+        RootUIElement.AddActionOnUIEvent(UIEvent.ButtonDown, (e) =>
+        {
+            var eventParams = (InputUIEventParams)e;
+            // System.Console.WriteLine("This is a test!!");
+            if (eventParams.Controls.Contains(UIControl.MoveDown))
+            {
+                RootUIElement.UIState.SelectionIndex += 1;
+            }
+            if (eventParams.Controls.Contains(UIControl.MoveUp))
+            {
+                RootUIElement.UIState.SelectionIndex -= 1;
+            }
+            if (eventParams.Controls.Contains(UIControl.MoveRight))
+            {
+                RootUIElement.UIState.SelectionIndex += 3;
+            }
+            if (eventParams.Controls.Contains(UIControl.MoveLeft))
+            {
+                RootUIElement.UIState.SelectionIndex -= 3;
+            }
+        });
+    }
 }

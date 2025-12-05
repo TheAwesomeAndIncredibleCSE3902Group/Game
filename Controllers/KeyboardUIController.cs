@@ -25,6 +25,12 @@ public class KeyboardUIController : IController
     //Update all keyboard input for UI
     public void Update(GameState gameState)
     {
+        if ( Game1.StateClass.RootUIElement == null)
+        {
+            // If Root ui is null or hasnt been created yet, we cant do controls on it!!!!!!!!
+            return;
+        } 
+
         KeyboardState currentState = Keyboard.GetState();
         List<UIControl> uiControlsDown = [];
         List<UIControl> uiControlsUp = []; 
@@ -52,27 +58,27 @@ public class KeyboardUIController : IController
 
         if (uiControlsDown.Count > 0)
         {
-            InputUIEventParams downUIEventParams = new(_myGame1.RootUIElement, uiControlsDown);
+            InputUIEventParams downUIEventParams = new(Game1.StateClass.RootUIElement, uiControlsDown);
             // dispatch button down event to root element
-            _myGame1.RootUIElement.DispatchUIEvent(UIEvent.ButtonDown, downUIEventParams);
+            Game1.StateClass.RootUIElement.DispatchUIEvent(UIEvent.ButtonDown, downUIEventParams);
             // dispatch button down event to selected element if it isn't null
-            _myGame1.RootUIElement.UIState.SelectedElement?.DispatchUIEvent(UIEvent.ButtonDown, downUIEventParams);
+            Game1.StateClass.RootUIElement.UIState.SelectedElement?.DispatchUIEvent(UIEvent.ButtonDown, downUIEventParams);
         }
         if (uiControlsUp.Count > 0)
         {
-            InputUIEventParams upUIEventParams = new(_myGame1.RootUIElement, uiControlsUp);
+            InputUIEventParams upUIEventParams = new(Game1.StateClass.RootUIElement, uiControlsUp);
             // dispatch button up event to root element
-            _myGame1.RootUIElement.DispatchUIEvent(UIEvent.ButtonUp, upUIEventParams);
+            Game1.StateClass.RootUIElement.DispatchUIEvent(UIEvent.ButtonUp, upUIEventParams);
             // dispatch button up event to selected element if it isn't null
-            _myGame1.RootUIElement.UIState.SelectedElement?.DispatchUIEvent(UIEvent.ButtonDown, upUIEventParams);
+            Game1.StateClass.RootUIElement.UIState.SelectedElement?.DispatchUIEvent(UIEvent.ButtonDown, upUIEventParams);
         }
         if (uiControlsPress.Count > 0)
         {
-            InputUIEventParams pressUIEventParams = new(_myGame1.RootUIElement, uiControlsPress);
+            InputUIEventParams pressUIEventParams = new(Game1.StateClass.RootUIElement, uiControlsPress);
             // dispatch button press event to root element
-            _myGame1.RootUIElement.DispatchUIEvent(UIEvent.ButtonPress, pressUIEventParams);
+            Game1.StateClass.RootUIElement.DispatchUIEvent(UIEvent.ButtonPress, pressUIEventParams);
             // dispatch button press event to selected element if it isn't null
-            _myGame1.RootUIElement.UIState.SelectedElement?.DispatchUIEvent(UIEvent.ButtonDown, pressUIEventParams);
+            Game1.StateClass.RootUIElement.UIState.SelectedElement?.DispatchUIEvent(UIEvent.ButtonDown, pressUIEventParams);
         }
 
         _previousState = currentState;
