@@ -15,4 +15,9 @@ public class SuperSwordSheathe : Equipment
         PlayerOverworld player = Player.Instance.PlayerOverworld;
         return [new PlayerSword(player.Position, player.FacingDirection),new SwordBeam(player.Position,player.FacingDirection)];
     }
+
+    protected override Type GetProjectileType()
+    {
+        return typeof(PlayerSword);
+    }
 }

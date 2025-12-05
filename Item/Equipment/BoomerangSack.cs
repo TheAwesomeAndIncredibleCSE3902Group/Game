@@ -15,4 +15,9 @@ public class BoomerangSack : Equipment
         PlayerOverworld player = Player.Instance.PlayerOverworld;
         return [new PlayerBoomerang(player.Position, player.FacingDirection)];
     }
+
+    protected override Type GetProjectileType()
+    {
+        return typeof(PlayerBoomerang);
+    }
 }
