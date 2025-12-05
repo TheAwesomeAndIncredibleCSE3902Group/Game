@@ -29,6 +29,7 @@ public class BattleState : IGameState
     private Game1 game;
     //Ideally enemies and enemySprites would be combined into a BattleEnemy
     private CharacterEnemyBase enemy;
+    private CharacterEnemyBase[] enemies;
     private CharacterBattleSprite[] enemySprites;
 
     private string enemyType;
@@ -61,7 +62,7 @@ public class BattleState : IGameState
         RootUIElement.Update(gameTime);
     }
 
-    public void ChangeToBattleState(CharacterEnemyBase[] enemies) { }
+    public void ChangeToBattleState(CharacterEnemyBase enemy) { }
     public void ChangeToStartState() { }
     public void ChangeToGameOverState() { }
     public void ChangeToWinState() { }
@@ -74,10 +75,7 @@ public class BattleState : IGameState
         //And then return to that Overworld state
         GameSoundFactory.StopBattleSceneTheme();
         //PlayerSoundFactory.PlayVictoryFanfare();
-        foreach (CharacterEnemyBase enemy in enemies)
-        {
-            enemy.TryDestroy();
-        }
+        enemy.TryDestroy();
 
         //TODO: do changes to player, NPCs (ie health), and enemies
         game.SetStateClass(overworldState);
@@ -116,6 +114,7 @@ public class BattleState : IGameState
 
     private void BuildBattlePanel()
     {
+        enemies = [enemy];
         TESTDupeEnemies();
 
         //TODO: background
