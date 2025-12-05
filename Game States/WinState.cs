@@ -63,7 +63,7 @@ public class WinState(Game1 game) : IGameState
         }
     }
 
-    public void ChangeToBattleState(CharacterEnemyBase[] enemies) { }
+    public void ChangeToBattleState(CharacterEnemyBase enemy) { }
 
     public void ChangeToOverworldState() { }
 

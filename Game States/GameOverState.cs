@@ -69,7 +69,7 @@ public class GameOverState : IGameState
         }
     }
 
-    public void ChangeToBattleState(CharacterEnemyBase[] enemies) { }
+    public void ChangeToBattleState(CharacterEnemyBase enemy) { }
 
     public void ChangeToOverworldState() { }
 

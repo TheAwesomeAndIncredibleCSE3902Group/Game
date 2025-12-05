@@ -18,10 +18,10 @@ public class PlayerProjectileEnemyCollideCommand : ICollisionCommand
             return;
         }
 
-        Game1.TransitionToBattleState([enemy]);
+        Game1.TransitionToBattleState(enemy);
         Debug.WriteLine("DEBUG ProjectileEnemyCollideCommand: Enter the battle state");
         projectile.Destroy();
 
-        Game1.TransitionToBattleState([enemy]);
+        Game1.TransitionToBattleState(enemy);
     }
 }

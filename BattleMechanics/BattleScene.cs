@@ -1,7 +1,9 @@
 ﻿using AwesomeRPG.BattleMechanics.BattleEnemies;
+using AwesomeRPG.Stats;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using System.Xml.XPath;
 
 namespace AwesomeRPG.BattleMechanics;
 public class BattleScene
@@ -25,10 +27,18 @@ public class BattleScene
         CurrentBattle = turnOrder.NextBattle();
         if (turnOrder.battleEnd)
         {
+            int totalXP = 0;
             CurrentlyInBattle = false;
 
-            AllyList = new List<IBattle>();
-            EnemyList = new List<IBattle>();
+            foreach (IBattle battle in EnemyList) totalXP += ((EnemyStats)battle.Stats).GetXPReward();
+            foreach (IBattle battle in AllyList)
+            {
+                ((PlayerStats)battle.Stats).ChangeLevel(totalXP);
+
+            }
+
+            AllyList.Clear();
+            EnemyList.Clear();
             turnOrder = new TurnList();
             return;
         }
