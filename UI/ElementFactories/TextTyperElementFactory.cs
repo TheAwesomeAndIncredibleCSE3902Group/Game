@@ -10,6 +10,7 @@ namespace AwesomeRPG.UI.ElementFactories;
 
 public class TextTyperElementFactory : IElementFactory
 {
+    private const long TICKS_IN_ONE_MILLISECOND = 10000;
     private RootElement RootElem { get; set; }
 
     public TextTyperElementFactory(RootElement rootElement)
@@ -27,6 +28,8 @@ public class TextTyperElementFactory : IElementFactory
     {
         var elem = new Element(RootElem);
 
+        // System.Console.WriteLine("Creating new text typer element!");
+
         Color color = textColor == default ? new Color(0, 0, 0, 255) : textColor;
 
         elem.Attributes["text_color"] = color;
@@ -36,32 +39,29 @@ public class TextTyperElementFactory : IElementFactory
         elem.Attributes["currently_drawn_char"] = 0;
         elem.Attributes["started_typing_time"] = null;
 
-        // TODO: GOTTA FIGURE THIS OUT!!  Idk why the started time is the end as the current game time......????
-
         elem.AddActionOnUIEvent(UIEvent.Update, (eventParams) =>
         {
-            System.Console.WriteLine("before everything " + elem.Attributes["started_typing_time"]);
+            // System.Console.WriteLine("before everything " + elem.Attributes["started_typing_time"]);
             DrawUIEventParams drawParams = (DrawUIEventParams)eventParams;
             GameTime gameTime = drawParams.GameTime;
             if (elem.Attributes["started_typing_time"] == null)
             {
-                elem.Attributes["started_typing_time"] = gameTime;
+                elem.Attributes["started_typing_time"] = gameTime.TotalGameTime.Ticks;
             }
-            object startedTimeObj = elem.Attributes["started_typing_time"];
-            GameTime startedTime = startedTimeObj as GameTime ?? gameTime;
-
+            long startedTimeTick = (long) elem.Attributes["started_typing_time"];
+            long currentTimeTick = gameTime.TotalGameTime.Ticks;
 
             // Calculate how many characters should be drawn
             int charDelay = (int)elem.Attributes["char_delay_ms"];
-            int elapsedMs = (int)gameTime.TotalGameTime.TotalMilliseconds - (int)startedTime.TotalGameTime.TotalMilliseconds;
+            int elapsedMs = (int)((currentTimeTick - startedTimeTick) / TICKS_IN_ONE_MILLISECOND);
             int currentlyDrawnChar = Math.Min(elapsedMs / charDelay, textString.Length);
 
             elem.Attributes["currently_drawn_char"] = currentlyDrawnChar;
 
-            System.Console.WriteLine("freaking drawing text typer shit! " + currentlyDrawnChar);
-            System.Console.WriteLine("Elapsed ms " + elapsedMs);
-            System.Console.WriteLine("Start time " + startedTime.TotalGameTime.TotalMilliseconds);
-            System.Console.WriteLine("End time " + gameTime.TotalGameTime.TotalMilliseconds);
+            // System.Console.WriteLine("freaking drawing text typer shit! " + currentlyDrawnChar);
+            // System.Console.WriteLine("Elapsed ms " + elapsedMs);
+            // System.Console.WriteLine("Start time tick " + startedTimeTick);
+            // System.Console.WriteLine("Current time tick " + currentTimeTick);
         });
 
         elem.AddActionOnUIEvent(UIEvent.Draw, (e) =>
