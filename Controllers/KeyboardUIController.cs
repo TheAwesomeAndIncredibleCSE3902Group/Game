@@ -70,7 +70,7 @@ public class KeyboardUIController : IController
             // dispatch button up event to root element
             Game1.StateClass.RootUIElement.DispatchUIEvent(UIEvent.ButtonUp, upUIEventParams);
             // dispatch button up event to selected element if it isn't null
-            Game1.StateClass.RootUIElement.UIState.SelectedElement?.DispatchUIEvent(UIEvent.ButtonDown, upUIEventParams);
+            Game1.StateClass.RootUIElement.UIState.SelectedElement?.DispatchUIEvent(UIEvent.ButtonUp, upUIEventParams);
         }
         if (uiControlsPress.Count > 0)
         {
@@ -78,7 +78,7 @@ public class KeyboardUIController : IController
             // dispatch button press event to root element
             Game1.StateClass.RootUIElement.DispatchUIEvent(UIEvent.ButtonPress, pressUIEventParams);
             // dispatch button press event to selected element if it isn't null
-            Game1.StateClass.RootUIElement.UIState.SelectedElement?.DispatchUIEvent(UIEvent.ButtonDown, pressUIEventParams);
+            Game1.StateClass.RootUIElement.UIState.SelectedElement?.DispatchUIEvent(UIEvent.ButtonPress, pressUIEventParams);
         }
 
         _previousState = currentState;
