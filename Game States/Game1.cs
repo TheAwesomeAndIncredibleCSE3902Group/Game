@@ -3,17 +3,9 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using AwesomeRPG.Controllers;
 using AwesomeRPG.Sprites;
-using AwesomeRPG.UI.ElementFactories;
 using AwesomeRPG.UI;
-using AwesomeRPG.UI.Events;
-using AwesomeRPG.Commands.BattleCommands;
-using AwesomeRPG.Commands;
-using AwesomeRPG.Map;
 using AwesomeRPG.Characters;
 using AwesomeRPG.Stats;
-using AwesomeRPG.BattleMechanics;
-using AwesomeRPG.BattleMechanics.BattleEnemies;
-using System.Diagnostics;
 
 namespace AwesomeRPG;
 
