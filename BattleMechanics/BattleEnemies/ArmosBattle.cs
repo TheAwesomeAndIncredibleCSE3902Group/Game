@@ -14,6 +14,21 @@ public class ArmosBattle : IEnemyBattle
     public string Name { get; set; } = "Armos";
     public string TurnText { get; set; } = null;
 
+    #region Constructors
+    public ArmosBattle(int level)
+    {
+        // Basic stat scaling based on level
+        int maxHealth = 10 + (level * 2);
+        int speed = 5 + level;
+        int attack = 4 + level;
+        int defense = 3 + level;
+        int specialAttack = 2 + level;
+        int specialDefense = 2 + level;
+        int luck = 1 + (level / 2);
+        int xpReward = 5 + (level * 3);
+
+        Stats = new EnemyStats(maxHealth, speed, attack, defense, specialAttack, specialDefense, luck, level, xpReward);
+    }
     public ArmosBattle(EnemyStats stats)
     {
         Stats = stats;
@@ -21,6 +36,7 @@ public class ArmosBattle : IEnemyBattle
         IsFriend = false;
         Stats.ChangeHealth(Stats.GetMaxHealth());
     }
+    #endregion
 
     public void TakeTurn()
     {
