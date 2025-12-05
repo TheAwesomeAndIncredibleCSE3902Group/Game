@@ -86,11 +86,11 @@ public class CharacterEnemyMoblin : CharacterEnemyBase
     {
         _sprite = direction switch
         {
-            Cardinal.up => CharacterSpriteFactory.Instance.MoblinSpriteUp(),
-            Cardinal.down => CharacterSpriteFactory.Instance.MoblinSpriteDown(),
-            Cardinal.left => CharacterSpriteFactory.Instance.MoblinSpriteLeft(),
-            Cardinal.right => CharacterSpriteFactory.Instance.MoblinSpriteRight(),
-            _ => CharacterSpriteFactory.Instance.MoblinSpriteDown()
+            Cardinal.up => EnemySpriteFactory.Instance.MoblinSpriteUp(),
+            Cardinal.down => EnemySpriteFactory.Instance.MoblinSpriteDown(),
+            Cardinal.left => EnemySpriteFactory.Instance.MoblinSpriteLeft(),
+            Cardinal.right => EnemySpriteFactory.Instance.MoblinSpriteRight(),
+            _ => EnemySpriteFactory.Instance.MoblinSpriteDown()
         };
     }
 
@@ -98,11 +98,11 @@ public class CharacterEnemyMoblin : CharacterEnemyBase
     {
         _sprite = direction switch
         {
-            Cardinal.up => CharacterSpriteFactory.Instance.MoblinAttackSpriteUp(),
-            Cardinal.down => CharacterSpriteFactory.Instance.MoblinAttackSpriteDown(),
-            Cardinal.left => CharacterSpriteFactory.Instance.MoblinAttackSpriteLeft(),
-            Cardinal.right => CharacterSpriteFactory.Instance.MoblinAttackSpriteRight(),
-            _ => CharacterSpriteFactory.Instance.MoblinAttackSpriteDown()
+            Cardinal.up => EnemySpriteFactory.Instance.MoblinAttackSpriteUp(),
+            Cardinal.down => EnemySpriteFactory.Instance.MoblinAttackSpriteDown(),
+            Cardinal.left => EnemySpriteFactory.Instance.MoblinAttackSpriteLeft(),
+            Cardinal.right => EnemySpriteFactory.Instance.MoblinAttackSpriteRight(),
+            _ => EnemySpriteFactory.Instance.MoblinAttackSpriteDown()
         };
     }
 

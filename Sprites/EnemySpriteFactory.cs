@@ -8,22 +8,22 @@ using System.Reflection.Metadata.Ecma335;
 namespace AwesomeRPG.Sprites;
 
 
-public class CharacterSpriteFactory
+public class EnemySpriteFactory
 {
     private Texture2D _enemySpriteSheet;
     private Texture2D _krisSpriteSheet;
     private SpriteBatch _spriteBatch;
 
-    private static CharacterSpriteFactory instance = new CharacterSpriteFactory();
+    private static EnemySpriteFactory instance = new EnemySpriteFactory();
 
-    public static CharacterSpriteFactory Instance
+    public static EnemySpriteFactory Instance
     {
         get
         {
             return instance;
         }
     }
-    private CharacterSpriteFactory()
+    private EnemySpriteFactory()
     {
 
     }

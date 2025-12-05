@@ -17,9 +17,9 @@ public class CharacterEnemyArmos : CharacterEnemyBase
     {
         _sprite = direction switch
         {
-            Cardinal.up => CharacterSpriteFactory.Instance.ArmosSpriteUp(),
-            Cardinal.down => CharacterSpriteFactory.Instance.ArmosSpriteDown(),
-            _=> CharacterSpriteFactory.Instance.ArmosSpriteDown()
+            Cardinal.up => EnemySpriteFactory.Instance.ArmosSpriteUp(),
+            Cardinal.down => EnemySpriteFactory.Instance.ArmosSpriteDown(),
+            _=> EnemySpriteFactory.Instance.ArmosSpriteDown()
         };
     }
 }

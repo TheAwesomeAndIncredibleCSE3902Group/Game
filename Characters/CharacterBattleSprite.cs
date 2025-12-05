@@ -44,7 +44,7 @@ public class CharacterBattleSprite
     /// <param name="attacking"></param>
     public void SetSprite(bool attacking = false)
     {
-        CharacterSpriteFactory csf = CharacterSpriteFactory.Instance;
+        EnemySpriteFactory csf = EnemySpriteFactory.Instance;
         sprite = type switch
         {
             CType.armos => csf.ArmosSpriteDown(),

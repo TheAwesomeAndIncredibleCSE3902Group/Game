@@ -12,7 +12,7 @@ public class CharacterKris : ICharacter
 {
     public CharacterKris()
     {
-        _sprite = CharacterSpriteFactory.Instance.KrisSprite(); 
+        _sprite = EnemySpriteFactory.Instance.KrisSprite(); 
     }
     public IPathingScheme Pathing
     {

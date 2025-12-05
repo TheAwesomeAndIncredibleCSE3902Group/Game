@@ -57,7 +57,8 @@ public class Game1 : Game
         //Create sprite factories; load textures
         MapItemSpriteFactory.LoadAllTextures(Content, _spriteBatch);
         ProjectileSpriteFactory.LoadAllTextures(Content, _spriteBatch);
-        CharacterSpriteFactory.Instance.LoadAllTextures(Content, _spriteBatch);
+        EnemySpriteFactory.Instance.LoadAllTextures(Content, _spriteBatch);
+        TeamSpriteFactory.Instance.LoadAllTextures(Content, _spriteBatch);
 
         //Create sound factories; load sound effects
         GameSoundFactory.LoadAndSetUpAllThemes(Content);
