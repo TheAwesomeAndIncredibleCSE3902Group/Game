@@ -18,7 +18,7 @@ public interface IGameState
     public RootElement RootUIElement { get; }
 
     public bool TransitionAllowedTo(GameState state);
-    public void ChangeToBattleState(CharacterEnemyBase[] enemies);
+    public void ChangeToBattleState(CharacterEnemyBase enemy);
     public void ChangeToOverworldState();
     public void ChangeToStartState();
     public void ChangeToGameOverState();

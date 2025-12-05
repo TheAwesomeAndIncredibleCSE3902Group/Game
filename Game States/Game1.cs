@@ -125,9 +125,9 @@ public class Game1 : Game
     /// <summary>
     /// TODO: change to StateClass = StateClass.ToBattleState();
     /// </summary>
-    public static void TransitionToBattleState(CharacterEnemyBase[] enemies)
+    public static void TransitionToBattleState(CharacterEnemyBase enemy)
     {
-        StateClass.ChangeToBattleState(enemies);
+        StateClass.ChangeToBattleState(enemy);
     }
 
     public static void TransitionToOverworldState()

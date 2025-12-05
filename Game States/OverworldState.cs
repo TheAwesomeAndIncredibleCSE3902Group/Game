@@ -59,12 +59,12 @@ public class OverworldState : IGameState
 
     }
 
-    public void ChangeToBattleState(CharacterEnemyBase[] enemies)
+    public void ChangeToBattleState(CharacterEnemyBase enemy)
     {
         //This will have to convert any relevant data to its battle representation
         //And return a new BattleState
         GameSoundFactory.StopOverworldMapTheme();
-        game.SetStateClass(new BattleState(this, game, enemies));
+        game.SetStateClass(new BattleState(this, game, enemy));
     }
 
     public void ChangeToOverworldState() { }

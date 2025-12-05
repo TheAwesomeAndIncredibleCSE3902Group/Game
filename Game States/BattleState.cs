@@ -28,19 +28,19 @@ public class BattleState : IGameState
     private OverworldState overworldState;
     private Game1 game;
     //Ideally enemies and enemySprites would be combined into a BattleEnemy
-    private CharacterEnemyBase[] enemies;
+    private CharacterEnemyBase enemy;
     private CharacterBattleSprite[] enemySprites;
 
     private string enemyType;
     public GameState CurrentState { get => GameState.battle; }
 
     //BattleState can only be made from an OverworldState
-    public BattleState(OverworldState overState, Game1 game, CharacterEnemyBase[] enemies)
+    public BattleState(OverworldState overState, Game1 game, CharacterEnemyBase enemy)
     {
         this.game = game;
         this.overworldState = overState;
-        this.enemies = enemies;
-        enemyType = enemies[0].Name;
+        this.enemy = enemy;
+        enemyType = enemy.Name;
         InitializeBattle();
     }
 
