@@ -18,11 +18,11 @@ public class LynelBattle : IEnemyBattle
     public LynelBattle(int level)
     {
         // Basic stat scaling based on level
-        int maxHealth = 10 + (level * 2);
-        int speed = 5 + level;
-        int attack = 4 + level;
-        int defense = 3 + level;
-        int specialAttack = 2 + level;
+        int maxHealth = 15 + (level * 3);
+        int speed = 6 + (level * 2);
+        int attack = 5 + ((level * 3) / 2);
+        int defense = 7 + level;
+        int specialAttack = 3 + level;
         int specialDefense = 2 + level;
         int luck = 1 + (level / 2);
         int xpReward = 5 + (level * 3);
