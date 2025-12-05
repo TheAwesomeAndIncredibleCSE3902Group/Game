@@ -21,43 +21,53 @@ public class SelectionAnimationElementFactory : IElementFactory
         var elem = new Element(RootElem);
         GameTime lastGameTime = null;
 
+        var rectElemFact = new RectElementFactory(RootElem);
+
+        var outlineRectElem = rectElemFact.CreateNew(new Color(0,0,0,0), 2, Color.White);
+        var glowRectElem = rectElemFact.CreateNew(new Color(0,0,0,0), 2, Color.White);
+        
+        outlineRectElem.IsVisible = false;
+        glowRectElem.IsVisible = false;
+        
+        elem.AddChild(outlineRectElem);
+        elem.AddChild(glowRectElem);
+
         elem.AddActionOnUIEvent(UIEvent.BeforeDraw, (e) =>
         {
-            elem.CalculateDerivedValuesFromAncestors();
             if (e is DrawUIEventParams drawParams)
             {
                 lastGameTime = drawParams.GameTime;
             }
         });
 
-        elem.AddActionOnUIEvent(UIEvent.Draw, (e) =>
+        elem.AddActionOnUIEvent(UIEvent.BeforeUpdate, (e) =>
         {
-            Console.WriteLine("Will be drawing selection.");
+            outlineRectElem.OffsetAndSize = new Rectangle(Point.Zero, elem.OffsetAndSize.Size);
+            glowRectElem.OffsetAndSize = new Rectangle(Point.Zero, elem.OffsetAndSize.Size);
+        });
+
+        elem.AddActionOnUIEvent(UIEvent.Update, (e) =>
+        {
             if (elem.DerivedAncestorIsSelected && elem.DerivedAncestorIsVisible && lastGameTime != null)
             {
-                int animationFrame = (int)lastGameTime.TotalGameTime.TotalMicroseconds / 9000 % 100;
-
-                var sizedRectangle1 = new Rectangle(elem.DerivedAbsolutePosition, elem.OffsetAndSize.Size);
-                sizedRectangle1.Inflate(2, 2);
-
-                elem.RootElement.SpriteBatch.Draw(
-                    elem.RootElement.RectangleTexture,
-                    sizedRectangle1,
-                    Color.LightBlue * 1
-                );
-
-                Color selectColor = new Color(255, 255, 255);
-                var sizedRectangle = new Rectangle(elem.DerivedAbsolutePosition, elem.OffsetAndSize.Size);
-                sizedRectangle.Inflate(animationFrame / 8 + 2, animationFrame / 8 + 2);
-                
-                Console.WriteLine("Drawing the selection shit!\n" + sizedRectangle);
-
-                elem.RootElement.SpriteBatch.Draw(
-                    elem.RootElement.RectangleTexture,
-                    sizedRectangle,
-                    selectColor * ((99 - animationFrame) / 2 / 255.0f)
-                );
+                outlineRectElem.IsVisible = true;
+                glowRectElem.IsVisible = true;
+            } else
+            {
+                outlineRectElem.IsVisible = false;
+                glowRectElem.IsVisible = false;
             }
+        });
+
+        elem.AddActionOnUIEvent(UIEvent.Draw, (e) =>
+        {
+            int animationFrame = (int)lastGameTime.TotalGameTime.TotalMicroseconds / 9000 % 100;
+
+            var newThickness = animationFrame / 8 + 2;
+            var newColor = Color.White * ((99 - animationFrame) / 2 / 255.0f);
+
+            glowRectElem.Attributes["outline_thickness"] = newThickness;
+            glowRectElem.Attributes["outline_color"] = newColor;
         });
 
         return elem;
