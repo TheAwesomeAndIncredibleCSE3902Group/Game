@@ -44,16 +44,15 @@ public class ButtonElementFactory : IElementFactory
         selAnimElem.OffsetAndSize = location;
         selAnimElem.AddChild(rectElem);
 
-        var commandFactory = new CommandElementFactory(_rootElement);
-        var commandElem = commandFactory.CreateNew();
-        commandElem.AddChild(selAnimElem);
-        commandElem.MakeSelectable();
+        var elem = new Element(_rootElement);
+        elem.AddChild(selAnimElem);
+        elem.MakeSelectable();
 
-        commandElem.AddActionOnUIEvent(UIEvent.Select, (e) =>
+        elem.AddActionOnUIEvent(UIEvent.Select, (e) =>
         {
             rectElem.Attributes["fill_color"] = bgColor * _selectedBgDim;
         });
-        commandElem.AddActionOnUIEvent(UIEvent.Unselect, (e) =>
+        elem.AddActionOnUIEvent(UIEvent.Unselect, (e) =>
         {
             rectElem.Attributes["fill_color"] = bgColor;
         });
@@ -61,17 +60,17 @@ public class ButtonElementFactory : IElementFactory
         _rootElement.AddActionOnUIEvent(UIEvent.ButtonDown, (e) =>
         {
             InputUIEventParams inputEventParams = (InputUIEventParams)e;
-            if (commandElem.IsSelected && inputEventParams.Controls.Contains(UIControl.Interact))
+            if (elem.IsSelected && inputEventParams.Controls.Contains(UIControl.Interact))
                 rectElem.Attributes["fill_color"] = bgColor * _clickBgDim;
         });
 
         _rootElement.AddActionOnUIEvent(UIEvent.ButtonUp, (e) =>
         {
             InputUIEventParams inputEventParams = (InputUIEventParams)e;
-            if (commandElem.IsSelected && inputEventParams.Controls.Contains(UIControl.Interact))
+            if (elem.IsSelected && inputEventParams.Controls.Contains(UIControl.Interact))
                 rectElem.Attributes["fill_color"] = bgColor;
         });
 
-        return commandElem;
+        return elem;
     }
 }

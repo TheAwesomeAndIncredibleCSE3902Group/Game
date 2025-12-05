@@ -217,9 +217,12 @@ public class BattleState : IGameState
 
         buttons[0].AddActionOnUIEvent(UIEvent.ButtonPress, (e) =>
         {
-            battleTextElem.IsVisible = true;
-            battleTextElem.Attributes["currently_drawn_char"] = 0;
-            battleTextElem.Attributes["started_typing_time"] = null;
+            if (((InputUIEventParams) e).Controls.Contains(UIControl.Interact))
+            {
+                battleTextElem.IsVisible = true;
+                battleTextElem.Attributes["currently_drawn_char"] = 0;
+                battleTextElem.Attributes["started_typing_time"] = null;
+            }
         });
 
         
