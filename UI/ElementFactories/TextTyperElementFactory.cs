@@ -36,17 +36,20 @@ public class TextTyperElementFactory : IElementFactory
         elem.Attributes["currently_drawn_char"] = 0;
         elem.Attributes["started_typing_time"] = null;
 
+        // TODO: GOTTA FIGURE THIS OUT!!  Idk why the started time is the end as the current game time......????
+
         elem.AddActionOnUIEvent(UIEvent.Update, (eventParams) =>
         {
+            System.Console.WriteLine("before everything " + elem.Attributes["started_typing_time"]);
             DrawUIEventParams drawParams = (DrawUIEventParams)eventParams;
             GameTime gameTime = drawParams.GameTime;
-            object startedTimeObj = elem.Attributes["started_typing_time"];
-            GameTime startedTime = startedTimeObj as GameTime ?? gameTime;
-
-            if (startedTimeObj == null)
+            if (elem.Attributes["started_typing_time"] == null)
             {
                 elem.Attributes["started_typing_time"] = gameTime;
             }
+            object startedTimeObj = elem.Attributes["started_typing_time"];
+            GameTime startedTime = startedTimeObj as GameTime ?? gameTime;
+
 
             // Calculate how many characters should be drawn
             int charDelay = (int)elem.Attributes["char_delay_ms"];
@@ -54,6 +57,11 @@ public class TextTyperElementFactory : IElementFactory
             int currentlyDrawnChar = Math.Min(elapsedMs / charDelay, textString.Length);
 
             elem.Attributes["currently_drawn_char"] = currentlyDrawnChar;
+
+            System.Console.WriteLine("freaking drawing text typer shit! " + currentlyDrawnChar);
+            System.Console.WriteLine("Elapsed ms " + elapsedMs);
+            System.Console.WriteLine("Start time " + startedTime.TotalGameTime.TotalMilliseconds);
+            System.Console.WriteLine("End time " + gameTime.TotalGameTime.TotalMilliseconds);
         });
 
         elem.AddActionOnUIEvent(UIEvent.Draw, (e) =>

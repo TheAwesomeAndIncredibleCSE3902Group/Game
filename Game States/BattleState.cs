@@ -178,7 +178,7 @@ public class BattleState : IGameState
         RootUIElement.AddChild(battleUiBoardBorder);
         RootUIElement.AddChild(battleUiBoardBg);
 
-        var battleText = new TextElementFactory(RootUIElement);
+        var battleText = new TextTyperElementFactory(RootUIElement);
         var battleTextElem = battleText.CreateNew(game.DefaultSpriteFont, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur ut facilisis libero. Fusce nec eleifend turpis. Curabitur condimentum dapibus nisl. Ut metus sapien, auctor et justo non, condimentum gravida risus. Donec varius pellentesque felis non ultricies. Quisque fermentum, augue eu pellentesque dictum, ante sapien elementum enim, sed ultricies mauris dui ut lorem. Donec vitae semper enim, sed ornare libero.", Color.White);
         battleTextElem.OffsetAndSize = new Rectangle(20, 540, 984, 210);
         RootUIElement.AddChild(battleTextElem);
@@ -215,5 +215,14 @@ public class BattleState : IGameState
                 RootUIElement.UIState.SelectionIndex -= 3;
             }
         });
+
+        buttons[0].AddActionOnUIEvent(UIEvent.ButtonPress, (e) =>
+        {
+            battleTextElem.IsVisible = true;
+            battleTextElem.Attributes["currently_drawn_char"] = 0;
+            battleTextElem.Attributes["started_typing_time"] = null;
+        });
+
+        
     }
 }
