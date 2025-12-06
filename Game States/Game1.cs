@@ -92,6 +92,10 @@ public class Game1 : Game
             new KeyboardUIController(this),
             new MouseController(this),
         ];
+
+        //TODO: reset all the sounds
+        //This doesn't work
+        //GameSoundFactory.PlayOverworldMapTheme(new GameTime());
     }
 
     public void Reset()

@@ -109,6 +109,8 @@ public class KeyboardController : IController
         overworldKeyPressMappings[Keys.E] = new DamagePlayerCommand();
         overworldKeyPressMappings[Keys.Home] = new GameOverCommand();
         overworldKeyPressMappings[Keys.End] = new WinCommand();
+
+        battleKeyPressMappings[Keys.R] = new ResetGameCommand(game);
     }
     //Initialize commands which relate to weapons and item use
     private void InitializeWeaponCommands(Game1 game)
