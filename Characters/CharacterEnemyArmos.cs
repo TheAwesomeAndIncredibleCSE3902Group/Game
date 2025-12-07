@@ -7,18 +7,19 @@ namespace AwesomeRPG.Characters;
 
 public class CharacterEnemyArmos : CharacterEnemyBase
 {
+    public override CType Type { get => CType.armos; }
     public CharacterEnemyArmos(Vector2 position, Cardinal direction) : base(position, direction)
     {
-        
+        Name = "Armos";
     }
 
     public override void ChangeDirectionalSprite(Cardinal direction)
     {
         _sprite = direction switch
         {
-            Cardinal.up => CharacterSpriteFactory.Instance.ArmosSpriteUp(),
-            Cardinal.down => CharacterSpriteFactory.Instance.ArmosSpriteDown(),
-            _=> CharacterSpriteFactory.Instance.ArmosSpriteDown()
+            Cardinal.up => EnemySpriteFactory.Instance.ArmosSpriteUp(),
+            Cardinal.down => EnemySpriteFactory.Instance.ArmosSpriteDown(),
+            _=> EnemySpriteFactory.Instance.ArmosSpriteDown()
         };
     }
 }

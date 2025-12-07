@@ -1,6 +1,7 @@
-﻿using AwesomeRPG.Stats;
-using System;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using AwesomeRPG.Stats;
 using static AwesomeRPG.Util;
 
 namespace AwesomeRPG.BattleMechanics.BattleEnemies;
@@ -8,10 +9,27 @@ public class MoblinBattle : IEnemyBattle
 {
     public IStats Stats { get; set; }
     public enum MoblinActions { ScratchBellyButton, RambleCharge, Dance }
-    public bool IsFainted { get; set; }
-    public bool IsFriend { get; set; }
-    public String TurnText { get; set; } = null;
+    public bool IsFainted { get; set; } = false;
+    public bool IsFriend { get; set; } = false;
 
+    public string Name { get; set; } = "Moblin";
+    public string TurnText { get; set; } = null;
+
+    #region Constructors
+    public MoblinBattle(int level)
+    {
+        // Basic stat scaling based on level
+        int maxHealth = 10 + (level * 2);
+        int speed = 5 + level;
+        int attack = 4 + level;
+        int defense = 3 + level;
+        int specialAttack = 2 + level;
+        int specialDefense = 2 + level;
+        int luck = 1 + (level / 2);
+        int xpReward = 5 + (level * 3);
+
+        Stats = new EnemyStats(maxHealth,speed,attack,defense,specialAttack,specialDefense,luck,level,xpReward);
+    }
     public MoblinBattle(EnemyStats stats)
     {
         Stats = stats;
@@ -19,24 +37,30 @@ public class MoblinBattle : IEnemyBattle
         IsFriend = false;
         Stats.ChangeHealth(Stats.GetMaxHealth());
     }
+    #endregion
 
     public void TakeTurn()
     {
         int rand = new Random().Next(BattleScene.Instance.AllyList.Count);
         IBattle target = BattleScene.Instance.AllyList[rand];
+        int healthChangeVal = 0;
+
         switch (ChooseAction())
         {
             case MoblinActions.ScratchBellyButton:
-                Stats.ChangeHealth(3);
-                TurnText = $"Moblin healed for 3";
+                healthChangeVal = 3;
+                Stats.ChangeHealth(healthChangeVal);
+                TurnText = $"{Name} scratched its belly and healed for {healthChangeVal}";
                 break;
             case MoblinActions.RambleCharge:
-                target.Stats.ChangeHealth(-4);
-                TurnText = $"Moblin attacked someone for 4\nTheir health is now: {target.Stats.GetHealth()}";
+                healthChangeVal = 4;
+                target.Stats.ChangeHealth(-healthChangeVal);
+                TurnText = $"The {Name} charged at {target.Name} for {healthChangeVal}\nTheir health is now: {target.Stats.GetHealth()}";
                 break;
             case MoblinActions.Dance:
-                target.Stats.ChangeHealth(-1);
-                TurnText = $"Moblin damaged someone for 1";
+                healthChangeVal = 1;
+                target.Stats.ChangeHealth(-healthChangeVal);
+                TurnText = $"The {Name}'s horrible dance caused {target.Name} to suffer {healthChangeVal} damage";
                 break;
         }
     }
@@ -47,8 +71,8 @@ public class MoblinBattle : IEnemyBattle
         if (Stats.GetHealth() < 10)
         {
             Random random = new();
-            int danceChance = random.Next(0, 20);
-            if (danceChance % 2 == 7)
+            int danceChance = random.Next(0, 3);
+            if (danceChance % 2 == 0)
             {
                 moblinChoice = MoblinActions.RambleCharge;
             }

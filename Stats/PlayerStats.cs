@@ -17,6 +17,8 @@ public class PlayerStats : IStats
     private int specialAttack;
     private int specialDefense;
     private int luck;
+    private int xp;
+    public int levelUps;
 
     public PlayerStats(int maxHealth, int specialPointCount, int speed, int attack, int defense, int weaponUse, int specialAttack, int specialDefense, int luck)
     {
@@ -33,14 +35,8 @@ public class PlayerStats : IStats
         this.luck = luck;
     }
     #region Health Methods
-    public int GetMaxHealth()
-    {
-        return maxHealth;
-    }
-    public int GetHealth()
-    {
-        return health;
-    }
+    public int GetMaxHealth() { return maxHealth; }
+    public int GetHealth() { return health; }
     public int ChangeHealth(int updateHealth)
     {
         if (updateHealth != 0)
@@ -58,41 +54,30 @@ public class PlayerStats : IStats
     #endregion
     #region Stats Methods
     #region Stat Getters
-    public int GetSpecialPoint()
-    {
-        return specialPointCount;
-    }
-    public int GetSpeed()
-    {
-        return speed;
-    }
-    public int GetAttack()
-    {
-        return attack;
-    }
-    public int GetDefense()
-    {
-        return defense;
-    }
-    public int GetWeaponUse()
-    {
-        return weaponUse;
-    }
-    public int GetSpecialAttack()
-    {
-        return specialAttack;
-    }
-    public int GetSpecialDefense()
-    {
-        return specialDefense;
-    }
-    public int GetLuck()
-    {
-        return luck;
-    }
+    public int GetSpecialPoint() { return specialPointCount; }
+    public int GetSpeed() { return speed; }
+    public int GetAttack() { return attack; }
+    public int GetDefense() { return defense; }
+    public int GetWeaponUse() { return weaponUse; }
+    public int GetSpecialAttack() { return specialAttack; }
+    public int GetSpecialDefense() { return specialDefense; }
+    public int GetLuck() { return luck; }
     #endregion
 
     #region Stat Changers
+    public void ChangeAll(int maxHealthChange, int specialPointCountChange, int speedChange, int attackChange, int defenseChange, int weaponUseChange, int specialAttackChange, int specialDefenseChange, int luckChange)
+    {
+        this.maxHealth += maxHealthChange;
+        this.health += maxHealthChange;
+        this.specialPointCount = specialPointCountChange;
+        this.speed += speedChange;
+        this.attack += attackChange;
+        this.defense += defenseChange;
+        this.weaponUse += weaponUseChange;
+        this.specialAttack += specialAttackChange;
+        this.specialDefense += specialDefenseChange;
+        this.luck += luckChange;
+    }
     public int ChangeSpecialPoint(int updateSpecialPointCount)
     {
         if (updateSpecialPointCount != 0)
@@ -166,15 +151,16 @@ public class PlayerStats : IStats
     #endregion
     #endregion
     #region Level Methods
-    public int GetLevel()
+    public int GetLevel() { return level; }
+    public int GetXP() { return xp; }
+    public int ChangeLevel(int xpGain)
     {
-        return level;
-    }
-    public int ChangeLevel(int updateOverallLevel)
-    {
-        if (updateOverallLevel != 0)
+        if (xpGain != 0)
         {
-            level += updateOverallLevel;
+            levelUps += xpGain / 100;
+            level += levelUps;
+            xp =+ xpGain;
+            xp = xp % 100;
         }
         return level;
     }

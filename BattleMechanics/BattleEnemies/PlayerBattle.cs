@@ -9,10 +9,11 @@ public class PlayerBattle : IBattle
 {
     public IStats Stats { get; set; }
 
-    public bool IsFriend { get; set; }
-    public bool IsFainted { get; set; }
+    public bool IsFriend { get; set; } = true;
+    public bool IsFainted { get; set; } = false;
 
-    public String TurnText { get; set; } = null;
+    public string Name { get; set; } = "Player";
+    public string TurnText { get; set; } = null;
 
     public PlayerBattle(PlayerStats stats)
     {
@@ -21,6 +22,19 @@ public class PlayerBattle : IBattle
         IsFriend = true;
     }
 
+    public void LevelUp()
+    {
+        PlayerStats stats = ((PlayerStats)Stats);
+        int level = stats.GetLevel();
+        while (stats.levelUps > 0)
+        {
+            stats.ChangeAll
+                (
+                    (level * 2), (level * 5), (level), (level), (level), (level), (level), (level), ((level * 3) / 4)
+                );
+            stats.levelUps--;
+        }
+    }
 
     public void Attack(int enemyIndex)
     {

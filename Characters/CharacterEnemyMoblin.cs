@@ -9,6 +9,8 @@ namespace AwesomeRPG.Characters;
 
 public class CharacterEnemyMoblin : CharacterEnemyBase
 {
+    public override CType Type { get => CType.moblin; }
+
     //Time is tracked in milliseconds
     private int attackCD;
     private int timeTillAttack;
@@ -16,6 +18,7 @@ public class CharacterEnemyMoblin : CharacterEnemyBase
     private int timeTillRecover;
     public CharacterEnemyMoblin(Vector2 position, Cardinal direction) : base(position, direction)
     {
+        Name = "Moblin";
         const int minCD = 2000; //2 seconds
         const int maxCD = 4000; // 4 seconds
         attackCD = new Random().Next(minCD,maxCD);
@@ -83,11 +86,11 @@ public class CharacterEnemyMoblin : CharacterEnemyBase
     {
         _sprite = direction switch
         {
-            Cardinal.up => CharacterSpriteFactory.Instance.MoblinSpriteUp(),
-            Cardinal.down => CharacterSpriteFactory.Instance.MoblinSpriteDown(),
-            Cardinal.left => CharacterSpriteFactory.Instance.MoblinSpriteLeft(),
-            Cardinal.right => CharacterSpriteFactory.Instance.MoblinSpriteRight(),
-            _ => CharacterSpriteFactory.Instance.MoblinSpriteDown()
+            Cardinal.up => EnemySpriteFactory.Instance.MoblinSpriteUp(),
+            Cardinal.down => EnemySpriteFactory.Instance.MoblinSpriteDown(),
+            Cardinal.left => EnemySpriteFactory.Instance.MoblinSpriteLeft(),
+            Cardinal.right => EnemySpriteFactory.Instance.MoblinSpriteRight(),
+            _ => EnemySpriteFactory.Instance.MoblinSpriteDown()
         };
     }
 
@@ -95,11 +98,11 @@ public class CharacterEnemyMoblin : CharacterEnemyBase
     {
         _sprite = direction switch
         {
-            Cardinal.up => CharacterSpriteFactory.Instance.MoblinAttackSpriteUp(),
-            Cardinal.down => CharacterSpriteFactory.Instance.MoblinAttackSpriteDown(),
-            Cardinal.left => CharacterSpriteFactory.Instance.MoblinAttackSpriteLeft(),
-            Cardinal.right => CharacterSpriteFactory.Instance.MoblinAttackSpriteRight(),
-            _ => CharacterSpriteFactory.Instance.MoblinAttackSpriteDown()
+            Cardinal.up => EnemySpriteFactory.Instance.MoblinAttackSpriteUp(),
+            Cardinal.down => EnemySpriteFactory.Instance.MoblinAttackSpriteDown(),
+            Cardinal.left => EnemySpriteFactory.Instance.MoblinAttackSpriteLeft(),
+            Cardinal.right => EnemySpriteFactory.Instance.MoblinAttackSpriteRight(),
+            _ => EnemySpriteFactory.Instance.MoblinAttackSpriteDown()
         };
     }
 

@@ -14,4 +14,9 @@ public class Bow : Equipment
         PlayerOverworld player = Player.Instance.PlayerOverworld;
         return [new WaveyArrow(player.Position,player.FacingDirection)];
     }
+
+    protected override Type GetProjectileType()
+    {
+        return typeof(WaveyArrow);
+    }
 }

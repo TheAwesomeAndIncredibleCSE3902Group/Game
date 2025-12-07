@@ -3,13 +3,13 @@
 
 using System;
 using System.Collections.Generic;
-using AwesomeRPG.Sprites;
+using System.Runtime.CompilerServices;
 using AwesomeRPG.UI.Events;
 using Microsoft.Xna.Framework;
 
-namespace AwesomeRPG.UI.Elements;
+namespace AwesomeRPG.UI;
 
-public abstract class ElementBase
+public class Element
 {
     public Rectangle OffsetAndSize { get; set; } = new Rectangle();
     private Point _derivedAbsolutePositionBase;
@@ -22,21 +22,49 @@ public abstract class ElementBase
     }
     public bool DerivedAncestorIsSelected { get; private set; } = false;
     public bool DerivedAncestorIsVisible { get; private set; } = true;
-    private List<ElementBase> _children = [];
+    protected internal List<Element> _children = [];
     public bool IsSelectable { get; private set; } = false;
-    public bool IsSelected = false;
-    public bool IsVisible = true;
+    public bool IsSelected { get; set; } = false;
+    public bool IsVisible { get; set; } = true;
+    public float Opacity { get; set; } = 1f;
     public RootElement RootElement { get; protected set; }
-    public ElementBase Parent { get; private set; }
+    public Element Parent { get; private set; }
     private readonly Dictionary<UIEvent, List<Action<UIEventParamsBase> >> _registeredUiEventActions = [];
+    public Dictionary<string, object> Attributes { get; } = [];
+    
+    // For debugging stuffs!!!!!!!
+    #pragma warning disable IDE0052
+    private readonly string DEBUG_codeThatCreatedMe;
 
-    public abstract void Draw(GameTime gameTime);
+    // Constructor that should ONLY be used by RootElement
+    protected Element()
+    {
+        SetUpElement(null);
+    }
 
-    public void AddChild(ElementBase element)
+    public Element(RootElement rootElement, [CallerFilePath] string debugCallerFilePath = "", [CallerLineNumber] int callerLineNumber = -1)
+    {
+        SetUpElement(rootElement);
+
+        // This is a very cool C# feature!
+        DEBUG_codeThatCreatedMe = debugCallerFilePath + " (" + callerLineNumber + ")";
+    }
+
+    protected internal void Draw(GameTime gameTime)
+    {
+        DispatchUIEvent(UIEvent.Draw, new DrawUIEventParams(this, gameTime));
+    }
+
+    protected internal void Update(GameTime gameTime)
+    {
+        DispatchUIEvent(UIEvent.Update, new DrawUIEventParams(this, gameTime));
+    }
+
+    public void AddChild(Element element)
     {
         if (element.Parent == null)
         {
-            element.Parent = this;
+            element.SetUpAsChild(this);
             _children.Add(element);
         } else
         {
@@ -44,7 +72,7 @@ public abstract class ElementBase
         }
     }
 
-    public void RemoveChild(ElementBase element)
+    public void RemoveChild(Element element)
     {
         if (element.Parent == this)
         {
@@ -59,41 +87,18 @@ public abstract class ElementBase
 
     // make shallow clone of list, so anything done with this list
     // doesn't affect things in here
-    public List<ElementBase> GetChildren()
+    public List<Element> GetChildren()
     {
         return new(_children);
     }
 
-    protected void CalculateDerivedValuesFromAncestors()
+    protected internal void CalculateDerivedValuesFromAncestors()
     {
-        _derivedAbsolutePositionBase = Parent.DerivedAbsolutePosition;
-        DerivedAncestorIsSelected = Parent.IsSelected || Parent.DerivedAncestorIsSelected;
-        DerivedAncestorIsVisible = Parent.IsVisible && Parent.DerivedAncestorIsVisible;
-    }
-
-    protected void RunBeforeDrawActions(GameTime gameTime)
-    {
-        // System.Console.WriteLine(_registeredUiEventActions.ToString());
-        foreach (Action<UIEventParamsBase> uiAction in _registeredUiEventActions[UIEvent.BeforeDraw])
+        if (Parent != null)
         {
-            uiAction(new DrawUIEventParams(this, gameTime));
-        }
-    }
-
-    protected void RunAfterDrawActions(GameTime gameTime)
-    {
-        foreach (Action<UIEventParamsBase> uiAction in _registeredUiEventActions[UIEvent.AfterDraw])
-        {
-            uiAction(new DrawUIEventParams(this, gameTime));
-        }
-    }
-
-    protected void DrawChildren(GameTime gameTime)
-    {
-        // We will draw each of this element's children.
-        foreach (ElementBase child in _children)
-        {
-            child.Draw(gameTime);
+            _derivedAbsolutePositionBase = Parent.DerivedAbsolutePosition;
+            DerivedAncestorIsSelected = Parent.IsSelected || Parent.DerivedAncestorIsSelected;
+            DerivedAncestorIsVisible = Parent.IsVisible && Parent.DerivedAncestorIsVisible;
         }
     }
 
@@ -118,8 +123,12 @@ public abstract class ElementBase
         foreach (UIEvent uiEventType in Enum.GetValues<UIEvent>())
         {
             _registeredUiEventActions[uiEventType] = [];
-            // System.Console.WriteLine(uiEventType);
         }
+    }
+    
+    protected void SetUpAsChild(Element parentElement)
+    {
+        this.Parent = parentElement;
     }
 
     public void AddActionOnUIEvent(UIEvent uiEvent, Action<UIEventParamsBase> action)

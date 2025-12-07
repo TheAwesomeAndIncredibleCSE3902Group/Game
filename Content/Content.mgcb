@@ -320,8 +320,6 @@
 #begin MapItems/Level4-3.xml
 /copy:MapItems/Level4-3.xml
 
-
-
 #begin SpriteImages/enemy_sprites.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -369,6 +367,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:SpriteImages/misc_items.png
+
+#begin SpriteImages/teammates.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:SpriteImages/teammates.png
 
 #begin TileImages/test_tiles_definition.xml
 /copy:TileImages/test_tiles_definition.xml

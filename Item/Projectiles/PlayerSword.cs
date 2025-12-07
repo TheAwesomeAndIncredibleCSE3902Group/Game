@@ -19,7 +19,7 @@ public class PlayerSword : Projectile
 
         sprite = ProjectileSpriteFactory.CreateSwordSprite(direction);
 
-        Position = position + Util.CardinalToUnitVector(direction) * swordOffset;
+        Position = position + CardinalToUnitVector(direction) * swordOffset;
         Collider = new CollisionRect(this, sprite.Width, sprite.Height);
         ObjectType = CollisionObjectType.PlayerProjectile;
     }
@@ -27,7 +27,7 @@ public class PlayerSword : Projectile
     protected override void Move()
     {
        //Sword tracks the player
-       this.Position = Player.Instance.PlayerOverworld.Position + Util.CardinalToUnitVector(direction) * swordOffset;
+       this.Position = Player.Instance.PlayerOverworld.Position + CardinalToUnitVector(direction) * swordOffset;
     }
 
 }

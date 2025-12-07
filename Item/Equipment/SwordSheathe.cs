@@ -15,4 +15,9 @@ public class SwordSheathe : Equipment
         PlayerOverworld player = Player.Instance.PlayerOverworld;
         return [new PlayerSword(player.Position, player.FacingDirection)];
     }
+
+    protected override Type GetProjectileType()
+    {
+        return typeof(PlayerSword);
+    }
 }

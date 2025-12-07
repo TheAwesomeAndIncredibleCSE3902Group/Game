@@ -11,7 +11,10 @@ namespace AwesomeRPG.Characters;
 
 public abstract class CharacterEnemyBase : CollisionObject, ICharacter
 {
+    public enum CType { generic, armos, lynel, moblin }
+    public virtual CType Type {get => CType.generic; }
     protected AnimatableSprite _sprite;
+    public string Name { get; set; } = "Enemy";
     public IPathingScheme Pathing { get; set; } = null;
 
     public int MoveSpeed { get; init; } = 133;
@@ -57,7 +60,10 @@ public abstract class CharacterEnemyBase : CollisionObject, ICharacter
                 Pathing.Update(gameTime);
                 Direction = Pathing.GetDirection();
             }
-            Position += CardinalToUnitVector(Direction) * (float)gameTime.ElapsedGameTime.TotalSeconds * MoveSpeed;
+            if (Pathing is not StandPathing)
+            {
+                Position += CardinalToUnitVector(Direction) * (float)gameTime.ElapsedGameTime.TotalSeconds * MoveSpeed;
+            } 
         }
     }
 

@@ -8,10 +8,27 @@ public class LynelBattle : IEnemyBattle
     public IStats Stats { get; set; }
     public enum LynelActions { BrushBackHair, HardStomp, StabNSlash }
 
-    public bool IsFriend { get; set; }
-    public bool IsFainted { get; set; }
-    public String TurnText { get; set; } = null;
+    public bool IsFriend { get; set; } = false;
+    public bool IsFainted { get; set; } = false;
 
+    public string Name { get; set; } = "Lynel";
+    public string TurnText { get; set; } = null;
+
+    #region Constructors
+    public LynelBattle(int level)
+    {
+        // Basic stat scaling based on level
+        int maxHealth = 15 + (level * 3);
+        int speed = 6 + (level * 2);
+        int attack = 5 + ((level * 3) / 2);
+        int defense = 7 + level;
+        int specialAttack = 3 + level;
+        int specialDefense = 2 + level;
+        int luck = 1 + (level / 2);
+        int xpReward = 5 + (level * 3);
+
+        Stats = new EnemyStats(maxHealth, speed, attack, defense, specialAttack, specialDefense, luck, level, xpReward);
+    }
     public LynelBattle(EnemyStats stats)
     {
         Stats = stats;
@@ -19,24 +36,30 @@ public class LynelBattle : IEnemyBattle
         IsFriend = false;
         Stats.ChangeHealth(Stats.GetMaxHealth());
     }
+    #endregion
 
     public void TakeTurn()
     {
         int rand = new Random().Next(BattleScene.Instance.AllyList.Count);
         IBattle target = BattleScene.Instance.AllyList[rand];
+        int healthChangeVal = 0;
+
         switch (ChooseAction())
         {
             case LynelActions.BrushBackHair:
-                Stats.ChangeHealth(1);
-                TurnText = $"Lynel healed for 1";
+                healthChangeVal = 1;
+                Stats.ChangeHealth(healthChangeVal);
+                TurnText = $"{Name} healed for {healthChangeVal}";
                 break;
             case LynelActions.HardStomp:
-                target.Stats.ChangeHealth(-3);
-                TurnText = $"Lynel attacked someone for 3";
+                healthChangeVal = 3;
+                target.Stats.ChangeHealth(-healthChangeVal);
+                TurnText = $"{Name} attacked {target.Name} for {healthChangeVal}";
                 break;
             case LynelActions.StabNSlash:
-                target.Stats.ChangeHealth(-5);
-                TurnText = $"Lynel attacked someone for 5";
+                healthChangeVal = 5;
+                target.Stats.ChangeHealth(-healthChangeVal);
+                TurnText = $"{Name} attacked {target.Name} for {healthChangeVal}";
                 break;
         }
     }

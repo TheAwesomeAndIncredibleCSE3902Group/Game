@@ -13,6 +13,6 @@ public class PlayerEntranceCollideCommand : ICollisionCommand
         CollisionObject player = collision.GetCollisionObjectOfType(CollisionObjectType.Player);
         Cardinal direction = collision.Direction.ToCard();
         
-        Entrance.changeRoom(player, direction);
+        Entrance.ChangeRoom(player, direction);
     }
 }

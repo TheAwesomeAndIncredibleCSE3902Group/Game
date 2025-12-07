@@ -22,6 +22,6 @@ public class PotionInventory : IInventoryItem
 
     public void Apply()
     {
-        Player.Instance.PlayerStats.ChangeHealth(healing);
+        Player.Instance.Party[0].ChangeHealth(healing);
     }
 }

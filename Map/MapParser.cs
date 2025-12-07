@@ -224,13 +224,15 @@ public class MapParser
                 pathing = entityTag.Attribute("pathing").Value.Trim().ToLower() switch
                 {
                     "line" => new LinePathing(facing),
-                    _ => new RandomWalkPathing(facing),
-                };
+                    "random" => new RandomWalkPathing(facing),
+                    "stand" => new StandPathing(facing),
+                    _ => new StandPathing(facing)
+                } ;
             }
         }
         catch
         {
-            pathing = new RandomWalkPathing(facing);
+            pathing = new StandPathing(facing);
         }
 
         ICharacter character;

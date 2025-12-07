@@ -1,6 +1,6 @@
 using System;
 using System.Diagnostics;
-using System.Numerics;
+using Microsoft.Xna.Framework;
 
 namespace AwesomeRPG;
 
@@ -16,8 +16,14 @@ public static class Util
 
     // Global Scale DO NOT TOUCH
     public readonly static int GlobalScale = 4;
+    public readonly static int BattleScale = 12;
+    //Milliseconds between the animation frames of enemies when they're just standing there
+    public readonly static int BattleStaticAnimationMilliseconds = 500;
 
     public static float Root2 { get => 1.41421356237f; }
+    //Make sure this is updated any time the screen changes size
+    public static Rectangle ScreenRect { get; set; }
+
 
     /// <summary>
     /// Converts a cardinal direction into it's Vector2 unit vector equivalent

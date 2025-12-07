@@ -8,10 +8,27 @@ public class ArmosBattle : IEnemyBattle
     public IStats Stats { get; set; }
     public enum ArmosActions { ShineArmour, ChargeForward}
 
-    public bool IsFriend { get; set; }
-    public bool IsFainted { get; set; }
-    public String TurnText { get; set; } = null;
+    public bool IsFriend { get; set; } = false;
+    public bool IsFainted { get; set; } = false;
 
+    public string Name { get; set; } = "Armos";
+    public string TurnText { get; set; } = null;
+
+    #region Constructors
+    public ArmosBattle(int level)
+    {
+        // Basic stat scaling based on level
+        int maxHealth = 20 + (level * 4);
+        int speed = 5 + level;
+        int attack = 4 + level;
+        int defense = 4 + ((level * 3) / 2);
+        int specialAttack = 2 + level;
+        int specialDefense = 1 + level;
+        int luck = 1 + (level / 2);
+        int xpReward = 5 + (level * 3);
+
+        Stats = new EnemyStats(maxHealth, speed, attack, defense, specialAttack, specialDefense, luck, level, xpReward);
+    }
     public ArmosBattle(EnemyStats stats)
     {
         Stats = stats;
@@ -19,20 +36,25 @@ public class ArmosBattle : IEnemyBattle
         IsFriend = false;
         Stats.ChangeHealth(Stats.GetMaxHealth());
     }
+    #endregion
 
     public void TakeTurn()
     {
         int rand = new Random().Next(BattleScene.Instance.AllyList.Count);
         IBattle target = BattleScene.Instance.AllyList[rand];
+        int healthChangeVal = 0;
+
         switch (ChooseAction())
         {
             case ArmosActions.ShineArmour:
-                Stats.ChangeHealth(3);
-                TurnText = $"Armos healed for 1";
+                healthChangeVal = 3;
+                Stats.ChangeHealth(healthChangeVal);
+                TurnText = $"{Name} healed for {healthChangeVal}";
                 break;
             case ArmosActions.ChargeForward:
-                target.Stats.ChangeHealth(-4);
-                TurnText = $"Armos attacked someone for 4";
+                healthChangeVal = 4;
+                target.Stats.ChangeHealth(-healthChangeVal);
+                TurnText = $"{Name} attacked {target.Name} for {healthChangeVal}";
                 break;
         }
     }

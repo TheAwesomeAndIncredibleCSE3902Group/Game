@@ -16,6 +16,7 @@ namespace AwesomeRPG.Commands
         public void Execute()
         {
             _currentPlayer.UseEquipment(_weapon);
+            Debug.WriteLine(_currentPlayer.Position.ToString());
         }
     }
 }
