@@ -93,7 +93,7 @@ public class BattleState : IGameState
 
     private void InitializeBattle()
     {
-        BattleScene.Instance.InitializeBattleSequence(true, new InitializeSampleBattle().SetUpEnemies(), new InitializeSampleBattle().SetUpAllies());
+        SetupBattle.Initialize(enemyType);
         BuildBattlePanel();
     }
     

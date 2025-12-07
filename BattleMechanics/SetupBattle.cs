@@ -1,6 +1,7 @@
 ﻿using AwesomeRPG.BattleMechanics.BattleEnemies;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Security;
 using System.Text;
@@ -8,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace AwesomeRPG.BattleMechanics
 {
-    public class SetupBattle
+    public static class SetupBattle
     {
-        private string enemyType = null;
-        private int partyLevelAvg = 0;
-        public void Initialize(string enemy)
+        private static string enemyType = null;
+        private static int partyLevelAvg = 0;
+        public static void Initialize(string enemy)
         {
             BattleScene.Instance.AllyList.Clear();
             BattleScene.Instance.EnemyList.Clear();
@@ -24,9 +25,11 @@ namespace AwesomeRPG.BattleMechanics
             List<IBattle> enemies = SetEnemies();
             List<IBattle> allies = SetAllies();
 
+            Debug.WriteLine($"Middle enemy name: {enemies[1].Name}");
+                
             BattleScene.Instance.InitializeBattleSequence(true, enemies, allies);
         }
-        private List<IBattle> SetEnemies()
+        private static List<IBattle> SetEnemies()
         {
             List<IBattle> enemyList = new List<IBattle>();
 
@@ -53,7 +56,7 @@ namespace AwesomeRPG.BattleMechanics
             return enemyList;
         }
 
-        private List<IBattle> SetAllies()
+        private static List<IBattle> SetAllies()
         {
             List<IBattle> allyList = new List<IBattle>();
 
