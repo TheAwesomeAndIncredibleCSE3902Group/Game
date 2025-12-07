@@ -20,6 +20,9 @@
   </Entities>
   <Pickups>
     <Pickup x="65" y="130">potion</Pickup>
-    <Pickup x="130" y="130" roomX="2" roomY="2" lockID="0">key</Pickup>
   </Pickups>
+  <Locks>
+    <Lock x="704" y="256" id="0"/>
+    <Lock x="704" y="320" id="0"/>
+  </Locks>
 </Map>

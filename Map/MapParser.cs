@@ -92,6 +92,16 @@ public class MapParser
         {
             GeneratePickup(map, pickup);
         }
+
+        // Generate Locks
+        if (mapElement.Element("Locks") != null)
+        {
+            foreach(XElement doorXML in mapElement.Element("Locks").Elements("Lock"))
+            {
+                GenerateDoor(map, doorXML, (int)(tileWidth * GlobalScale), (int)(tileHeight * GlobalScale));
+            }
+        }
+
         return map;
     }
 
@@ -253,6 +263,20 @@ public class MapParser
             map.MovingCollisionObjects.Add(enemyBase);
         }
         return;
+    }
+
+    /// <summary>
+    /// Generates a lock entity
+    /// </summary>
+    /// <param name="map">Map to add pickup to</param>
+    /// <param name="doorElement"></Lock>XML element</param>
+    private static void GenerateDoor(RoomMap map, XElement doorElement, int width, int height)
+    {
+        Vector2 position = new(int.Parse(doorElement.Attribute("x").Value), int.Parse(doorElement.Attribute("y").Value));
+        int id = int.Parse(doorElement.Attribute("id").Value);
+        Door door = new(position, width, height, id);
+        map.NonMovingCollisionObjects.Add(door);
+        map.Doors.Add(door);
     }
 
 

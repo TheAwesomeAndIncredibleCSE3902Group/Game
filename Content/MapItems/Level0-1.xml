@@ -19,5 +19,6 @@
     <Entity x="700" y="218" pathing="random" facing="left">armos</Entity>
   </Entities>
   <Pickups>
+    <Pickup x="80" y="130" roomX="0" roomY="2" lockID="0">key</Pickup>
   </Pickups>
 </Map>

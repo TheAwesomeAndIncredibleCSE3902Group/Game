@@ -18,6 +18,8 @@ public class RoomMap
     public List<Projectile> Projectiles { get; private set; } = [];
     public List<CollisionObject> MovingCollisionObjects { get; private set; } = [];
     public List<CollisionObject> NonMovingCollisionObjects { get; private set; } = [];
+    
+    public List<Door> Doors { get; private set; } = [];
     private readonly Tilemap _minimap;
 
     public RoomMap(Tilemap map)
@@ -90,6 +92,7 @@ public class RoomMap
         DrawTiles(spriteBatch);
         DrawPickups(gameTime);
         DrawCharacters(gameTime);
+        DrawDoors(gameTime);
         DrawProjectiles(gameTime);
         DrawPlayer(gameTime);
     }
@@ -119,6 +122,17 @@ public class RoomMap
         }
     }
 
+    private void DrawDoors(GameTime gameTime)
+    {
+        foreach(Door door in Doors)
+        {
+            if (NonMovingCollisionObjects.Contains(door))
+            {
+                door.Draw(gameTime);                
+            }
+        }
+    }
+
     private void DrawProjectiles(GameTime gameTime)
     {
         foreach (Projectile p in Projectiles)
@@ -128,5 +142,15 @@ public class RoomMap
     }
     #endregion
 
-    
+    public void UnlockLock(int LockID)
+    {
+        foreach (Door l in Doors)
+        {
+            if (l.ID == LockID)
+            {
+                NonMovingCollisionObjects.Remove(l);
+            }       
+        }
+    }
+
 }

@@ -12,6 +12,7 @@ public class CharacterSpriteFactory
 {
     private Texture2D _enemySpriteSheet;
     private Texture2D _krisSpriteSheet;
+    private Texture2D _tileSpriteSheet;
     private SpriteBatch _spriteBatch;
 
     private static CharacterSpriteFactory instance = new CharacterSpriteFactory();
@@ -32,6 +33,7 @@ public class CharacterSpriteFactory
     {
         _enemySpriteSheet = content.Load<Texture2D>("SpriteImages/enemy_sprites");
         _krisSpriteSheet = content.Load<Texture2D>("SpriteImages/kris_custom");
+        _tileSpriteSheet = content.Load<Texture2D>("TileImages/zelda_tiles");
         _spriteBatch = spriteBatch;
     }
 
@@ -61,6 +63,8 @@ public class CharacterSpriteFactory
     public AnimatableSprite LynelSpriteLeft() => BuildEnemySprite(new Rectangle(32, 34, 16, 16));
     public AnimatableSprite LynelSpriteDown() => BuildEnemySprite(new Rectangle(64, 34, 16, 16));
     public AnimatableSprite LynelSpriteUp() => BuildEnemySprite(new Rectangle(96, 34, 16, 16));
+
+    public AnimatableSprite LockSprite() => new (_spriteBatch, _tileSpriteSheet, new Rectangle(32, 32, 16, 16), 1, 0, new Point(0,0));
 
     public AnimatableSprite KrisSprite()
     {

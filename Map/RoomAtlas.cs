@@ -234,6 +234,11 @@ namespace AwesomeRPG.Map
             GetRoom(column, row).MovingCollisionObjects.Remove(player);
         }
 
+        public void UnlockLock(int column, int row, int lockID)
+        {
+            GetRoom(column, row).UnlockLock(lockID);
+        }
+
 
     }
 

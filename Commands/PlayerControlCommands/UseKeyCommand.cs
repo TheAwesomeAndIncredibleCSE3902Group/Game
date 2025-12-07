@@ -17,6 +17,6 @@ public class UseKeyCommand: ICommand
 
     public void Execute()
     {
-        Console.WriteLine("Using key on level ({0},{1}), targetID {2}", X, Y, ID);
+        RoomAtlas.Instance.UnlockLock(X, Y, ID);
     }
 }
