@@ -15,7 +15,7 @@ namespace AwesomeRPG.Map
             Collider = new CollisionRect(this, width, height);
             ObjectType = CollisionObjectType.Wall;
             ID = id;
-            _sprite = CharacterSpriteFactory.Instance.LockSprite();
+            _sprite = EnemySpriteFactory.Instance.LockSprite();
         }
 
         public void Draw(GameTime gameTime)
