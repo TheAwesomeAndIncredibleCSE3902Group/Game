@@ -51,7 +51,6 @@ public class WinState(Game1 game) : IGameState
     public void Update(GameTime gameTime)
     {
         ProcessInput();
-        RootUIElement.Update(gameTime);
     }
     
     private void ProcessInput()

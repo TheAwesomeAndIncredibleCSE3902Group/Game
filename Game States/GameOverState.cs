@@ -57,7 +57,6 @@ public class GameOverState : IGameState
     public void Update(GameTime gameTime)
     {
         ProcessInput();
-        RootUIElement.Update(gameTime);
     }
     
     private void ProcessInput()
