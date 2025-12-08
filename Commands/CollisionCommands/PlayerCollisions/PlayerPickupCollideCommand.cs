@@ -10,6 +10,6 @@ public class PlayerPickupCollideCommand : ICollisionCommand
     {
         Pickup pickup = (Pickup)collision.GetCollisionObjectOfType(CollisionObjectType.Pickup);
         PlayerOverworld player = (PlayerOverworld)collision.GetCollisionObjectOfType(CollisionObjectType.Player);
-        pickup.OnPlayerTouched(player);
+        pickup.OnPlayerTouched();
     }
 }

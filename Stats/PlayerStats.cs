@@ -18,25 +18,25 @@ public class PlayerStats : IStats
     private int specialDefense;
     private int luck;
     private int xp;
-    
-    public string Type { get; set; } = "Generic";
 
-    public PlayerStats(string Type) : this(100, 10, 10, 10, 10, 10, 10, 10, 10)
+    public CharType Type { get; set; }
+
+    public PlayerStats(CharType type) : this(100, 10, 10, 10, 10, 10, 10, 10, 10)
     {
-        this.Type = Type;
-        switch (Type)
+        this.Type = type;
+        switch (type)
         {
-            case "Link":
+            case CharType.Link:
                 maxHealth = 150;
                 attack = 15;
                 defense = 12;
                 break;
-            case "Old Man":
+            case CharType.OldLady:
                 maxHealth = 80;
                 specialAttack = 18;
                 specialPointCount = 15;
                 break;
-            case "Zelda":
+            case CharType.Zelda:
                 maxHealth = 100;
                 speed = 15;
                 luck = 20;

@@ -23,5 +23,6 @@
   <Pickups>
     <Pickup x="100" y="300">potion</Pickup>
     <Pickup x="600" y="400">potion</Pickup>
+    <Pickup x="500" y="350" charType="merchant">team</Pickup>
   </Pickups>
 </Map>

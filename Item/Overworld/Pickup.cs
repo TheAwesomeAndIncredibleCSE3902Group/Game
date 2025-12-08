@@ -21,10 +21,10 @@ public abstract class Pickup : CollisionObject
         ObjectType = CollisionObjectType.Pickup;
     }
 
-    public void OnPlayerTouched(PlayerOverworld player)
+    public void OnPlayerTouched()
     {
         //Run the Apply method of the specific Pickup that extends this
-        this.Apply(player);
+        this.Apply();
 
         //Then destroy this
         Destroy();
@@ -35,7 +35,7 @@ public abstract class Pickup : CollisionObject
         Sprite.Draw(gt, Position);
     }
 
-    protected abstract void Apply(PlayerOverworld player);
+    protected abstract void Apply();
     private void Destroy()
     {
         RoomAtlas.Instance.RemovePickup(this);

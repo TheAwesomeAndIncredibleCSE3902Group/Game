@@ -17,7 +17,7 @@ public class KeyOverworld : Pickup
         Collider = new CollisionRect(this, Sprite.Width, Sprite.Height);
         _useKeyCommand = new(roomX, roomY, lockId);
     }
-    protected override void Apply(PlayerOverworld player)
+    protected override void Apply()
     {
         _useKeyCommand.Execute();
     }

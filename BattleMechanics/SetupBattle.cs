@@ -65,10 +65,10 @@ namespace AwesomeRPG.BattleMechanics
             {
                 switch (ally.Type)
                 {
-                    case "Link":
+                    case CharType.Link:
                         allyList.Add(new LinkBattle(ally));
                         break;
-                    case "Old Man":
+                    case CharType.OldLady:
                         allyList.Add(new LinkBattle(ally));
                         break;
                     default:

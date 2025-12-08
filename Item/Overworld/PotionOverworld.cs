@@ -13,7 +13,7 @@ public class PotionOverworld : Pickup
         Sprite = MapItemSpriteFactory.CreatePotionSprite();
         Collider = new CollisionRect(this, Sprite.Width, Sprite.Height);
     }
-    protected override void Apply(PlayerOverworld player)
+    protected override void Apply()
     {
         Player.Instance.Inventory[IInventoryItem.Type.potion]++;
 

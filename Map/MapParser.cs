@@ -306,6 +306,11 @@ public class MapParser
                 pickupToAdd = new KeyOverworld(map, roomX, roomY, lockID);
                 pickupToAdd.Position = position;
                 break;
+            case "team":
+                string charTypeName = pickup.Attribute("charType").Value.Trim().ToLower();
+                pickupToAdd = new TeamOverworld(map, charTypeName);
+                pickupToAdd.Position = position;
+                break;
             default:
                 Console.WriteLine("Pickup type not supported: " + type);
                 pickupToAdd = new PotionOverworld(map); //Arbitrary
