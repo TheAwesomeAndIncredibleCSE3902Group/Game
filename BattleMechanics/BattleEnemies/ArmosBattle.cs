@@ -47,7 +47,7 @@ public class ArmosBattle : IEnemyBattle
         switch (ChooseAction())
         {
             case ArmosActions.ShineArmour:
-                healthChangeVal = 3;
+                healthChangeVal = Stats.GetSpecialAttack() / 2;
                 Stats.ChangeHealth(healthChangeVal);
                 TurnText = $"{Name} healed for {healthChangeVal}";
                 break;
@@ -56,7 +56,7 @@ public class ArmosBattle : IEnemyBattle
                 if (healthChangeVal < 0) healthChangeVal = 0;
 
                 target.Stats.ChangeHealth(-healthChangeVal);
-                TurnText = $"{Name} attacked {target.Name} for {healthChangeVal}";
+                TurnText = $"{Name} charged {target.Name} for {healthChangeVal}";
                 break;
         }
     }

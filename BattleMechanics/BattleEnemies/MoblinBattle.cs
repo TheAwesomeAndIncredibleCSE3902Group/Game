@@ -48,7 +48,7 @@ public class MoblinBattle : IEnemyBattle
         switch (ChooseAction())
         {
             case MoblinActions.ScratchBellyButton:
-                healthChangeVal = Stats.GetAttack() - target.Stats.GetDefense();
+                healthChangeVal = Stats.GetSpecialAttack() / 4;
                 if (healthChangeVal < 0) healthChangeVal = 0;
 
                 Stats.ChangeHealth(healthChangeVal);
@@ -62,7 +62,7 @@ public class MoblinBattle : IEnemyBattle
                 TurnText = $"The {Name} charged at {target.Name} for {healthChangeVal}\nTheir health is now: {target.Stats.GetHealth()}";
                 break;
             case MoblinActions.Dance:
-                healthChangeVal = 1;
+                healthChangeVal = Stats.GetAttack() - target.Stats.GetDefense();
                 target.Stats.ChangeHealth(-healthChangeVal);
                 TurnText = $"The {Name}'s horrible dance caused {target.Name} to suffer {healthChangeVal} damage";
                 break;

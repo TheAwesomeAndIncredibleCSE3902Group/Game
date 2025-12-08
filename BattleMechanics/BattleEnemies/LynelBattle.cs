@@ -47,7 +47,7 @@ public class LynelBattle : IEnemyBattle
         switch (ChooseAction())
         {
             case LynelActions.BrushBackHair:
-                healthChangeVal = 1;
+                healthChangeVal = Stats.GetSpecialAttack() / 3;
                 Stats.ChangeHealth(healthChangeVal);
                 TurnText = $"{Name} healed for {healthChangeVal}";
                 break;
@@ -56,14 +56,14 @@ public class LynelBattle : IEnemyBattle
                 if (healthChangeVal < 0) healthChangeVal = 0;
 
                 target.Stats.ChangeHealth(-healthChangeVal);
-                TurnText = $"{Name} attacked {target.Name} for {healthChangeVal}";
+                TurnText = $"{Name} stomped {target.Name} for {healthChangeVal}";
                 break;
             case LynelActions.StabNSlash:
-                healthChangeVal = Stats.GetAttack() - target.Stats.GetDefense();
-                if (healthChangeVal < 0) healthChangeVal=0;
+                healthChangeVal = Stats.GetAttack() - (target.Stats.GetDefense() / 2);
+                if (healthChangeVal < 0) healthChangeVal = 0;
 
                 target.Stats.ChangeHealth(-healthChangeVal);
-                TurnText = $"{Name} attacked {target.Name} for {healthChangeVal}";
+                TurnText = $"{Name} stabbed {target.Name} for {healthChangeVal}";
                 break;
         }
     }

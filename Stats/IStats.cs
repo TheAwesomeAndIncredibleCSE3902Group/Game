@@ -12,5 +12,8 @@ public interface IStats
     public int GetAttack();
     public int GetSpeed();
     public int GetDefense();
+    public int GetSpecialAttack();
+    public int GetSpecialDefense();
+    public int GetLuck();
     public int ChangeHealth(int change);
 }
