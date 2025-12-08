@@ -76,12 +76,7 @@ public class Game1 : Game
     {
         //Player must be declared before the Overworld
         PlayerOverworld pOverworld = new PlayerOverworld(Content, _spriteBatch);
-        PlayerStats pStats = new PlayerStats
-        (
-            maxHealth: 50, specialPointCount: 5,
-            speed: 5, attack: 10, defense: 5,
-            weaponUse: 5, specialAttack: 5, specialDefense: 5, luck: 100
-        );
+        PlayerStats pStats = new PlayerStats("Link");
         new Player(pStats, pOverworld);
 
         StateClass = new OverworldState(Content, Player.Instance.PlayerOverworld, this);

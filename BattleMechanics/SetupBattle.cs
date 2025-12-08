@@ -63,7 +63,17 @@ namespace AwesomeRPG.BattleMechanics
 
             foreach (var ally in Player.Instance.Party)
             {
-                allyList.Add(new LinkBattle(ally));
+                switch (ally.Type)
+                {
+                    case "Link":
+                        allyList.Add(new LinkBattle(ally));
+                        break;
+                    case "Old Man":
+                        allyList.Add(new LinkBattle(ally));
+                        break;
+                    default:
+                        throw new Exception("Ally type not recognized in InitializeBattle");
+                }
             }
 
             return allyList;

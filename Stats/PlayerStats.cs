@@ -18,8 +18,34 @@ public class PlayerStats : IStats
     private int specialDefense;
     private int luck;
     private int xp;
-    public int levelUps;
+    
+    public string Type { get; set; } = "Generic";
 
+    public PlayerStats(string Type) : this(100, 10, 10, 10, 10, 10, 10, 10, 10)
+    {
+        this.Type = Type;
+        switch (Type)
+        {
+            case "Link":
+                maxHealth = 150;
+                attack = 15;
+                defense = 12;
+                break;
+            case "Old Man":
+                maxHealth = 80;
+                specialAttack = 18;
+                specialPointCount = 15;
+                break;
+            case "Zelda":
+                maxHealth = 100;
+                speed = 15;
+                luck = 20;
+                break;
+            default:
+                // Default stats are already set in the constructor call
+                break;
+        }
+    }
     public PlayerStats(int maxHealth, int specialPointCount, int speed, int attack, int defense, int weaponUse, int specialAttack, int specialDefense, int luck)
     {
         this.maxHealth = maxHealth;
@@ -157,9 +183,8 @@ public class PlayerStats : IStats
     {
         if (xpGain != 0)
         {
-            levelUps += xpGain / 100;
-            level += levelUps;
-            xp =+ xpGain;
+            xp += xpGain;
+            level += xp / 100;
             xp = xp % 100;
         }
         return level;
