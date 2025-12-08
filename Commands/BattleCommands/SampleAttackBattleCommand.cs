@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using AwesomeRPG.BattleMechanics;
 using AwesomeRPG.BattleMechanics.BattleEnemies;
 using AwesomeRPG.Stats;
+using Sprint0.BattleMechanics.BattleEnemies;
 
 namespace AwesomeRPG.Commands.BattleCommands
 {
@@ -17,7 +18,7 @@ namespace AwesomeRPG.Commands.BattleCommands
         public SampleAttackBattleCommand() 
         { 
             //Command should only be able to be called when it is a Player turn since Enemies should be automated
-            playerBattle = new PlayerBattle(new PlayerStats(200,11,3,11,3,3,3,3,3));
+            playerBattle = new LinkBattle(new PlayerStats(200,11,3,11,3,3,3,3,3));
             targetBattle = new MoblinBattle(new EnemyStats(100,1,1,1,1,1,1,1,100));
         }
 

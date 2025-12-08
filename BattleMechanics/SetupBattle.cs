@@ -1,4 +1,5 @@
 ﻿using AwesomeRPG.BattleMechanics.BattleEnemies;
+using Sprint0.BattleMechanics.BattleEnemies;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -62,7 +63,7 @@ namespace AwesomeRPG.BattleMechanics
 
             foreach (var ally in Player.Instance.Party)
             {
-                allyList.Add(new PlayerBattle(ally));
+                allyList.Add(new LinkBattle(ally));
             }
 
             return allyList;
