@@ -67,16 +67,16 @@ public class PlayerStats : IStats
     #region Stat Changers
     public void ChangeAll(int maxHealthChange, int specialPointCountChange, int speedChange, int attackChange, int defenseChange, int weaponUseChange, int specialAttackChange, int specialDefenseChange, int luckChange)
     {
-        this.maxHealth += maxHealthChange;
-        this.health += maxHealthChange;
+        this.maxHealth = maxHealthChange;
+        this.health = maxHealthChange;
         this.specialPointCount = specialPointCountChange;
-        this.speed += speedChange;
-        this.attack += attackChange;
-        this.defense += defenseChange;
-        this.weaponUse += weaponUseChange;
-        this.specialAttack += specialAttackChange;
-        this.specialDefense += specialDefenseChange;
-        this.luck += luckChange;
+        this.speed = speedChange;
+        this.attack = attackChange;
+        this.defense = defenseChange;
+        this.weaponUse = weaponUseChange;
+        this.specialAttack = specialAttackChange;
+        this.specialDefense = specialDefenseChange;
+        this.luck = luckChange;
     }
     public int ChangeSpecialPoint(int updateSpecialPointCount)
     {

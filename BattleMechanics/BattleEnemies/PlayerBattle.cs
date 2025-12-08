@@ -5,7 +5,7 @@ using System.Diagnostics;
 using static AwesomeRPG.Util;
 
 namespace AwesomeRPG.BattleMechanics.BattleEnemies;
-public class PlayerBattle : IBattle
+public abstract class PlayerBattle : IBattle
 {
     public IStats Stats { get; set; }
 
@@ -26,14 +26,10 @@ public class PlayerBattle : IBattle
     {
         PlayerStats stats = ((PlayerStats)Stats);
         int level = stats.GetLevel();
-        while (stats.levelUps > 0)
-        {
-            stats.ChangeAll
-                (
-                    (level * 2), (level * 5), (level), (level), (level), (level), (level), (level), ((level * 3) / 4)
-                );
-            stats.levelUps--;
-        }
+        stats.ChangeAll
+            (
+                (level * 2), (level * 5), (level), (level), (level), (level), (level), (level), ((level * 3) / 4)
+            );
     }
 
     public void Attack(int enemyIndex)
@@ -44,7 +40,7 @@ public class PlayerBattle : IBattle
 
         BattleScene.Instance.EnemyList[enemyIndex].Stats.ChangeHealth(damageVal);
 
-        TurnText = $"player attack value: {attackVal}. enemy defense value: {defenseVal}\nPlayer attacked for {Math.Abs(damageVal)} damage!\nEnemy's health is now {BattleScene.Instance.EnemyList[enemyIndex].Stats.GetHealth()}";
+        TurnText = $"{Name} attack value: {attackVal}. enemy defense value: {defenseVal}\nPlayer attacked for {Math.Abs(damageVal)} damage!\nEnemy's health is now {BattleScene.Instance.EnemyList[enemyIndex].Stats.GetHealth()}";
         if (BattleScene.Instance.EnemyList[enemyIndex].Stats.GetHealth() < 1)
         {
             BattleScene.Instance.EnemyList[enemyIndex].IsFainted = true;
