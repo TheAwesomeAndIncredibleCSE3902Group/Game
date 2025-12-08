@@ -21,7 +21,7 @@ public class OverworldState : IGameState
     public float TimeScale { get; private set; } = 1;
     private Game1 game;
     public GameState CurrentState { get => GameState.overworld; }
-    public RootElement RootUIElement { get; }
+    public RootElement RootUIElement { get; set; }
 
 
     /// <summary>

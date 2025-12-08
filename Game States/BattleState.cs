@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using AwesomeRPG.BattleMechanics;
 using AwesomeRPG.Characters;
+using AwesomeRPG.Commands;
 using AwesomeRPG.Controllers;
 using AwesomeRPG.UI;
 using AwesomeRPG.UI.ElementFactories;
@@ -78,6 +79,7 @@ public class BattleState : IGameState
         enemy.TryDestroy();
 
         //TODO: do changes to player, NPCs (ie health), and enemies
+        overworldState.RootUIElement = this.RootUIElement;
         game.SetStateClass(overworldState);
     }
 
@@ -190,6 +192,10 @@ public class BattleState : IGameState
             buttons.Add(currentButtonToAdd);
             RootUIElement.AddChild(currentButtonToAdd);
         }
+
+        var command = new BattleStateToOverworldCommand();
+        buttons[0].AddActionOnUIEvent(UIEvent.ButtonDown, (e) => command.Execute());
+
         
         RootUIElement.UIState.SelectionIndex = 0;
 

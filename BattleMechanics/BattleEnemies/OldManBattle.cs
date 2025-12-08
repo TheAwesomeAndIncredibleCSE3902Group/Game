@@ -32,3 +32,4 @@ namespace Sprint0.BattleMechanics.BattleEnemies
             }
         }
     }
+}
