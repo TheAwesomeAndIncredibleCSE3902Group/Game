@@ -48,12 +48,16 @@ public class MoblinBattle : IEnemyBattle
         switch (ChooseAction())
         {
             case MoblinActions.ScratchBellyButton:
-                healthChangeVal = 3;
+                healthChangeVal = Stats.GetAttack() - target.Stats.GetDefense();
+                if (healthChangeVal < 0) healthChangeVal = 0;
+
                 Stats.ChangeHealth(healthChangeVal);
                 TurnText = $"{Name} scratched its belly and healed for {healthChangeVal}";
                 break;
             case MoblinActions.RambleCharge:
-                healthChangeVal = 4;
+                healthChangeVal = ((Stats.GetAttack() * 3) / 2) - target.Stats.GetDefense();
+                if (healthChangeVal < 0) healthChangeVal = 0;
+
                 target.Stats.ChangeHealth(-healthChangeVal);
                 TurnText = $"The {Name} charged at {target.Name} for {healthChangeVal}\nTheir health is now: {target.Stats.GetHealth()}";
                 break;

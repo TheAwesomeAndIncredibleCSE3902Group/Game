@@ -52,7 +52,9 @@ public class ArmosBattle : IEnemyBattle
                 TurnText = $"{Name} healed for {healthChangeVal}";
                 break;
             case ArmosActions.ChargeForward:
-                healthChangeVal = 4;
+                healthChangeVal = Stats.GetAttack() - target.Stats.GetAttack();
+                if (healthChangeVal < 0) healthChangeVal = 0;
+
                 target.Stats.ChangeHealth(-healthChangeVal);
                 TurnText = $"{Name} attacked {target.Name} for {healthChangeVal}";
                 break;

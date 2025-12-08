@@ -52,12 +52,16 @@ public class LynelBattle : IEnemyBattle
                 TurnText = $"{Name} healed for {healthChangeVal}";
                 break;
             case LynelActions.HardStomp:
-                healthChangeVal = 3;
+                healthChangeVal = Stats.GetAttack() - target.Stats.GetDefense();
+                if (healthChangeVal < 0) healthChangeVal = 0;
+
                 target.Stats.ChangeHealth(-healthChangeVal);
                 TurnText = $"{Name} attacked {target.Name} for {healthChangeVal}";
                 break;
             case LynelActions.StabNSlash:
-                healthChangeVal = 5;
+                healthChangeVal = Stats.GetAttack() - target.Stats.GetDefense();
+                if (healthChangeVal < 0) healthChangeVal=0;
+
                 target.Stats.ChangeHealth(-healthChangeVal);
                 TurnText = $"{Name} attacked {target.Name} for {healthChangeVal}";
                 break;

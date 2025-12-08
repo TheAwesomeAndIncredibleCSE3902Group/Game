@@ -36,9 +36,10 @@ public abstract class PlayerBattle : IBattle
     {
         int attackVal = Stats.GetAttack();
         int defenseVal = BattleScene.Instance.EnemyList[enemyIndex].Stats.GetDefense();
-        int damageVal =  defenseVal - attackVal;
+        int damageVal =  attackVal - defenseVal;
+        if (damageVal < 0) damageVal = 0;
 
-        BattleScene.Instance.EnemyList[enemyIndex].Stats.ChangeHealth(damageVal);
+        BattleScene.Instance.EnemyList[enemyIndex].Stats.ChangeHealth(-damageVal);
 
         TurnText = $"{Name} attack value: {attackVal}. enemy defense value: {defenseVal}\nPlayer attacked for {Math.Abs(damageVal)} damage!\nEnemy's health is now {BattleScene.Instance.EnemyList[enemyIndex].Stats.GetHealth()}";
         if (BattleScene.Instance.EnemyList[enemyIndex].Stats.GetHealth() < 1)
