@@ -27,14 +27,21 @@ public class BattleScene
         CurrentBattle = turnOrder.NextBattle();
         if (turnOrder.battleEnd)
         {
-            int totalXP = 0;
             CurrentlyInBattle = false;
 
-            foreach (IBattle battle in EnemyList) totalXP += ((EnemyStats)battle.Stats).GetXPReward();
-            foreach (IBattle battle in AllyList)
+            if (turnOrder.battleLost == true)
             {
-                ((PlayerStats)battle.Stats).ChangeLevel(totalXP);
+                //do something here or use turnOrder.battleLost in BattleState to swap to gameOver
+            }
+            else
+            {
+                int totalXP = 0;
+                foreach (IBattle battle in EnemyList) totalXP += ((EnemyStats)battle.Stats).GetXPReward();
+                foreach (IBattle battle in AllyList)
+                {
+                    ((PlayerStats)battle.Stats).ChangeLevel(totalXP);
 
+                }
             }
 
             AllyList.Clear();
