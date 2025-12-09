@@ -24,11 +24,11 @@ namespace Sprint0.BattleMechanics.BattleEnemies
 
             BattleScene.Instance.EnemyList[enemyIndex].Stats.ChangeHealth(damageVal);
 
-            TurnText = $"{Name} attack value: {attackVal}. enemy defense value: {defenseVal}\nPlayer attacked for {Math.Abs(damageVal)} damage!\nEnemy's health is now {BattleScene.Instance.EnemyList[enemyIndex].Stats.GetHealth()}";
+            TurnText = $"{Name} stabbed {BattleScene.Instance.EnemyList[enemyIndex].Name} for {damageVal} damage!\n";
             if (BattleScene.Instance.EnemyList[enemyIndex].Stats.GetHealth() < 1)
             {
                 BattleScene.Instance.EnemyList[enemyIndex].IsFainted = true;
-                TurnText += $"Enemy has fainted!";
+                TurnText += $"{BattleScene.Instance.EnemyList[enemyIndex].Name} has fainted!";
             }
         }
     }
