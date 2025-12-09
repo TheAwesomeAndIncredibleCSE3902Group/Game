@@ -18,9 +18,9 @@ namespace Sprint0.BattleMechanics.BattleEnemies
 
         public void ThrowGold(int enemyIndex)
         {
-            int specialAttackVal = Stats.GetSpecialAttack();
-            int specialDefenseVal = BattleScene.Instance.EnemyList[enemyIndex].Stats.GetSpecialDefense();
-            int damageVal = specialAttackVal - (specialDefenseVal / 2);
+            int attackVal = Stats.GetAttack();
+            int defenseVal = BattleScene.Instance.EnemyList[enemyIndex].Stats.GetDefense();
+            int damageVal = attackVal - (defenseVal / 2);
             if (damageVal < 0) damageVal = 0;
 
             BattleScene.Instance.EnemyList[enemyIndex].Stats.ChangeHealth(-damageVal);

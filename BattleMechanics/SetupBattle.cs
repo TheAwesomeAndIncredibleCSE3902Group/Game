@@ -69,7 +69,10 @@ namespace AwesomeRPG.BattleMechanics
                         allyList.Add(new LinkBattle(ally));
                         break;
                     case CharType.OldLady:
-                        allyList.Add(new LinkBattle(ally));
+                        allyList.Add(new OldLadyBattle(ally));
+                        break;
+                    case CharType.Zelda:
+                        allyList.Add(new ZeldaBattle(ally));
                         break;
                     default:
                         throw new Exception("Ally type not recognized in InitializeBattle");

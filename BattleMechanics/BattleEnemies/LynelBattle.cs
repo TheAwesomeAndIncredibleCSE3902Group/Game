@@ -72,7 +72,7 @@ public class LynelBattle : IEnemyBattle
     {
         LynelActions lynelChoice = LynelActions.BrushBackHair;
 
-        if (Stats.GetHealth() < 5)
+        if (Stats.GetHealth() > (Stats.GetMaxHealth() / 3))
         {
             Random random = new();
             int coinFlip = random.Next(0, 2);
