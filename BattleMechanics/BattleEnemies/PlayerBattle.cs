@@ -25,11 +25,12 @@ public abstract class PlayerBattle : IBattle
     public void LevelUp()
     {
         PlayerStats stats = ((PlayerStats)Stats);
-        int level = stats.GetLevel();
+        int levelUps = stats.levelUps;
         stats.ChangeAll
             (
-                (level * 2), (level * 5), (level), (level), (level), (level), (level), (level), ((level * 3) / 4)
+                (levelUps * 2), (levelUps * 5), (levelUps), (levelUps), (levelUps), (levelUps), (levelUps), (levelUps), ((levelUps * 3) / 4)
             );
+        stats.levelUps = 0;
     }
 
     public void Attack(int enemyIndex)

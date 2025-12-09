@@ -19,6 +19,7 @@ public class PlayerStats : IStats
     private int luck;
     private int xp;
 
+    public int levelUps;
     public CharType Type { get; set; }
 
     public PlayerStats(CharType type) : this(100, 10, 10, 10, 10, 10, 10, 10, 10)
@@ -93,16 +94,16 @@ public class PlayerStats : IStats
     #region Stat Changers
     public void ChangeAll(int maxHealthChange, int specialPointCountChange, int speedChange, int attackChange, int defenseChange, int weaponUseChange, int specialAttackChange, int specialDefenseChange, int luckChange)
     {
-        this.maxHealth = maxHealthChange;
-        this.health = maxHealthChange;
-        this.specialPointCount = specialPointCountChange;
-        this.speed = speedChange;
-        this.attack = attackChange;
-        this.defense = defenseChange;
-        this.weaponUse = weaponUseChange;
-        this.specialAttack = specialAttackChange;
-        this.specialDefense = specialDefenseChange;
-        this.luck = luckChange;
+        this.maxHealth += maxHealthChange;
+        this.health += maxHealthChange;
+        this.specialPointCount += specialPointCountChange;
+        this.speed += speedChange;
+        this.attack += attackChange;
+        this.defense += defenseChange;
+        this.weaponUse += weaponUseChange;
+        this.specialAttack += specialAttackChange;
+        this.specialDefense += specialDefenseChange;
+        this.luck += luckChange;
     }
     public int ChangeSpecialPoint(int updateSpecialPointCount)
     {
@@ -184,7 +185,8 @@ public class PlayerStats : IStats
         if (xpGain != 0)
         {
             xp += xpGain;
-            level += xp / 100;
+            levelUps = xp / 100;
+            level += levelUps;
             xp = xp % 100;
         }
         return level;

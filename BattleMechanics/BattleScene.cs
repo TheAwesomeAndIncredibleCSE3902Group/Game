@@ -40,7 +40,7 @@ public class BattleScene
                 foreach (IBattle battle in AllyList)
                 {
                     ((PlayerStats)battle.Stats).ChangeLevel(totalXP);
-
+                    ((PlayerBattle)battle).LevelUp();
                 }
             }
 
