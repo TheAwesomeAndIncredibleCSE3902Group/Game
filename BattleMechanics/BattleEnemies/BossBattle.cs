@@ -24,14 +24,14 @@ namespace Sprint0.BattleMechanics.BattleEnemies
         public BossBattle(int level)
         {
             // Basic stat scaling based on level
-            int maxHealth = 20 + (level * 4);
+            int maxHealth = 50 + (level * 10);
             int speed = 5 + level;
-            int attack = 4 + level;
+            int attack = 8 + (level * 2);
             int defense = 4 + ((level * 3) / 2);
-            int specialAttack = 2 + level;
-            int specialDefense = 1 + level;
+            int specialAttack = 5 + level;
+            int specialDefense = 3 + level;
             int luck = 1 + (level / 2);
-            int xpReward = 5 + (level * 3);
+            int xpReward = 50 + (level * 5);
 
             Stats = new EnemyStats(maxHealth, speed, attack, defense, specialAttack, specialDefense, luck, level, xpReward);
         }
