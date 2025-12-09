@@ -50,6 +50,9 @@ namespace AwesomeRPG.BattleMechanics
                     enemyList.Add(new BattleEnemies.LynelBattle(partyLevelAvg));
                     enemyList.Add(new BattleEnemies.MoblinBattle(partyLevelAvg));
                     break;
+                case "Boss":
+                    enemyList.Add(new BossBattle(partyLevelAvg));
+                    break;
                 default:
                     throw new Exception("Enemy type not recognized in InitializeBattle");
             }
