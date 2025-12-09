@@ -11,7 +11,7 @@ namespace AwesomeRPG;
 public enum CharType {Zelda, Merchant, OldLady, Link};
 public class TeamOverworld : Pickup
 {
-    CharType charType;
+    CharType _charType;
     public TeamOverworld(RoomMap levelMap, string charTypeName) : base(levelMap)
     {
         CharType charType = StringToCharType(charTypeName);
@@ -20,7 +20,7 @@ public class TeamOverworld : Pickup
     }
     protected override void Apply()
     {
-        Player.Instance.Party.Add(new PlayerStats(charType));
+        Player.Instance.Party.Add(new PlayerStats(_charType));
     }
     private void SetCharacterType(CharType teammate)
     {
