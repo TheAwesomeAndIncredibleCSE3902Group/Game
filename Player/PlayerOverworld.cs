@@ -89,8 +89,20 @@ public class PlayerOverworld : CollisionObject
         Player.Instance.Party[0].ChangeHealth(amount);
     }
 
+    private IInventoryItem.Type ConvertWeaponTyping(Weapons weapon)
+    {
+        return weapon switch
+        {
+            Weapons.bow => IInventoryItem.Type.bow,
+            Weapons.boomerangSack => IInventoryItem.Type.boomerang,
+            Weapons.superSwordSheathe => IInventoryItem.Type.beamSword,
+            _ => IInventoryItem.Type.bow
+        };
+    }
     public void UseEquipment(Weapons requestedEQ)
     {
+        bool isWeaponObtained = (requestedEQ == Weapons.swordSheathe || Player.Instance.Inventory[ConvertWeaponTyping(requestedEQ)] > 0);
+        if (!isWeaponObtained) return;
         switch (requestedEQ)
         {
             case Weapons.bow:
@@ -116,6 +128,8 @@ public class PlayerOverworld : CollisionObject
         PStateMachine.ChangeStateItemUse();
         playerEQ.Use();
     }
+
+   
 
     //Declares values for all equipment
     private void InitializeEquipment()

@@ -311,6 +311,11 @@ public class MapParser
                 pickupToAdd = new TeamOverworld(map, charTypeName);
                 pickupToAdd.Position = position;
                 break;
+            case "weapon":
+                string weaponTypeName = pickup.Attribute("weaponType").Value.Trim().ToLower();
+                pickupToAdd = new WeaponOverworld(map, weaponTypeName);
+                pickupToAdd.Position = position;
+                break;
             default:
                 Console.WriteLine("Pickup type not supported: " + type);
                 pickupToAdd = new PotionOverworld(map); //Arbitrary
