@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using AwesomeRPG.UI;
 using System.Diagnostics;
 using Microsoft.Xna.Framework.Input;
+using AwesomeRPG.UI.ElementFactories;
 
 namespace AwesomeRPG;
 
