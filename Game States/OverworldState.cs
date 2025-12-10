@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using AwesomeRPG.UI;
 using System.Diagnostics;
+using Microsoft.Xna.Framework.Input;
 
 namespace AwesomeRPG;
 
@@ -22,7 +23,7 @@ public class OverworldState : IGameState
     private Game1 game;
     public GameState CurrentState { get => GameState.overworld; }
     public RootElement RootUIElement { get; set; }
-
+    private KeyboardState _previousKeyboardState = new KeyboardState();
 
     /// <summary>
     /// Requires Content already loaded and Player fully constructed
@@ -51,6 +52,14 @@ public class OverworldState : IGameState
 
     public void Update(GameTime gameTime)
     {
+        // TODO: Probably shouldn't be doing this here and should be in a Controller class but whatever
+        KeyboardState keyboard = Keyboard.GetState();
+        if (keyboard.IsKeyUp(Keys.Escape) && _previousKeyboardState.IsKeyDown(Keys.Escape))
+        {
+            game.SetStateClass(new MenuState(this, game));
+        }
+        _previousKeyboardState = keyboard;
+
         GameSoundFactory.PlayOverworldMapTheme(gameTime);
         gameTime = new GameTime(gameTime.TotalGameTime, gameTime.ElapsedGameTime * TimeScale);
 

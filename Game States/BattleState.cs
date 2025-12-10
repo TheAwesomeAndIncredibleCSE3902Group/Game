@@ -199,15 +199,15 @@ public class BattleState : IGameState
                 allyHealth.Attributes["associated_battle"] = BattleScene.Instance.AllyList[i];
 
                 var currentHealthBarBg = rectFactory.CreateNew(new Color(100, 0, 0));
-                currentHealthBarBg.OffsetAndSize = new Rectangle(46, 27, 208, 12);
+                currentHealthBarBg.OffsetAndSize = new Rectangle(46, 29, 208, 10);
                 allyHealth.AddChild(currentHealthBarBg);
 
                 var currentHealthBarFg = rectFactory.CreateNew(new Color(0, 200, 0));
-                currentHealthBarFg.OffsetAndSize = new Rectangle(46, 27, 111, 12); //TODO: set width according to current health
+                currentHealthBarFg.OffsetAndSize = new Rectangle(46, 29, 111, 10); //TODO: set width according to current health
                 allyHealth.AddChild(currentHealthBarFg);
 
                 var currentTextElem = textElementFactory.CreateNew(game.DefaultSpriteFont, BattleScene.Instance.AllyList[i].Name, Color.White);
-                currentTextElem.OffsetAndSize = new Rectangle(46, 0, 208, 20);
+                currentTextElem.OffsetAndSize = new Rectangle(46, 2, 208, 20);
                 allyHealth.AddChild(currentTextElem);
                 
                 var playerIcon = animSpriteElementFactory.CreateNew();
