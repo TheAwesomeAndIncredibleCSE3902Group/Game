@@ -170,16 +170,56 @@ public class BattleState : IGameState
     {
         RootUIElement = new RootElement(spriteBatch);
 
-        var rectBorderFactory = new RectElementFactory(RootUIElement);
-        var battleUiBoardBorder = rectBorderFactory.CreateNew(new Color(40, 0, 40));
+        var textElementFactory = new TextElementFactory(RootUIElement);
+        var animSpriteElementFactory = new AnimSpriteElementFactory(RootUIElement);
+
+        var rectFactory = new RectElementFactory(RootUIElement);
+        var battleUiBoardBorder = rectFactory.CreateNew(new Color(40, 0, 40));
         battleUiBoardBorder.OffsetAndSize = new Rectangle(8, 528, 1008, 234);
 
-        var rectBgFactory = new RectElementFactory(RootUIElement);
-        var battleUiBoardBg = rectBgFactory.CreateNew(new Color(80, 0, 80));
+        var battleUiBoardBg = rectFactory.CreateNew(new Color(80, 0, 80));
         battleUiBoardBg.OffsetAndSize = new Rectangle(10, 530, 1004, 230);
 
         RootUIElement.AddChild(battleUiBoardBorder);
         RootUIElement.AddChild(battleUiBoardBg);
+
+        var allyHealthContainer = new Element(RootUIElement);
+        allyHealthContainer.OffsetAndSize = new Rectangle(745, 540, 260, 210);
+        for (int i = 0; i < 4; i++)
+        {
+            var allyHealth = new Element(RootUIElement);
+            allyHealth.OffsetAndSize = new Rectangle(0, i * 55, 260, 45);
+
+            var currentBgRect = rectFactory.CreateNew(new Color(0, 0, 0, 0.2f));
+            currentBgRect.OffsetAndSize = new Rectangle(0, 0, 260, 45);
+            allyHealth.AddChild(currentBgRect);
+
+            if (i < BattleScene.Instance.AllyList.Count)
+            {
+                allyHealth.Attributes["associated_battle"] = BattleScene.Instance.AllyList[i];
+
+                var currentHealthBarBg = rectFactory.CreateNew(new Color(100, 0, 0));
+                currentHealthBarBg.OffsetAndSize = new Rectangle(46, 27, 208, 12);
+                allyHealth.AddChild(currentHealthBarBg);
+
+                var currentHealthBarFg = rectFactory.CreateNew(new Color(0, 200, 0));
+                currentHealthBarFg.OffsetAndSize = new Rectangle(46, 27, 111, 12); //TODO: set width according to current health
+                allyHealth.AddChild(currentHealthBarFg);
+
+                var currentTextElem = textElementFactory.CreateNew(game.DefaultSpriteFont, BattleScene.Instance.AllyList[i].Name, Color.White);
+                currentTextElem.OffsetAndSize = new Rectangle(46, 0, 208, 20);
+                allyHealth.AddChild(currentTextElem);
+                
+                var playerIcon = animSpriteElementFactory.CreateNew();
+                // TODO: add the anim sprite element of the player's battle icon here
+                playerIcon.OffsetAndSize = new Rectangle(6,7, 32, 32);
+                allyHealth.AddChild(playerIcon);
+                
+            }
+
+            allyHealthContainer.AddChild(allyHealth);
+        }
+        RootUIElement.AddChild(allyHealthContainer);
 
         var battleText = new TextTyperElementFactory(RootUIElement);
         var battleTextElem = battleText.CreateNew(game.DefaultSpriteFont, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur ut facilisis libero. Fusce nec eleifend turpis. Curabitur condimentum dapibus nisl. Ut metus sapien, auctor et justo non, condimentum gravida risus. Donec varius pellentesque felis non ultricies. Quisque fermentum, augue eu pellentesque dictum, ante sapien elementum enim, sed ultricies mauris dui ut lorem. Donec vitae semper enim, sed ornare libero.", Color.White);
@@ -253,6 +293,7 @@ public class BattleState : IGameState
                 elem.MakeUnselectable();
             }
             battleTextElem.IsVisible = true;
+            allyHealthContainer.IsVisible = false;
             battleTextElem.MakeSelectable();
             RootUIElement.UIState.SelectionIndex = 0;
             UISoundFactory.PlaySelectSoundEffect();
@@ -267,6 +308,7 @@ public class BattleState : IGameState
                 elem.IsVisible = true;
                 elem.MakeSelectable();
             }
+            allyHealthContainer.IsVisible = true;
             RootUIElement.UIState.SelectionIndex = 0;
             UISoundFactory.PlaySelectSoundEffect();
         }
