@@ -28,23 +28,22 @@ public class BattleState : IGameState
     public RootElement RootUIElement { get; private set; }
 
     //Caches the last OverworldState. This makes returning to the overworld much easier
-    private OverworldState overworldState;
+    private OverworldState _overworldState;
     private Game1 game;
     //Ideally enemies and enemySprites would be combined into a BattleEnemy
-    private CharacterEnemyBase enemy;
-    private CharacterEnemyBase[] enemies;
-    private CharacterBattleSprite[] enemySprites;
-
-    private string enemyType;
+    private CharacterEnemyBase _enemy;
+    private CharacterEnemyBase[] _enemies;
+    private CharacterBattleSprite[] _enemySprites;
+    private string _enemyType;
     public GameState CurrentState { get => GameState.battle; }
 
     //BattleState can only be made from an OverworldState
     public BattleState(OverworldState overState, Game1 game, CharacterEnemyBase enemy)
     {
         this.game = game;
-        this.overworldState = overState;
-        this.enemy = enemy;
-        enemyType = enemy.Name;
+        this._overworldState = overState;
+        this._enemy = enemy;
+        _enemyType = enemy.Name;
         InitializeBattle();
     }
 
@@ -55,7 +54,7 @@ public class BattleState : IGameState
             InitializeUI(spriteBatch);            
         }
         RootUIElement.Draw(gameTime);
-        foreach (CharacterBattleSprite enemy in enemySprites)
+        foreach (CharacterBattleSprite enemy in _enemySprites)
             enemy.Draw(gameTime);
     }
 
@@ -78,12 +77,12 @@ public class BattleState : IGameState
         //And then return to that Overworld state
         GameSoundFactory.StopBattleSceneTheme();
         //PlayerSoundFactory.PlayVictoryFanfare();
-        enemy.TryDestroy();
+        _enemy.TryDestroy();
 
         //TODO: do changes to player, NPCs (ie health), and enemies
         // overworldState.RootUIElement = this.RootUIElement;
         RootUIElement = null;
-        game.SetStateClass(overworldState);
+        game.SetStateClass(_overworldState);
     }
 
     public bool TransitionAllowedTo(GameState state)
@@ -98,7 +97,7 @@ public class BattleState : IGameState
 
     private void InitializeBattle()
     {
-        SetupBattle.Initialize(enemyType);
+        SetupBattle.Initialize(_enemyType);
         BuildBattlePanel();
     }
     
@@ -107,30 +106,30 @@ public class BattleState : IGameState
     {
         const int num = 3;
 
-        CharacterEnemyBase[] oldEnemies = enemies;
-        enemies = new CharacterEnemyBase[num];
+        CharacterEnemyBase[] oldEnemies = _enemies;
+        _enemies = new CharacterEnemyBase[num];
 
         for (int i = 0; i < num; i++)
         {
-            enemies[i] = oldEnemies[0];
+            _enemies[i] = oldEnemies[0];
         }
-        enemies[1] = new CharacterEnemyMoblin(Vector2.Zero, Util.Cardinal.down);
+        _enemies[1] = new CharacterEnemyMoblin(Vector2.Zero, Util.Cardinal.down);
     }
 
     private void BuildBattlePanel()
     {
-        enemies = [enemy];
+        _enemies = [_enemy];
         TESTDupeEnemies();
 
         //TODO: background
 
-        Vector2[] enemyOffsets = FindEnemyOffsets(enemies.Length);
-        enemySprites = new CharacterBattleSprite[enemies.Length];
+        Vector2[] enemyOffsets = FindEnemyOffsets(_enemies.Length);
+        _enemySprites = new CharacterBattleSprite[_enemies.Length];
 
-        for (int i = 0; i < enemies.Length; i++)
-            enemySprites[i] = new CharacterBattleSprite(enemies[i].Type, enemyOffsets[i]);
+        for (int i = 0; i < _enemies.Length; i++)
+            _enemySprites[i] = new CharacterBattleSprite(_enemies[i].Type, enemyOffsets[i]);
 
-        enemySprites[1].Hurt = true;
+        _enemySprites[1].Hurt = true;
     }
     
 
