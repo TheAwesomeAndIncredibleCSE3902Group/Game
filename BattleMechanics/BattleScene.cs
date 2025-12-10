@@ -49,10 +49,6 @@ public class BattleScene
             turnOrder = new TurnList();
             return;
         }
-        if (!CurrentBattle.IsFriend)
-        {
-            //progress straight into text element with EnemyActionBattleCommand
-        }
     }
 
     public void InitializeBattleSequence(bool isPlayerStartingFirst, List<IBattle> enemiesInBattle, List<IBattle> playersInBattle)

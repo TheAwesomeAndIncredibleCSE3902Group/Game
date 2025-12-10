@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using AwesomeRPG.BattleMechanics;
+using AwesomeRPG.BattleMechanics.BattleEnemies;
 using AwesomeRPG.Characters;
 using AwesomeRPG.Commands;
 using AwesomeRPG.Controllers;
@@ -10,6 +11,7 @@ using AwesomeRPG.UI.ElementFactories;
 using AwesomeRPG.UI.Events;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace AwesomeRPG;
 
@@ -184,23 +186,33 @@ public class BattleState : IGameState
         battleTextElem.OffsetAndSize = new Rectangle(20, 540, 984, 210);
         RootUIElement.AddChild(battleTextElem);
 
-        List<Element> buttons = new List<Element>();
+        battleTextElem.IsVisible = false;
+
+        var beforeFirstFrame = true;
+        
+        RootUIElement.AddActionOnUIEvent(UIEvent.Update, (e) =>
+        {
+            if (beforeFirstFrame) beforeFirstFrame = false;
+        });
+
+        var buttonContainer = new Element(RootUIElement);
+        var buttonFactory = new ButtonElementFactory(RootUIElement);
         for (int i = 0; i < 6; i++)
         {
-            var buttonFactory = new ButtonElementFactory(RootUIElement);
             var currentButtonToAdd = buttonFactory.CreateNew(game.DefaultSpriteFont, game, new Rectangle(20 + (i / 3) * 365, 540 + (i % 3) * 75, 350, 60), Color.Purple, Color.White, "Action " + i);
-            buttons.Add(currentButtonToAdd);
-            RootUIElement.AddChild(currentButtonToAdd);
+            buttonContainer.AddChild(currentButtonToAdd);
         }
 
-        var command = new BattleStateToOverworldCommand();
-        buttons[0].AddActionOnUIEvent(UIEvent.ButtonDown, (e) => command.Execute());
-
+        RootUIElement.AddChild(buttonContainer);
         
         RootUIElement.UIState.SelectionIndex = 0;
 
         RootUIElement.AddActionOnUIEvent(UIEvent.ButtonDown, (e) =>
         {
+            // Ensure that if arrow key is being held on the first frame. If so, exit prevent updating the selectoin index.
+            // Prevents player from changing which button is selected if they're walking into enemy before starting battle
+            if (beforeFirstFrame) return;
+            
             var eventParams = (InputUIEventParams)e;
             // System.Console.WriteLine("This is a test!!");
             if (eventParams.Controls.Contains(UIControl.MoveDown))
@@ -221,16 +233,78 @@ public class BattleState : IGameState
             }
         });
 
-        buttons[0].AddActionOnUIEvent(UIEvent.ButtonPress, (e) =>
+        var buttons = buttonContainer.GetChildren();
+
+        void SwitchToBattleText()
+        {
+            battleTextElem.Attributes["currently_drawn_char"] = 0;
+            battleTextElem.Attributes["started_typing_time"] = null;
+            foreach (Element elem in buttons)
+            {
+                elem.IsVisible = false;
+                elem.MakeUnselectable();
+            }
+            battleTextElem.IsVisible = true;
+            battleTextElem.MakeSelectable();
+            RootUIElement.UIState.SelectionIndex = 0;
+        }
+
+        void SwitchToButtons()
+        {
+            battleTextElem.IsVisible = false;
+            battleTextElem.MakeUnselectable();
+            foreach (Element elem in buttons)
+            {
+                elem.IsVisible = true;
+                elem.MakeSelectable();
+            }
+            RootUIElement.UIState.SelectionIndex = 0;
+        }
+
+        void DoNextTurn()
+        {
+            BattleScene.Instance.NextTurn();
+            if (BattleScene.Instance.CurrentBattle.IsFriend)
+            {
+                SwitchToButtons();
+            } else
+            {
+                (BattleScene.Instance.CurrentBattle as IEnemyBattle).TakeTurn();
+                if (BattleScene.Instance.CurrentBattle.TurnText == null)
+                {
+                    battleTextElem.Attributes["text_string"] = BattleScene.Instance.CurrentBattle.ToString() + ": TurnText string is null...";
+                    
+                } else
+                {
+                    battleTextElem.Attributes["text_string"] = BattleScene.Instance.CurrentBattle.ToString() + ": " + BattleScene.Instance.CurrentBattle.TurnText;
+                }
+                SwitchToBattleText();
+            }
+        }
+
+        buttons[0].AddActionOnUIEvent(UIEvent.ButtonUp, (e) =>
         {
             if (((InputUIEventParams) e).Controls.Contains(UIControl.Interact))
             {
-                battleTextElem.IsVisible = true;
-                battleTextElem.Attributes["currently_drawn_char"] = 0;
-                battleTextElem.Attributes["started_typing_time"] = null;
+                // We will have the player do some sort of action here
+
+                // and then run DoNextTurn
+                DoNextTurn();
             }
         });
-
-        
+        battleTextElem.AddActionOnUIEvent(UIEvent.ButtonUp, (e) =>
+        {
+            if (((InputUIEventParams) e).Controls.Contains(UIControl.Interact))
+            {
+                DoNextTurn();
+            }
+        });
+        buttons[5].AddActionOnUIEvent(UIEvent.ButtonPress, (e) =>
+        {
+            if (((InputUIEventParams) e).Controls.Contains(UIControl.Interact))
+            {
+                Game1.StateClass.ChangeToOverworldState();
+            }
+        });
     }
 }
