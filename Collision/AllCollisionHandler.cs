@@ -100,6 +100,7 @@ namespace AwesomeRPG.Collision
             collisionResponses[new CollisionPair(CollisionObjectType.Player, CollisionObjectType.Pickup)] = new PlayerPickupCollideCommand();
             collisionResponses[new CollisionPair(CollisionObjectType.Player, CollisionObjectType.Enemy)] = new PlayerEnemyCollideCommand();
             collisionResponses[new CollisionPair(CollisionObjectType.Player, CollisionObjectType.Entrance)] = new PlayerEntranceCollideCommand();
+            collisionResponses[new CollisionPair(CollisionObjectType.Player, CollisionObjectType.DebugEntrance)] = new PlayerDebugCollideCommand();
         }
 
         private void InitializeEnemyCollisions()

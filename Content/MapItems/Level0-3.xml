@@ -4,7 +4,7 @@
     <Tileset tileWidth="16" tileHeight="16">TileImages/zelda_tiles</Tileset>
     <Tiles rows="9" columns="16">
       <Row>!01 !01 !01 !01 !01 !01 !01 !01 !01 !01 !01 !01 !01 !01 !01 !01</Row>
-      <Row>!01  00  00  00  00  00  00  00  00  00  00  00  00  00  00 !01</Row>
+      <Row>!01 -07  00  00  00  00  00  00  00  00  00  00  00  00  00 !01</Row>
       <Row>!01  00  00  00  00  00 !01 !01 !01 !01 !01  00  00  00  00 !01</Row>
       <Row>!01  00  00  00  00  00  00  00  00  00  00  00  00  00  00 !01</Row>
       <Row>!01  00  00  00  00  00  00  00  00  00  00  00  00  00  00 !01</Row>
@@ -17,7 +17,7 @@
   <Entities>
     <Entity x="892" y="384" pathing="stand" facing="left">armos</Entity>
     <Entity x="892" y="192" pathing="stand" facing="left">lynel</Entity>
-    <Entity x="512" y="450" pathing="stand" facing="up">moblin</Entity>
+    <Entity x="512" y="450" pathing="stand" facing="down">moblin</Entity>
   </Entities>
   <Pickups>
     <Pickup x="132" y="256">potion</Pickup>
