@@ -33,7 +33,7 @@ public class BattleState : IGameState
     private Game1 game;
     //Ideally enemies and enemySprites would be combined into a BattleEnemy
     private CharacterEnemyBase _enemy;
-    private CharacterEnemyBase[] _enemies;
+    private CharacterEnemyBase.CType[] _enemies;
     private CharacterBattleSprite[] _enemySprites;
     private string _enemyType;
     public GameState CurrentState { get => GameState.battle; }
@@ -103,34 +103,37 @@ public class BattleState : IGameState
     }
     
     //Little test method to test displaying multiple enemies
-    private void TESTDupeEnemies()
+    private void GetEnemies()
     {
-        const int num = 3;
-
-        CharacterEnemyBase[] oldEnemies = _enemies;
-        _enemies = new CharacterEnemyBase[num];
+        int num = BattleScene.Instance.EnemyList.Count;
+        _enemies = new CharacterEnemyBase.CType[num];
 
         for (int i = 0; i < num; i++)
         {
-            _enemies[i] = oldEnemies[0];
+            _enemies[i] = (BattleScene.Instance.EnemyList[i] as IEnemyBattle).Type;
         }
-        _enemies[1] = new CharacterEnemyMoblin(Vector2.Zero, Util.Cardinal.down);
+
     }
 
     private void BuildBattlePanel()
     {
-        _enemies = [_enemy];
-        TESTDupeEnemies();
+        GetEnemies();
 
         //TODO: background
+        if (_enemies.Length > 0)
+        {
+            Vector2[] enemyOffsets = FindEnemyOffsets(_enemies.Length);
+            _enemySprites = new CharacterBattleSprite[_enemies.Length];
 
-        Vector2[] enemyOffsets = FindEnemyOffsets(_enemies.Length);
-        _enemySprites = new CharacterBattleSprite[_enemies.Length];
+            for (int i = 0; i < _enemies.Length; i++)
+                _enemySprites[i] = new CharacterBattleSprite(_enemies[i], enemyOffsets[i]);
 
-        for (int i = 0; i < _enemies.Length; i++)
-            _enemySprites[i] = new CharacterBattleSprite(_enemies[i].Type, enemyOffsets[i]);
-
-        _enemySprites[1].Hurt = true;
+            _enemySprites[1].Hurt = true;
+        }
+        else
+        {
+            Debug.WriteLine("ERROR _enemies is null");
+        }
     }
     
 

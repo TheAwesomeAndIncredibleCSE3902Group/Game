@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AwesomeRPG.BattleMechanics;
 using AwesomeRPG.BattleMechanics.BattleEnemies;
+using AwesomeRPG.Characters;
 using AwesomeRPG.Stats;
 using static AwesomeRPG.BattleMechanics.BattleEnemies.ArmosBattle;
 using static AwesomeRPG.BattleMechanics.BattleEnemies.MoblinBattle;
@@ -13,6 +14,7 @@ namespace Sprint0.BattleMechanics.BattleEnemies
 {
     public class BossBattle : IBattle, IEnemyBattle
     {
+        public CharacterEnemyBase.CType Type { get; } = CharacterEnemyBase.CType.boss;
         public IStats Stats { get; set; }
         public enum BossActions { WildSwing, GutPunch, EatMeal }
 

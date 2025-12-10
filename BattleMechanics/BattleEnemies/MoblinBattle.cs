@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using AwesomeRPG.Characters;
 using AwesomeRPG.Stats;
 using static AwesomeRPG.Util;
 
 namespace AwesomeRPG.BattleMechanics.BattleEnemies;
 public class MoblinBattle : IEnemyBattle
 {
+    public CharacterEnemyBase.CType Type { get; } = CharacterEnemyBase.CType.moblin;
     public IStats Stats { get; set; }
     public enum MoblinActions { ScratchBellyButton, RambleCharge, Dance }
     public bool IsFainted { get; set; } = false;

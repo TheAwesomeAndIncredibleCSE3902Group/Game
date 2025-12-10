@@ -1,10 +1,12 @@
-﻿using AwesomeRPG.Stats;
+﻿using AwesomeRPG.Characters;
+using AwesomeRPG.Stats;
 using System;
 using static AwesomeRPG.Util;
 
 namespace AwesomeRPG.BattleMechanics.BattleEnemies;
 public class ArmosBattle : IEnemyBattle
 {
+    public CharacterEnemyBase.CType Type { get; } = CharacterEnemyBase.CType.armos;
     public IStats Stats { get; set; }
     public enum ArmosActions { ShineArmour, ChargeForward}
 

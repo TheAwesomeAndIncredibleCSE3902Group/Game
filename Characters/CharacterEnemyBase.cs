@@ -11,7 +11,7 @@ namespace AwesomeRPG.Characters;
 
 public abstract class CharacterEnemyBase : CollisionObject, ICharacter
 {
-    public enum CType { generic, armos, lynel, moblin }
+    public enum CType { generic, armos, lynel, moblin, boss }
     public virtual CType Type {get => CType.generic; }
     protected AnimatableSprite _sprite;
     public string Name { get; set; } = "Enemy";
