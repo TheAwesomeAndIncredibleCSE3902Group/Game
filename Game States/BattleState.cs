@@ -319,7 +319,7 @@ public class BattleState : IGameState
         void DoNextTurn()
         {
             BattleScene.Instance.NextTurn();
-            if (!BattleScene.Instance.CurrentlyInBattle) { Game1.StateClass.ChangeToOverworldState(); }
+            if (!BattleScene.Instance.CurrentlyInBattle) { Game1.StateClass.ChangeToOverworldState(); return; }
             foreach (CharacterBattleSprite enemy in _enemySprites) { enemy.Hurt = false; }
             if (BattleScene.Instance.CurrentBattle.IsFriend)
             {
