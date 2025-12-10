@@ -86,6 +86,13 @@
 /processorParam:TextureFormat=Compressed
 /build:Fonts/MyFont.spritefont
 
+#begin Fonts/ZeldaFont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Fonts/ZeldaFont.spritefont
+
 #begin GameThemes/BattleSceneThemeIntro.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -260,30 +267,6 @@
 /processorParam:Quality=Best
 /build:LinkSoundEffects/VictoryFanfare.wav
 
-#begin UISoundEffects/snd_cantselect.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:UISoundEffects/snd_cantselect.wav
-
-#begin UISoundEffects/snd_graze.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:UISoundEffects/snd_graze.wav
-
-#begin UISoundEffects/snd_select.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:UISoundEffects/snd_select.wav
-
-#begin UISoundEffects/snd_text.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:UISoundEffects/snd_text.wav
-
 #begin MapItems/Level0-0.xml
 /copy:MapItems/Level0-0.xml
 
@@ -430,4 +413,28 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:TileImages/zelda_tiles.png
+
+#begin UISoundEffects/snd_cantselect.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:UISoundEffects/snd_cantselect.wav
+
+#begin UISoundEffects/snd_graze.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:UISoundEffects/snd_graze.wav
+
+#begin UISoundEffects/snd_select.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:UISoundEffects/snd_select.wav
+
+#begin UISoundEffects/snd_text.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:UISoundEffects/snd_text.wav
 
