@@ -1,5 +1,6 @@
 ﻿using AwesomeRPG.BattleMechanics;
 using AwesomeRPG.BattleMechanics.BattleEnemies;
+using AwesomeRPG.Sprites;
 using AwesomeRPG.Stats;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,9 @@ namespace Sprint0.BattleMechanics.BattleEnemies
         public OldLadyBattle(PlayerStats stats) : base(stats)
         {
             Name = "Old Lady";
+            AnimatableSprite animatableSprite = TeamSpriteFactory.Instance.CreateOldSprite() as AnimatableSprite;
+            animatableSprite.SetScale(2);
+            Icon = animatableSprite;
         }
 
         public void WiseAdvice(int enemyIndex)

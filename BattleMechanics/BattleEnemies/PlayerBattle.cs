@@ -1,4 +1,5 @@
-﻿using AwesomeRPG.Stats;
+﻿using AwesomeRPG.Sprites;
+using AwesomeRPG.Stats;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -13,6 +14,7 @@ public abstract class PlayerBattle : IBattle
     public bool IsFainted { get; set; } = false;
 
     public string Name { get; set; } = "Player";
+    public AnimatableSprite Icon { get; set; } = null;
     public string TurnText { get; set; } = null;
 
     public PlayerBattle(PlayerStats stats)

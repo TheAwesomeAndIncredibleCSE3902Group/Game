@@ -1,15 +1,13 @@
 using System;
 using System.Collections.Generic;
 using AwesomeRPG.Characters;
-using AwesomeRPG.Collision;
 using AwesomeRPG.Map;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using AwesomeRPG.UI;
-using System.Diagnostics;
+using Microsoft.Xna.Framework.Input;
 using AwesomeRPG.UI.ElementFactories;
-//using System.Drawing;
 
 namespace AwesomeRPG;
 
@@ -24,7 +22,7 @@ public class OverworldState : IGameState
     private Game1 game;
     public GameState CurrentState { get => GameState.overworld; }
     public RootElement RootUIElement { get; set; }
-
+    private KeyboardState _previousKeyboardState = new KeyboardState();
 
     /// <summary>
     /// Requires Content already loaded and Player fully constructed
@@ -53,6 +51,14 @@ public class OverworldState : IGameState
 
     public void Update(GameTime gameTime)
     {
+        // TODO: Probably shouldn't be doing this here and should be in a Controller class but whatever
+        KeyboardState keyboard = Keyboard.GetState();
+        if (keyboard.IsKeyUp(Keys.Escape) && _previousKeyboardState.IsKeyDown(Keys.Escape))
+        {
+            game.SetStateClass(new MenuState(this, game));
+        }
+        _previousKeyboardState = keyboard;
+
         GameSoundFactory.PlayOverworldMapTheme(gameTime);
         gameTime = new GameTime(gameTime.TotalGameTime, gameTime.ElapsedGameTime * TimeScale);
 
@@ -102,22 +108,49 @@ public class OverworldState : IGameState
     private void DrawPlayerHUD(GameTime gameTime,SpriteBatch spriteBatch)
     {
         RootElement rootUIElement = new RootElement(spriteBatch);
-
-        
-        //Ensure the font is loaded
         var spriteFont = game.Content.Load<SpriteFont>("Fonts\\ZeldaFont");
-        TextElementFactory textElementFactory = new TextElementFactory(rootUIElement);
+        TextElementFactory textFactory = new TextElementFactory(rootUIElement);
+
+        Element healthElem = CreateHealthElement(textFactory,spriteFont);
+        rootUIElement.AddChild(healthElem);
+
+        Element equipElem = CreateWeaponDisplay(textFactory, spriteFont);
+        rootUIElement.AddChild(equipElem);
+        
+        rootUIElement.Draw(gameTime);
+    }
+    private Element CreateWeaponDisplay(TextElementFactory textFactory, SpriteFont spriteFont)
+    {
+        string equipmentString = GetEquipmentString();
+        Element textElem = textFactory.CreateNew(spriteFont,
+                                                        equipmentString,
+                                                        Color.White,
+                                                        TextElementFactory.TextAlign.Right,
+                                                        TextElementFactory.TextAlign.Right);
+        textElem.OffsetAndSize = Util.ScreenRect;
+        return textElem;
+    }
+    private string GetEquipmentString()
+    {
+        Dictionary<IInventoryItem.Type,int> inventory = Player.Instance.Inventory;
+        char bowStatus = inventory[IInventoryItem.Type.bow] > 0 ? '#' : '*';
+        char boomerangStatus = inventory[IInventoryItem.Type.boomerang] > 0 ? '#' : '*';
+        char beamStatus = inventory[IInventoryItem.Type.beamSword] > 0 ? '#' : '*';
+        return $"{bowStatus}        {boomerangStatus}        {beamStatus}";
+    }
+
+    private Element CreateHealthElement(TextElementFactory textFactory, SpriteFont spriteFont)
+    {
+        
         string healthString = GetPartyHealthString();
-        Element textElem = textElementFactory.CreateNew(spriteFont, 
-                                                        healthString, 
+        Element textElem = textFactory.CreateNew(spriteFont,
+                                                        healthString,
                                                         Color.White,
                                                         TextElementFactory.TextAlign.Left,
                                                         TextElementFactory.TextAlign.Right);
         textElem.OffsetAndSize = Util.ScreenRect;
-        rootUIElement.AddChild(textElem);
-         rootUIElement.Draw(gameTime);
+        return textElem;
     }
-
     private string GetPartyHealthString()
     {
         string healthString = "";

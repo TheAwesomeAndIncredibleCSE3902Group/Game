@@ -10,6 +10,13 @@ namespace AwesomeRPG.UI;
 public class UIState
 {
     private readonly List<Element> _selectableElements = [];
+    public List<Element> SelectableElements
+    {
+        get
+        {
+            return _selectableElements;
+        }
+    }
     private int _selectionIndex = -1; // This is the "location" of the currently selected element. Can be null
     public int SelectionIndex
     {

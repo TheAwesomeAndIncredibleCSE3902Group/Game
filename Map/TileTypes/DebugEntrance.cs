@@ -27,7 +27,7 @@ namespace AwesomeRPG.Map
             int newCol = 0;
             
             RoomMap newRoom = roomAtlas.GetRoom(newCol, newRow);
-            Vector2 futurePlayerPos = new Vector2(350, 350);
+            Vector2 futurePlayerPos = new Vector2(400, 350);
 
             if (newRoom != null)
             {
