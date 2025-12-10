@@ -39,13 +39,13 @@ public class BattleState : IGameState
     public GameState CurrentState { get => GameState.battle; }
 
     //BattleState can only be made from an OverworldState
-    public BattleState(OverworldState overState, Game1 game, CharacterEnemyBase enemy)
+    public BattleState(OverworldState overState, Game1 game, CharacterEnemyBase enemy, bool playerStarting)
     {
         this.game = game;
         this._overworldState = overState;
         this._enemy = enemy;
         _enemyType = enemy.Name;
-        InitializeBattle();
+        InitializeBattle(playerStarting);
     }
 
     public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
@@ -65,7 +65,7 @@ public class BattleState : IGameState
         RootUIElement.Update(gameTime);
     }
 
-    public void ChangeToBattleState(CharacterEnemyBase enemy) { }
+    public void ChangeToBattleState(CharacterEnemyBase enemy, bool playerStarting) { }
     public void ChangeToStartState() { }
     public void ChangeToGameOverState() { game.SetStateClass(new GameOverState(game)); }
     public void ChangeToWinState() { }
@@ -97,9 +97,10 @@ public class BattleState : IGameState
         };
     }
 
-    private void InitializeBattle()
+    private void InitializeBattle(bool playerStarting)
     {
-        SetupBattle.Initialize(_enemyType);
+        SetupBattle.Initialize(_enemyType, playerStarting);
+        Debug.WriteLine(BattleScene.Instance.CurrentBattle.Name);
         BuildBattlePanel();
     }
     
@@ -290,6 +291,29 @@ public class BattleState : IGameState
 
         var buttons = buttonContainer.GetChildren();
 
+        void SetButtonNames()
+        {
+            (buttons[0].Attributes["text_element"] as Element).Attributes["text_string"] = "Attack";
+            (buttons[1].Attributes["text_element"] as Element).Attributes["text_string"] = "Heal";
+            switch (BattleScene.Instance.CurrentBattle.Name)
+            {
+                case "Link":
+                    (buttons[2].Attributes["text_element"] as Element).Attributes["text_string"] = "Sword Stab";
+                    break;
+                case "Old Lady":
+                    (buttons[2].Attributes["text_element"] as Element).Attributes["text_string"] = "Wise Advice";
+                    break;
+                case "Zelda":
+                    (buttons[2].Attributes["text_element"] as Element).Attributes["text_string"] = "Light Arrow";
+                    break;
+                case "Merchant":
+                    (buttons[2].Attributes["text_element"] as Element).Attributes["text_string"] = "Throw Gold";
+                    break;
+            }
+        }
+        SetButtonNames();
+
+        #region TurnFunctions
         void SwitchToBattleText()
         {
             battleTextElem.Attributes["currently_drawn_char"] = 0;
@@ -316,6 +340,7 @@ public class BattleState : IGameState
                 elem.MakeSelectable();
             }
             allyHealthContainer.IsVisible = true;
+            SetButtonNames();
             RootUIElement.UIState.SelectionIndex = 0;
             UISoundFactory.PlaySelectSoundEffect();
         }
@@ -343,7 +368,9 @@ public class BattleState : IGameState
                 SwitchToBattleText();
             }
         }
+        #endregion
 
+        #region ButtonActions
         buttons[0].AddActionOnUIEvent(UIEvent.ButtonUp, (e) =>
         {
             if (((InputUIEventParams)e).Controls.Contains(UIControl.Interact))
@@ -365,7 +392,6 @@ public class BattleState : IGameState
                 SwitchToBattleText();
             }
         });
-        (buttons[0].Attributes["text_element"] as Element).Attributes["text_string"] = "Attack";
         buttons[1].AddActionOnUIEvent(UIEvent.ButtonUp, (e) =>
         {
             if (((InputUIEventParams)e).Controls.Contains(UIControl.Interact))
@@ -383,7 +409,6 @@ public class BattleState : IGameState
                 SwitchToBattleText();
             }
         });
-        (buttons[1].Attributes["text_element"] as Element).Attributes["text_string"] = "Heal";
         buttons[2].AddActionOnUIEvent(UIEvent.ButtonUp, (e) =>
         {
             if (((InputUIEventParams)e).Controls.Contains(UIControl.Interact))
@@ -420,7 +445,7 @@ public class BattleState : IGameState
                 }
                 SwitchToBattleText();
             }
-        });
+        }); 
         battleTextElem.AddActionOnUIEvent(UIEvent.ButtonDown, (e) =>
         {
             var eventParams = (InputUIEventParams) e;
@@ -445,6 +470,6 @@ public class BattleState : IGameState
                 Game1.StateClass.ChangeToOverworldState();
             }
         });
-        (buttons[5].Attributes["text_element"] as Element).Attributes["text_string"] = "Flee";
+        #endregion
     }
 }
