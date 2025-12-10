@@ -43,6 +43,11 @@ public class TextTyperElementFactory : IElementFactory
         {
             // System.Console.WriteLine("before everything " + elem.Attributes["started_typing_time"]);
             DrawUIEventParams drawParams = (DrawUIEventParams)eventParams;
+
+            string textString = (string) elem.Attributes["text_string"];
+
+            int oldCurrentlyDrawnChar = (int) elem.Attributes["currently_drawn_char"];
+
             GameTime gameTime = drawParams.GameTime;
             if (elem.Attributes["started_typing_time"] == null)
             {
@@ -57,6 +62,14 @@ public class TextTyperElementFactory : IElementFactory
             int currentlyDrawnChar = Math.Min(elapsedMs / charDelay, textString.Length);
 
             elem.Attributes["currently_drawn_char"] = currentlyDrawnChar;
+
+            // If there is a new char to be drawn, we will play text typing sound
+            if ((currentlyDrawnChar > oldCurrentlyDrawnChar) && elem.IsVisible)
+            {
+                UISoundFactory.PlayTextSoundEffect();
+                System.Console.WriteLine("new: " + currentlyDrawnChar);
+                System.Console.WriteLine("old: " + oldCurrentlyDrawnChar);
+            }
 
             // System.Console.WriteLine("freaking drawing text typer shit! " + currentlyDrawnChar);
             // System.Console.WriteLine("Elapsed ms " + elapsedMs);

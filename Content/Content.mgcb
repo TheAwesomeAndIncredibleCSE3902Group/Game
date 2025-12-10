@@ -260,6 +260,30 @@
 /processorParam:Quality=Best
 /build:LinkSoundEffects/VictoryFanfare.wav
 
+#begin UISoundEffects/snd_cantselect.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:UISoundEffects/snd_cantselect.wav
+
+#begin UISoundEffects/snd_graze.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:UISoundEffects/snd_graze.wav
+
+#begin UISoundEffects/snd_select.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:UISoundEffects/snd_select.wav
+
+#begin UISoundEffects/snd_text.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:UISoundEffects/snd_text.wav
+
 #begin MapItems/Level0-0.xml
 /copy:MapItems/Level0-0.xml
 

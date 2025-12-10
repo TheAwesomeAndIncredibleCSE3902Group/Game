@@ -81,7 +81,8 @@ public class BattleState : IGameState
         enemy.TryDestroy();
 
         //TODO: do changes to player, NPCs (ie health), and enemies
-        overworldState.RootUIElement = this.RootUIElement;
+        // overworldState.RootUIElement = this.RootUIElement;
+        RootUIElement = null;
         game.SetStateClass(overworldState);
     }
 
@@ -200,6 +201,10 @@ public class BattleState : IGameState
         for (int i = 0; i < 6; i++)
         {
             var currentButtonToAdd = buttonFactory.CreateNew(game.DefaultSpriteFont, game, new Rectangle(20 + (i / 3) * 365, 540 + (i % 3) * 75, 350, 60), Color.Purple, Color.White, "Action " + i);
+            currentButtonToAdd.AddActionOnUIEvent(UIEvent.ButtonUp, (e) =>
+            {
+                var eventParams = (InputUIEventParams)e;
+            });
             buttonContainer.AddChild(currentButtonToAdd);
         }
 
@@ -218,18 +223,22 @@ public class BattleState : IGameState
             if (eventParams.Controls.Contains(UIControl.MoveDown))
             {
                 RootUIElement.UIState.SelectionIndex += 1;
+                UISoundFactory.PlayGrazeSoundEffect();
             }
             if (eventParams.Controls.Contains(UIControl.MoveUp))
             {
                 RootUIElement.UIState.SelectionIndex -= 1;
+                UISoundFactory.PlayGrazeSoundEffect();
             }
             if (eventParams.Controls.Contains(UIControl.MoveRight))
             {
                 RootUIElement.UIState.SelectionIndex += 3;
+                UISoundFactory.PlayGrazeSoundEffect();
             }
             if (eventParams.Controls.Contains(UIControl.MoveLeft))
             {
                 RootUIElement.UIState.SelectionIndex -= 3;
+                UISoundFactory.PlayGrazeSoundEffect();
             }
         });
 
@@ -247,6 +256,7 @@ public class BattleState : IGameState
             battleTextElem.IsVisible = true;
             battleTextElem.MakeSelectable();
             RootUIElement.UIState.SelectionIndex = 0;
+            UISoundFactory.PlaySelectSoundEffect();
         }
 
         void SwitchToButtons()
@@ -259,6 +269,7 @@ public class BattleState : IGameState
                 elem.MakeSelectable();
             }
             RootUIElement.UIState.SelectionIndex = 0;
+            UISoundFactory.PlaySelectSoundEffect();
         }
 
         void DoNextTurn()

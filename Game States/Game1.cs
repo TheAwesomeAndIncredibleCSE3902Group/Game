@@ -65,6 +65,7 @@ public class Game1 : Game
         PlayerSoundFactory.LoadAndSetUpAllPlayerSounds(Content);
         ItemSoundFactory.LoadAndSetUpAllItemSounds(Content);
         EnemySoundFactory.LoadAndSetUpAllEnemySounds(Content);
+        UISoundFactory.LoadAndSetUpAllUISounds(Content);
         
         DefaultSpriteFont = Content.Load<SpriteFont>("Fonts\\MyFont");
 

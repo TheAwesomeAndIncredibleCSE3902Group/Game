@@ -28,6 +28,9 @@ public class KeyboardUIController : IController
         if ( Game1.StateClass.RootUIElement == null)
         {
             // If Root ui is null or hasnt been created yet, we cant do controls on it!!!!!!!!
+            // But still update the previousState because wacky things happen when we switch to state
+            // with a root, then without a root, then with a root.
+            _previousState = Keyboard.GetState();
             return;
         } 
 
