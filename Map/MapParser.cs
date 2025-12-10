@@ -254,6 +254,9 @@ public class MapParser
             case "kris":
                 character = new CharacterKris();
                 break;
+            case "boss":
+                character = new CharacterEnemyBoss(position, facing);
+                break;
             default:
                 Console.WriteLine("Entity type not supported: " + type);
                 character = new CharacterKris(); //Arbitrary
