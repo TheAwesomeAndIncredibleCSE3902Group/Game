@@ -248,6 +248,9 @@ public class BattleState : IGameState
                 var eventParams = (InputUIEventParams)e;
             });
             buttonContainer.AddChild(currentButtonToAdd);
+
+            //This is an example for how to change button text
+            //(currentButtonToAdd.Attributes["text_element"] as Element).Attributes["text_string"] = "test";
         }
 
         RootUIElement.AddChild(buttonContainer);
