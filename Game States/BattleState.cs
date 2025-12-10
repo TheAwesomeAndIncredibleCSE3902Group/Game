@@ -128,7 +128,6 @@ public class BattleState : IGameState
             for (int i = 0; i < _enemies.Length; i++)
                 _enemySprites[i] = new CharacterBattleSprite(_enemies[i], enemyOffsets[i]);
 
-            _enemySprites[1].Hurt = true;
         }
         else
         {

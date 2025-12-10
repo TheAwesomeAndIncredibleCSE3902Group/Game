@@ -40,15 +40,20 @@ namespace AwesomeRPG.BattleMechanics
                     enemyList.Add(new BattleEnemies.MoblinBattle(partyLevelAvg)); 
                     enemyList.Add(new BattleEnemies.MoblinBattle(partyLevelAvg));
                     enemyList.Add(new BattleEnemies.MoblinBattle(partyLevelAvg));
+                    for (int i = 0; i < enemyList.Count; i++) { enemyList[i].Name += $" {i+1}"; }
                     break;
                 case "Armos":
                     enemyList.Add(new BattleEnemies.ArmosBattle(partyLevelAvg));
                     enemyList.Add(new BattleEnemies.ArmosBattle(partyLevelAvg));
+                    for (int i = 0; i < enemyList.Count; i++) { enemyList[i].Name += $" {i+1}"; }
                     break;
                 case "Lynel":
                     enemyList.Add(new BattleEnemies.MoblinBattle(partyLevelAvg));
+                    enemyList[0].Name += " 1";
                     enemyList.Add(new BattleEnemies.LynelBattle(partyLevelAvg));
+                    enemyList[1].Name += " 1";
                     enemyList.Add(new BattleEnemies.MoblinBattle(partyLevelAvg));
+                    enemyList[2].Name += " 2";
                     break;
                 case "Boss":
                     enemyList.Add(new BossBattle(partyLevelAvg));
