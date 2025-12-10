@@ -8,6 +8,7 @@ using System.Xml.XPath;
 namespace AwesomeRPG.BattleMechanics;
 public class BattleScene
 {
+    public bool Lost { get; set; } = false;
     public bool CurrentlyInBattle { get; set; }
     public IBattle CurrentBattle { get; private set; }
     public List<IBattle> AllyList { get; private set; }
@@ -31,7 +32,7 @@ public class BattleScene
 
             if (turnOrder.battleLost == true)
             {
-                //do something here or use turnOrder.battleLost in BattleState to swap to gameOver
+                Lost = true;
             }
             else
             {

@@ -67,7 +67,7 @@ public class BattleState : IGameState
 
     public void ChangeToBattleState(CharacterEnemyBase enemy) { }
     public void ChangeToStartState() { }
-    public void ChangeToGameOverState() { }
+    public void ChangeToGameOverState() { game.SetStateClass(new GameOverState(game)); }
     public void ChangeToWinState() { }
 
     public void ChangeToOverworldState()
@@ -78,8 +78,9 @@ public class BattleState : IGameState
         //And then return to that Overworld state
         GameSoundFactory.StopBattleSceneTheme();
         //PlayerSoundFactory.PlayVictoryFanfare();
-        _enemy.TryDestroy();
 
+        _enemy.TryDestroy();
+        
         //TODO: do changes to player, NPCs (ie health), and enemies
         // overworldState.RootUIElement = this.RootUIElement;
         RootUIElement = null;
@@ -322,6 +323,7 @@ public class BattleState : IGameState
         void DoNextTurn()
         {
             BattleScene.Instance.NextTurn();
+            if (BattleScene.Instance.Lost) { ChangeToGameOverState(); return; }
             if (!BattleScene.Instance.CurrentlyInBattle) { Game1.StateClass.ChangeToOverworldState(); return; }
             foreach (CharacterBattleSprite enemy in _enemySprites) { enemy.Hurt = false; }
             if (BattleScene.Instance.CurrentBattle.IsFriend)
@@ -363,6 +365,7 @@ public class BattleState : IGameState
                 SwitchToBattleText();
             }
         });
+        (buttons[0].Attributes["text_element"] as Element).Attributes["text_string"] = "Attack";
         buttons[1].AddActionOnUIEvent(UIEvent.ButtonUp, (e) =>
         {
             if (((InputUIEventParams)e).Controls.Contains(UIControl.Interact))
@@ -380,6 +383,7 @@ public class BattleState : IGameState
                 SwitchToBattleText();
             }
         });
+        (buttons[1].Attributes["text_element"] as Element).Attributes["text_string"] = "Heal";
         buttons[2].AddActionOnUIEvent(UIEvent.ButtonUp, (e) =>
         {
             if (((InputUIEventParams)e).Controls.Contains(UIControl.Interact))
@@ -441,5 +445,6 @@ public class BattleState : IGameState
                 Game1.StateClass.ChangeToOverworldState();
             }
         });
+        (buttons[5].Attributes["text_element"] as Element).Attributes["text_string"] = "Flee";
     }
 }
