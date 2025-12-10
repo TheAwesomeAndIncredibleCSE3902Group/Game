@@ -67,8 +67,8 @@ public class TextTyperElementFactory : IElementFactory
             if ((currentlyDrawnChar > oldCurrentlyDrawnChar) && elem.IsVisible)
             {
                 UISoundFactory.PlayTextSoundEffect();
-                System.Console.WriteLine("new: " + currentlyDrawnChar);
-                System.Console.WriteLine("old: " + oldCurrentlyDrawnChar);
+                // System.Console.WriteLine("new: " + currentlyDrawnChar);
+                // System.Console.WriteLine("old: " + oldCurrentlyDrawnChar);
             }
 
             // System.Console.WriteLine("freaking drawing text typer shit! " + currentlyDrawnChar);
