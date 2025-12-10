@@ -302,9 +302,19 @@ public class BattleState : IGameState
                 DoNextTurn();
             }
         });
+        battleTextElem.AddActionOnUIEvent(UIEvent.ButtonDown, (e) =>
+        {
+            var eventParams = (InputUIEventParams) e;
+            if (eventParams.Controls.Contains(UIControl.Return))
+            {
+                // Skip typing text
+                battleTextElem.Attributes["started_typing_time"] = (long) 0;
+            }
+        });
         battleTextElem.AddActionOnUIEvent(UIEvent.ButtonUp, (e) =>
         {
-            if (((InputUIEventParams) e).Controls.Contains(UIControl.Interact))
+            var eventParams = (InputUIEventParams) e;
+            if (eventParams.Controls.Contains(UIControl.Interact))
             {
                 DoNextTurn();
             }

@@ -16,8 +16,15 @@ public class KeyboardUIController : IController
         [Keys.Right] = UIControl.MoveRight,
         [Keys.Up] = UIControl.MoveUp,
         [Keys.Down] = UIControl.MoveDown,
+        [Keys.A] = UIControl.MoveLeft,
+        [Keys.D] = UIControl.MoveRight,
+        [Keys.W] = UIControl.MoveUp,
+        [Keys.S] = UIControl.MoveDown,
         [Keys.Enter] = UIControl.Interact,
         [Keys.Back] = UIControl.Return,
+        [Keys.RightShift] = UIControl.Return,
+        [Keys.Z] = UIControl.Interact,
+        [Keys.X] = UIControl.Return,
     };
 
     private KeyboardState _previousState;
@@ -44,17 +51,27 @@ public class KeyboardUIController : IController
         {
             if (currentState.IsKeyDown(keyMapping.Key))
             {
-                uiControlsPress.Add(keyMapping.Value);
-                // System.Console.WriteLine("keypress" + keyMapping.Value.ToString());
+                if (!uiControlsPress.Contains(keyMapping.Value))
+                {
+                    uiControlsPress.Add(keyMapping.Value);
+                    // System.Console.WriteLine("keypress" + keyMapping.Value.ToString());
+                }
             }
             if (currentState.IsKeyDown(keyMapping.Key) && _previousState.IsKeyUp(keyMapping.Key))
             {
-                uiControlsDown.Add(keyMapping.Value);
-                // System.Console.WriteLine("keydown" + keyMapping.Value.ToString());
+                if (!uiControlsDown.Contains(keyMapping.Value))
+                {
+                    uiControlsDown.Add(keyMapping.Value);
+                    // System.Console.WriteLine("keydown" + keyMapping.Value.ToString()); 
+                }
             }
             if (currentState.IsKeyUp(keyMapping.Key) && _previousState.IsKeyDown(keyMapping.Key))
             {
-                uiControlsUp.Add(keyMapping.Value);
+                // if another key mapped to the same ui event is being pressed at same time, we will not add it to uiControlsUp
+                if (!uiControlsUp.Contains(keyMapping.Value))
+                {
+                    uiControlsUp.Add(keyMapping.Value);
+                }
                 // System.Console.WriteLine("keyup" + keyMapping.Value.ToString());
             }
         }
