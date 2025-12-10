@@ -14,8 +14,8 @@ public class TeamOverworld : Pickup
     CharType _charType;
     public TeamOverworld(RoomMap levelMap, string charTypeName) : base(levelMap)
     {
-        CharType charType = StringToCharType(charTypeName);
-        SetCharacterType(charType);
+        _charType = StringToCharType(charTypeName);
+        SetCharacterType(_charType);
         Collider = new CollisionRect(this, Sprite.Width, Sprite.Height);
     }
     protected override void Apply()
