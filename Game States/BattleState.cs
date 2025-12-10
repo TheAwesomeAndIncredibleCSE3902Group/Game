@@ -12,6 +12,7 @@ using AwesomeRPG.UI.Events;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Sprint0.BattleMechanics.BattleEnemies;
 
 namespace AwesomeRPG;
 
@@ -328,7 +329,7 @@ public class BattleState : IGameState
                     
                 } else
                 {
-                    battleTextElem.Attributes["text_string"] = BattleScene.Instance.CurrentBattle.ToString() + ": " + BattleScene.Instance.CurrentBattle.TurnText;
+                    battleTextElem.Attributes["text_string"] = BattleScene.Instance.CurrentBattle.TurnText;
                 }
                 SwitchToBattleText();
             }
@@ -336,12 +337,71 @@ public class BattleState : IGameState
 
         buttons[0].AddActionOnUIEvent(UIEvent.ButtonUp, (e) =>
         {
-            if (((InputUIEventParams) e).Controls.Contains(UIControl.Interact))
+            if (((InputUIEventParams)e).Controls.Contains(UIControl.Interact))
             {
-                // We will have the player do some sort of action here
+                int target = 0;
+                for (int i = 0; i < BattleScene.Instance.EnemyList.Count; i++) { if (!BattleScene.Instance.EnemyList[i].IsFainted) { target = i; break; } }
+                (BattleScene.Instance.CurrentBattle as PlayerBattle).Attack(target);
+                if (BattleScene.Instance.CurrentBattle.TurnText == null)
+                {
+                    battleTextElem.Attributes["text_string"] = BattleScene.Instance.CurrentBattle.ToString() + ": TurnText string is null...";
 
-                // and then run DoNextTurn
-                DoNextTurn();
+                }
+                else
+                {
+                    battleTextElem.Attributes["text_string"] = BattleScene.Instance.CurrentBattle.TurnText;
+                }
+                SwitchToBattleText();
+            }
+        });
+        buttons[1].AddActionOnUIEvent(UIEvent.ButtonUp, (e) =>
+        {
+            if (((InputUIEventParams)e).Controls.Contains(UIControl.Interact))
+            {
+                (BattleScene.Instance.CurrentBattle as PlayerBattle).Heal();
+                if (BattleScene.Instance.CurrentBattle.TurnText == null)
+                {
+                    battleTextElem.Attributes["text_string"] = BattleScene.Instance.CurrentBattle.ToString() + ": TurnText string is null...";
+
+                }
+                else
+                {
+                    battleTextElem.Attributes["text_string"] = BattleScene.Instance.CurrentBattle.TurnText;
+                }
+                SwitchToBattleText();
+            }
+        });
+        buttons[2].AddActionOnUIEvent(UIEvent.ButtonUp, (e) =>
+        {
+            if (((InputUIEventParams)e).Controls.Contains(UIControl.Interact))
+            {
+                int target = 0;
+                for (int i = 0; i < BattleScene.Instance.EnemyList.Count; i++) { if (!BattleScene.Instance.EnemyList[i].IsFainted) { target = i; break; } }
+                switch (BattleScene.Instance.CurrentBattle.Name)
+                {
+                    case "Link":
+                        (BattleScene.Instance.CurrentBattle as LinkBattle).SwordStab(target);
+                        break;
+                    case "Old Lady":
+                        (BattleScene.Instance.CurrentBattle as OldLadyBattle).WiseAdvice(target);
+                        break;
+                    case "Zelda":
+                        (BattleScene.Instance.CurrentBattle as ZeldaBattle).LightArrow(target);
+                        break;
+                    case "Merchant":
+                        (BattleScene.Instance.CurrentBattle as MerchantBattle).ThrowGold(target);
+                        break;
+                }
+                if (BattleScene.Instance.CurrentBattle.TurnText == null)
+                {
+                    battleTextElem.Attributes["text_string"] = BattleScene.Instance.CurrentBattle.ToString() + ": TurnText string is null...";
+
+                }
+                else
+                {
+                    battleTextElem.Attributes["text_string"] = BattleScene.Instance.CurrentBattle.TurnText;
+                }
+                SwitchToBattleText();
             }
         });
         battleTextElem.AddActionOnUIEvent(UIEvent.ButtonDown, (e) =>

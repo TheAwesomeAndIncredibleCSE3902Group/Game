@@ -77,6 +77,9 @@ namespace AwesomeRPG.BattleMechanics
                     case CharType.Zelda:
                         allyList.Add(new ZeldaBattle(ally));
                         break;
+                    case CharType.Merchant:
+                        allyList.Add(new MerchantBattle(ally));
+                        break;
                     default:
                         throw new Exception("Ally type not recognized in InitializeBattle");
                 }
