@@ -319,6 +319,7 @@ public class BattleState : IGameState
         void DoNextTurn()
         {
             BattleScene.Instance.NextTurn();
+            foreach (CharacterBattleSprite enemy in _enemySprites) { enemy.Hurt = false; }
             if (BattleScene.Instance.CurrentBattle.IsFriend)
             {
                 SwitchToButtons();
@@ -344,6 +345,8 @@ public class BattleState : IGameState
                 int target = 0;
                 for (int i = 0; i < BattleScene.Instance.EnemyList.Count; i++) { if (!BattleScene.Instance.EnemyList[i].IsFainted) { target = i; break; } }
                 (BattleScene.Instance.CurrentBattle as PlayerBattle).Attack(target);
+                _enemySprites[target].Hurt = true;
+
                 if (BattleScene.Instance.CurrentBattle.TurnText == null)
                 {
                     battleTextElem.Attributes["text_string"] = BattleScene.Instance.CurrentBattle.ToString() + ": TurnText string is null...";
@@ -383,15 +386,19 @@ public class BattleState : IGameState
                 {
                     case "Link":
                         (BattleScene.Instance.CurrentBattle as LinkBattle).SwordStab(target);
+                        _enemySprites[target].Hurt = true;
                         break;
                     case "Old Lady":
                         (BattleScene.Instance.CurrentBattle as OldLadyBattle).WiseAdvice(target);
+                        _enemySprites[target].Hurt = true;
                         break;
                     case "Zelda":
                         (BattleScene.Instance.CurrentBattle as ZeldaBattle).LightArrow(target);
+                        _enemySprites[target].Hurt = true;
                         break;
                     case "Merchant":
                         (BattleScene.Instance.CurrentBattle as MerchantBattle).ThrowGold(target);
+                        _enemySprites[target].Hurt = true;
                         break;
                 }
                 if (BattleScene.Instance.CurrentBattle.TurnText == null)
