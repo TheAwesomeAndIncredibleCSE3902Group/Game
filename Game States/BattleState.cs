@@ -369,6 +369,20 @@ public class BattleState : IGameState
             }
         }
         #endregion
+        if (!BattleScene.Instance.CurrentBattle.IsFriend)
+        {
+            (BattleScene.Instance.CurrentBattle as IEnemyBattle).TakeTurn();
+            if (BattleScene.Instance.CurrentBattle.TurnText == null)
+            {
+                battleTextElem.Attributes["text_string"] = BattleScene.Instance.CurrentBattle.ToString() + ": TurnText string is null...";
+
+            }
+            else
+            {
+                battleTextElem.Attributes["text_string"] = BattleScene.Instance.CurrentBattle.TurnText;
+            }
+            SwitchToBattleText();
+        }
 
         #region ButtonActions
         buttons[0].AddActionOnUIEvent(UIEvent.ButtonUp, (e) =>
