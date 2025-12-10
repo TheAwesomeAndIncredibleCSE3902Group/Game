@@ -50,6 +50,7 @@ public class CharacterBattleSprite
             CType.armos => csf.ArmosSpriteDown(),
             CType.lynel => csf.LynelSpriteDown(),
             CType.moblin => csf.MoblinSpriteDown(),
+            CType.boss => csf.BossSprite(),
             _ => csf.ArmosSpriteDown()
         };
 

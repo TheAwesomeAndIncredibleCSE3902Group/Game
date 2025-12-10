@@ -37,5 +37,11 @@ public class TeamSpriteFactory
         return new AnimatableSprite(_spriteBatch, _teamSpriteSheet, oldSourceRect);
     }
 
+    public ISprite CreateLinkSprite()
+    {
+        Rectangle oldSourceRect = new Rectangle(48, 0, 16, 16);
+        return new AnimatableSprite(_spriteBatch, _teamSpriteSheet, oldSourceRect);
+    }
+
 }
 

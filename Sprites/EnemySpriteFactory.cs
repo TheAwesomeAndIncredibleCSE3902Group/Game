@@ -64,6 +64,8 @@ public class EnemySpriteFactory
     public AnimatableSprite LynelSpriteDown() => BuildEnemySprite(new Rectangle(64, 34, 16, 16));
     public AnimatableSprite LynelSpriteUp() => BuildEnemySprite(new Rectangle(96, 34, 16, 16));
 
+    public AnimatableSprite BossSprite() => BuildEnemySprite(new Rectangle(0, 80, 16, 16));
+
     public AnimatableSprite LockSprite() => new (_spriteBatch, _tileSpriteSheet, new Rectangle(32, 32, 16, 16), 1, 0, new Point(0,0));
 
     public AnimatableSprite KrisSprite()

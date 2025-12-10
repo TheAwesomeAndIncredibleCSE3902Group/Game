@@ -3,11 +3,11 @@
   <Tilemap>
     <Tileset tileWidth="16" tileHeight="16">TileImages/zelda_tiles</Tileset>
     <Tiles rows="9" columns="16">
-      <Row>!01 !01 !01 !01 !01 !01 ?04 !01 !01 !01 !01 !01 !01 !01 !01 !01</Row>
+      <Row>!01 !01 !01 !01 !01 !01 !01 !01 !01 !01 !01 !01 !01 !01 !01 !01</Row>
       <Row>!01  00  00  00  00  00  00  00  00  00  00  00  00  00  00 !01</Row>
       <Row>!01  00  00  00  00  00  00  00  00  00  00  00  00  00  00 !01</Row>
-      <Row>!01  00  00  00  00  00  00  00  00  00  00  00  00  00  00 ?04</Row>
-      <Row>!01  00  00  00  00  00  04  00  00  00  00  00  00  00  00 ?04</Row>
+      <Row>?04  00  00  00  00  00  00  00  00  00  00  00  00  00  00 ?04</Row>
+      <Row>?04  00  00  00  00  00 .06 .06  00  00  00  00  00  00  00 ?04</Row>
       <Row>!01  00  00  00  00  00  00  00  00  00  00  00  00  00  00 !01</Row>
       <Row>!01  00  00  00  00  00  00  00  00  00  00  00  00  00  00 !01</Row>
       <Row>!01  00  00  00  00  00  00  00  00  00  00  00  00  00  00 !01</Row>
@@ -18,7 +18,6 @@
     <Entity x="60" y="60" pathing="random" facing="up">moblin</Entity>
     <Entity x="300" y="350" pathing="random" facing="down">armos</Entity>
     <Entity x="500" y="70" pathing="line" facing="right">lynel</Entity>
-    <Entity x="300" y="300" pathing="" facing="up">kris</Entity>
   </Entities>
   <Pickups>
     <Pickup x="100" y="300">potion</Pickup>

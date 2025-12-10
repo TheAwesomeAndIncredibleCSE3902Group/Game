@@ -202,24 +202,41 @@ public class BattleState : IGameState
             if (i < BattleScene.Instance.AllyList.Count)
             {
                 allyHealth.Attributes["associated_battle"] = BattleScene.Instance.AllyList[i];
+                var associatedBattle = BattleScene.Instance.AllyList[i];
 
                 var currentHealthBarBg = rectFactory.CreateNew(new Color(100, 0, 0));
-                currentHealthBarBg.OffsetAndSize = new Rectangle(46, 27, 208, 12);
+                currentHealthBarBg.OffsetAndSize = new Rectangle(46, 29, 208, 10);
                 allyHealth.AddChild(currentHealthBarBg);
 
                 var currentHealthBarFg = rectFactory.CreateNew(new Color(0, 200, 0));
-                currentHealthBarFg.OffsetAndSize = new Rectangle(46, 27, 111, 12); //TODO: set width according to current health
+                currentHealthBarFg.OffsetAndSize = new Rectangle(46, 29, 111, 10); //TODO: set width according to current health
                 allyHealth.AddChild(currentHealthBarFg);
 
-                var currentTextElem = textElementFactory.CreateNew(game.DefaultSpriteFont, BattleScene.Instance.AllyList[i].Name, Color.White);
-                currentTextElem.OffsetAndSize = new Rectangle(46, 0, 208, 20);
+                var currentTextElem = textElementFactory.CreateNew(game.DefaultSpriteFont, "ALLY TEXT?", Color.White);
+                currentTextElem.OffsetAndSize = new Rectangle(46, 2, 208, 20);
                 allyHealth.AddChild(currentTextElem);
                 
                 var playerIcon = animSpriteElementFactory.CreateNew();
-                // TODO: add the anim sprite element of the player's battle icon here
+                playerIcon.Attributes["associated_anim_sprite"] = ((PlayerBattle) associatedBattle).Icon;
                 playerIcon.OffsetAndSize = new Rectangle(6,7, 32, 32);
                 allyHealth.AddChild(playerIcon);
-                
+
+                allyHealth.AddActionOnUIEvent(UIEvent.Update, (e) =>
+                {
+                    var eventParams = (DrawUIEventParams)e;
+                    
+                    var hp = associatedBattle.Stats.GetHealth();
+                    var maxHp = associatedBattle.Stats.GetMaxHealth();
+
+                    currentHealthBarFg.OffsetAndSize = new Rectangle(
+                        currentHealthBarFg.OffsetAndSize.X,
+                        currentHealthBarFg.OffsetAndSize.Y,
+                        (int)(208 * ((float)hp / maxHp)),
+                        currentHealthBarFg.OffsetAndSize.Height
+                    );
+
+                    currentTextElem.Attributes["text_string"] = $"{associatedBattle.Name} HP: {hp}/{maxHp}";
+                });
             }
 
             allyHealthContainer.AddChild(allyHealth);

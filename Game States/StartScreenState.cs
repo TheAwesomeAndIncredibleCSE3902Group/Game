@@ -59,7 +59,9 @@ public class StartScreenState : IGameState
         double totalSeconds = gameTime.TotalGameTime.TotalSeconds * frequency;
         //Create a sin wave that varies from [0,1] with a specified frequency
         float lerp = (float)Math.Cos(Math.Tau * (totalSeconds - (int)totalSeconds)) / 2f + 0.5f;
-        return Color.Lerp(Color.DarkBlue, Color.BlueViolet, lerp);
+
+        Color violet = new Color(170, 90, 230);
+        return Color.Lerp(Color.DarkBlue, violet, lerp);
     }
 
     public void Update(GameTime gameTime)
