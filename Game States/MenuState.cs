@@ -1,4 +1,9 @@
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+using AwesomeRPG.BattleMechanics;
+using AwesomeRPG.BattleMechanics.BattleEnemies;
 using AwesomeRPG.Characters;
 using AwesomeRPG.UI;
 using AwesomeRPG.UI.ElementFactories;
@@ -101,6 +106,7 @@ public class MenuState : IGameState
         var rectFactory = new RectElementFactory(RootUIElement);
         var textFactory = new TextElementFactory(RootUIElement);
         var buttonFactory = new ButtonElementFactory(RootUIElement);
+        AnimSpriteElementFactory animSpriteFactory = new(RootUIElement);
         
         // Create semi-transparent overlay background
         var overlayBg = rectFactory.CreateNew(new Color(0, 0, 0, 0.7f));
@@ -178,7 +184,7 @@ public class MenuState : IGameState
         RootUIElement.AddChild(tabButtonContainer);
         
         // Create containers for each menu tab content
-        CreatePartyMenu(rectFactory, textFactory);
+        CreatePartyMenu(rectFactory, textFactory, animSpriteFactory);
         CreateInventoryMenu(rectFactory, textFactory);
         CreateOptionsMenu(rectFactory, textFactory);
         
@@ -265,7 +271,7 @@ public class MenuState : IGameState
         SwitchToTab(MenuTab.Party);
     }
     
-    private void CreatePartyMenu(RectElementFactory rectFactory, TextElementFactory textFactory)
+    private void CreatePartyMenu(RectElementFactory rectFactory, TextElementFactory textFactory, AnimSpriteElementFactory animSpriteElementFactory)
     {
         _partyContainer = new Element(RootUIElement);
         _partyContainer.OffsetAndSize = new Rectangle(116, 158, 792, 522);
@@ -281,16 +287,50 @@ public class MenuState : IGameState
         partyHeader.OffsetAndSize = new Rectangle(0, 10, 792, 40);
         _partyContainer.AddChild(partyHeader);
         
-        // Placeholder content for party menu
-        var partyContent = textFactory.CreateNew(
-            _game.DefaultSpriteFont, 
-            "TODO: Add party member content here.", 
-            new Color(200, 200, 200), 
-            TextElementFactory.TextAlign.Center, 
-            TextElementFactory.TextAlign.Center
-        );
-        partyContent.OffsetAndSize = new Rectangle(50, 80, 692, 400);
-        _partyContainer.AddChild(partyContent);
+        var partyStatusContainer = new Element(RootUIElement);
+        partyStatusContainer.OffsetAndSize = new Rectangle(745, 540, 260, 210);
+        
+        for (int i = 0; i < 4; i++)
+        {
+            var allyHealth = new Element(RootUIElement);
+            allyHealth.OffsetAndSize = new Rectangle(0, i * 55, 260, 45);
+
+            var currentBgRect = rectFactory.CreateNew(new Color(0, 0, 0, 0.2f));
+            currentBgRect.OffsetAndSize = new Rectangle(0, 0, 260, 45);
+            allyHealth.AddChild(currentBgRect);
+            if (i < Player.Instance.Party.Count)
+            {
+                allyHealth.Attributes["associated_battle"] = Player.Instance.Party[i];
+                var associatedBattle = Player.Instance.Party[i];
+
+                var currentHealthBarBg = rectFactory.CreateNew(new Color(100, 0, 0));
+                currentHealthBarBg.OffsetAndSize = new Rectangle(46, 29, 208, 10);
+                allyHealth.AddChild(currentHealthBarBg);
+
+                var currentHealthBarFg = rectFactory.CreateNew(new Color(0, 200, 0));
+                currentHealthBarFg.OffsetAndSize = new Rectangle(46, 29, 111, 10); 
+                allyHealth.AddChild(currentHealthBarFg);
+
+                var currentTextElem = textFactory.CreateNew(_game.DefaultSpriteFont, "ALLY TEXT?", Color.White);
+                currentTextElem.OffsetAndSize = new Rectangle(46, 2, 208, 20);
+                allyHealth.AddChild(currentTextElem);
+                var hp = associatedBattle.GetHealth();
+                var maxHp = associatedBattle.GetMaxHealth();
+
+                currentHealthBarFg.OffsetAndSize = new Rectangle(
+                    currentHealthBarFg.OffsetAndSize.X,
+                    currentHealthBarFg.OffsetAndSize.Y,
+                    (int)(208 * ((float)hp / maxHp)),
+                    currentHealthBarFg.OffsetAndSize.Height
+                );
+
+                currentTextElem.Attributes["text_string"] = $"{associatedBattle.Type} HP: {hp}/{maxHp}";
+            }
+
+            partyStatusContainer.AddChild(allyHealth);
+        }
+        partyStatusContainer.OffsetAndSize = new Rectangle(50, 80, 692, 400);
+        _partyContainer.AddChild(partyStatusContainer);
     }
     
     private void CreateInventoryMenu(RectElementFactory rectFactory, TextElementFactory textFactory)
@@ -308,15 +348,25 @@ public class MenuState : IGameState
         );
         inventoryHeader.OffsetAndSize = new Rectangle(0, 10, 792, 40);
         _inventoryContainer.AddChild(inventoryHeader);
+
+        var inventoryContent = new Element(RootUIElement);
+        inventoryContent.OffsetAndSize = new Rectangle(745, 540, 260, 210);
         
-        // Placeholder content for inventory menu
-        var inventoryContent = textFactory.CreateNew(
-            _game.DefaultSpriteFont, 
-            "TODO: Add inventory content here.", 
-            new Color(200, 200, 200), 
-            TextElementFactory.TextAlign.Center, 
-            TextElementFactory.TextAlign.Center
-        );
+        int i = 0;
+        foreach (KeyValuePair<IInventoryItem.Type, int> keyValue in Player.Instance.Inventory)
+        {
+            if (keyValue.Value > 0) {
+                var itemContainer = new Element(RootUIElement);
+                itemContainer.OffsetAndSize = new Rectangle(0, i * 55, 260, 45);
+                
+                var currentTextElem = textFactory.CreateNew(_game.DefaultSpriteFont, "ALLY TEXT?", Color.White);
+                currentTextElem.OffsetAndSize = new Rectangle(46, 2, 208, 20);
+                itemContainer.AddChild(currentTextElem);
+                currentTextElem.Attributes["text_string"] = $"{keyValue.Key}: {keyValue.Value}";
+                inventoryContent.AddChild(itemContainer);
+                i++;
+            }
+        }
         inventoryContent.OffsetAndSize = new Rectangle(50, 80, 692, 400);
         _inventoryContainer.AddChild(inventoryContent);
     }
