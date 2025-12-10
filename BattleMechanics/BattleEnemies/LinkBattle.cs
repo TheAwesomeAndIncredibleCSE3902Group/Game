@@ -20,9 +20,10 @@ namespace Sprint0.BattleMechanics.BattleEnemies
         {
             int attackVal = Stats.GetAttack();
             int defenseVal = BattleScene.Instance.EnemyList[enemyIndex].Stats.GetDefense();
-            int damageVal = (defenseVal / 2) - attackVal;
+            int damageVal = attackVal - (defenseVal / 2);
+            if (damageVal < 0) damageVal = 0;
 
-            BattleScene.Instance.EnemyList[enemyIndex].Stats.ChangeHealth(damageVal);
+            BattleScene.Instance.EnemyList[enemyIndex].Stats.ChangeHealth(-damageVal);
 
             TurnText = $"{Name} stabbed {BattleScene.Instance.EnemyList[enemyIndex].Name} for {damageVal} damage!\n";
             if (BattleScene.Instance.EnemyList[enemyIndex].Stats.GetHealth() < 1)

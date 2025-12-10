@@ -12,6 +12,7 @@ using AwesomeRPG.UI.Events;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Sprint0.BattleMechanics.BattleEnemies;
 
 namespace AwesomeRPG;
 
@@ -32,7 +33,7 @@ public class BattleState : IGameState
     private Game1 game;
     //Ideally enemies and enemySprites would be combined into a BattleEnemy
     private CharacterEnemyBase _enemy;
-    private CharacterEnemyBase[] _enemies;
+    private CharacterEnemyBase.CType[] _enemies;
     private CharacterBattleSprite[] _enemySprites;
     private string _enemyType;
     public GameState CurrentState { get => GameState.battle; }
@@ -102,34 +103,36 @@ public class BattleState : IGameState
     }
     
     //Little test method to test displaying multiple enemies
-    private void TESTDupeEnemies()
+    private void GetEnemies()
     {
-        const int num = 3;
-
-        CharacterEnemyBase[] oldEnemies = _enemies;
-        _enemies = new CharacterEnemyBase[num];
+        int num = BattleScene.Instance.EnemyList.Count;
+        _enemies = new CharacterEnemyBase.CType[num];
 
         for (int i = 0; i < num; i++)
         {
-            _enemies[i] = oldEnemies[0];
+            _enemies[i] = (BattleScene.Instance.EnemyList[i] as IEnemyBattle).Type;
         }
-        _enemies[1] = new CharacterEnemyMoblin(Vector2.Zero, Util.Cardinal.down);
+
     }
 
     private void BuildBattlePanel()
     {
-        _enemies = [_enemy];
-        TESTDupeEnemies();
+        GetEnemies();
 
         //TODO: background
+        if (_enemies.Length > 0)
+        {
+            Vector2[] enemyOffsets = FindEnemyOffsets(_enemies.Length);
+            _enemySprites = new CharacterBattleSprite[_enemies.Length];
 
-        Vector2[] enemyOffsets = FindEnemyOffsets(_enemies.Length);
-        _enemySprites = new CharacterBattleSprite[_enemies.Length];
+            for (int i = 0; i < _enemies.Length; i++)
+                _enemySprites[i] = new CharacterBattleSprite(_enemies[i], enemyOffsets[i]);
 
-        for (int i = 0; i < _enemies.Length; i++)
-            _enemySprites[i] = new CharacterBattleSprite(_enemies[i].Type, enemyOffsets[i]);
-
-        _enemySprites[1].Hurt = true;
+        }
+        else
+        {
+            Debug.WriteLine("ERROR _enemies is null");
+        }
     }
     
 
@@ -245,6 +248,9 @@ public class BattleState : IGameState
                 var eventParams = (InputUIEventParams)e;
             });
             buttonContainer.AddChild(currentButtonToAdd);
+
+            //This is an example for how to change button text
+            //(currentButtonToAdd.Attributes["text_element"] as Element).Attributes["text_string"] = "test";
         }
 
         RootUIElement.AddChild(buttonContainer);
@@ -316,6 +322,8 @@ public class BattleState : IGameState
         void DoNextTurn()
         {
             BattleScene.Instance.NextTurn();
+            if (!BattleScene.Instance.CurrentlyInBattle) { Game1.StateClass.ChangeToOverworldState(); return; }
+            foreach (CharacterBattleSprite enemy in _enemySprites) { enemy.Hurt = false; }
             if (BattleScene.Instance.CurrentBattle.IsFriend)
             {
                 SwitchToButtons();
@@ -328,7 +336,7 @@ public class BattleState : IGameState
                     
                 } else
                 {
-                    battleTextElem.Attributes["text_string"] = BattleScene.Instance.CurrentBattle.ToString() + ": " + BattleScene.Instance.CurrentBattle.TurnText;
+                    battleTextElem.Attributes["text_string"] = BattleScene.Instance.CurrentBattle.TurnText;
                 }
                 SwitchToBattleText();
             }
@@ -336,12 +344,77 @@ public class BattleState : IGameState
 
         buttons[0].AddActionOnUIEvent(UIEvent.ButtonUp, (e) =>
         {
-            if (((InputUIEventParams) e).Controls.Contains(UIControl.Interact))
+            if (((InputUIEventParams)e).Controls.Contains(UIControl.Interact))
             {
-                // We will have the player do some sort of action here
+                int target = 0;
+                for (int i = 0; i < BattleScene.Instance.EnemyList.Count; i++) { if (!BattleScene.Instance.EnemyList[i].IsFainted) { target = i; break; } }
+                (BattleScene.Instance.CurrentBattle as PlayerBattle).Attack(target);
+                _enemySprites[target].Hurt = true;
 
-                // and then run DoNextTurn
-                DoNextTurn();
+                if (BattleScene.Instance.CurrentBattle.TurnText == null)
+                {
+                    battleTextElem.Attributes["text_string"] = BattleScene.Instance.CurrentBattle.ToString() + ": TurnText string is null...";
+
+                }
+                else
+                {
+                    battleTextElem.Attributes["text_string"] = BattleScene.Instance.CurrentBattle.TurnText;
+                }
+                SwitchToBattleText();
+            }
+        });
+        buttons[1].AddActionOnUIEvent(UIEvent.ButtonUp, (e) =>
+        {
+            if (((InputUIEventParams)e).Controls.Contains(UIControl.Interact))
+            {
+                (BattleScene.Instance.CurrentBattle as PlayerBattle).Heal();
+                if (BattleScene.Instance.CurrentBattle.TurnText == null)
+                {
+                    battleTextElem.Attributes["text_string"] = BattleScene.Instance.CurrentBattle.ToString() + ": TurnText string is null...";
+
+                }
+                else
+                {
+                    battleTextElem.Attributes["text_string"] = BattleScene.Instance.CurrentBattle.TurnText;
+                }
+                SwitchToBattleText();
+            }
+        });
+        buttons[2].AddActionOnUIEvent(UIEvent.ButtonUp, (e) =>
+        {
+            if (((InputUIEventParams)e).Controls.Contains(UIControl.Interact))
+            {
+                int target = 0;
+                for (int i = 0; i < BattleScene.Instance.EnemyList.Count; i++) { if (!BattleScene.Instance.EnemyList[i].IsFainted) { target = i; break; } }
+                switch (BattleScene.Instance.CurrentBattle.Name)
+                {
+                    case "Link":
+                        (BattleScene.Instance.CurrentBattle as LinkBattle).SwordStab(target);
+                        _enemySprites[target].Hurt = true;
+                        break;
+                    case "Old Lady":
+                        (BattleScene.Instance.CurrentBattle as OldLadyBattle).WiseAdvice(target);
+                        _enemySprites[target].Hurt = true;
+                        break;
+                    case "Zelda":
+                        (BattleScene.Instance.CurrentBattle as ZeldaBattle).LightArrow(target);
+                        _enemySprites[target].Hurt = true;
+                        break;
+                    case "Merchant":
+                        (BattleScene.Instance.CurrentBattle as MerchantBattle).ThrowGold(target);
+                        _enemySprites[target].Hurt = true;
+                        break;
+                }
+                if (BattleScene.Instance.CurrentBattle.TurnText == null)
+                {
+                    battleTextElem.Attributes["text_string"] = BattleScene.Instance.CurrentBattle.ToString() + ": TurnText string is null...";
+
+                }
+                else
+                {
+                    battleTextElem.Attributes["text_string"] = BattleScene.Instance.CurrentBattle.TurnText;
+                }
+                SwitchToBattleText();
             }
         });
         battleTextElem.AddActionOnUIEvent(UIEvent.ButtonDown, (e) =>

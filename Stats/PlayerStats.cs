@@ -22,7 +22,7 @@ public class PlayerStats : IStats
     public int levelUps;
     public CharType Type { get; set; }
 
-    public PlayerStats(CharType type) : this(100, 10, 10, 10, 10, 10, 10, 10, 10)
+    public PlayerStats(CharType type) : this(100, 10, 10, 5, 2, 10, 4, 1, 1)
     {
         this.Type = type;
         switch (type)
@@ -30,17 +30,17 @@ public class PlayerStats : IStats
             case CharType.Link:
                 maxHealth = 150;
                 attack = 15;
-                defense = 12;
+                defense = 4;
                 break;
             case CharType.OldLady:
                 maxHealth = 80;
-                specialAttack = 18;
+                specialAttack = 10;
                 specialPointCount = 15;
                 break;
             case CharType.Zelda:
                 maxHealth = 100;
                 speed = 15;
-                luck = 20;
+                luck = 10;
                 break;
             default:
                 // Default stats are already set in the constructor call

@@ -42,11 +42,19 @@ public abstract class PlayerBattle : IBattle
 
         BattleScene.Instance.EnemyList[enemyIndex].Stats.ChangeHealth(-damageVal);
 
-        TurnText = $"{Name} attack value: {attackVal}. enemy defense value: {defenseVal}\nPlayer attacked for {Math.Abs(damageVal)} damage!\nEnemy's health is now {BattleScene.Instance.EnemyList[enemyIndex].Stats.GetHealth()}";
+        TurnText = $"{Name} attack value: {attackVal}. enemy defense value: {defenseVal}\n{Name} attacked for {Math.Abs(damageVal)} damage!\n{BattleScene.Instance.EnemyList[enemyIndex].Name}'s health is now {BattleScene.Instance.EnemyList[enemyIndex].Stats.GetHealth()}";
         if (BattleScene.Instance.EnemyList[enemyIndex].Stats.GetHealth() < 1)
         {
             BattleScene.Instance.EnemyList[enemyIndex].IsFainted = true;
             TurnText += $"Enemy has fainted!";
         }
+    }
+    public void Heal()
+    {
+        int specialAtkVal = Stats.GetSpecialAttack();
+
+        Stats.ChangeHealth(specialAtkVal);
+
+        TurnText = $"{Name} healed themselves for {specialAtkVal}!";
     }
 }

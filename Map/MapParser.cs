@@ -183,6 +183,10 @@ public class MapParser
                 {
                     map.NonMovingCollisionObjects.Add(new Lava(position, width, height));
                 }
+                else if ((collisionMatrix[i][j] == 4))
+                {
+                    map.NonMovingCollisionObjects.Add(new DebugEntrance(position, width, height));
+                }
             }
         }
     }

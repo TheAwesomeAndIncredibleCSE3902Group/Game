@@ -1,10 +1,12 @@
-﻿using AwesomeRPG.Stats;
-using System;
+﻿using System;
+using AwesomeRPG.Characters;
+using AwesomeRPG.Stats;
 using static AwesomeRPG.Util;
 
 namespace AwesomeRPG.BattleMechanics.BattleEnemies;
 public class LynelBattle : IEnemyBattle
 {
+    public CharacterEnemyBase.CType Type { get; } = CharacterEnemyBase.CType.lynel;
     public IStats Stats { get; set; }
     public enum LynelActions { BrushBackHair, HardStomp, StabNSlash }
 

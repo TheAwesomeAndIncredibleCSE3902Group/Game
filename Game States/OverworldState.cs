@@ -110,19 +110,29 @@ public class OverworldState : IGameState
     {
         RootElement rootUIElement = new RootElement(spriteBatch);
 
+        
         //Ensure the font is loaded
-        var spriteFont = game.Content.Load<SpriteFont>("Fonts\\MyFont");
+        var spriteFont = game.Content.Load<SpriteFont>("Fonts\\ZeldaFont");
+        TextElementFactory textElementFactory = new TextElementFactory(rootUIElement);
+        string healthString = GetPartyHealthString();
+        Element textElem = textElementFactory.CreateNew(spriteFont, 
+                                                        healthString, 
+                                                        Color.White,
+                                                        TextElementFactory.TextAlign.Left,
+                                                        TextElementFactory.TextAlign.Right);
+        textElem.OffsetAndSize = Util.ScreenRect;
+        rootUIElement.AddChild(textElem);
+         rootUIElement.Draw(gameTime);
+    }
 
-        // //Ensure the font is loaded
-        // var spriteFont = game.Content.Load<SpriteFont>("Fonts\\MyFont");
-
-        // //Text element construction
-        // String textString = Player.Instance.PlayerStats[0].GetHealth().ToString();
-        // TextElement textElem = new TextElement(rootUIElement, spriteFont, textString, Color.White);
-        // textElem.OffsetAndSize = game.GetScreenRect();
-        // textElem.HorizontalTextAlign = TextElement.TextAlign.Left;
-        // textElem.VerticalTextAlign = TextElement.TextAlign.Right;
-        // rootUIElement.AddChild(textElem);
-        // rootUIElement.Draw(gameTime);
+    private string GetPartyHealthString()
+    {
+        string healthString = "";
+        var partyHealths = Player.Instance.Party;
+        foreach(var member in partyHealths)
+        {
+            healthString += $"{member.Type}: {member.GetHealth()}HP\n";
+        }
+        return healthString;
     }
 }

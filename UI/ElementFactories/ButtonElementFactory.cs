@@ -71,6 +71,9 @@ public class ButtonElementFactory : IElementFactory
                 rectElem.Attributes["fill_color"] = bgColor;
         });
 
+        //Allows convenient access to buttton text
+        elem.Attributes["text_element"] = textElem;
+
         return elem;
     }
 }
