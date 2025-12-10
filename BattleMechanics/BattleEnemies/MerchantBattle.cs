@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AwesomeRPG.BattleMechanics;
 using AwesomeRPG.BattleMechanics.BattleEnemies;
+using AwesomeRPG.Sprites;
 using AwesomeRPG.Stats;
 
 namespace Sprint0.BattleMechanics.BattleEnemies
@@ -14,6 +15,9 @@ namespace Sprint0.BattleMechanics.BattleEnemies
         public MerchantBattle(PlayerStats stats) : base(stats) 
         {
             Name = "Merchant";
+            AnimatableSprite animatableSprite = TeamSpriteFactory.Instance.CreateMerchantSprite() as AnimatableSprite;
+            animatableSprite.SetScale(2);
+            Icon = animatableSprite;
         }
 
         public void ThrowGold(int enemyIndex)
