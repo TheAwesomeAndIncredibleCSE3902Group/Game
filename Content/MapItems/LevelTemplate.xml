@@ -18,11 +18,19 @@
     <Entity x="60" y="60" pathing="random" facing="up">moblin</Entity>
     <Entity x="300" y="350" pathing="random" facing="down">armos</Entity>
     <Entity x="500" y="70" pathing="line" facing="right">lynel</Entity>
-    <Entity x="300" y="300" pathing="" facing="up">kris</Entity>
+    <Entity x="300" y="300" pathing="stand" facing="up">kris</Entity>
   </Entities>
   <Pickups>
     <Pickup x="100" y="300">potion</Pickup>
-    <Pickup x="600" y="400">potion</Pickup>
+    <Pickup x="80" y="130" roomX="0" roomY="2" lockID="0">key</Pickup>
     <Pickup x="500" y="350" charType="merchant">team</Pickup>
+    <Pickup x="384" y="196" weaponType="bow">weapon</Pickup>
+    <Pickup x="512" y="196" weaponType="boomerang">weapon</Pickup>
+    <Pickup x="640" y="196" weaponType="beamsword">weapon</Pickup>
+    <Pickup x="68" y="452" charType="old">team</Pickup>
+    <Pickup x="68" y="256" charType="zelda">team</Pickup>
   </Pickups>
+  <Locks>
+    <Lock x="704" y="256" id="0"/>
+  </Locks>
 </Map>
