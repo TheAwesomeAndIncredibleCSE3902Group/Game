@@ -45,6 +45,7 @@ public class MoblinBattle : IEnemyBattle
     {
         int rand = new Random().Next(BattleScene.Instance.AllyList.Count);
         IBattle target = BattleScene.Instance.AllyList[rand];
+        if (target.IsFainted) { foreach (IBattle player in BattleScene.Instance.AllyList) { if (!player.IsFainted) { target = player; break; } } }
         int healthChangeVal = 0;
 
         switch (ChooseAction())

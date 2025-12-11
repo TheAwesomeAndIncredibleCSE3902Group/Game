@@ -40,6 +40,10 @@ Combat
 | Move between Options | up, down, left, right |
 | Select Option     | enter |
 
+When succeeding in combat with enemies you gain xp, when a party member has
+gained enough xp to level up they will heal and increase their stats. Enemy
+difficulty is scaled based on the average level of the party.
+
 The UI is manipulated with the arrow keys for navigation and the enter button
     to make a selection.
 
