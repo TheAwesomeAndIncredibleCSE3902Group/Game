@@ -188,7 +188,7 @@ public class MenuState : IGameState
         
         // Create containers for each menu tab content
         CreatePartyMenu(rectFactory, textFactory);
-        CreateInventoryMenu(rectFactory, textFactory);
+        CreateInventoryMenu(rectFactory, textFactory, animSpriteFactory);
         CreateOptionsMenu(rectFactory, textFactory, buttonFactory);
         
         // Add all containers to root
@@ -335,18 +335,18 @@ public class MenuState : IGameState
         partyStatusContainer.OffsetAndSize = new Rectangle(50, 80, 692, 400);
         _partyContainer.AddChild(partyStatusContainer);
     }
-    
-    private void CreateInventoryMenu(RectElementFactory rectFactory, TextElementFactory textFactory)
+
+    private void CreateInventoryMenu(RectElementFactory rectFactory, TextElementFactory textFactory, AnimSpriteElementFactory animSpriteFactory)
     {
         _inventoryContainer = new(RootUIElement);
         _inventoryContainer.OffsetAndSize = new Rectangle(116, 158, 792, 522);
-        
+
         // Inventory menu header
         Element inventoryHeader = textFactory.CreateNew(
-            _game.DefaultSpriteFont, 
-            "Inventory", 
-            Color.White, 
-            TextElementFactory.TextAlign.Center, 
+            _game.DefaultSpriteFont,
+            "Inventory",
+            Color.White,
+            TextElementFactory.TextAlign.Center,
             TextElementFactory.TextAlign.Left
         );
         inventoryHeader.OffsetAndSize = new Rectangle(0, 10, 792, 40);
@@ -354,20 +354,40 @@ public class MenuState : IGameState
 
         Element inventoryContent = new Element(RootUIElement);
         inventoryContent.OffsetAndSize = new Rectangle(745, 540, 260, 210);
-        
-        int i = 0;
+
+        int consumables = 0;
+        int equipments = 0;
         foreach (KeyValuePair<IInventoryItem.Type, int> keyValue in Player.Instance.Inventory)
         {
-            if (keyValue.Value > 0) {
+            if (keyValue.Value > 0)
+            {
                 Element itemContainer = new Element(RootUIElement);
-                itemContainer.OffsetAndSize = new Rectangle(0, i * 55, 260, 45);
+
+                if (keyValue.Key.IsConsumable())
+                {
+                    itemContainer.OffsetAndSize = new Rectangle(0, consumables * 55, 260, 45);
+                    consumables++;
+                }
+                else
+                {
+                    itemContainer.OffsetAndSize = new Rectangle(400, equipments * 55, 260, 45);
+                    equipments++;
+                }
                 
-                Element currentTextElem = textFactory.CreateNew(_game.DefaultSpriteFont, "ALLY TEXT?", Color.White);
+                Element currentBgRect = rectFactory.CreateNew(new Color(0, 0, 0, 0.2f));
+                currentBgRect.OffsetAndSize = new Rectangle(0, 0, 220, 45); //Should do variable width but I aint gonna
+                itemContainer.AddChild(currentBgRect);
+
+                var pickupIcon = animSpriteFactory.CreateNew();
+                pickupIcon.Attributes["associated_anim_sprite"] = keyValue.Key.GetInventorySprite();
+                pickupIcon.OffsetAndSize = new Rectangle(6, 7, 32, 32);
+                itemContainer.AddChild(pickupIcon);
+
+                string text = keyValue.Key.IsConsumable() ? $"{keyValue.Key}: {keyValue.Value}" : $"{keyValue.Key}";
+                Element currentTextElem = textFactory.CreateNew(_game.DefaultSpriteFont, text, Color.White);
                 currentTextElem.OffsetAndSize = new Rectangle(46, 2, 208, 20);
                 itemContainer.AddChild(currentTextElem);
-                currentTextElem.Attributes["text_string"] = $"{keyValue.Key}: {keyValue.Value}";
                 inventoryContent.AddChild(itemContainer);
-                i++;
             }
         }
         inventoryContent.OffsetAndSize = new Rectangle(50, 80, 692, 400);

@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using AwesomeRPG.Sprites;
 using Microsoft.Xna.Framework;
 
 namespace AwesomeRPG;
@@ -76,12 +77,36 @@ public static class Util
     public static Cardinal ToCard(this Collision.CollisionDirection direction)
     {
         return direction switch
-            {
-                Collision.CollisionDirection.Bottom => Cardinal.down,
-                Collision.CollisionDirection.Top => Cardinal.up,
-                Collision.CollisionDirection.Right => Cardinal.right,
-                Collision.CollisionDirection.Left => Cardinal.left,
-                _ => throw new ArgumentException("CollisionDirection cannot be null!")
-            };
+        {
+            Collision.CollisionDirection.Bottom => Cardinal.down,
+            Collision.CollisionDirection.Top => Cardinal.up,
+            Collision.CollisionDirection.Right => Cardinal.right,
+            Collision.CollisionDirection.Left => Cardinal.left,
+            _ => throw new ArgumentException("CollisionDirection cannot be null!")
+        };
+    }
+
+    public static ISprite GetInventorySprite(this IInventoryItem.Type type)
+    {
+        ISprite sprite = type switch
+        {
+            IInventoryItem.Type.potion => MapItemSpriteFactory.CreatePotionSprite(),
+            IInventoryItem.Type.boomerang => ProjectileSpriteFactory.CreateBoomerangSprite(),
+            IInventoryItem.Type.beamSword => ProjectileSpriteFactory.CreateSwordBeamSprite(Cardinal.right),
+            IInventoryItem.Type.bow => ProjectileSpriteFactory.CreateArrowSprite(Cardinal.down),
+            _ => throw new ArgumentException("No Sprite for this type!")
+        };
+
+        (sprite as AnimatableSprite).SetScale(2);
+        return sprite;
+    }
+
+    public static bool IsConsumable(this IInventoryItem.Type type)
+    {
+        return type switch
+        {
+            IInventoryItem.Type.potion => true,
+            _ => false
+        };
     }
 }

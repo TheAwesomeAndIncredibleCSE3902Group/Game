@@ -66,9 +66,7 @@ public class SelectionAnimationElementFactory : IElementFactory
             var newThickness = animationFrame / 8 + 2;
 
             //The 150 used to be ~500 but I wanted it brighter
-            var newColor = Color.White * ((99 - animationFrame) / 200.0f);
-
-            Console.WriteLine("Color is " + newColor);
+            Color newColor = Color.White * ((99 - animationFrame) / 200.0f);
 
             glowRectElem.Attributes["outline_thickness"] = newThickness;
             glowRectElem.Attributes["outline_color"] = newColor;

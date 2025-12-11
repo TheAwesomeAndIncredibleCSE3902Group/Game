@@ -4,6 +4,7 @@ using AwesomeRPG.Sprites;
 using Microsoft.Xna.Framework;
 using static AwesomeRPG.Util;
 using static AwesomeRPG.Characters.CharacterEnemyBase;
+using AwesomeRPG.UI;
 
 namespace AwesomeRPG.Characters;
 
@@ -15,11 +16,12 @@ public class CharacterBattleSprite
         set
         {
             hurt = value;
-            sprite.Color = hurt ? new Color(255, 120, 120) : Color.White;
+            Sprite.Color = hurt ? new Color(255, 120, 120) : Color.White;
         }
     }
     private bool hurt = false;
-    private AnimatableSprite sprite;
+    public AnimatableSprite Sprite { get; private set; }
+    public Element Element { get; set; }
     private Vector2 Position { get; set; }
     private CType type;
 
@@ -29,12 +31,12 @@ public class CharacterBattleSprite
         this.type = type;
         Position = pos;
         SetSprite();
-        sprite.RandomizeAnimationStart();
+        Sprite.RandomizeAnimationStart();
     }
 
     public void Draw(GameTime gameTime)
     {
-        sprite.Draw(gameTime, Position);
+        Sprite.Draw(gameTime, Position);
     }
 
     /// <summary>
@@ -45,7 +47,7 @@ public class CharacterBattleSprite
     public void SetSprite(bool attacking = false)
     {
         EnemySpriteFactory csf = EnemySpriteFactory.Instance;
-        sprite = type switch
+        Sprite = type switch
         {
             CType.armos => csf.ArmosSpriteDown(),
             CType.lynel => csf.LynelSpriteDown(),
@@ -54,7 +56,7 @@ public class CharacterBattleSprite
             _ => csf.ArmosSpriteDown()
         };
 
-        sprite.MillisecondsBetweenFrames = (ulong)Util.BattleStaticAnimationMilliseconds;
-        sprite.SetScale(Util.BattleScale);
+        Sprite.MillisecondsBetweenFrames = (ulong)Util.BattleStaticAnimationMilliseconds;
+        Sprite.SetScale(Util.BattleScale);
     }
 }

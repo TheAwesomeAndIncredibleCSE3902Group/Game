@@ -55,8 +55,6 @@ public class BattleState : IGameState
             InitializeUI(spriteBatch);            
         }
         RootUIElement.Draw(gameTime);
-        foreach (CharacterBattleSprite enemy in _enemySprites)
-            enemy.Draw(gameTime);
     }
 
     public void Update(GameTime gameTime)
@@ -109,7 +107,6 @@ public class BattleState : IGameState
     {
         SetupBattle.Initialize(_enemyType, playerStarting);
         Debug.WriteLine(BattleScene.Instance.CurrentBattle.Name);
-        BuildBattlePanel();
     }
     
     //Little test method to test displaying multiple enemies
@@ -125,7 +122,7 @@ public class BattleState : IGameState
 
     }
 
-    private void BuildBattlePanel()
+    private void BuildBattlePanel(AnimSpriteElementFactory animSpriteElementFactory)
     {
         GetEnemies();
 
@@ -136,7 +133,16 @@ public class BattleState : IGameState
             _enemySprites = new CharacterBattleSprite[_enemies.Length];
 
             for (int i = 0; i < _enemies.Length; i++)
-                _enemySprites[i] = new CharacterBattleSprite(_enemies[i], enemyOffsets[i]);
+            {
+                CharacterBattleSprite battleSprite = new CharacterBattleSprite(_enemies[i], enemyOffsets[i]);
+                _enemySprites[i] = battleSprite;
+
+                Element enemySpriteElem = animSpriteElementFactory.CreateNew(battleSprite.Sprite);
+                enemySpriteElem.OffsetAndSize = new Rectangle((int)enemyOffsets[i].X, (int)enemyOffsets[i].Y, 64, 64);
+                RootUIElement.AddChild(enemySpriteElem);
+
+                _enemySprites[i].Element = enemySpriteElem;
+            }
 
         }
         else
@@ -185,8 +191,10 @@ public class BattleState : IGameState
 
         var textElementFactory = new TextElementFactory(RootUIElement);
         var animSpriteElementFactory = new AnimSpriteElementFactory(RootUIElement);
-
         var rectFactory = new RectElementFactory(RootUIElement);
+
+        BuildBattlePanel(animSpriteElementFactory);
+
         var battleUiBoardBorder = rectFactory.CreateNew(new Color(40, 0, 40));
         battleUiBoardBorder.OffsetAndSize = new Rectangle(8, 528, 1008, 234);
 
@@ -418,7 +426,14 @@ public class BattleState : IGameState
             if (((InputUIEventParams)e).Controls.Contains(UIControl.Interact))
             {
                 int target = 0;
-                for (int i = 0; i < BattleScene.Instance.EnemyList.Count; i++) { if (!BattleScene.Instance.EnemyList[i].IsFainted) { target = i; break; } }
+                for (int i = 0; i < BattleScene.Instance.EnemyList.Count; i++)
+                {
+                    if (!BattleScene.Instance.EnemyList[i].IsFainted)
+                    {
+                        target = i; 
+                        break; 
+                    } 
+                }
                 (BattleScene.Instance.CurrentBattle as PlayerBattle).Attack(target);
                 _enemySprites[target].Hurt = true;
 
