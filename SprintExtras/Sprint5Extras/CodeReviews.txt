@@ -108,3 +108,29 @@ Time: 5 minutes
 The code seems to be seemingly easy to understand. 
 The UI portion seems to be a bit crammed, but other than that the names for everything are coherent and easy to understand.
 Well done.
+
+Lupine
+December 10th
+Sprint 5
+-----------------
+Author of code: 
+
+
+Author of code: Almost everybody? It was a mad dash at the end.
+Code under Review: MenuState for readability
+Time: 5 minutes
+If you're willing to look past InitializeUI then this class is quite readable. The methods implemented from IGameState are
+succinct and understandable. All the fields and properties have good names and rational access modifiers. The methods for
+UI response are also perfectly cromulent.
+
+Author of code: Almost everybody? It was a mad dash at the end.
+Code under Review: MenuState for code quality
+Time: 5 minutes
+Once again, omitting InitializeUI the quality doesn't seem bad. Coupling with KeyboardState is not good, but we did it for
+time crunch reasons. However, the elephant in the room is InitializeUI. The team strugged with UI creation both in MenuState
+and in BattleState. I don't think any of us were prepared for how complicated that method needed to be, and by the time we
+realized, it was far too late for this sprint. This would need to be cleaned up into many methods, or, as John said about
+BattleState, the UI initialization could be given its own class entirely. I also would like to see a bit more code reuse
+when constructing UI components. The factories that we have are decent, but I think they could encapsulate more. Finally,
+we have a problem with lambda functions getting way inflated for button response. These lambdas need to be changed to more
+structured delegates, running named functions, and some of the response should be handled in some kind of a controller.

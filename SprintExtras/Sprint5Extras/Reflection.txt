@@ -47,3 +47,13 @@ buttons earlier so as to not worry my fellow teammates as much, but with what I 
 I would be able to quickly put all the pieces together. Still no excuse and it is safer to get it done sooner anyways,
 regardless we did end up having a lot of changes for visible functionality happen right at the end, which was not ideal.
 Besides that maybe scary hiccup, I think we all contributed a good amount of work and put together something pretty neat.
+
+Lupine
+-----------
+I'm actually really happy with this sprint. I'm perhaps even happier to be done with it, as just a few days ago it looked
+like the backlog of tasks was insurmountable. The team came together well, focused on what we could present instead of
+fretting about code quality, and in the end we have a product that I'm pretty proud of. Code quality definitely suffered,
+and if development on this project were to continue, the first task would be a lengthy stage of rebuilding. To the graders
+I will say that there's no possible way to get experience that's more relevant to real development. We're leaving things
+unpolished, but at the same time I feel we've done a good job demonstrating what we're capable of and hitting just about
+every goal we set at the beginning.
