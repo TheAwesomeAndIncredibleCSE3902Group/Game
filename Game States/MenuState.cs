@@ -184,9 +184,9 @@ public class MenuState : IGameState
         RootUIElement.AddChild(tabButtonContainer);
         
         // Create containers for each menu tab content
-        CreatePartyMenu(rectFactory, textFactory, animSpriteFactory);
+        CreatePartyMenu(rectFactory, textFactory);
         CreateInventoryMenu(rectFactory, textFactory);
-        CreateOptionsMenu(rectFactory, textFactory);
+        CreateOptionsMenu(rectFactory, textFactory, buttonFactory);
         
         // Add all containers to root
         RootUIElement.AddChild(_partyContainer);
@@ -271,7 +271,7 @@ public class MenuState : IGameState
         SwitchToTab(MenuTab.Party);
     }
     
-    private void CreatePartyMenu(RectElementFactory rectFactory, TextElementFactory textFactory, AnimSpriteElementFactory animSpriteElementFactory)
+    private void CreatePartyMenu(RectElementFactory rectFactory, TextElementFactory textFactory)
     {
         _partyContainer = new Element(RootUIElement);
         _partyContainer.OffsetAndSize = new Rectangle(116, 158, 792, 522);
@@ -371,7 +371,7 @@ public class MenuState : IGameState
         _inventoryContainer.AddChild(inventoryContent);
     }
     
-    private void CreateOptionsMenu(RectElementFactory rectFactory, TextElementFactory textFactory)
+    private void CreateOptionsMenu(RectElementFactory rectFactory, TextElementFactory textFactory, ButtonElementFactory buttonFactory)
     {
         _optionsContainer = new Element(RootUIElement);
         _optionsContainer.OffsetAndSize = new Rectangle(116, 158, 792, 522);
@@ -386,15 +386,23 @@ public class MenuState : IGameState
         );
         optionsHeader.OffsetAndSize = new Rectangle(0, 10, 792, 40);
         _optionsContainer.AddChild(optionsHeader);
-        
-        // Placeholder content for options menu
-        var optionsContent = textFactory.CreateNew(
-            _game.DefaultSpriteFont, 
-            "TODO: Add options content here.", 
-            new Color(200, 200, 200), 
-            TextElementFactory.TextAlign.Center, 
-            TextElementFactory.TextAlign.Center
-        );
+
+        var optionsContent = new Element(RootUIElement);
+
+        for (int i = 0; i < 6; i++)
+        {
+            var currentButtonToAdd = buttonFactory.CreateNew(_game.DefaultSpriteFont, _game, new Rectangle(20 + (i / 3) * 365, 540 + (i % 3) * 75, 350, 60), Color.Purple, Color.White, "Action " + i);
+            currentButtonToAdd.AddActionOnUIEvent(UIEvent.ButtonUp, (e) =>
+            {
+                var eventParams = (InputUIEventParams)e;
+            });
+            optionsContent.AddChild(currentButtonToAdd);
+
+            //This is an example for how to change button text
+            //(currentButtonToAdd.Attributes["text_element"] as Element).Attributes["text_string"] = "test";
+        }
+
+
         optionsContent.OffsetAndSize = new Rectangle(50, 80, 692, 400);
         _optionsContainer.AddChild(optionsContent);
     }
