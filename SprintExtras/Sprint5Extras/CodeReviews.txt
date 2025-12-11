@@ -43,6 +43,30 @@ to have the default leveling being it's own function stored in Player. Then spec
 This would likely require stats to be a dictionary which I think might be better overall since, playerStats has a lot
 of file scope variables as is.
 
+
+
+Eli
+December 10th
+Sprint 5
+----------------
+Author of Code: John
+Code Under Review: SetupBattle for Code Quality
+Time: 5 minutes
+SetupBattle overall looks pretty good. One thing that may need to change if we were to ever continue working on this
+game is instead of having SetEnemies() and SetAllies() use a switch with enemyType or the ally Type, this data could 
+be held in its own class. This way we wouldn't be concentrating everything into one class (and therefore having high 
+coupling). But I would say everything in the class is cohesive because its sole purpose is to set up a battle.
+
+Author of Code: Caleb
+Code Under Review: OverworldState for Readability/Code Quality
+Time: 5 minutes
+Compared to the other state classes, this has a lot less going on, (especially because the HUD is much more limited
+than the massive amount of UI in the other state classes). Variables, Functions, etc. are named well. However, something 
+that I noticed is that the Root UI element is being created and the game.Content.Load method to load the ZeldaFont 
+is being run for every single frame since they are inside of Draw. I believe that these should only be run when the State
+class is being initially created, like how it works within the other States. If we added a lot more to the 
+intiialization code of the HUD, this may cause unnecessary performance loss. But it works well as it is.
+
 John
 December 10th
 Sprint 5
@@ -64,3 +88,49 @@ is probably more due to the nature of UI, but it is rather unsightly to see the 
 InitializeUI (for both BattleState and MenuState, though I believe Eli did the InitializeUI for BattleState, I may just
 be wrong). In fact, I'd probably suggest that the InitializeUI is separated into its own class for each state, just due
 to the sheer size of them.
+
+Jesse 
+December 10th
+Sprint 5
+-----------------
+Code Reviews
+Code Author: John
+Code Under Review: ZeldaBattle for Code Quality
+Time: 10 minutes
+This file is well written! Quality wise the code is condense, somewhat tightly coupled with stats within both LevelUp 
+and LightArrow, but methods are cleanly written and easy to understand the general concept. 
+There are also some long message chains with getting enemies damaged in LightArrow,
+and I have a slight concern with how level ups are done with a ton of parameters. Other than that, well done.
+
+Code Author: Iris
+Code Under Review: WinState for readability 
+Time: 5 minutes
+The code seems to be seemingly easy to understand. 
+The UI portion seems to be a bit crammed, but other than that the names for everything are coherent and easy to understand.
+Well done.
+
+Lupine
+December 10th
+Sprint 5
+-----------------
+Author of code: 
+
+
+Author of code: Almost everybody? It was a mad dash at the end.
+Code under Review: MenuState for readability
+Time: 5 minutes
+If you're willing to look past InitializeUI then this class is quite readable. The methods implemented from IGameState are
+succinct and understandable. All the fields and properties have good names and rational access modifiers. The methods for
+UI response are also perfectly cromulent.
+
+Author of code: Almost everybody? It was a mad dash at the end.
+Code under Review: MenuState for code quality
+Time: 5 minutes
+Once again, omitting InitializeUI the quality doesn't seem bad. Coupling with KeyboardState is not good, but we did it for
+time crunch reasons. However, the elephant in the room is InitializeUI. The team strugged with UI creation both in MenuState
+and in BattleState. I don't think any of us were prepared for how complicated that method needed to be, and by the time we
+realized, it was far too late for this sprint. This would need to be cleaned up into many methods, or, as John said about
+BattleState, the UI initialization could be given its own class entirely. I also would like to see a bit more code reuse
+when constructing UI components. The factories that we have are decent, but I think they could encapsulate more. Finally,
+we have a problem with lambda functions getting way inflated for button response. These lambdas need to be changed to more
+structured delegates, running named functions, and some of the response should be handled in some kind of a controller.
