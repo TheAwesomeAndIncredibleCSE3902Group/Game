@@ -21,13 +21,13 @@ namespace Sprint0.BattleMechanics.BattleEnemies
         }
         public override void LevelUp()
         {
-            PlayerStats stats = ((PlayerStats)Stats);
-            int levelUps = stats.levelUps;
-            stats.ChangeAll
+            int levelUps = ((PlayerStats)Stats).levelUps;
+            ((PlayerStats)Stats).ChangeAll
                 (
-                    (levelUps), (levelUps * 5), (levelUps), (levelUps), (levelUps), (levelUps), (levelUps * 5), (levelUps), ((levelUps * 3) / 4)
+                    (levelUps * 2), (levelUps * 5), (levelUps), (levelUps), (levelUps / 4), (levelUps), (levelUps * 5), (levelUps / 4), ((levelUps * 3) / 4)
                 );
-            stats.levelUps = 0;
+            ((PlayerStats)Stats).levelUps = 0;
+            Stats.ChangeHealth(Stats.GetMaxHealth());
         }
         public void WiseAdvice(int enemyIndex)
         {
@@ -38,11 +38,7 @@ namespace Sprint0.BattleMechanics.BattleEnemies
 
             BattleScene.Instance.EnemyList[enemyIndex].Stats.ChangeHealth(-damageVal);
             TurnText = $"{Name} gave {BattleScene.Instance.EnemyList[enemyIndex].Name} wise advice for {damageVal} damage!\n";
-            if (BattleScene.Instance.EnemyList[enemyIndex].Stats.GetHealth() < 1)
-            {
-                BattleScene.Instance.EnemyList[enemyIndex].IsFainted = true;
-                TurnText += $"{BattleScene.Instance.EnemyList[enemyIndex].Name} has fainted!";
-            }
+            EnemyFainted(enemyIndex);
         }
     }
 }

@@ -23,14 +23,13 @@ namespace Sprint0.BattleMechanics.BattleEnemies
 
         public override void LevelUp()
         {
-            PlayerStats stats = ((PlayerStats)Stats);
-            int levelUps = stats.levelUps;
-            Debug.WriteLine(levelUps);
-            stats.ChangeAll
+            int levelUps = ((PlayerStats)Stats).levelUps;
+            ((PlayerStats)Stats).ChangeAll
                 (
-                    (levelUps * 2), (levelUps * 5), (levelUps), (levelUps * 4), (levelUps * 2), (levelUps), (levelUps), (levelUps), ((levelUps * 3) / 4)
+                    (levelUps * 5), (levelUps * 5), (levelUps ), (levelUps * 4), (levelUps), (levelUps), (levelUps), (levelUps / 2), ((levelUps * 3) / 4)
                 );
-            stats.levelUps = 0;
+            ((PlayerStats)Stats).levelUps = 0;
+            Stats.ChangeHealth(Stats.GetMaxHealth());
         }
 
         public void SwordStab(int enemyIndex)
@@ -43,11 +42,7 @@ namespace Sprint0.BattleMechanics.BattleEnemies
             BattleScene.Instance.EnemyList[enemyIndex].Stats.ChangeHealth(-damageVal);
 
             TurnText = $"{Name} stabbed {BattleScene.Instance.EnemyList[enemyIndex].Name} for {damageVal} damage!\n";
-            if (BattleScene.Instance.EnemyList[enemyIndex].Stats.GetHealth() < 1)
-            {
-                BattleScene.Instance.EnemyList[enemyIndex].IsFainted = true;
-                TurnText += $"{BattleScene.Instance.EnemyList[enemyIndex].Name} has fainted!";
-            }
+            EnemyFainted(enemyIndex);
         }
     }
 }

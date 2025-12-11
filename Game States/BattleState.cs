@@ -380,6 +380,7 @@ public class BattleState : IGameState
 
         void DoNextTurn()
         {
+            for (int i = 0; i < BattleScene.Instance.EnemyList.Count; i++) { if (BattleScene.Instance.EnemyList[i].IsFainted) { _enemySprites[i].Element.IsVisible = false; } }
             BattleScene.Instance.NextTurn();
             if (BattleScene.Instance.Lost) { ChangeToGameOverState(); return; }
             if (!BattleScene.Instance.CurrentlyInBattle) {

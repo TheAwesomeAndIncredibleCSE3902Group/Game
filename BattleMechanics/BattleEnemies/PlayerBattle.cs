@@ -35,6 +35,14 @@ public abstract class PlayerBattle : IBattle
             );
         stats.levelUps = 0;
     }
+    public void EnemyFainted(int enemyIndex)
+    {
+        if (BattleScene.Instance.EnemyList[enemyIndex].Stats.GetHealth() < 1)
+        {
+            BattleScene.Instance.EnemyList[enemyIndex].IsFainted = true;
+            TurnText += $"Enemy has fainted!";
+        }
+    }
 
     public void Attack(int enemyIndex)
     {
@@ -46,11 +54,7 @@ public abstract class PlayerBattle : IBattle
         BattleScene.Instance.EnemyList[enemyIndex].Stats.ChangeHealth(-damageVal);
 
         TurnText = $"{Name} attack value: {attackVal}. enemy defense value: {defenseVal}\n{Name} attacked for {Math.Abs(damageVal)} damage!\n{BattleScene.Instance.EnemyList[enemyIndex].Name}'s health is now {BattleScene.Instance.EnemyList[enemyIndex].Stats.GetHealth()}";
-        if (BattleScene.Instance.EnemyList[enemyIndex].Stats.GetHealth() < 1)
-        {
-            BattleScene.Instance.EnemyList[enemyIndex].IsFainted = true;
-            TurnText += $"Enemy has fainted!";
-        }
+        EnemyFainted(enemyIndex);
     }
     public void Heal()
     {
