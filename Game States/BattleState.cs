@@ -473,7 +473,16 @@ public class BattleState : IGameState
         {
             if (((InputUIEventParams)e).Controls.Contains(UIControl.Interact))
             {
-                (BattleScene.Instance.CurrentBattle as PlayerBattle).LuckyStrike();
+                int target = 0;
+                for (int i = 0; i < BattleScene.Instance.EnemyList.Count; i++)
+                {
+                    if (!BattleScene.Instance.EnemyList[i].IsFainted)
+                    {
+                        target = i;
+                        break;
+                    }
+                }
+                (BattleScene.Instance.CurrentBattle as PlayerBattle).LuckyStrike(target);
                 if (BattleScene.Instance.CurrentBattle.TurnText == null)
                 {
                     battleTextElem.Attributes["text_string"] = BattleScene.Instance.CurrentBattle.ToString() + ": TurnText string is null...";
