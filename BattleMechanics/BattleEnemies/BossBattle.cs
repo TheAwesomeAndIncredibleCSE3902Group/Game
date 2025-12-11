@@ -43,6 +43,7 @@ namespace Sprint0.BattleMechanics.BattleEnemies
             IsFainted = false;
             IsFriend = false;
             Stats.ChangeHealth(Stats.GetMaxHealth());
+            BattleScene.Instance.End = true;
         }
 
         public void TakeTurn()

@@ -366,7 +366,10 @@ public class BattleState : IGameState
         {
             BattleScene.Instance.NextTurn();
             if (BattleScene.Instance.Lost) { ChangeToGameOverState(); return; }
-            if (!BattleScene.Instance.CurrentlyInBattle) { Game1.StateClass.ChangeToOverworldState(); return; }
+            if (!BattleScene.Instance.CurrentlyInBattle) {
+                if (BattleScene.Instance.End) { Game1.StateClass.ChangeToWinState(); } 
+                else { Game1.StateClass.ChangeToOverworldState(); return; } 
+            }
             foreach (CharacterBattleSprite enemy in _enemySprites) { enemy.Hurt = false; }
             if (BattleScene.Instance.CurrentBattle.IsFriend)
             {

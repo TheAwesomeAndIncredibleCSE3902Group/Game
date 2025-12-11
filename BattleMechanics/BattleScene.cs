@@ -9,6 +9,7 @@ namespace AwesomeRPG.BattleMechanics;
 public class BattleScene
 {
     public bool Lost { get; set; } = false;
+    public bool End { get; set; } = false;
     public bool CurrentlyInBattle { get; set; }
     public IBattle CurrentBattle { get; private set; }
     public List<IBattle> AllyList { get; private set; }
