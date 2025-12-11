@@ -2,12 +2,19 @@
 
 Hello! This is our game repo where we're making the video game 😎
 
-AwesomeRPG is a Zelda clone that will eventually include turn-based RPG elements.
+AwesomeRPG is a Zelda clone that includes bonus turn-based RPG elements.
 
 Interacting with an enemy sends the player to the turn-based realm, where they
-    will have to defeat them with a collection of moves. After this the player
+    have to defeat them with a collection of moves. After this, the player
     can return to the overworld and continue their quest.
-Items like potions will be picked up in the overworld but used in battle.
+
+Equipment and allies must be found in the world as the player explores (or,
+    if you're someone of weak morals, found in the debug room down the stairs
+    from the starting room.)
+
+Items like potions are picked up in the overworld and then used in battle.
+    You can also see all the items you've collected and allies who have joined
+    you by pressing Esc.
 
 Overworld
 
@@ -24,6 +31,7 @@ Overworld
 | Use Bow           | 1             |
 | Use Boomerang     | 2             |
 | Use Super Sword   | 3             |
+| Enter menu        | Esc           |
 
 Combat
 
