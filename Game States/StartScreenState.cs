@@ -35,10 +35,11 @@ public class StartScreenState : IGameState
 
         //Ensure the font is loaded
         var spriteFont = game.Content.Load<SpriteFont>("Fonts\\MyFont");
+        var titleFont = game.Content.Load<SpriteFont>("Fonts\\ZeldaFont");
 
         //Background, because I'm sorry but the green was so ugly
         var rectFactory = new RectElementFactory(RootUIElement);
-        var rect = rectFactory.CreateNew(Color.BurlyWood);
+        var rect = rectFactory.CreateNew(Color.Salmon);
         rect.OffsetAndSize = Util.ScreenRect;
         RootUIElement.AddChild(rect);
 
@@ -51,6 +52,14 @@ public class StartScreenState : IGameState
         textElem.Attributes["horizontal_align"] = TextElementFactory.TextAlign.Center;
         textElem.Attributes["vertical_align"] = TextElementFactory.TextAlign.Center;
         RootUIElement.AddChild(textElem);
+
+        //Title construction
+        textString = "The Awesome and Incredible Game";
+        var titleElem = textFactory.CreateNew(titleFont, textString, textColor);
+        titleElem.OffsetAndSize = Util.ScreenRect;
+        titleElem.Attributes["horizontal_align"] = TextElementFactory.TextAlign.Center;
+        titleElem.Attributes["vertical_align"] = TextElementFactory.TextAlign.Left;
+        RootUIElement.AddChild(titleElem);
     }
 
     private Color LerpTextColors(GameTime gameTime)

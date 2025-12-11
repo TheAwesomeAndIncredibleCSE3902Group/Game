@@ -6,6 +6,7 @@ using AwesomeRPG.BattleMechanics.BattleEnemies;
 using AwesomeRPG.Characters;
 using AwesomeRPG.Commands;
 using AwesomeRPG.Controllers;
+using AwesomeRPG.Sprites;
 using AwesomeRPG.UI;
 using AwesomeRPG.UI.ElementFactories;
 using AwesomeRPG.UI.Events;
@@ -283,9 +284,6 @@ public class BattleState : IGameState
                 var eventParams = (InputUIEventParams)e;
             });
             buttonContainer.AddChild(currentButtonToAdd);
-
-            //This is an example for how to change button text
-            //(currentButtonToAdd.Attributes["text_element"] as Element).Attributes["text_string"] = "test";
         }
 
         RootUIElement.AddChild(buttonContainer);
@@ -324,12 +322,24 @@ public class BattleState : IGameState
 
         var buttons = buttonContainer.GetChildren();
 
+
+        //Add a nifty little potion icon for its button
+        AnimatableSprite potionSprite = IInventoryItem.Type.potion.GetInventorySprite() as AnimatableSprite;
+        potionSprite.SetScale(3);
+        var potionIcon = animSpriteElementFactory.CreateNew(potionSprite);
+        potionIcon.OffsetAndSize = new Rectangle(80, 5, 32, 32);
+        buttons[4].AddChild(potionIcon);
+        
+
         void SetButtonNames()
         {
             (buttons[0].Attributes["text_element"] as Element).Attributes["text_string"] = "Attack";
             (buttons[1].Attributes["text_element"] as Element).Attributes["text_string"] = "Heal";
             (buttons[2].Attributes["text_element"] as Element).Attributes["text_string"] = "Lucky Strike";
             (buttons[5].Attributes["text_element"] as Element).Attributes["text_string"] = "Give Up";
+
+            (buttons[4].Attributes["text_element"] as Element).Attributes["text_string"] = "Use Potion";
+
             switch (BattleScene.Instance.CurrentBattle.Name)
             {
                 case "Link":
@@ -543,15 +553,30 @@ public class BattleState : IGameState
         });
         battleTextElem.AddActionOnUIEvent(UIEvent.ButtonUp, (e) =>
         {
-            var eventParams = (InputUIEventParams) e;
+            var eventParams = (InputUIEventParams)e;
             if (eventParams.Controls.Contains(UIControl.Interact))
             {
                 DoNextTurn();
             }
         });
+
+        buttons[4].AddActionOnUIEvent(UIEvent.ButtonUp, (e) =>
+        {
+            if (((InputUIEventParams)e).Controls.Contains(UIControl.Interact))
+                PotionInventory.Apply();
+        });
+
+        buttons[4].AddActionOnUIEvent(UIEvent.BeforeDraw, (e) =>
+        {
+            //I tried getting this button through e, but to no avail. This will have to do
+            Element button = buttons[4];
+            int potions = Player.Instance.Inventory[IInventoryItem.Type.potion];
+            (button.Attributes["text_element"] as Element).Attributes["text_string"] = $"{potions} remaining";
+        });
+
         buttons[5].AddActionOnUIEvent(UIEvent.ButtonPress, (e) =>
         {
-            if (((InputUIEventParams) e).Controls.Contains(UIControl.Interact))
+            if (((InputUIEventParams)e).Controls.Contains(UIControl.Interact))
             {
                 Game1.StateClass.ChangeToGameOverState();
             }
