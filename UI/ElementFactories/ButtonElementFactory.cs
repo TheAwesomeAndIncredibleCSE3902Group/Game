@@ -41,7 +41,7 @@ public class ButtonElementFactory : IElementFactory
 
         var selAnimFactory = new SelectionAnimationElementFactory(_rootElement);
         var selAnimElem = selAnimFactory.CreateNew();
-        selAnimElem.OffsetAndSize = location;
+        selAnimElem.OffsetAndSize = new Rectangle(Point.Zero, location.Size);
         selAnimElem.AddChild(rectElem);
 
         var elem = new Element(_rootElement);
@@ -73,6 +73,7 @@ public class ButtonElementFactory : IElementFactory
 
         //Allows convenient access to buttton text
         elem.Attributes["text_element"] = textElem;
+        elem.OffsetAndSize = location;
 
         return elem;
     }
