@@ -36,6 +36,7 @@ namespace Sprint0.BattleMechanics.BattleEnemies
             int xpReward = 50 + (level * 5);
 
             Stats = new EnemyStats(maxHealth, speed, attack, defense, specialAttack, specialDefense, luck, level, xpReward);
+            BattleScene.Instance.End = true;
         }
         public BossBattle(EnemyStats stats)
         {
