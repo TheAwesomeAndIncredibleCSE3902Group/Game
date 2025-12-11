@@ -19,7 +19,16 @@ namespace Sprint0.BattleMechanics.BattleEnemies
             animatableSprite.SetScale(2);
             Icon = animatableSprite;
         }
-
+        public override void LevelUp()
+        {
+            PlayerStats stats = ((PlayerStats)Stats);
+            int levelUps = stats.levelUps;
+            stats.ChangeAll
+                (
+                    (levelUps), (levelUps * 5), (levelUps), (levelUps), (levelUps), (levelUps), (levelUps * 5), (levelUps), ((levelUps * 3) / 4)
+                );
+            stats.levelUps = 0;
+        }
         public void WiseAdvice(int enemyIndex)
         {
             int specialAttackVal = Stats.GetSpecialAttack();

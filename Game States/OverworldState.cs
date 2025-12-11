@@ -133,6 +133,7 @@ public class OverworldState : IGameState
     private string GetEquipmentString()
     {
         Dictionary<IInventoryItem.Type,int> inventory = Player.Instance.Inventory;
+        // '*' Produces an empty heart char, '#' produce a filled heart
         char bowStatus = inventory[IInventoryItem.Type.bow] > 0 ? '#' : '*';
         char boomerangStatus = inventory[IInventoryItem.Type.boomerang] > 0 ? '#' : '*';
         char beamStatus = inventory[IInventoryItem.Type.beamSword] > 0 ? '#' : '*';
@@ -157,7 +158,7 @@ public class OverworldState : IGameState
         var partyHealths = Player.Instance.Party;
         foreach(var member in partyHealths)
         {
-            healthString += $"{member.Type}: {member.GetHealth()}HP\n";
+            healthString += $"\n{member.Type}: {member.GetHealth()}HP";
         }
         return healthString;
     }

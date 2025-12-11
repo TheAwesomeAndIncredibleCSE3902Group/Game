@@ -42,10 +42,16 @@ public class PlayerStats : IStats
                 speed = 15;
                 luck = 10;
                 break;
+            case CharType.Merchant:
+                maxHealth = 100;
+                attack = 12;
+                specialAttack = 10;
+                break;
             default:
                 // Default stats are already set in the constructor call
                 break;
         }
+        this.health = maxHealth;
     }
     public PlayerStats(int maxHealth, int specialPointCount, int speed, int attack, int defense, int weaponUse, int specialAttack, int specialDefense, int luck)
     {
