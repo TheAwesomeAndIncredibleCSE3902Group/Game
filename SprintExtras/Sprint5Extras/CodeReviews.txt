@@ -22,3 +22,23 @@ Sprint 5
 ----------------
 Author of Code: Iris
 Code Under Review: Lock and Key for Code Quality
+Time: 1 Minute
+The code make use of the command pattern to assist with decoupling which makes it fairly clean. It allows for
+the key and the door to separate without having a hard reliance on each other. A potential issue is level of access
+which the Door's ID has. By making it a public set, it would be possible to change its ID dynamically which goes
+against what I'm assuming atleast is the intended design pattern. Where locks are set once created, and keys are 
+made to unlocked them.
+
+
+Author of Code: John
+Code Under Review: Party Member Battle Classes for Readability
+Time: 4 Minutes
+The code is fairly readable overall though a few changes could be made to improve it further. These primarily
+consist of creating a few more helper functions along with altering the levelUp system to not require 9 arguments.
+For the helper functions, it seems that a lot of the attack consist of a change in the math of the game then a display
+to the user of what math was done. I think by putting these two separate actions into different functions it would
+improve the readablitiy of the various special attack and maybe allow for less repeated code. In terms of the levelUP
+system 9 arguments makes it hard to know what stats are correlated to which arguments. A potential solution could be
+to have the default leveling being it's own function stored in Player. Then specific stat changes are called individually.
+This would likely require stats to be a dictionary which I think might be better overall since, playerStats has a lot
+of file scope variables as is.
