@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 using AwesomeRPG.UI;
 using Microsoft.Xna.Framework.Input;
 using AwesomeRPG.UI.ElementFactories;
+using AwesomeRPG.Sprites;
 
 namespace AwesomeRPG;
 
@@ -116,6 +117,7 @@ public class OverworldState : IGameState
 
         Element equipElem = CreateWeaponDisplay(textFactory, spriteFont);
         rootUIElement.AddChild(equipElem);
+
         
         rootUIElement.Draw(gameTime);
     }
@@ -137,7 +139,11 @@ public class OverworldState : IGameState
         char bowStatus = inventory[IInventoryItem.Type.bow] > 0 ? '#' : '*';
         char boomerangStatus = inventory[IInventoryItem.Type.boomerang] > 0 ? '#' : '*';
         char beamStatus = inventory[IInventoryItem.Type.beamSword] > 0 ? '#' : '*';
-        return $"{bowStatus}        {boomerangStatus}        {beamStatus}";
+        int potionCount = inventory[IInventoryItem.Type.potion];
+        return $"Bow Obtained: {bowStatus}\n" +
+               $"Boomerang Obtained: {boomerangStatus}\n" +
+               $"Beamsword Obtained: {beamStatus}\n" +
+               $"Potions Held: {potionCount}";
     }
 
     private Element CreateHealthElement(TextElementFactory textFactory, SpriteFont spriteFont)
