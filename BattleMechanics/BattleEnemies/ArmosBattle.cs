@@ -21,12 +21,12 @@ public class ArmosBattle : IEnemyBattle
     public ArmosBattle(int level)
     {
         // Basic stat scaling based on level
-        int maxHealth = 20 + (level * 4);
+        int maxHealth = 20 + (level * 2);
         int speed = 5 + level;
-        int attack = 6 + (level * 2);
-        int defense = 5 + ((level * 3) / 2);
+        int attack = 6 + level;
+        int defense = 5 + (level / 2);
         int specialAttack = 2 + level;
-        int specialDefense = 3 + level;
+        int specialDefense = 3 + (level / 2);
         int luck = 1 + (level / 2);
         int xpReward = 25;
 

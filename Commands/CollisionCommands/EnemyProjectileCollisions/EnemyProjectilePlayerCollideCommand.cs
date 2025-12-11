@@ -23,6 +23,6 @@ public class EnemyProjectilePlayerCollideCommand : ICollisionCommand
         ICharacter enemy = (projectile as MoblinFire).Firee;
 
         projectile.Destroy();
-        Game1.TransitionToBattleState(enemy as CharacterEnemyBase, true);
+        Game1.TransitionToBattleState(enemy as CharacterEnemyBase, false);
     }
 }

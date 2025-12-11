@@ -50,7 +50,7 @@ public abstract class PlayerBattle : IBattle
         if (target.Stats.GetHealth() < 1)
         {
             target.IsFainted = true;
-            TurnText += $"Enemy has fainted!";
+            TurnText += $"\nEnemy has fainted!";
         }
     }
 
@@ -85,11 +85,10 @@ public abstract class PlayerBattle : IBattle
         int damageVal = attackVal - defenseVal;
         if (damageVal < 0) damageVal = 0;
 
-        TurnText += $" for {attackVal}!\n{target.Name}'s health is now {target.Stats.GetHealth()}";
-
         target.Stats.ChangeHealth(-damageVal);
 
-        
+        TurnText += $" for {damageVal}!\n{target.Name}'s health is now {target.Stats.GetHealth()}";
+
         EnemyFainted();
     }
     public void Heal()

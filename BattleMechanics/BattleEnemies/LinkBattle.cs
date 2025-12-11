@@ -28,7 +28,7 @@ namespace Sprint0.BattleMechanics.BattleEnemies
             {
                 ((PlayerStats)Stats).ChangeAll
                 (
-                    (levelUps * 5), (levelUps * 5), (levelUps), (levelUps * 4), (levelUps), (levelUps), (levelUps), (levelUps / 2), ((levelUps * 3) / 4)
+                    (levelUps * 20), (levelUps * 5), (levelUps), (levelUps * 4), (levelUps), (levelUps), (levelUps), (levelUps / 2), ((levelUps * 3) / 4)
                 );
                 ((PlayerStats)Stats).levelUps = 0;
                 Stats.ChangeHealth(Stats.GetMaxHealth());

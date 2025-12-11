@@ -25,6 +25,7 @@ public class PlayerStats : IStats
 
     public PlayerStats(CharType type) : this(100, 10, 10, 10, 2, 10, 10, 2, 1)
     {
+        this.level = 0;
         this.Type = type;
         switch (type)
         {

@@ -516,7 +516,7 @@ public class BattleState : IGameState
                 {
                     case "Link":
                         (BattleScene.Instance.CurrentBattle as LinkBattle).SpinAttack(target);
-                        _enemySprites[target].Hurt = true;
+                        foreach(CharacterBattleSprite enemy in _enemySprites) enemy.Hurt = true;
                         break;
                     case "Old Lady":
                         (BattleScene.Instance.CurrentBattle as OldLadyBattle).WiseAdvice(target);
