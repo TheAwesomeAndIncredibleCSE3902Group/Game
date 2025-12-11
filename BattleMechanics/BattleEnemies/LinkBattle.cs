@@ -20,6 +20,17 @@ namespace Sprint0.BattleMechanics.BattleEnemies
             Icon = animatableSprite;
         }
 
+        public override void LevelUp()
+        {
+            PlayerStats stats = ((PlayerStats)Stats);
+            int levelUps = stats.levelUps;
+            stats.ChangeAll
+                (
+                    (levelUps * 2), (levelUps * 5), (levelUps), (levelUps * 4), (levelUps * 2), (levelUps), (levelUps), (levelUps), ((levelUps * 3) / 4)
+                );
+            stats.levelUps = 0;
+        }
+
         public void SwordStab(int enemyIndex)
         {
             int attackVal = Stats.GetAttack();

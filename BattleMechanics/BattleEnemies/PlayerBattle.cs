@@ -24,7 +24,7 @@ public abstract class PlayerBattle : IBattle
         IsFriend = true;
     }
 
-    public void LevelUp()
+    public virtual void LevelUp()
     {
         PlayerStats stats = ((PlayerStats)Stats);
         int levelUps = stats.levelUps;
