@@ -8,7 +8,7 @@ public class LynelBattle : IEnemyBattle
 {
     public CharacterEnemyBase.CType Type { get; } = CharacterEnemyBase.CType.lynel;
     public IStats Stats { get; set; }
-    public enum LynelActions { BrushBackHair, HardStomp, StabNSlash }
+    public enum LynelActions { RecklessCharge, HardStomp, StabNSlash }
 
     public bool IsFriend { get; set; } = false;
     public bool IsFainted { get; set; } = false;
@@ -21,7 +21,7 @@ public class LynelBattle : IEnemyBattle
     {
         // Basic stat scaling based on level
         int maxHealth = 25 + (level * 10);
-        int speed = 8 + (level * 2);
+        int speed = 10 + (level * 4);
         int attack = 7 + (level * 3);
         int defense = 5 + ((level * 3) / 2);
         int specialAttack = 3 + level;
@@ -48,10 +48,10 @@ public class LynelBattle : IEnemyBattle
 
         switch (ChooseAction())
         {
-            case LynelActions.BrushBackHair:
-                healthChangeVal = Stats.GetSpecialAttack() / 3;
-                Stats.ChangeHealth(healthChangeVal);
-                TurnText = $"{Name} healed for {healthChangeVal}";
+            case LynelActions.RecklessCharge:
+                healthChangeVal = Stats.GetSpeed();
+                target.Stats.ChangeHealth(-healthChangeVal);
+                TurnText = $"{Name} recklessly charged {target.Name} for {healthChangeVal}";
                 break;
             case LynelActions.HardStomp:
                 healthChangeVal = Stats.GetAttack() - target.Stats.GetDefense();
@@ -73,7 +73,7 @@ public class LynelBattle : IEnemyBattle
 
     private LynelActions ChooseAction()
     {
-        LynelActions lynelChoice = LynelActions.BrushBackHair;
+        LynelActions lynelChoice = LynelActions.RecklessCharge;
 
         if (Stats.GetHealth() > (Stats.GetMaxHealth() / 3))
         {

@@ -1,6 +1,7 @@
 ﻿using AwesomeRPG.Characters;
 using AwesomeRPG.Stats;
 using System;
+using System.ComponentModel.Design;
 using static AwesomeRPG.Util;
 
 namespace AwesomeRPG.BattleMechanics.BattleEnemies;
@@ -8,7 +9,7 @@ public class ArmosBattle : IEnemyBattle
 {
     public CharacterEnemyBase.CType Type { get; } = CharacterEnemyBase.CType.armos;
     public IStats Stats { get; set; }
-    public enum ArmosActions { ShineArmour, ChargeForward}
+    public enum ArmosActions { ShieldBash, ChargeForward}
 
     public bool IsFriend { get; set; } = false;
     public bool IsFainted { get; set; } = false;
@@ -48,9 +49,11 @@ public class ArmosBattle : IEnemyBattle
 
         switch (ChooseAction())
         {
-            case ArmosActions.ShineArmour:
-                healthChangeVal = Stats.GetSpecialAttack() / 2;
-                Stats.ChangeHealth(healthChangeVal);
+            case ArmosActions.ShieldBash:
+                healthChangeVal = (Stats.GetDefense() + (Stats.GetAttack() / 2)) - target.Stats.GetDefense();
+                if (healthChangeVal < 0) healthChangeVal = 0;
+
+                target.Stats.ChangeHealth(-healthChangeVal);
                 TurnText = $"{Name} healed for {healthChangeVal}";
                 break;
             case ArmosActions.ChargeForward:
@@ -66,11 +69,16 @@ public class ArmosBattle : IEnemyBattle
 
     private ArmosActions ChooseAction()
     {
-        ArmosActions armosChoice = ArmosActions.ShineArmour;
-            
-        if (Stats.GetHealth() > (Stats.GetMaxHealth() / 3))
+        ArmosActions armosChoice = new ArmosActions();
+        Random random = new();
+        int coinFlip = random.Next(0, 2);
+        if (coinFlip == 0) 
         {
             armosChoice = ArmosActions.ChargeForward;
+        }
+        else
+        {
+            armosChoice = ArmosActions.ShieldBash;
         }
         return armosChoice;
     }

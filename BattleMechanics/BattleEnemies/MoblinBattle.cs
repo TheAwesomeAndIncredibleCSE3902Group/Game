@@ -10,7 +10,7 @@ public class MoblinBattle : IEnemyBattle
 {
     public CharacterEnemyBase.CType Type { get; } = CharacterEnemyBase.CType.moblin;
     public IStats Stats { get; set; }
-    public enum MoblinActions { ScratchBellyButton, RambleCharge, Dance }
+    public enum MoblinActions { LuckyStrike, RambleCharge, Dance }
     public bool IsFainted { get; set; } = false;
     public bool IsFriend { get; set; } = false;
 
@@ -27,7 +27,7 @@ public class MoblinBattle : IEnemyBattle
         int defense = 3 + level;
         int specialAttack = 2 + level;
         int specialDefense = 2 + level;
-        int luck = 1 + (level / 2);
+        int luck = 1 + level;
         int xpReward = 15;
 
         Stats = new EnemyStats(maxHealth,speed,attack,defense,specialAttack,specialDefense,luck,level,xpReward);
@@ -49,11 +49,14 @@ public class MoblinBattle : IEnemyBattle
 
         switch (ChooseAction())
         {
-            case MoblinActions.ScratchBellyButton:
-                healthChangeVal = Stats.GetSpecialAttack() / 4;
-                if (healthChangeVal < 0) healthChangeVal = 0;
+            case MoblinActions.LuckyStrike:
+                int luck = Stats.GetLuck();
+                if (luck > 7) luck = 7;
+                healthChangeVal = Stats.GetSpecialAttack();
+                Random random = new();
+                if(random.Next(0, 10 - Stats.GetLuck()) % 2 == 0) healthChangeVal *= 10;
 
-                Stats.ChangeHealth(healthChangeVal);
+                target.Stats.ChangeHealth(-healthChangeVal);
                 TurnText = $"{Name} scratched its belly and healed for {healthChangeVal}";
                 break;
             case MoblinActions.RambleCharge:
@@ -74,7 +77,7 @@ public class MoblinBattle : IEnemyBattle
 
     private MoblinActions ChooseAction()
     {
-        MoblinActions moblinChoice = MoblinActions.ScratchBellyButton;
+        MoblinActions moblinChoice = MoblinActions.LuckyStrike;
         if (Stats.GetHealth() > (Stats.GetMaxHealth() / 3))
         {
             Random random = new();

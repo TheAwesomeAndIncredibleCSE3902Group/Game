@@ -76,6 +76,7 @@ public class PlayerStats : IStats
         if (updateHealth != 0)
         {
             health += updateHealth;
+            if (health >  maxHealth) health = maxHealth;
         }
 
         if (health < 0)

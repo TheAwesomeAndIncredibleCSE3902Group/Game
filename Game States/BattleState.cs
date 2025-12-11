@@ -328,6 +328,7 @@ public class BattleState : IGameState
         {
             (buttons[0].Attributes["text_element"] as Element).Attributes["text_string"] = "Attack";
             (buttons[1].Attributes["text_element"] as Element).Attributes["text_string"] = "Heal";
+            (buttons[5].Attributes["text_element"] as Element).Attributes["text_string"] = "Give Up";
             switch (BattleScene.Instance.CurrentBattle.Name)
             {
                 case "Link":
@@ -525,7 +526,7 @@ public class BattleState : IGameState
         {
             if (((InputUIEventParams) e).Controls.Contains(UIControl.Interact))
             {
-                Game1.StateClass.ChangeToOverworldState();
+                Game1.StateClass.ChangeToGameOverState();
             }
         });
         #endregion
