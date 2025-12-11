@@ -15,9 +15,10 @@
     </Tiles>
   </Tilemap>
   <Entities>
-    <Entity x="512" y="258" pathing="line" facing="right">lynel</Entity><!--Make em stop moving later-->
+    <Entity x="512" y="258" pathing="stand" facing="left">lynel</Entity>
   </Entities>
   <Pickups>
-    <Pickup x="82" y="258">potion</Pickup><!--Change this to a new teammate later-->
+    <Pickup x="64" y="258" charType="old">team</Pickup>
+    <Pickup x="132" y="258" roomX="3" roomY="2" lockID="0">key</Pickup>
   </Pickups>
 </Map>

@@ -3,25 +3,32 @@
   <Tilemap>
     <Tileset tileWidth="16" tileHeight="16">TileImages/zelda_tiles</Tileset>
     <Tiles rows="9" columns="16">
-      <Row>!01 !01 !01 !01 !01 !01 !01 !01 !01 !01 !01 !01 !01 !01 !01 !01</Row>
-      <Row>!01  00  00  00  00  00  00  00  00  00  00  00  00  00  00 !01</Row>
-      <Row>!01  00  00  00  00  00  00  00  00  00  00  00  00  00  00 !01</Row>
-      <Row>!01  00  00  00  00  00  00  00  00  00  00  00  00  00  00 ?04</Row>
-      <Row>!01  00  00  00  00  00  00  00  00  04  00  00  00  00  00 ?04</Row>
-      <Row>!01  00  00  00  00  00  00  00  00  00  00  00  00  00  00 !01</Row>
-      <Row>!01  00  00  00  00  00  00  00  00  00  00  00  00  00  00 !01</Row>
-      <Row>!01  00  00  00  00  00  00  00  00  00  00  00  00  00  00 !01</Row>
+      <Row>!01 !01 !01 !01 !01 !01 !01 ?04 ?04 !01 !01 !01 !01 !01 !01 !01</Row>
+      <Row>!01  00  00  00  00  00  00  00  00  00  00  00  00 .06  00 !01</Row>
+      <Row>!01  00  00  00  00  00  00 !01 !01 !01 !01 !01  00 .06  00 !01</Row>
+      <Row>?04  00  00 !01 !01 !01 !01 !01  00 .06  00 !01  00 .06  00 !01</Row>
+      <Row>?04  00  00 !01 .06 .06 .06 .06  00 .06  00 !01  00 !01  00 !01</Row>
+      <Row>!01 !01 !01 !01 .06 .06 .06 .06  00 .06  00 !01  00 .06  00 !01</Row>
+      <Row>!01 .06 .06 .06 .06 .06 .06 .06  00 .06  00 !01  00 .06  00 !01</Row>
+      <Row>!01 .06 .06 .06 .06 .06 .06 .06  00 .06  00  00  00 .06  00 !01</Row>
       <Row>!01 !01 !01 !01 !01 !01 !01 !01 !01 !01 !01 !01 !01 !01 !01 !01</Row>
     </Tiles>
   </Tilemap>
   <Entities>
-    <Entity x="60" y="60" pathing="random" facing="up">moblin</Entity>
-    <Entity x="300" y="350" pathing="random" facing="down">armos</Entity>
-    <Entity x="500" y="70" pathing="line" facing="right">lynel</Entity>
-    <Entity x="300" y="300" pathing="" facing="up">kris</Entity>
+    <Entity x="896" y="124" pathing="stand" facing="left">moblin</Entity>
+    <Entity x="896" y="190" pathing="stand" facing="left">moblin</Entity>
+    <Entity x="896" y="322" pathing="stand" facing="left">moblin</Entity>
+    <Entity x="896" y="388" pathing="stand" facing="left">moblin</Entity>
+    <Entity x="512" y="450" pathing="stand" facing="left">moblin</Entity>
+    <Entity x="512" y="388" pathing="stand" facing="left">moblin</Entity>
+    <Entity x="512" y="322" pathing="stand" facing="left">moblin</Entity>
+    <Entity x="512" y="256" pathing="stand" facing="left">moblin</Entity>
   </Entities>
   <Pickups>
-    <Pickup x="100" y="300">potion</Pickup>
-    <Pickup x="600" y="400">potion</Pickup>
+    <Pickup x="660" y="196" roomX="3" roomY="3" lockID="0">key</Pickup>
   </Pickups>
+  <Locks>
+    <Lock x="64" y="196" id="0"/>
+    <Lock x="64" y="256" id="0"/>
+  </Locks>
 </Map>

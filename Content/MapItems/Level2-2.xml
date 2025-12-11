@@ -8,18 +8,18 @@
       <Row>!01  00  00  00  00  00  00 !01 !01 !01 !01 !01  00  00  00 !01</Row>
       <Row>?04  00  00  00  00  00  00 !01 !01  00  00  00  00  00  00 ?04</Row>
       <Row>?04  00  00  00  00  00  00 !01 !01  00  00  00  00  00  00 ?04</Row>
-      <Row>!01  00  00  00  00  00  00  01  01  00  00  00  00  00  00 !01</Row>
+      <Row>!01  00  00  00  00  00  00 !01 !01  00  00  00  00  00  00 !01</Row>
       <Row>!01  00  00  00  00  00  00 !01 !01  00  00  00  00  00  00 !01</Row>
       <Row>!01  00  00  00  00  00  00 !01 !01  00  00  00  00  00  00 !01</Row>
       <Row>!01 !01 !01 !01 !01 !01 !01 !01 !01 !01 !01 !01 !01 !01 !01 !01</Row>
     </Tiles>
   </Tilemap>
   <Entities>
-    <Entity x="780" y="60" pathing="" facing="right">lynel</Entity>
+    <Entity x="780" y="60" pathing="stand" facing="right">lynel</Entity>
     <Entity x="704" y="320" pathing="stand" facing="right">boss</Entity>
   </Entities>
   <Pickups>
-    <Pickup x="400" y="260">potion</Pickup>
-    <Pickup x="650" y="60">potion</Pickup>
+    <Pickup x="400" y="260" weaponType="bow">weapon</Pickup>
+    <Pickup x="640" y="60" charType="zelda">team</Pickup>
   </Pickups>
 </Map>

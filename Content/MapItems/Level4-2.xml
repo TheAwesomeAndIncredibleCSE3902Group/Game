@@ -17,8 +17,9 @@
   <Entities>
   </Entities>
   <Pickups>
-    <Pickup x="500" y="340">potion</Pickup><!--Make this a teammate later-->
+    <Pickup x="500" y="340" weaponType="beamsword">weapon</Pickup>
     <Pickup x="600" y="260">potion</Pickup>
     <Pickup x="350" y="260">potion</Pickup>
+    <Pickup x="64" y="224" roomX="3" roomY="2" lockID="2">key</Pickup>
   </Pickups>
 </Map>

@@ -19,6 +19,6 @@
     <Entity x="250" y="258" pathing="line" facing="down">armos</Entity>
   </Entities>
   <Pickups>
-    <Pickup x="470" y="440">potion</Pickup>
+    <Pickup x="460" y="460" weaponType="boomerang">weapon</Pickup>
   </Pickups>
 </Map>
