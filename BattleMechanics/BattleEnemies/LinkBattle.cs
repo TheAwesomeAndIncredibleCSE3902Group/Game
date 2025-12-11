@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,6 +25,7 @@ namespace Sprint0.BattleMechanics.BattleEnemies
         {
             PlayerStats stats = ((PlayerStats)Stats);
             int levelUps = stats.levelUps;
+            Debug.WriteLine(levelUps);
             stats.ChangeAll
                 (
                     (levelUps * 2), (levelUps * 5), (levelUps), (levelUps * 4), (levelUps * 2), (levelUps), (levelUps), (levelUps), ((levelUps * 3) / 4)

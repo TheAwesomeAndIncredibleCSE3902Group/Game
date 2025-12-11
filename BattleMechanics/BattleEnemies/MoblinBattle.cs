@@ -69,6 +69,7 @@ public class MoblinBattle : IEnemyBattle
                 TurnText = $"The {Name}'s horrible dance caused {target.Name} to suffer {healthChangeVal} damage";
                 break;
         }
+        if (target.Stats.GetHealth() < 1) { target.IsFainted = true; }
     }
 
     private MoblinActions ChooseAction()

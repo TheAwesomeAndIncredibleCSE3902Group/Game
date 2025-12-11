@@ -68,6 +68,7 @@ public class LynelBattle : IEnemyBattle
                 TurnText = $"{Name} stabbed {target.Name} for {healthChangeVal}";
                 break;
         }
+        if (target.Stats.GetHealth() < 1) { target.IsFainted = true; }
     }
 
     private LynelActions ChooseAction()

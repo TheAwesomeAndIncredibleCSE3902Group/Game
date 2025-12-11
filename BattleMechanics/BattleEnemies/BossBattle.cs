@@ -73,6 +73,7 @@ namespace Sprint0.BattleMechanics.BattleEnemies
                     TurnText = $"{Name} gut punched {target.Name} for {healthChangeVal}";
                     break;
             }
+            if (target.Stats.GetHealth() < 1) { target.IsFainted = true; }
         }
 
         private BossActions ChooseAction()

@@ -61,6 +61,7 @@ public class ArmosBattle : IEnemyBattle
                 TurnText = $"{Name} charged {target.Name} for {healthChangeVal}";
                 break;
         }
+        if (target.Stats.GetHealth() < 1) { target.IsFainted = true; }
     }
 
     private ArmosActions ChooseAction()

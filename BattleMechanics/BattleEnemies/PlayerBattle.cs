@@ -28,6 +28,7 @@ public abstract class PlayerBattle : IBattle
     {
         PlayerStats stats = ((PlayerStats)Stats);
         int levelUps = stats.levelUps;
+        Debug.WriteLine("Generic player level up");
         stats.ChangeAll
             (
                 (levelUps * 2), (levelUps * 5), (levelUps), (levelUps), (levelUps), (levelUps), (levelUps), (levelUps), ((levelUps * 3) / 4)
