@@ -31,14 +31,15 @@ namespace Sprint0.BattleMechanics.BattleEnemies
         }
         public void ThrowGold(int enemyIndex)
         {
+            target = BattleScene.Instance.EnemyList[enemyIndex];
             int attackVal = Stats.GetAttack();
-            int defenseVal = BattleScene.Instance.EnemyList[enemyIndex].Stats.GetDefense();
+            int defenseVal = target.Stats.GetDefense();
             int damageVal = attackVal - (defenseVal / 2);
             if (damageVal < 0) damageVal = 0;
 
-            BattleScene.Instance.EnemyList[enemyIndex].Stats.ChangeHealth(-damageVal);
-            TurnText = $"{Name} threw gold at {BattleScene.Instance.EnemyList[enemyIndex].Name} for {damageVal} damage!\n";
-            EnemyFainted(enemyIndex);
+            target.Stats.ChangeHealth(-damageVal);
+            TurnText = $"{Name} threw gold at {target.Name} for {damageVal} damage!\n";
+            EnemyFainted();
         }
     }
 }

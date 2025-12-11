@@ -17,6 +17,9 @@ public abstract class PlayerBattle : IBattle
     public AnimatableSprite Icon { get; set; } = null;
     public string TurnText { get; set; } = null;
 
+    private int attackVal; private int specialAttackVal;
+    public IBattle target;
+
     public PlayerBattle(PlayerStats stats)
     {
         Stats = stats;
@@ -36,49 +39,52 @@ public abstract class PlayerBattle : IBattle
             );
         stats.levelUps = 0;
     }
-    public void EnemyFainted(int enemyIndex)
+    public void EnemyFainted()
     {
-        if (BattleScene.Instance.EnemyList[enemyIndex].Stats.GetHealth() < 1)
+        if (target.Stats.GetHealth() < 1)
         {
-            BattleScene.Instance.EnemyList[enemyIndex].IsFainted = true;
+            target.IsFainted = true;
             TurnText += $"Enemy has fainted!";
         }
     }
 
     public void Attack(int enemyIndex)
     {
+        target = BattleScene.Instance.EnemyList[enemyIndex];
         int attackVal = Stats.GetAttack();
-        int defenseVal = BattleScene.Instance.EnemyList[enemyIndex].Stats.GetDefense();
+        int defenseVal = target.Stats.GetDefense();
         int damageVal =  attackVal - defenseVal;
         if (damageVal < 0) damageVal = 0;
 
-        BattleScene.Instance.EnemyList[enemyIndex].Stats.ChangeHealth(-damageVal);
+        target.Stats.ChangeHealth(-damageVal);
 
-        TurnText = $"{Name} attacked for {Math.Abs(damageVal)} damage!\n{BattleScene.Instance.EnemyList[enemyIndex].Name}'s health is now {BattleScene.Instance.EnemyList[enemyIndex].Stats.GetHealth()}";
-        EnemyFainted(enemyIndex);
+        TurnText = $"{Name} attacked for {Math.Abs(damageVal)} damage!\n{target.Name}'s health is now {target.Stats.GetHealth()}";
+        EnemyFainted();
     }
 
     public void LuckyStrike(int enemyIndex)
     {
+        target = BattleScene.Instance.EnemyList[enemyIndex];
         int luck = Stats.GetLuck();
         if (luck > 7) luck = 7;
-        int attackVal = Stats.GetAttack();
-        int defenseVal = BattleScene.Instance.EnemyList[enemyIndex].Stats.GetDefense();
-        int damageVal = attackVal;
+        int attackVal = Stats.GetSpecialAttack();
+        int defenseVal = target.Stats.GetDefense();
         Random random = new();
         if (random.Next(0, 10 - Stats.GetLuck()) % 2 == 0)
         {
-            damageVal *= 10;
-            TurnText = $"{Name} got a lucky strike on {BattleScene.Instance.EnemyList[enemyIndex].Name} for {damageVal}!\n{BattleScene.Instance.EnemyList[enemyIndex].Name}'s health is now {BattleScene.Instance.EnemyList[enemyIndex].Stats.GetHealth()}";
+            attackVal *= 3;
+            TurnText = $"{Name} got a lucky strike on {target.Name}";
         }
-        else { TurnText = $"{Name} whiffed a hit for {Math.Abs(damageVal)} damage\n{BattleScene.Instance.EnemyList[enemyIndex].Name}'s health is now {BattleScene.Instance.EnemyList[enemyIndex].Stats.GetHealth()}"; }
-        damageVal = attackVal - defenseVal;
+        else { TurnText = $"{Name} whiffed a hit on {target.Name}"; }
+        int damageVal = attackVal - defenseVal;
         if (damageVal < 0) damageVal = 0;
 
-        BattleScene.Instance.EnemyList[enemyIndex].Stats.ChangeHealth(-damageVal);
+        TurnText += $" for {attackVal}!\n{target.Name}'s health is now {target.Stats.GetHealth()}";
+
+        target.Stats.ChangeHealth(-damageVal);
 
         
-        EnemyFainted(enemyIndex);
+        EnemyFainted();
     }
     public void Heal()
     {
