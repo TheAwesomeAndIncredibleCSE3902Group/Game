@@ -453,4 +453,8 @@ public class MenuState : IGameState
             child.MakeSelectable();
         }
     }
+
+    public void ChangeToBattleState(CharacterEnemyBase enemy, bool playerStarting)
+    {
+    }
 }

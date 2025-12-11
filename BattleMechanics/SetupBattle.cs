@@ -14,7 +14,7 @@ namespace AwesomeRPG.BattleMechanics
     {
         private static string enemyType = null;
         private static int partyLevelAvg = 0;
-        public static void Initialize(string enemy)
+        public static void Initialize(string enemy, bool playerStarting)
         {
             BattleScene.Instance.AllyList.Clear();
             BattleScene.Instance.EnemyList.Clear();
@@ -28,7 +28,7 @@ namespace AwesomeRPG.BattleMechanics
 
             Debug.WriteLine($"Middle enemy name: {enemies[1].Name}");
                 
-            BattleScene.Instance.InitializeBattleSequence(true, enemies, allies);
+            BattleScene.Instance.InitializeBattleSequence(playerStarting, enemies, allies);
         }
         private static List<IBattle> SetEnemies()
         {

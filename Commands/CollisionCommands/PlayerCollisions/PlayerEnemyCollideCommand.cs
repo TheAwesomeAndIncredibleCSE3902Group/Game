@@ -10,6 +10,6 @@ public class PlayerEnemyCollideCommand : ICollisionCommand
         // Debug.WriteLine("DEBUG CollidePlayerEnemyCommand: Enter the battle state");
         CharacterEnemyBase enemy = (CharacterEnemyBase)collision.GetCollisionObjectOfType(CollisionObjectType.Enemy);
 
-        Game1.TransitionToBattleState(enemy);
+        Game1.TransitionToBattleState(enemy, false);
     }
 }

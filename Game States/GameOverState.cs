@@ -68,7 +68,7 @@ public class GameOverState : IGameState
         }
     }
 
-    public void ChangeToBattleState(CharacterEnemyBase enemy) { }
+    public void ChangeToBattleState(CharacterEnemyBase enemy, bool playerStarting) { }
 
     public void ChangeToOverworldState() { }
 
