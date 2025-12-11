@@ -42,3 +42,27 @@ system 9 arguments makes it hard to know what stats are correlated to which argu
 to have the default leveling being it's own function stored in Player. Then specific stat changes are called individually.
 This would likely require stats to be a dictionary which I think might be better overall since, playerStats has a lot
 of file scope variables as is.
+
+
+
+Eli
+December 10th
+Sprint 5
+----------------
+Author of Code: John
+Code Under Review: SetupBattle for Code Quality
+Time: 5 minutes
+SetupBattle overall looks pretty good. One thing that may need to change if we were to ever continue working on this
+game is instead of having SetEnemies() and SetAllies() use a switch with enemyType or the ally Type, this data could 
+be held in its own class. This way we wouldn't be concentrating everything into one class (and therefore having high 
+coupling). But I would say everything in the class is cohesive because its sole purpose is to set up a battle.
+
+Author of Code: Caleb
+Code Under Review: OverworldState for Readability/Code Quality
+Time: 5 minutes
+Compared to the other state classes, this has a lot less going on, (especially because the HUD is much more limited
+than the massive amount of UI in the other state classes). Variables, Functions, etc. are named well. However, something 
+that I noticed is that the Root UI element is being created and the game.Content.Load method to load the ZeldaFont 
+is being run for every single frame since they are inside of Draw. I believe that these should only be run when the State
+class is being initially created, like how it works within the other States. If we added a lot more to the 
+intiialization code of the HUD, this may cause unnecessary performance loss. But it works well as it is.
