@@ -21,7 +21,7 @@ public class LynelBattle : IEnemyBattle
     {
         // Basic stat scaling based on level
         int maxHealth = 25 + (level * 10);
-        int speed = 10 + (level * 4);
+        int speed = 15 + (level * 4);
         int attack = 7 + (level * 3);
         int defense = 5 + ((level * 3) / 2);
         int specialAttack = 3 + level;
@@ -44,12 +44,13 @@ public class LynelBattle : IEnemyBattle
     {
         int rand = new Random().Next(BattleScene.Instance.AllyList.Count);
         IBattle target = BattleScene.Instance.AllyList[rand];
+        while (target.IsFainted) { target = BattleScene.Instance.AllyList[rand]; }
         int healthChangeVal = 0;
 
         switch (ChooseAction())
         {
             case LynelActions.RecklessCharge:
-                healthChangeVal = Stats.GetSpeed();
+                healthChangeVal = Stats.GetSpeed() - target.Stats.GetSpeed();
                 target.Stats.ChangeHealth(-healthChangeVal);
                 TurnText = $"{Name} recklessly charged {target.Name} for {healthChangeVal}";
                 break;

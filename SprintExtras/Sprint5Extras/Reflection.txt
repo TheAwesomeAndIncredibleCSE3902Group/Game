@@ -16,7 +16,7 @@ which led to us having less time to polish the project in this sprint. All in al
 Jesse 
 --------------
 Reflection: This sprint was fairly decent, but rushed by the end as the others have been.
-I personally havenÅft been able to get things done for this sprint because of personal matters to which is all on me,
+I personally havenÔøΩft been able to get things done for this sprint because of personal matters to which is all on me,
 and I believe that our own personal matters have inflicted upon each of us to their respective degrees 
 despite the thanksgiving break we all had. I still see it now especially with finals around the corner. 
 However, we did communicate with each other about what needed to be finalized for this sprint, 
@@ -24,3 +24,26 @@ and I believe we have produced a decent game at the end of it. Had we got more t
 we would have produced a fully polished game; however, I am proud of the game we ended up producing,
 and especially proud of the work my teammates have put into the game because their efforts, with a bit of mine,
 helped form a game that is of decent quality.
+
+Eli
+--------------
+I think that this sprint was pretty good, since we (or at least I) got a lot more of our goals accomplisheed than
+previous sprints, (although a lot of these goals were unfinished ones from previous sprints). I really enjoyed
+being able to work on the UI and its framework in the game, (especially because I got to incorporate some of my 
+experience working on web development when building everything for the UI framework). However, I believe that if
+I were to go back and change anything related to the UI, I would try to make it more maintainable longer term by
+splitting the current UI code into multiple classes/files. Overall, I really enjoyed working on our project, and even 
+though there are definitely things I would want to improve if we had more time, I think that we accomplished our goal of 
+making a game that actually feels like a game lol. I personally really enjoyed working with my teammates and that we
+all made a pretty good team!!
+
+John
+-----------
+Me personally, I feel like we did a good job this sprint. I know some of my teammates were more anxious especially
+towards the end of the sprint, which is definitely an issue I should've addressed. I did a lot of backend work and
+some frontend work needed my assistance in implementing it. I didn't want to step on the toes of my frontend teammates
+so I tried to work with them and was in a lot of calls together with Eli. In hindsight, I should've implemented the
+buttons earlier so as to not worry my fellow teammates as much, but with what I had already set up I was fairly confident
+I would be able to quickly put all the pieces together. Still no excuse and it is safer to get it done sooner anyways,
+regardless we did end up having a lot of changes for visible functionality happen right at the end, which was not ideal.
+Besides that maybe scary hiccup, I think we all contributed a good amount of work and put together something pretty neat.

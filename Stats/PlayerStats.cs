@@ -9,6 +9,7 @@ public class PlayerStats : IStats
     private int maxHealth;
     private int health;
     private int level;
+    private int specialPointMax;
     private int specialPointCount;
     private int speed;
     private int attack;
@@ -35,7 +36,7 @@ public class PlayerStats : IStats
             case CharType.OldLady:
                 maxHealth = 80;
                 specialAttack = 15;
-                specialPointCount = 15;
+                specialPointMax = 15;
                 break;
             case CharType.Zelda:
                 maxHealth = 100;
@@ -59,7 +60,7 @@ public class PlayerStats : IStats
         this.maxHealth = maxHealth;
         this.health = maxHealth;
         this.level = 1;
-        this.specialPointCount = specialPointCount;
+        this.specialPointMax = specialPointCount;
         this.speed = speed;
         this.attack = attack;
         this.defense = defense;
@@ -89,7 +90,7 @@ public class PlayerStats : IStats
     #endregion
     #region Stats Methods
     #region Stat Getters
-    public int GetSpecialPoint() { return specialPointCount; }
+    public int GetSpecialPointMax() { return specialPointMax; }
     public int GetSpeed() { return speed; }
     public int GetAttack() { return attack; }
     public int GetDefense() { return defense; }
@@ -104,7 +105,7 @@ public class PlayerStats : IStats
     {
         this.maxHealth += maxHealthChange;
         this.health += maxHealthChange;
-        this.specialPointCount += specialPointCountChange;
+        this.specialPointMax += specialPointCountChange;
         this.speed += speedChange;
         this.attack += attackChange;
         this.defense += defenseChange;
@@ -113,13 +114,22 @@ public class PlayerStats : IStats
         this.specialDefense += specialDefenseChange;
         this.luck += luckChange;
     }
-    public int ChangeSpecialPoint(int updateSpecialPointCount)
+    public int ChangeSpecialPoint(int  updateSpecialPointCount)
     {
         if (updateSpecialPointCount != 0)
         {
             specialPointCount += updateSpecialPointCount;
+            if (specialPointCount > specialPointMax) specialPointCount = specialPointMax;
         }
         return specialPointCount;
+    }
+    public int ChangeSpecialPointMax(int updateSpecialPointCount)
+    {
+        if (updateSpecialPointCount != 0)
+        {
+            specialPointMax += updateSpecialPointCount;
+        }
+        return specialPointMax;
     }
     public int ChangeSpeed(int updateSpeed)
     {
