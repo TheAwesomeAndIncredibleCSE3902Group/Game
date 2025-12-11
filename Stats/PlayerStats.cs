@@ -104,7 +104,6 @@ public class PlayerStats : IStats
     public void ChangeAll(int maxHealthChange, int specialPointCountChange, int speedChange, int attackChange, int defenseChange, int weaponUseChange, int specialAttackChange, int specialDefenseChange, int luckChange)
     {
         this.maxHealth += maxHealthChange;
-        this.health += maxHealthChange;
         this.specialPointMax += specialPointCountChange;
         this.speed += speedChange;
         this.attack += attackChange;

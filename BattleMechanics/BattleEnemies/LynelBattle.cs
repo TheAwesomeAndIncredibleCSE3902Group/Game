@@ -44,7 +44,6 @@ public class LynelBattle : IEnemyBattle
     {
         int rand = new Random().Next(BattleScene.Instance.AllyList.Count);
         IBattle target = BattleScene.Instance.AllyList[rand];
-        while (target.IsFainted) { target = BattleScene.Instance.AllyList[rand]; }
         int healthChangeVal = 0;
 
         switch (ChooseAction())

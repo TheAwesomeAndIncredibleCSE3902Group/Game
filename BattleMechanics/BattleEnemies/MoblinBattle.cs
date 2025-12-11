@@ -45,7 +45,6 @@ public class MoblinBattle : IEnemyBattle
     {
         int rand = new Random().Next(BattleScene.Instance.AllyList.Count);
         IBattle target = BattleScene.Instance.AllyList[rand];
-        while (target.IsFainted) { target = BattleScene.Instance.AllyList[rand]; }
         int healthChangeVal = 0;
 
         switch (ChooseAction())
@@ -57,7 +56,7 @@ public class MoblinBattle : IEnemyBattle
                 Random random = new();
                 if (random.Next(0, 30 - Stats.GetLuck()) == 0)
                 {
-                    healthChangeVal *= 2;
+                    healthChangeVal *= 4;
                     TurnText = $"{Name} got a lucky smack on {target.Name} for {healthChangeVal}!";
                 }
                 else { TurnText = $"{Name} hit {target.Name} very limply for {healthChangeVal}"; }
@@ -82,7 +81,7 @@ public class MoblinBattle : IEnemyBattle
     private MoblinActions ChooseAction()
     {
         MoblinActions moblinChoice = MoblinActions.LuckySmack;
-        if (Stats.GetHealth() > (Stats.GetMaxHealth() / 3))
+        if (Stats.GetHealth() > (Stats.GetMaxHealth() / 4))
         {
             Random random = new();
             int coinFlip = random.Next(0, 3);
