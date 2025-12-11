@@ -45,6 +45,7 @@ public class ArmosBattle : IEnemyBattle
     {
         int rand = new Random().Next(BattleScene.Instance.AllyList.Count);
         IBattle target = BattleScene.Instance.AllyList[rand];
+        while (target.IsFainted) { target = BattleScene.Instance.AllyList[rand]; }
         int healthChangeVal = 0;
 
         switch (ChooseAction())
@@ -54,7 +55,7 @@ public class ArmosBattle : IEnemyBattle
                 if (healthChangeVal < 0) healthChangeVal = 0;
 
                 target.Stats.ChangeHealth(-healthChangeVal);
-                TurnText = $"{Name} healed for {healthChangeVal}";
+                TurnText = $"{Name} bashed {target.Name} with their shield for {healthChangeVal}";
                 break;
             case ArmosActions.ChargeForward:
                 healthChangeVal = Stats.GetAttack() - target.Stats.GetDefense();
@@ -71,14 +72,14 @@ public class ArmosBattle : IEnemyBattle
     {
         ArmosActions armosChoice = new ArmosActions();
         Random random = new();
-        int coinFlip = random.Next(0, 2);
+        int coinFlip = random.Next(0, 4);
         if (coinFlip == 0) 
         {
-            armosChoice = ArmosActions.ChargeForward;
+            armosChoice = ArmosActions.ShieldBash;
         }
         else
         {
-            armosChoice = ArmosActions.ShieldBash;
+            armosChoice = ArmosActions.ChargeForward;
         }
         return armosChoice;
     }

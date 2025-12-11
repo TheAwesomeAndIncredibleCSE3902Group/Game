@@ -36,3 +36,14 @@ splitting the current UI code into multiple classes/files. Overall, I really enj
 though there are definitely things I would want to improve if we had more time, I think that we accomplished our goal of 
 making a game that actually feels like a game lol. I personally really enjoyed working with my teammates and that we
 all made a pretty good team!!
+
+John
+-----------
+Me personally, I feel like we did a good job this sprint. I know some of my teammates were more anxious especially
+towards the end of the sprint, which is definitely an issue I should've addressed. I did a lot of backend work and
+some frontend work needed my assistance in implementing it. I didn't want to step on the toes of my frontend teammates
+so I tried to work with them and was in a lot of calls together with Eli. In hindsight, I should've implemented the
+buttons earlier so as to not worry my fellow teammates as much, but with what I had already set up I was fairly confident
+I would be able to quickly put all the pieces together. Still no excuse and it is safer to get it done sooner anyways,
+regardless we did end up having a lot of changes for visible functionality happen right at the end, which was not ideal.
+Besides that maybe scary hiccup, I think we all contributed a good amount of work and put together something pretty neat.

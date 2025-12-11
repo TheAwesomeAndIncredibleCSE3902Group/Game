@@ -31,14 +31,15 @@ namespace Sprint0.BattleMechanics.BattleEnemies
         }
         public void WiseAdvice(int enemyIndex)
         {
+            target = BattleScene.Instance.EnemyList[enemyIndex];
             int specialAttackVal = Stats.GetSpecialAttack();
-            int specialDefenseVal = BattleScene.Instance.EnemyList[enemyIndex].Stats.GetSpecialDefense();
+            int specialDefenseVal = target.Stats.GetSpecialDefense();
             int damageVal = specialAttackVal - (specialDefenseVal / 2);
             if (damageVal < 0) damageVal = 0;
 
-            BattleScene.Instance.EnemyList[enemyIndex].Stats.ChangeHealth(-damageVal);
-            TurnText = $"{Name} gave {BattleScene.Instance.EnemyList[enemyIndex].Name} wise advice for {damageVal} damage!\n";
-            EnemyFainted(enemyIndex);
+            target.Stats.ChangeHealth(-damageVal);
+            TurnText = $"{Name} gave {target.Name} wise advice for {damageVal} damage!\n";
+            EnemyFainted();
         }
     }
 }

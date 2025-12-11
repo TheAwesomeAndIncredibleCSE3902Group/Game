@@ -16,7 +16,7 @@ namespace Sprint0.BattleMechanics.BattleEnemies
     {
         public CharacterEnemyBase.CType Type { get; } = CharacterEnemyBase.CType.boss;
         public IStats Stats { get; set; }
-        public enum BossActions { WildSwing, GutPunch, EatMeal }
+        public enum BossActions { WildSwing, GutPunch, PoisonBreath }
 
         public bool IsFriend { get; set; } = false;
         public bool IsFainted { get; set; } = false;
@@ -28,7 +28,7 @@ namespace Sprint0.BattleMechanics.BattleEnemies
             // Basic stat scaling based on level
             int maxHealth = 50 + (level * 10);
             int speed = 5 + level;
-            int attack = 8 + (level * 2);
+            int attack = 10 + (level * 2);
             int defense = 4 + ((level * 3) / 2);
             int specialAttack = 5 + level;
             int specialDefense = 3 + level;
@@ -50,24 +50,26 @@ namespace Sprint0.BattleMechanics.BattleEnemies
         {
             int rand = new Random().Next(BattleScene.Instance.AllyList.Count);
             IBattle target = BattleScene.Instance.AllyList[rand];
+            while (target.IsFainted) { target = BattleScene.Instance.AllyList[rand]; }
             int healthChangeVal = 0;
 
             switch (ChooseAction())
             {
-                case BossActions.EatMeal:
-                    healthChangeVal = Stats.GetSpecialAttack() / 2;
-                    Stats.ChangeHealth(healthChangeVal);
-                    TurnText = $"{Name} ate a delicious meal for {healthChangeVal}";
+                case BossActions.PoisonBreath:
+                    healthChangeVal = Stats.GetSpecialAttack();
+
+                    foreach (IBattle player in BattleScene.Instance.AllyList) { player.Stats.ChangeHealth(-healthChangeVal); }
+                    TurnText = $"{Name} used their poison breath on the whole party for {healthChangeVal}";
                     break;
                 case BossActions.WildSwing:
-                    healthChangeVal = Stats.GetAttack() - target.Stats.GetDefense();
+                    healthChangeVal = (Stats.GetAttack() + Stats.GetSpecialAttack()) - target.Stats.GetDefense();
                     if (healthChangeVal < 0) healthChangeVal = 0;
 
                     target.Stats.ChangeHealth(-healthChangeVal);
                     TurnText = $"{Name} took a wild swing at {target.Name} for {healthChangeVal}";
                     break;
                 case BossActions.GutPunch:
-                    healthChangeVal = Stats.GetAttack() - (target.Stats.GetDefense() / 2);
+                    healthChangeVal = (Stats.GetAttack() * 2) - (target.Stats.GetDefense() / 2);
                     if (healthChangeVal < 0) healthChangeVal = 0;
 
                     target.Stats.ChangeHealth(-healthChangeVal);
@@ -79,7 +81,7 @@ namespace Sprint0.BattleMechanics.BattleEnemies
 
         private BossActions ChooseAction()
         {
-            BossActions bossChoice = BossActions.EatMeal;
+            BossActions bossChoice = BossActions.PoisonBreath;
 
             if (Stats.GetHealth() > (Stats.GetMaxHealth() / 3))
             {

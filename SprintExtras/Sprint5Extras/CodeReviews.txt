@@ -66,3 +66,25 @@ that I noticed is that the Root UI element is being created and the game.Content
 is being run for every single frame since they are inside of Draw. I believe that these should only be run when the State
 class is being initially created, like how it works within the other States. If we added a lot more to the 
 intiialization code of the HUD, this may cause unnecessary performance loss. But it works well as it is.
+
+John
+December 10th
+Sprint 5
+-----------------
+Author of Code: Eli
+Code Under Review: Intialize UI for Readability
+Time: 1 minute
+Honestly, for how long and messy it is, I think it's fairly readable and clear what each individual part does. I just really
+want to recommend using regions comments when you have code that stretches on very long as it can be a lot more difficult to
+just look at a long document of code rather than code that is chunked up and hidden away with comments describing it without
+them always being visible.
+
+Author of Code: Lupine
+Code Under Review: Game States for Code Quality
+Time: 5 minutes
+I think the code is not bad, it just utilizes the things it needs to interact with which for the most part is UI. not a
+readability review, but I do appreciate the use of comments in the longer files and naming seems to be pretty good. This
+is probably more due to the nature of UI, but it is rather unsightly to see the wall of code all for one function of
+InitializeUI (for both BattleState and MenuState, though I believe Eli did the InitializeUI for BattleState, I may just
+be wrong). In fact, I'd probably suggest that the InitializeUI is separated into its own class for each state, just due
+to the sheer size of them.

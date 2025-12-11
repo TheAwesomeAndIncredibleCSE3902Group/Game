@@ -31,14 +31,15 @@ namespace Sprint0.BattleMechanics.BattleEnemies
         }
         public void LightArrow(int enemyIndex)
         {
+            target = BattleScene.Instance.EnemyList[enemyIndex];
             int specialAttackVal = Stats.GetSpecialAttack();
-            int specialDefenseVal = BattleScene.Instance.EnemyList[enemyIndex].Stats.GetSpecialDefense();
+            int specialDefenseVal = target.Stats.GetSpecialDefense();
             int damageVal = specialAttackVal - (specialDefenseVal / 2);
             if (damageVal < 0) damageVal = 0;
 
-            BattleScene.Instance.EnemyList[enemyIndex].Stats.ChangeHealth(-damageVal);
-            TurnText = $"{Name} shot a light arrow at {BattleScene.Instance.EnemyList[enemyIndex].Name} for {damageVal} damage!\n";
-            EnemyFainted(enemyIndex);
+            target.Stats.ChangeHealth(-damageVal);
+            TurnText = $"{Name} shot a light arrow at {target.Name} for {damageVal} damage!\n";
+            EnemyFainted();
         }
     }
 }
