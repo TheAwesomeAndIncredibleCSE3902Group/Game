@@ -1,0 +1,17 @@
+Iris
+December 10th
+Sprint 5
+-----------------
+Author of Code: Eli
+Code Under Review: RectElementFactory for Readability
+Time: 10 minutes
+Overall, the factory is understandable. There aren't any major issues, and the code is well broken up. 
+The only changes I would make to improve readability would be to reduce the number of abbriviated variable names 
+and to use variable types instead of the var keyword to better show what type each object is. 
+
+Author of Code: Jessie
+Code Under Review: ThemeController
+Time: 10 minutes
+ThemeController is well written. It has low coupling as it is used only by the GameSoundFactory. If we did want to change
+themes later to be able to have an outro or something similar, we would have to make an entirely new method for it. However,
+based on what is currently present, that wouldn't take much more logic. 
