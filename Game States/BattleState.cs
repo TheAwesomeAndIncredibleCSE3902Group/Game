@@ -67,8 +67,16 @@ public class BattleState : IGameState
 
     public void ChangeToBattleState(CharacterEnemyBase enemy, bool playerStarting) { }
     public void ChangeToStartState() { }
-    public void ChangeToGameOverState() { game.SetStateClass(new GameOverState(game)); }
-    public void ChangeToWinState() { }
+    public void ChangeToGameOverState() 
+    {
+        BattleScene.Instance.Lost = false;
+        game.SetStateClass(new GameOverState(game));
+    }
+    public void ChangeToWinState() 
+    {
+        BattleScene.Instance.End = false;
+        game.SetStateClass(new WinState(game));
+    }
 
     public void ChangeToOverworldState()
     {

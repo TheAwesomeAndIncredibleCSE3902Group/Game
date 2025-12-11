@@ -22,7 +22,7 @@ public class ArmosBattle : IEnemyBattle
         // Basic stat scaling based on level
         int maxHealth = 20 + (level * 4);
         int speed = 5 + level;
-        int attack = 4 + level;
+        int attack = 6 + level;
         int defense = 4 + ((level * 3) / 2);
         int specialAttack = 2 + level;
         int specialDefense = 1 + level;

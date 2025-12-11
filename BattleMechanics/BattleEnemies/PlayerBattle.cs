@@ -54,7 +54,7 @@ public abstract class PlayerBattle : IBattle
     }
     public void Heal()
     {
-        int specialAtkVal = Stats.GetSpecialAttack();
+        int specialAtkVal = (Stats.GetSpecialAttack() * 2);
 
         Stats.ChangeHealth(specialAtkVal);
 

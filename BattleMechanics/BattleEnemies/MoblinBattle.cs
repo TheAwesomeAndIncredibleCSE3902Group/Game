@@ -23,7 +23,7 @@ public class MoblinBattle : IEnemyBattle
         // Basic stat scaling based on level
         int maxHealth = 10 + (level * 2);
         int speed = 5 + level;
-        int attack = 4 + level;
+        int attack = 5 + level;
         int defense = 3 + level;
         int specialAttack = 2 + level;
         int specialDefense = 2 + level;
