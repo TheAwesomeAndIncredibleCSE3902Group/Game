@@ -88,3 +88,23 @@ is probably more due to the nature of UI, but it is rather unsightly to see the 
 InitializeUI (for both BattleState and MenuState, though I believe Eli did the InitializeUI for BattleState, I may just
 be wrong). In fact, I'd probably suggest that the InitializeUI is separated into its own class for each state, just due
 to the sheer size of them.
+
+Jesse 
+December 10th
+Sprint 5
+-----------------
+Code Reviews
+Code Author: John
+Code Under Review: ZeldaBattle for Code Quality
+Time: 10 minutes
+This file is well written! Quality wise the code is condense, somewhat tightly coupled with stats within both LevelUp 
+and LightArrow, but methods are cleanly written and easy to understand the general concept. 
+There are also some long message chains with getting enemies damaged in LightArrow,
+and I have a slight concern with how level ups are done with a ton of parameters. Other than that, well done.
+
+Code Author: Iris
+Code Under Review: WinState for readability 
+Time: 5 minutes
+The code seems to be seemingly easy to understand. 
+The UI portion seems to be a bit crammed, but other than that the names for everything are coherent and easy to understand.
+Well done.
