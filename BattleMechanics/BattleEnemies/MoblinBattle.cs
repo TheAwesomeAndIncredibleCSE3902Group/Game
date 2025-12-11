@@ -10,7 +10,7 @@ public class MoblinBattle : IEnemyBattle
 {
     public CharacterEnemyBase.CType Type { get; } = CharacterEnemyBase.CType.moblin;
     public IStats Stats { get; set; }
-    public enum MoblinActions { LuckyStrike, RambleCharge, Dance }
+    public enum MoblinActions { LuckySmack, RambleCharge, Dance }
     public bool IsFainted { get; set; } = false;
     public bool IsFriend { get; set; } = false;
 
@@ -50,15 +50,18 @@ public class MoblinBattle : IEnemyBattle
 
         switch (ChooseAction())
         {
-            case MoblinActions.LuckyStrike:
+            case MoblinActions.LuckySmack:
                 int luck = Stats.GetLuck();
                 if (luck > 7) luck = 7;
                 healthChangeVal = Stats.GetSpecialAttack();
                 Random random = new();
-                if(random.Next(0, 10 - Stats.GetLuck()) % 2 == 0) healthChangeVal *= 10;
-
-                target.Stats.ChangeHealth(-healthChangeVal);
-                TurnText = $"{Name} scratched its belly and healed for {healthChangeVal}";
+                if (random.Next(0, 10 - Stats.GetLuck()) % 2 == 0)
+                {
+                    healthChangeVal *= 10;
+                    TurnText = $"{Name} got a lucky smack on {target.Name} for {healthChangeVal}!";
+                }
+                else { TurnText = $"{Name} hit {target.Name} very limply for {healthChangeVal}"; }
+                    target.Stats.ChangeHealth(-healthChangeVal);
                 break;
             case MoblinActions.RambleCharge:
                 healthChangeVal = ((Stats.GetAttack() * 3) / 2) - target.Stats.GetDefense();
@@ -78,7 +81,7 @@ public class MoblinBattle : IEnemyBattle
 
     private MoblinActions ChooseAction()
     {
-        MoblinActions moblinChoice = MoblinActions.LuckyStrike;
+        MoblinActions moblinChoice = MoblinActions.LuckySmack;
         if (Stats.GetHealth() > (Stats.GetMaxHealth() / 3))
         {
             Random random = new();

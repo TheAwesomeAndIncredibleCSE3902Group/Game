@@ -328,20 +328,21 @@ public class BattleState : IGameState
         {
             (buttons[0].Attributes["text_element"] as Element).Attributes["text_string"] = "Attack";
             (buttons[1].Attributes["text_element"] as Element).Attributes["text_string"] = "Heal";
+            (buttons[2].Attributes["text_element"] as Element).Attributes["text_string"] = "Lucky Strike";
             (buttons[5].Attributes["text_element"] as Element).Attributes["text_string"] = "Give Up";
             switch (BattleScene.Instance.CurrentBattle.Name)
             {
                 case "Link":
-                    (buttons[2].Attributes["text_element"] as Element).Attributes["text_string"] = "Sword Stab";
+                    (buttons[3].Attributes["text_element"] as Element).Attributes["text_string"] = "Sword Stab";
                     break;
                 case "Old Lady":
-                    (buttons[2].Attributes["text_element"] as Element).Attributes["text_string"] = "Wise Advice";
+                    (buttons[3].Attributes["text_element"] as Element).Attributes["text_string"] = "Wise Advice";
                     break;
                 case "Zelda":
-                    (buttons[2].Attributes["text_element"] as Element).Attributes["text_string"] = "Light Arrow";
+                    (buttons[3].Attributes["text_element"] as Element).Attributes["text_string"] = "Light Arrow";
                     break;
                 case "Merchant":
-                    (buttons[2].Attributes["text_element"] as Element).Attributes["text_string"] = "Throw Gold";
+                    (buttons[3].Attributes["text_element"] as Element).Attributes["text_string"] = "Throw Gold";
                     break;
             }
         }
@@ -469,6 +470,23 @@ public class BattleState : IGameState
             }
         });
         buttons[2].AddActionOnUIEvent(UIEvent.ButtonUp, (e) =>
+        {
+            if (((InputUIEventParams)e).Controls.Contains(UIControl.Interact))
+            {
+                (BattleScene.Instance.CurrentBattle as PlayerBattle).LuckyStrike();
+                if (BattleScene.Instance.CurrentBattle.TurnText == null)
+                {
+                    battleTextElem.Attributes["text_string"] = BattleScene.Instance.CurrentBattle.ToString() + ": TurnText string is null...";
+
+                }
+                else
+                {
+                    battleTextElem.Attributes["text_string"] = BattleScene.Instance.CurrentBattle.TurnText;
+                }
+                SwitchToBattleText();
+            }
+        });
+        buttons[3].AddActionOnUIEvent(UIEvent.ButtonUp, (e) =>
         {
             if (((InputUIEventParams)e).Controls.Contains(UIControl.Interact))
             {
