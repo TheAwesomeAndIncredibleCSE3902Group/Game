@@ -15,3 +15,10 @@ Time: 10 minutes
 ThemeController is well written. It has low coupling as it is used only by the GameSoundFactory. If we did want to change
 themes later to be able to have an outro or something similar, we would have to make an entirely new method for it. However,
 based on what is currently present, that wouldn't take much more logic. 
+
+Caleb
+December 10th
+Sprint 5
+----------------
+Author of Code: Iris
+Code Under Review: Lock and Key for Code Quality
