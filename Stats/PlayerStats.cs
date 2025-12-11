@@ -10,7 +10,6 @@ public class PlayerStats : IStats
     private int health;
     private int level;
     private int specialPointMax;
-    private int specialPointCount;
     private int speed;
     private int attack;
     private int defense;
@@ -20,6 +19,7 @@ public class PlayerStats : IStats
     private int luck;
     private int xp;
 
+    public int specialPointCount;
     public int levelUps;
     public CharType Type { get; set; }
 
@@ -113,15 +113,6 @@ public class PlayerStats : IStats
         this.specialAttack += specialAttackChange;
         this.specialDefense += specialDefenseChange;
         this.luck += luckChange;
-    }
-    public int ChangeSpecialPoint(int  updateSpecialPointCount)
-    {
-        if (updateSpecialPointCount != 0)
-        {
-            specialPointCount += updateSpecialPointCount;
-            if (specialPointCount > specialPointMax) specialPointCount = specialPointMax;
-        }
-        return specialPointCount;
     }
     public int ChangeSpecialPointMax(int updateSpecialPointCount)
     {

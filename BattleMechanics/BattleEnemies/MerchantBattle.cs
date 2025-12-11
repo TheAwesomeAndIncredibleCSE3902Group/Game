@@ -22,23 +22,27 @@ namespace Sprint0.BattleMechanics.BattleEnemies
         public override void LevelUp()
         {
             int levelUps = ((PlayerStats)Stats).levelUps;
-            ((PlayerStats)Stats).ChangeAll
-                (
-                    (levelUps * 2), (levelUps * 5), (levelUps), (levelUps * 2), (levelUps / 2), (levelUps), (levelUps * 2), (levelUps / 2), (levelUps * 2)
-                );
-            ((PlayerStats)Stats).levelUps = 0;
-            Stats.ChangeHealth(Stats.GetMaxHealth());
+            if (levelUps > 0)
+            {
+                ((PlayerStats)Stats).ChangeAll
+                    (
+                        (levelUps * 2), (levelUps * 5), (levelUps), (levelUps * 2), (levelUps / 2), (levelUps), (levelUps * 2), (levelUps / 2), (levelUps * 2)
+                    );
+                ((PlayerStats)Stats).levelUps = 0;
+                Stats.ChangeHealth(Stats.GetMaxHealth());
+            }
         }
         public void ThrowGold(int enemyIndex)
         {
+            if (((PlayerStats)Stats).specialPointCount < 5) { Attack(enemyIndex); TurnText += "\nYou do not have enough special points to do this move."; return; }
+            ((PlayerStats)Stats).specialPointCount -= 5;
             target = BattleScene.Instance.EnemyList[enemyIndex];
-            int attackVal = Stats.GetAttack();
             int defenseVal = target.Stats.GetDefense();
             int damageVal = attackVal - (defenseVal / 2);
             if (damageVal < 0) damageVal = 0;
 
             target.Stats.ChangeHealth(-damageVal);
-            TurnText = $"{Name} threw gold at {target.Name} for {damageVal} damage!\n";
+            TurnText = $"{Name} threw gold at {target.Name} for {damageVal} damage!\nTheir special points are now {((PlayerStats)Stats).specialPointCount}\n";
             EnemyFainted();
         }
     }

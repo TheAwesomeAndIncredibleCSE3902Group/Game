@@ -23,7 +23,7 @@ public class MoblinBattle : IEnemyBattle
         // Basic stat scaling based on level
         int maxHealth = 10 + (level * 5);
         int speed = 5 + level;
-        int attack = 10 + (level * 2);
+        int attack = 5 + (level * 2);
         int defense = 3 + level;
         int specialAttack = 2 + level;
         int specialDefense = 2 + level;
@@ -52,12 +52,12 @@ public class MoblinBattle : IEnemyBattle
         {
             case MoblinActions.LuckySmack:
                 int luck = Stats.GetLuck();
-                if (luck > 7) luck = 7;
+                if (luck > 15) luck = 15;
                 healthChangeVal = Stats.GetSpecialAttack();
                 Random random = new();
-                if (random.Next(0, 10 - Stats.GetLuck()) % 2 == 0)
+                if (random.Next(0, 30 - Stats.GetLuck()) == 0)
                 {
-                    healthChangeVal *= 10;
+                    healthChangeVal *= 2;
                     TurnText = $"{Name} got a lucky smack on {target.Name} for {healthChangeVal}!";
                 }
                 else { TurnText = $"{Name} hit {target.Name} very limply for {healthChangeVal}"; }
@@ -85,8 +85,8 @@ public class MoblinBattle : IEnemyBattle
         if (Stats.GetHealth() > (Stats.GetMaxHealth() / 3))
         {
             Random random = new();
-            int danceChance = random.Next(0, 3);
-            if (danceChance % 2 == 0)
+            int coinFlip = random.Next(0, 3);
+            if (coinFlip == 0)
             {
                 moblinChoice = MoblinActions.RambleCharge;
             }

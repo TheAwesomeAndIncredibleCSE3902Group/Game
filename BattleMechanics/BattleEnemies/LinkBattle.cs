@@ -24,25 +24,34 @@ namespace Sprint0.BattleMechanics.BattleEnemies
         public override void LevelUp()
         {
             int levelUps = ((PlayerStats)Stats).levelUps;
-            ((PlayerStats)Stats).ChangeAll
+            if (levelUps > 0)
+            {
+                ((PlayerStats)Stats).ChangeAll
                 (
-                    (levelUps * 5), (levelUps * 5), (levelUps ), (levelUps * 4), (levelUps), (levelUps), (levelUps), (levelUps / 2), ((levelUps * 3) / 4)
+                    (levelUps * 5), (levelUps * 5), (levelUps), (levelUps * 4), (levelUps), (levelUps), (levelUps), (levelUps / 2), ((levelUps * 3) / 4)
                 );
-            ((PlayerStats)Stats).levelUps = 0;
-            Stats.ChangeHealth(Stats.GetMaxHealth());
+                ((PlayerStats)Stats).levelUps = 0;
+                Stats.ChangeHealth(Stats.GetMaxHealth());
+            }
         }
 
-        public void SwordStab(int enemyIndex)
+        public void SpinAttack(int enemyIndex)
         {
-            target = BattleScene.Instance.EnemyList[enemyIndex];
-            int attackVal = Stats.GetAttack();
-            int defenseVal = target.Stats.GetDefense();
-            int damageVal = attackVal - (defenseVal / 2);
-            if (damageVal < 0) damageVal = 0;
+            if (((PlayerStats)Stats).specialPointCount < 5) { Attack(enemyIndex); TurnText += "\nYou do not have enough special points to do this move."; return; }
+            ((PlayerStats)Stats).specialPointCount -= 5;
+            int damageVal = attackVal;
 
-            target.Stats.ChangeHealth(-damageVal);
+            foreach (IBattle enemy in BattleScene.Instance.EnemyList)
+            {
+                target = enemy;
+                int defenseVal = enemy.Stats.GetDefense();
+                damageVal = attackVal - defenseVal;
+                if (damageVal < 0) damageVal = 0;
+                enemy.Stats.ChangeHealth(-damageVal);
+            }
 
-            TurnText = $"{Name} stabbed {target.Name} for {damageVal} damage!\n";
+
+            TurnText = $"{Name} spinned around with their sword, hitting all enemies for {damageVal} damage!\nTheir special points are now {((PlayerStats)Stats).specialPointCount}\n";
             EnemyFainted();
         }
     }

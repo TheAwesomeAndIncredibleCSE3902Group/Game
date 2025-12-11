@@ -22,23 +22,27 @@ namespace Sprint0.BattleMechanics.BattleEnemies
         public override void LevelUp()
         {
             int levelUps = ((PlayerStats)Stats).levelUps;
-            ((PlayerStats)Stats).ChangeAll
-                (
-                    (levelUps * 2), (levelUps * 5), (levelUps), (levelUps), (levelUps / 4), (levelUps), (levelUps * 5), (levelUps / 4), ((levelUps * 3) / 4)
-                );
-            ((PlayerStats)Stats).levelUps = 0;
-            Stats.ChangeHealth(Stats.GetMaxHealth());
+            if (levelUps > 0)
+            {
+                ((PlayerStats)Stats).ChangeAll
+                    (
+                        (levelUps * 2), (levelUps * 10), (levelUps), (levelUps), (levelUps / 4), (levelUps), (levelUps * 5), (levelUps / 4), ((levelUps * 3) / 4)
+                    );
+                ((PlayerStats)Stats).levelUps = 0;
+                Stats.ChangeHealth(Stats.GetMaxHealth());
+            }
         }
         public void WiseAdvice(int enemyIndex)
         {
+            if (((PlayerStats)Stats).specialPointCount < 5) { Attack(enemyIndex); TurnText += "\nYou do not have enough special points to do this move."; return; }
+            ((PlayerStats)Stats).specialPointCount -= 5;
             target = BattleScene.Instance.EnemyList[enemyIndex];
-            int specialAttackVal = Stats.GetSpecialAttack();
             int specialDefenseVal = target.Stats.GetSpecialDefense();
             int damageVal = specialAttackVal - (specialDefenseVal / 2);
             if (damageVal < 0) damageVal = 0;
 
             target.Stats.ChangeHealth(-damageVal);
-            TurnText = $"{Name} gave {target.Name} wise advice for {damageVal} damage!\n";
+            TurnText = $"{Name} gave {target.Name} wise advice for {damageVal} damage!\nTheir special points are now {((PlayerStats)Stats).specialPointCount}\n";
             EnemyFainted();
         }
     }

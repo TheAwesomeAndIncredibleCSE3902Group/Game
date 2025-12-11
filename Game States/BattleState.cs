@@ -343,7 +343,7 @@ public class BattleState : IGameState
             switch (BattleScene.Instance.CurrentBattle.Name)
             {
                 case "Link":
-                    (buttons[3].Attributes["text_element"] as Element).Attributes["text_string"] = "Sword Stab";
+                    (buttons[3].Attributes["text_element"] as Element).Attributes["text_string"] = "Spin Attack";
                     break;
                 case "Old Lady":
                     (buttons[3].Attributes["text_element"] as Element).Attributes["text_string"] = "Wise Advice";
@@ -493,6 +493,7 @@ public class BattleState : IGameState
                     }
                 }
                 (BattleScene.Instance.CurrentBattle as PlayerBattle).LuckyStrike(target);
+                _enemySprites[target].Hurt = true;
                 if (BattleScene.Instance.CurrentBattle.TurnText == null)
                 {
                     battleTextElem.Attributes["text_string"] = BattleScene.Instance.CurrentBattle.ToString() + ": TurnText string is null...";
@@ -514,7 +515,7 @@ public class BattleState : IGameState
                 switch (BattleScene.Instance.CurrentBattle.Name)
                 {
                     case "Link":
-                        (BattleScene.Instance.CurrentBattle as LinkBattle).SwordStab(target);
+                        (BattleScene.Instance.CurrentBattle as LinkBattle).SpinAttack(target);
                         _enemySprites[target].Hurt = true;
                         break;
                     case "Old Lady":

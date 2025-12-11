@@ -3,29 +3,35 @@ using AwesomeRPG.Stats;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Security;
 using static AwesomeRPG.Util;
 
 namespace AwesomeRPG.BattleMechanics.BattleEnemies;
 public abstract class PlayerBattle : IBattle
 {
+    //Battle math variables
+    public int attackVal; public int specialAttackVal;
+    public IBattle target;
     public IStats Stats { get; set; }
 
+    //bools
     public bool IsFriend { get; set; } = true;
     public bool IsFainted { get; set; } = false;
 
+    //UI related things
     public string Name { get; set; } = "Player";
     public AnimatableSprite Icon { get; set; } = null;
     public string TurnText { get; set; } = null;
 
-    private int attackVal; private int specialAttackVal;
-    public IBattle target;
 
     public PlayerBattle(PlayerStats stats)
     {
         Stats = stats;
+        attackVal = Stats.GetAttack();
+        specialAttackVal = Stats.GetSpecialAttack();
         IsFainted = false;
         IsFriend = true;
-        ((PlayerStats)Stats).ChangeSpecialPoint(((PlayerStats)Stats).GetSpecialPointMax());
+        ((PlayerStats)Stats).specialPointCount = ((PlayerStats)Stats).GetSpecialPointMax();
     }
 
     public virtual void LevelUp()
@@ -90,8 +96,8 @@ public abstract class PlayerBattle : IBattle
     {
         int specialAtkVal = (Stats.GetSpecialAttack() * 2);
 
-        Stats.ChangeHealth(specialAtkVal);
+        foreach (IBattle ally in BattleScene.Instance.AllyList) { Stats.ChangeHealth(specialAtkVal); }
 
-        TurnText = $"{Name} healed themselves for {specialAtkVal}!";
+        TurnText = $"{Name} healed the party for {specialAtkVal}!";
     }
 }
