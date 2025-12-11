@@ -42,3 +42,9 @@ system 9 arguments makes it hard to know what stats are correlated to which argu
 to have the default leveling being it's own function stored in Player. Then specific stat changes are called individually.
 This would likely require stats to be a dictionary which I think might be better overall since, playerStats has a lot
 of file scope variables as is.
+
+John
+December 10th
+Sprint 5
+-----------------
+Author of Code: 
