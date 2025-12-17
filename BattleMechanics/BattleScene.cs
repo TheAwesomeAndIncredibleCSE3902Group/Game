@@ -46,9 +46,9 @@ public class BattleScene
                 }
             }
 
-            AllyList.Clear();
-            EnemyList.Clear();
-            turnOrder = new TurnList();
+            //AllyList.Clear();
+            //EnemyList.Clear();
+            //turnOrder = new TurnList();
             return;
         }
     }
